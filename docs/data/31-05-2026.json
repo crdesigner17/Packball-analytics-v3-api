@@ -101,7 +101,9 @@
       "best_risk": "Baixo",
       "justif_15": "O1.5 70% · xG 4.3 · PPG 1.1 · H2H 2.9 gols · Via 2 ✓",
       "justif_esc": "Média 11.0 cant · O8.5: 66.7% · O7.5: 100.0%",
-      "justif_cards": "Média 4.33 cart · O2.5: 88.9% · O3.5: 66.7%"
+      "justif_cards": "Média 4.33 cart · O2.5: 88.9% · O3.5: 66.7%",
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
