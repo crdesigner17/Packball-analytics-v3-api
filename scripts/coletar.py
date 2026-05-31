@@ -64,7 +64,7 @@ LIGAS = {
 
 LIGAS_ELITE_IDS = {lid for lid, (_, tier) in LIGAS.items() if tier == "elite"}
 
-SEASON = 2025  # temporada atual — ajuste se necessário
+SEASON = 2024  # temporada atual — ajuste se necessário
 
 # Retry / rate-limit
 MAX_RETRIES   = 3
