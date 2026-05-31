@@ -69,7 +69,7 @@ SEASON = 2024  # temporada atual — ajuste se necessário
 # Retry / rate-limit
 MAX_RETRIES   = 3
 RETRY_DELAY   = 2.0   # segundos entre retries
-CALL_DELAY    = 0.35  # segundos entre chamadas (plano Free = ~100/dia; Pro = 7500/hora)
+CALL_DELAY    = 6.5   # plano Free: 10 req/min = 1 a cada 6s
 
 # ── HTTP helper ─────────────────────────────────────────────────────
 class APIClient:
