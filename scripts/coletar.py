@@ -510,6 +510,7 @@ def calcular_scores(jogo: dict) -> dict:
     prob_o15 = prob_poisson(exg_tot, 2) if exg_tot else None
     prob_o25 = prob_poisson(exg_tot, 3) if exg_tot else None
     prob_u45 = (100 - prob_poisson(exg_tot, 5)) if exg_tot else None
+    prob_u35 = (100 - prob_poisson(exg_tot, 4)) if exg_tot else None
 
     # Normalizações
     h2h_nv = n(h2h_g, 0, 5)
@@ -543,6 +544,7 @@ def calcular_scores(jogo: dict) -> dict:
     s_btts    = ws([(btts_cf,40),(h2h_nv,15),(ppg_n,15),(af_n,15),(o15g,10),(exg_n or 50,5)])
     s_05ht    = ws([(o05ht,45),(o15ht or 50,15),(ppg_n,15),(af_n,15),(sot_n or 50,10)]) if o05ht else ws([(ppg_n,40),(af_n,30),(o15g or 50,20),(sot_n or 50,10)])
     s_u45     = ws([(prob_u45,35),(u25cf or 50,25),(100-(exg_n or 50),20),(50,20)]) if prob_u45 else ws([(u25cf or 50,40),(100-(ppg_n or 50),30),(50,30)])
+    s_u35     = ws([(prob_u35,45),(u25cf or 50,20),(100-(exg_n or 50),25),(50,10)]) if prob_u35 else ws([(u25cf or 50,50),(100-(ppg_n or 50),30),(50,20)])
     s_esc75   = ws([(cant_n,40),(o75c,30),(shots_n,15),(o65c or 50,10),(ppg_n,5)])
     s_esc85   = ws([(cant_n,38),(o85c,32),(shots_n,15),(o75c,10),(ppg_n,5)])
     s_cards25 = ws([(o25cards,45),(cards_n,35),(ppg_n,10),(50,10)])
@@ -554,6 +556,7 @@ def calcular_scores(jogo: dict) -> dict:
         ('BTTS',     s_btts, True),
         ('Over 0.5 HT', s_05ht, True),
         ('Under 4.5', s_u45, True),
+            ('Under 3.5', s_u35, True),
         ('Esc 7.5', s_esc75, True),
         ('Esc 8.5', s_esc85, True),
         ('Cart 2.5', s_cards25, True),
@@ -577,6 +580,7 @@ def calcular_scores(jogo: dict) -> dict:
         "poisson_o15": round(prob_o15,1) if prob_o15 else None,
         "poisson_o25": round(prob_o25,1) if prob_o25 else None,
         "poisson_u45": round(prob_u45,1) if prob_u45 else None,
+                "poisson_u35": round(prob_u35,1) if prob_u35 else None,
         "score_15":    round(s15,1),
         "score_25":    round(s25,1),
         "score_btts":  round(s_btts,1),
@@ -593,6 +597,7 @@ def calcular_scores(jogo: dict) -> dict:
         "grade_btts":  grade(s_btts),
         "grade_05ht":  grade(s_05ht),
         "grade_u45":   grade(s_u45),
+                "grade_u35":   grade(s_u35),
         "grade_esc85": grade(s_esc85),
         "grade_esc75": grade(s_esc75),
         "grade_cart25":grade(s_cards25),
@@ -947,7 +952,7 @@ def main():
         print("\n⚠ Nenhum jogo encontrado/processado.")
         sys.exit(0)
 
-    gravar_dia(date_str, jogos, force=getattr(args, 'force', False))
+    gravar_dia(date_str, jogos, force=args.force)
 
     # Regenerar site
     if not args.no_site:
