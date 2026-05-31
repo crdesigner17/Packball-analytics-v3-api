@@ -64,12 +64,12 @@ LIGAS = {
 
 LIGAS_ELITE_IDS = {lid for lid, (_, tier) in LIGAS.items() if tier == "elite"}
 
-SEASON = 2024  # temporada atual — ajuste se necessário
+SEASON = 2025  # temporada atual — ajuste se necessário
 
 # Retry / rate-limit
 MAX_RETRIES   = 3
 RETRY_DELAY   = 2.0   # segundos entre retries
-CALL_DELAY    = 6.5   # plano Free: 10 req/min = 1 a cada 6s
+CALL_DELAY    = 0.5   # plano Free: 10 req/min = 1 a cada 6s
 
 # ── HTTP helper ─────────────────────────────────────────────────────
 class APIClient:
@@ -896,8 +896,8 @@ def main():
     used, limit = client.remaining()
     if limit > 0:
         print(f"   Quota API: {used}/{limit} chamadas hoje")
-        if limit - used < 50:
-            print(f"   ⚠ ATENÇÃO: menos de 50 chamadas restantes!")
+        if limit - used < 500:
+    print(f"   ⚠ ATENÇÃO: menos de 500 chamadas restantes!")
 
     jogos = processar_data(client, date_str)
 
