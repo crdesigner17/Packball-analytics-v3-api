@@ -86,4 +86,5 @@ jobs:
           git config user.email "bot@packball.local"
           git add docs/
           git diff --staged --quiet || git commit -m "🔄 Reprocessado ${{ github.event.inputs.date_start }} → ${{ github.event.inputs.date_end }}"
+          git pull --rebase origin main
           git push
