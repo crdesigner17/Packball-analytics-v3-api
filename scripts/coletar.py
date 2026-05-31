@@ -825,7 +825,7 @@ def processar_data(client: APIClient, date_str: str) -> list:
     return results
 
 # ── Gravar JSON ─────────────────────────────────────────────────────
-def gravar_dia(date_str_api: str, jogos: list):
+def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
     """date_str_api: YYYY-MM-DD → converte para DD-MM-YYYY no arquivo."""
     d = datetime.strptime(date_str_api, "%Y-%m-%d")
     date_fmt = d.strftime("%d-%m-%Y")
@@ -840,13 +840,15 @@ def gravar_dia(date_str_api: str, jogos: list):
     resultado_confirmado = False
     resultado_stats      = {}
     resultados_existentes = {}
+    jogos_existentes_count = 0
 
     if os.path.exists(out_path):
         try:
             with open(out_path, encoding="utf-8") as f:
                 old_json = json.load(f)
-            resultado_confirmado = old_json.get("resultado_confirmado", False)
-            resultado_stats      = old_json.get("resultado_stats", {})
+            resultado_confirmado  = old_json.get("resultado_confirmado", False)
+            resultado_stats       = old_json.get("resultado_stats", {})
+            jogos_existentes_count = len(old_json.get("jogos", []))
             # Mapear resultados por nome do jogo
             for j in old_json.get("jogos", []):
                 if j.get("resultado"):
@@ -856,6 +858,13 @@ def gravar_dia(date_str_api: str, jogos: list):
                     }
         except:
             pass
+
+    # Proteção: não sobrescrever se API retornou menos jogos que o existente
+    # Isso evita que reprocessamentos parciais destruam dados de CSVs mais completos
+    if not force and jogos_existentes_count > 0 and len(jogos) < jogos_existentes_count * 0.5:
+        print(f"  ⚠ Proteção ativada: API retornou {len(jogos)} jogos vs {jogos_existentes_count} existentes.")
+        print(f"  ⚠ Mantendo dados existentes para {date_fmt}. Use --force para sobrescrever.")
+        return
 
     # Reinjetar resultados preservados nos novos jogos
     for j in jogos:
@@ -938,7 +947,7 @@ def main():
         print("\n⚠ Nenhum jogo encontrado/processado.")
         sys.exit(0)
 
-    gravar_dia(date_str, jogos)
+    gravar_dia(date_str, jogos, force=args.force)
 
     # Regenerar site
     if not args.no_site:
