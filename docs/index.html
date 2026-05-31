@@ -41,10 +41,10 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .badge.updated{background:rgba(100,116,139,.1);color:var(--muted);border:1px solid var(--border);font-size:9px}
 
 /* DATE TABS */
-.date-bar{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:6px 12px;scrollbar-width:thin;scrollbar-color:var(--border) transparent}
+.date-bar{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:8px 16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;justify-content:center;position:sticky;top:61px;z-index:95}
 .date-bar::-webkit-scrollbar{height:3px}
 .date-bar::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}
-.date-tab{padding:7px 12px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:7px;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--s2);min-width:85px}
+.date-tab{padding:7px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:7px;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--s2)}
 .date-tab:hover{color:var(--text);border-color:var(--accent)}
 .date-tab.active{color:var(--accent);border-color:var(--accent);background:rgba(249,115,22,.07)}
 .dt-label{font-weight:700;font-size:12px}
@@ -56,7 +56,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .dt-kpi.prem{background:rgba(255,215,0,.12);color:var(--aplus)}
 
 /* MKT BAR */
-.mkt-bar{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:61px;z-index:90;flex-direction:column}
+.mkt-bar{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:109px;z-index:90}
 .mkt-tabs{display:flex;overflow-x:auto;gap:0;padding:0 6px;scrollbar-width:none}
 .mkt-tabs::-webkit-scrollbar{display:none}
 .mkt-tab{padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:5px}
@@ -276,7 +276,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 
 <div class="header">
   <div class="logo">
-    <svg width="280" height="70" viewBox="0 0 340 110" role="img" style="flex-shrink:0">
+    <svg width="320" height="80" viewBox="0 0 340 110" role="img" style="flex-shrink:0">
       <title>WinMetrics</title>
       <defs><clipPath id="bc"><circle cx="31" cy="55" r="28"/></clipPath></defs>
       <circle cx="31" cy="55" r="28" fill="#f97316"/>
@@ -304,7 +304,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   <div class="header-right">
     <span class="badge validated">✓ Over 1.5 · 88.6%</span>
     <span class="badge version">v3.1</span>
-    <span class="badge updated">🕐 31/05/2026 16:10 UTC</span>
+    <span class="badge updated">🕐 31/05/2026 16:17 UTC</span>
   </div>
 </div>
 
@@ -1228,10 +1228,6 @@ function switchDate(date){
   activeDate=date;
   if(!activeMkt[date])activeMkt[date]='visao';
   switchMkt(date,activeMkt[date]);
-  // Mover date-bar para abaixo da mkt-bar
-  const mktBar=panel?panel.querySelector('.mkt-bar'):null;
-  const dateBar=document.getElementById('date-bar');
-  if(mktBar&&dateBar)mktBar.parentNode.insertBefore(dateBar,mktBar.nextSibling);
 }
 
 function switchMkt(date,mkt){
@@ -1262,18 +1258,9 @@ function renderMkt(date,mkt){
 renderGlobalKpis();
 const dates=Object.keys(ALL_DATA);
 
-function positionDateBar(date){
-  const panel=document.getElementById('day-'+date);
-  const mktBar=panel?panel.querySelector('.mkt-bar'):null;
-  const dateBar=document.getElementById('date-bar');
-  if(mktBar&&dateBar){
-    mktBar.parentNode.insertBefore(dateBar, mktBar.nextSibling);
-  }
-}
-
 if(dates.length){
-  switchDate(dates[0]);
-  positionDateBar(dates[0]);
+  const lastDate=dates[dates.length-1];
+  switchDate(lastDate);
 }
 </script>
 
