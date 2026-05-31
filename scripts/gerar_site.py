@@ -82,7 +82,7 @@ def day_panel_html(d, day_data):
       <div class="mkt-tab active" data-mkt="visao"      onclick="switchMkt('{d}','visao')">📊 Visão Geral</div>
       <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Ranking <span class="cnt g">{nprem}</span></div>
       <div class="mkt-tab"       data-mkt="over15"      onclick="switchMkt('{d}','over15')">⚽ Over 1.5 <span class="cnt b">{n15}</span></div>
-      <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">🔽 Under 4.5</div>
+      <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">🔽 Under 3.5</div>
       <div class="mkt-tab"       data-mkt="escanteios"  onclick="switchMkt('{d}','escanteios')">🚩 Escanteios <span class="cnt g">{nesc}</span></div>
       <div class="mkt-tab"       data-mkt="cartoes"     onclick="switchMkt('{d}','cartoes')">🟨 Cartões <span class="cnt g">{ncart}</span></div>
       <div class="mkt-tab"       data-mkt="historico_dia" onclick="switchMkt('{d}','historico_dia')">{res_badge} Resultados</div>
@@ -119,12 +119,6 @@ def gerar_site():
 
         date_tabs_html.append(f'''<div class="date-tab" data-date="{d}" onclick="switchDate('{d}')">
   <span class="dt-label">{wd} {fmt}</span>
-  <span class="dt-kpis">
-    <span class="dt-kpi prem">P:{nprem}</span>
-    <span class="dt-kpi g">O1.5:{n15}</span>
-    <span class="dt-kpi b">Esc:{nesc}</span>
-    <span class="dt-kpi o">Cart:{ncart}</span>
-  </span>
 </div>''')
         day_panels_html.append(day_panel_html(d, day_data))
         all_data[d] = day_data
@@ -204,7 +198,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .dt-kpi.prem{{background:rgba(255,215,0,.12);color:var(--aplus)}}
 
 /* MKT BAR */
-.mkt-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:61px;z-index:90}}
+.mkt-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:61px;z-index:90;flex-direction:column}}
 .mkt-tabs{{display:flex;overflow-x:auto;gap:0;padding:0 6px;scrollbar-width:none}}
 .mkt-tabs::-webkit-scrollbar{{display:none}}
 .mkt-tab{{padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:5px}}
@@ -424,7 +418,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
 <div class="header">
   <div class="logo">
-    <svg width="220" height="55" viewBox="0 0 340 110" role="img" style="flex-shrink:0">
+    <svg width="280" height="70" viewBox="0 0 340 110" role="img" style="flex-shrink:0">
       <title>WinMetrics</title>
       <defs><clipPath id="bc"><circle cx="31" cy="55" r="28"/></clipPath></defs>
       <circle cx="31" cy="55" r="28" fill="#f97316"/>
@@ -719,12 +713,11 @@ function renderRanking(date,jogos){{
         <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
         ${{placarCell(d)}}
         <td>${{resBadge(d,mktKey)}}</td>
-        <td style="font-size:11px;color:var(--muted);max-width:180px">${{d.justif_15||'—'}}</td>
       </tr>`;
     }}).join('');
     return`<div class="callout ${{calloutClass}}">${{calloutText}}</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Score</th><th>xG</th><th>Placar</th><th>Resultado</th><th>Justificativa</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Score</th><th>xG</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
   }}
@@ -742,24 +735,27 @@ function renderRanking(date,jogos){{
 function renderOver15(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over15');
   let rows=[...jogos].filter(d=>d.passou_filtro).sort((a,b)=>b.score_15-a.score_15);
+  const total=rows.length;
   const html=rows.map((d,i)=>{{
     const rc=rowClass(d,'over15_ok');
+    const probColor=d.over15_g>=85?'var(--green)':d.over15_g>=75?'var(--blue)':'var(--orange)';
     return`<tr class="${{rc}}">
       <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
       <td class="mono muted">${{d.hora}}</td>
-      <td>${{bar(d.score_15)}}</td><td>${{gradeHtml(d.grade_15)}}</td>
-      <td class="mono">${{pct(d.over15_g)}}</td>
+      <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{d.over15_g||'—'}}%</span></td>
+      ${{placarCell(d)}}
+      <td>${{resBadge(d,'over15_ok')}}</td>
+      <td>${{bar(d.score_15)}}</td>
+      <td>${{gradeHtml(d.grade_15)}}</td>
       <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
-      <td class="mono" style="color:var(--purple)">${{d.poisson_o15?d.poisson_o15+'%':'—'}}</td>
-      <td class="mono">${{d.ppg_min}}</td><td>${{via(d.via)}}</td>
-      ${{placarCell(d)}}<td>${{resBadge(d,'over15_ok')}}</td>
+      <td>${{via(d.via)}}</td>
     </tr>`;
   }}).join('');
   el.innerHTML=`
-    <div class="callout info"><strong>Over 1.5 Gols — Validado 88.6%</strong> · Filtro 3 Vias ativo.</div>
+    <div class="callout info"><strong>Over 1.5 Gols — Validado 88.6%</strong> · ${{total}} jogos aprovados no Filtro 3 Vias.</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>Over 1.5%</th><th>xG</th><th>Poisson</th><th>PPG min</th><th>Via</th><th>Placar</th><th>Resultado</th></tr></thead>
-      <tbody>${{html||'<tr><td colspan="12" class="empty">Nenhum jogo passou o Filtro 3 Vias.</td></tr>'}}</tbody>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Probabilidade</th><th>Placar</th><th>Resultado</th><th>Score</th><th>Grade</th><th>xG</th><th>Via</th></tr></thead>
+      <tbody>${{html||'<tr><td colspan="10" class="empty">Nenhum jogo passou o Filtro 3 Vias.</td></tr>'}}</tbody>
     </table></div>`;
 }}
 
@@ -768,9 +764,9 @@ function renderOver25(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over25');
   const ru45=[...jogos].sort((a,b)=>b.score_u45-a.score_u45);
   el.innerHTML=`
-    <div class="callout ok"><strong>Under 4.5 Gols</strong> · Alta taxa base (~95%). Ideal para combos e acumuladores.</div>
+    <div class="callout ok"><strong>Under 3.5 Gols</strong> · Mercado conservador. Ideal para combos.</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>Poisson U4.5</th><th>xG</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>Poisson U3.5</th><th>xG</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{ru45.map((d,i)=>{{
         const rc=rowClass(d,'under45_ok');
         return`<tr class="${{rc}}">
@@ -822,21 +818,30 @@ function renderCart(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-cartoes');
   const rows=[...jogos].sort((a,b)=>b.score_cards25-a.score_cards25);
   el.innerHTML=`
-    <div class="callout ok"><strong>Cartões Over 2.5 / 3.5</strong> · Alta consistência observada.</div>
+    <div class="callout ok"><strong>Cartões Over 2.5 / Over 3.5</strong> · Alta consistência observada.</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score 2.5</th><th>Grade</th><th>Score 3.5</th><th>Média</th><th>O2.5%</th><th>O3.5%</th><th>Real</th><th>Resultado</th></tr></thead>
+      <thead><tr>
+        <th>#</th><th>Jogo</th><th>Hora</th>
+        <th style="color:var(--yellow)">O2.5%</th>
+        <th style="color:var(--orange)">O3.5%</th>
+        <th>Real</th><th>Resultado</th>
+        <th>Score 2.5</th><th>Grade</th><th>Score 3.5</th><th>Média</th>
+      </tr></thead>
       <tbody>${{rows.map((d,i)=>{{
         const rc=rowClass(d,'cart25_ok');
         const res=getResultado(d);
-        const cartReal=res&&res.cards_total!=null?`<td class="mono" style="color:var(--yellow)">${{res.cards_total}}</td>`:'<td class="mono muted">—</td>';
+        const cartReal=res&&res.cards_total!=null?`<td class="mono" style="color:var(--yellow);font-weight:700;font-size:15px">${{res.cards_total}}</td>`:'<td class="mono muted">—</td>';
+        const p25color=d.over25_cards>=85?'var(--green)':d.over25_cards>=75?'var(--blue)':'var(--orange)';
+        const p35color=d.over35_cards>=75?'var(--green)':d.over35_cards>=60?'var(--blue)':'var(--muted)';
         return`<tr class="${{rc}}">
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
+          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p25color}}">${{d.over25_cards||'—'}}%</span></td>
+          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p35color}}">${{d.over35_cards||'—'}}%</span></td>
+          ${{cartReal}}<td>${{resBadge(d,'cart25_ok')}}</td>
           <td>${{bar(d.score_cards25)}}</td><td>${{gradeHtml(d.grade_cart25)}}</td>
           <td>${{bar(d.score_cards35,70)}}</td>
           <td class="mono" style="color:var(--yellow)">${{d.avg_cards||'—'}}</td>
-          <td class="mono">${{pct(d.over25_cards)}}</td><td class="mono">${{pct(d.over35_cards)}}</td>
-          ${{cartReal}}<td>${{resBadge(d,'cart25_ok')}}</td>
         </tr>`;
       }}).join('')}}</tbody>
     </table></div>`;
@@ -1148,6 +1153,10 @@ function switchDate(date){{
   activeDate=date;
   if(!activeMkt[date])activeMkt[date]='visao';
   switchMkt(date,activeMkt[date]);
+  // Mover date-bar para abaixo da mkt-bar
+  const mktBar=panel?panel.querySelector('.mkt-bar'):null;
+  const dateBar=document.getElementById('date-bar');
+  if(mktBar&&dateBar)mktBar.parentNode.insertBefore(dateBar,mktBar.nextSibling);
 }}
 
 function switchMkt(date,mkt){{
@@ -1174,10 +1183,23 @@ function renderMkt(date,mkt){{
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
 }}
 
-// Init
+// Init — mover date-bar para abaixo da mkt-bar
 renderGlobalKpis();
 const dates=Object.keys(ALL_DATA);
-if(dates.length) switchDate(dates[0]);
+
+function positionDateBar(date){{
+  const panel=document.getElementById('day-'+date);
+  const mktBar=panel?panel.querySelector('.mkt-bar'):null;
+  const dateBar=document.getElementById('date-bar');
+  if(mktBar&&dateBar){{
+    mktBar.parentNode.insertBefore(dateBar, mktBar.nextSibling);
+  }}
+}}
+
+if(dates.length){{
+  switchDate(dates[0]);
+  positionDateBar(dates[0]);
+}}
 </script>
 
 <!-- Botão Histórico Global flutuante na date-bar -->
@@ -1197,7 +1219,7 @@ const btn=document.createElement('div');
 btn.id='btn-historico';
 btn.className='date-tab';
 btn.style.cssText='min-width:100px;cursor:pointer';
-btn.innerHTML='<span class="dt-label">📈 Histórico</span><span style="font-size:9px;color:var(--muted);margin-top:2px">geral</span>';
+btn.innerHTML='<span class="dt-label">📈 Histórico</span><span style="font-size:9px;color:var(--muted);margin-top:2px">Visão geral</span>';
 btn.onclick=showHistoricoGlobal;
 dateBar.appendChild(btn);
 
