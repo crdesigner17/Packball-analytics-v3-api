@@ -504,7 +504,7 @@ const MKT_SCORE = {{
   'Cart 2.5':'score_cards25','Cart 3.5':'score_cards35',
 }};
 const MKT_MIN = {{
-  'Over 1.5':85,'Over 2.5':75,'BTTS':70,'Over 0.5 HT':75,'Under 4.5':75,
+  'Over 1.5':85,'Over 2.5':75,'BTTS':70,'Over 0.5 HT':75,'Under 4.5':75,'Under 3.5':75,
   'Esc 7.5':75,'Esc 8.5':75,'Cart 2.5':75,'Cart 3.5':75,
 }};
 
@@ -963,7 +963,7 @@ function renderHistoricoGlobal(){{
     return`<div class="hist-mkt-card">
       <div class="hist-mkt-name">${{m}}</div>
       <div class="hist-taxa-val" style="color:${{c}}">${{t!=null?t+'%':'—'}}</div>
-      <div class="hist-detail">${{s.a}}✓ ${{s.e}}✗ / ${{s.p}} palpites</div>
+      <div class="hist-detail">${{s.acertos}}✓ ${{s.erros}}✗ / ${{s.palpites}} palpites</div>
       <div class="hist-bar-track"><div class="hist-bar-fill" style="width:${{t||0}}%;background:${{c}}"></div></div>
     </div>`;
   }}).join('');
