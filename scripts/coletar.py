@@ -278,7 +278,7 @@ def get_odds(client: APIClient, fixture_id: int) -> dict:
     for bm in data["response"]:
         for bet in bm.get("bookmakers", [{}])[0].get("bets", []):
             name = bet.get("name", "").lower()
-            vals = {v["value"].lower(): s(v.get("odd")) for v in bet.get("values", [])}
+            vals = {str(v["value"]).lower(): s(v.get("odd")) for v in bet.get("values", [])}
 
             if "match winner" in name:
                 result["odds_h"] = vals.get("home")
@@ -352,11 +352,12 @@ def get_predictions(client: APIClient, fixture_id: int) -> dict:
     goals_a = comp.get("goals", {})
 
     # under_over field (se disponível no plano)
-    uo = under25 or {}
-    result["over15_pct"]  = pct_to_float(uo.get("over", {}).get("1.5")) or pct_to_float(uo.get("1.5"))
-    result["over25_pct"]  = pct_to_float(uo.get("over", {}).get("2.5")) or pct_to_float(uo.get("2.5"))
-    result["under25_pct"] = pct_to_float(uo.get("under", {}).get("2.5"))
-    result["btts_pct"]    = pct_to_float(pred.get("goals", {}).get("both"))
+    uo = under25 if isinstance(under25, dict) else {}
+    result["over15_pct"]  = pct_to_float(uo.get("over", {}).get("1.5") if isinstance(uo.get("over"), dict) else None) or pct_to_float(uo.get("1.5"))
+    result["over25_pct"]  = pct_to_float(uo.get("over", {}).get("2.5") if isinstance(uo.get("over"), dict) else None) or pct_to_float(uo.get("2.5"))
+    result["under25_pct"] = pct_to_float(uo.get("under", {}).get("2.5") if isinstance(uo.get("under"), dict) else None)
+    goals_pred = pred.get("goals", {})
+    result["btts_pct"]    = pct_to_float(goals_pred.get("both") if isinstance(goals_pred, dict) else None)
 
     # Ataque/defesa relativo (0-100) que a API fornece
     att_h = pct_to_float(comp.get("att", {}).get("home"))
