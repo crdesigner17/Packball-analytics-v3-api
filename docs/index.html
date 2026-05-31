@@ -209,6 +209,57 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 .mkt-panel{display:none}.mkt-panel.active{display:block}
 .empty{padding:36px;text-align:center;color:var(--muted);font-size:13px}
 
+/* CALENDAR */
+.cal-btn{
+  padding:7px 14px;font-size:12px;font-weight:600;color:var(--muted);
+  cursor:pointer;border:1px solid var(--border);border-radius:7px;
+  background:var(--s2);white-space:nowrap;transition:all .15s;
+  display:flex;align-items:center;gap:5px;flex-shrink:0;align-self:center;
+}
+.cal-btn:hover{color:var(--text);border-color:var(--accent)}
+.cal-modal{
+  position:fixed;inset:0;background:rgba(0,0,0,.7);z-index:999;
+  display:flex;align-items:center;justify-content:center;
+}
+.cal-modal.hidden{display:none}
+.cal-box{
+  background:var(--s1);border:1px solid var(--border);border-radius:14px;
+  padding:24px;min-width:320px;box-shadow:0 20px 60px rgba(0,0,0,.5);
+}
+.cal-header{display:flex;align-items:center;justify-content:space-between;margin-bottom:16px}
+.cal-title{font-size:15px;font-weight:700;color:var(--text)}
+.cal-nav{background:var(--s2);border:1px solid var(--border);border-radius:6px;
+  padding:4px 10px;cursor:pointer;color:var(--text);font-size:14px;}
+.cal-nav:hover{border-color:var(--accent);color:var(--accent)}
+.cal-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;margin-bottom:16px}
+.cal-dow{font-size:10px;font-weight:600;color:var(--muted);text-align:center;padding:4px 0;letter-spacing:.5px}
+.cal-day{
+  aspect-ratio:1;display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-family:'JetBrains Mono',monospace;font-weight:500;
+  border-radius:6px;cursor:pointer;border:1px solid transparent;
+  transition:all .15s;color:var(--muted);
+}
+.cal-day:hover{background:var(--s3);border-color:var(--border);color:var(--text)}
+.cal-day.today{border-color:var(--accent);color:var(--accent)}
+.cal-day.has-data{color:var(--text);background:rgba(59,130,246,.08);border-color:rgba(59,130,246,.2)}
+.cal-day.has-data:hover{background:rgba(59,130,246,.15);border-color:var(--blue)}
+.cal-day.confirmed{background:rgba(34,197,94,.08);border-color:rgba(34,197,94,.2);color:var(--green)}
+.cal-day.confirmed:hover{background:rgba(34,197,94,.15);border-color:var(--green)}
+.cal-day.future{color:var(--muted);opacity:.5}
+.cal-day.empty{cursor:default;pointer-events:none}
+.cal-day.selected{background:var(--accent);color:#fff;border-color:var(--accent)}
+.cal-status{
+  font-size:12px;color:var(--muted);text-align:center;padding:10px;
+  background:var(--s2);border-radius:6px;border:1px solid var(--border);
+  font-family:'JetBrains Mono',monospace;min-height:36px;
+}
+.cal-status.loading{color:var(--yellow)}
+.cal-status.success{color:var(--green)}
+.cal-status.error{color:var(--red)}
+.cal-legend{display:flex;gap:12px;justify-content:center;margin-top:12px;flex-wrap:wrap}
+.cal-leg{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}
+.cal-leg-dot{width:8px;height:8px;border-radius:2px}
+
 /* MOBILE */
 @media(max-width:640px){
   .header{padding:10px 14px}
@@ -253,7 +304,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   <div class="header-right">
     <span class="badge validated">✓ Over 1.5 · 88.6%</span>
     <span class="badge version">v3.1</span>
-    <span class="badge updated">🕐 31/05/2026 14:13 UTC</span>
+    <span class="badge updated">🕐 31/05/2026 14:34 UTC</span>
   </div>
 </div>
 
@@ -514,6 +565,24 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
     <div id="mkt-31-05-2026-escanteios"   class="mkt-panel"></div>
     <div id="mkt-31-05-2026-cartoes"      class="mkt-panel"></div>
     <div id="mkt-31-05-2026-historico_dia" class="mkt-panel"></div>
+  </div>
+</div>
+
+<!-- MODAL CALENDÁRIO -->
+<div class="cal-modal hidden" id="cal-modal" onclick="if(event.target===this)closeCal()">
+  <div class="cal-box">
+    <div class="cal-header">
+      <button class="cal-nav" onclick="calNav(-1)">‹</button>
+      <span class="cal-title" id="cal-title">Maio 2026</span>
+      <button class="cal-nav" onclick="calNav(1)">›</button>
+    </div>
+    <div class="cal-grid" id="cal-grid"></div>
+    <div class="cal-status" id="cal-status">Selecione uma data para carregar os palpites</div>
+    <div class="cal-legend">
+      <div class="cal-leg"><div class="cal-leg-dot" style="background:rgba(34,197,94,.4)"></div>Confirmado</div>
+      <div class="cal-leg"><div class="cal-leg-dot" style="background:rgba(59,130,246,.4)"></div>Com dados</div>
+      <div class="cal-leg"><div class="cal-leg-dot" style="background:rgba(249,115,22,.8)"></div>Hoje</div>
+    </div>
   </div>
 </div>
 
@@ -1025,6 +1094,139 @@ function renderHistoricoGlobal(){
     <div style="max-width:700px">${timeline||'<div class="empty">Sem dias confirmados.</div>'}</div>`;
 }
 
+// ── Calendário ────────────────────────────────────────────────────
+const GH_OWNER = 'crdesigner17';
+const GH_REPO  = 'winmetrics-analytics';
+const GH_TOKEN_KEY = 'wm_gh_token';
+
+let calYear  = new Date().getFullYear();
+let calMonth = new Date().getMonth();
+const MONTHS_PT = ['Janeiro','Fevereiro','Março','Abril','Maio','Junho',
+                   'Julho','Agosto','Setembro','Outubro','Novembro','Dezembro'];
+const DAYS_PT   = ['Dom','Seg','Ter','Qua','Qui','Sex','Sáb'];
+
+function openCal(){
+  document.getElementById('cal-modal').classList.remove('hidden');
+  renderCal();
+}
+function closeCal(){
+  document.getElementById('cal-modal').classList.add('hidden');
+}
+
+function calNav(dir){
+  calMonth += dir;
+  if(calMonth > 11){ calMonth=0; calYear++; }
+  if(calMonth < 0) { calMonth=11; calYear--; }
+  renderCal();
+}
+
+function renderCal(){
+  document.getElementById('cal-title').textContent = MONTHS_PT[calMonth]+' '+calYear;
+  const grid = document.getElementById('cal-grid');
+  const today = new Date();
+  const todayStr = today.toISOString().slice(0,10).split('-').reverse().join('-'); // DD-MM-YYYY
+
+  // Day-of-week headers
+  let html = DAYS_PT.map(d=>`<div class="cal-dow">${d}</div>`).join('');
+
+  // First day of month
+  const first = new Date(calYear, calMonth, 1).getDay();
+  for(let i=0;i<first;i++) html += '<div class="cal-day empty"></div>';
+
+  // Days
+  const days = new Date(calYear, calMonth+1, 0).getDate();
+  for(let d=1;d<=days;d++){
+    const dd = String(d).padStart(2,'0');
+    const mm = String(calMonth+1).padStart(2,'0');
+    const dateKey = `${dd}-${mm}-${calYear}`; // DD-MM-YYYY
+    const apiDate = `${calYear}-${mm}-${dd}`; // YYYY-MM-DD
+    const dayDate = new Date(calYear, calMonth, d);
+    const isFuture = dayDate > today;
+    const isToday  = dateKey === todayStr;
+    const hasData  = !!ALL_DATA[dateKey];
+    const isConf   = hasData && ALL_DATA[dateKey].resultado_confirmado;
+
+    let cls = 'cal-day';
+    if(isToday)        cls += ' today';
+    else if(isConf)    cls += ' confirmed';
+    else if(hasData)   cls += ' has-data';
+    else if(isFuture)  cls += ' future';
+
+    html += `<div class="${cls}" onclick="calSelect('${dateKey}','${apiDate}')">${d}</div>`;
+  }
+
+  grid.innerHTML = html;
+}
+
+async function calSelect(dateKey, apiDate){
+  // Highlight selected
+  document.querySelectorAll('.cal-day').forEach(d=>d.classList.remove('selected'));
+  event.target.classList.add('selected');
+
+  const status = document.getElementById('cal-status');
+  const today = new Date();
+  const selDate = new Date(apiDate);
+  const isPast = selDate < new Date(today.toDateString());
+
+  // If data already exists, just navigate to it
+  if(ALL_DATA[dateKey]){
+    status.textContent = `✓ Dados já carregados para ${dateKey}`;
+    status.className = 'cal-status success';
+    closeCal();
+    setTimeout(()=>switchDate(dateKey), 300);
+    return;
+  }
+
+  // Need to trigger workflow
+  const token = localStorage.getItem(GH_TOKEN_KEY) || prompt('Cole seu GH_TOKEN para acionar o workflow:');
+  if(!token){ status.textContent = 'Token não fornecido.'; status.className='cal-status error'; return; }
+  localStorage.setItem(GH_TOKEN_KEY, token);
+
+  status.textContent = `⏳ Acionando coleta para ${apiDate}...`;
+  status.className = 'cal-status loading';
+
+  // Trigger coletar workflow
+  const ok = await triggerWorkflow('build.yml', { date: apiDate }, token);
+  if(!ok){ status.textContent = '✗ Erro ao acionar workflow. Verifique o token.'; status.className='cal-status error'; return; }
+
+  status.textContent = `✓ Coleta iniciada para ${apiDate}! O dashboard atualiza em ~2 min.`;
+  status.className = 'cal-status success';
+
+  // If past date, also trigger confirmar
+  if(isPast){
+    setTimeout(async()=>{
+      status.textContent = `⏳ Acionando confirmação de resultados...`;
+      status.className = 'cal-status loading';
+      const ok2 = await triggerWorkflow('confirmar.yml', { date: apiDate }, token);
+      if(ok2){
+        status.textContent = `✓ Coleta + confirmação iniciadas! Aguarde ~3 min e recarregue.`;
+        status.className = 'cal-status success';
+      }
+    }, 5000);
+  }
+}
+
+async function triggerWorkflow(workflow, inputs, token){
+  try{
+    const r = await fetch(
+      `https://api.github.com/repos/${GH_OWNER}/${GH_REPO}/actions/workflows/${workflow}/dispatches`,
+      {
+        method: 'POST',
+        headers:{
+          'Authorization': `Bearer ${token}`,
+          'Accept': 'application/vnd.github+json',
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ ref:'main', inputs })
+      }
+    );
+    return r.status === 204;
+  } catch(e){
+    console.error(e);
+    return false;
+  }
+}
+
 // ── Navigation ─────────────────────────────────────────────────────
 let activeDate=null;
 let activeMkt={};
@@ -1104,6 +1306,13 @@ btn.style.cssText='min-width:100px;cursor:pointer';
 btn.innerHTML='<span class="dt-label">📈 Histórico</span><span style="font-size:9px;color:var(--muted);margin-top:2px">geral</span>';
 btn.onclick=showHistoricoGlobal;
 dateBar.appendChild(btn);
+
+const calBtn=document.createElement('div');
+calBtn.className='date-tab';
+calBtn.style.cssText='min-width:100px;cursor:pointer;border-color:rgba(249,115,22,.3)';
+calBtn.innerHTML='<span class="dt-label">📅 Data</span><span style="font-size:9px;color:var(--accent);margin-top:2px">selecionar</span>';
+calBtn.onclick=openCal;
+dateBar.appendChild(calBtn);
 </script>
 </body>
 </html>
