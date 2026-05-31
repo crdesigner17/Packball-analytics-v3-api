@@ -69,7 +69,7 @@ SEASON = 2025  # temporada atual — ajuste se necessário
 # Retry / rate-limit
 MAX_RETRIES   = 3
 RETRY_DELAY   = 2.0   # segundos entre retries
-CALL_DELAY    = 0.5   # plano Free: 10 req/min = 1 a cada 6s
+CALL_DELAY    = 0.35  # segundos entre chamadas (plano Free = ~100/dia; Pro = 7500/hora)
 
 # ── HTTP helper ─────────────────────────────────────────────────────
 class APIClient:
@@ -278,7 +278,7 @@ def get_odds(client: APIClient, fixture_id: int) -> dict:
     for bm in data["response"]:
         for bet in bm.get("bookmakers", [{}])[0].get("bets", []):
             name = bet.get("name", "").lower()
-            vals = {str(v["value"]).lower(): s(v.get("odd")) for v in bet.get("values", [])}
+            vals = {v["value"].lower(): s(v.get("odd")) for v in bet.get("values", [])}
 
             if "match winner" in name:
                 result["odds_h"] = vals.get("home")
@@ -352,12 +352,11 @@ def get_predictions(client: APIClient, fixture_id: int) -> dict:
     goals_a = comp.get("goals", {})
 
     # under_over field (se disponível no plano)
-    uo = under25 if isinstance(under25, dict) else {}
-    result["over15_pct"]  = pct_to_float(uo.get("over", {}).get("1.5") if isinstance(uo.get("over"), dict) else None) or pct_to_float(uo.get("1.5"))
-    result["over25_pct"]  = pct_to_float(uo.get("over", {}).get("2.5") if isinstance(uo.get("over"), dict) else None) or pct_to_float(uo.get("2.5"))
-    result["under25_pct"] = pct_to_float(uo.get("under", {}).get("2.5") if isinstance(uo.get("under"), dict) else None)
-    goals_pred = pred.get("goals", {})
-    result["btts_pct"]    = pct_to_float(goals_pred.get("both") if isinstance(goals_pred, dict) else None)
+    uo = under25 or {}
+    result["over15_pct"]  = pct_to_float(uo.get("over", {}).get("1.5")) or pct_to_float(uo.get("1.5"))
+    result["over25_pct"]  = pct_to_float(uo.get("over", {}).get("2.5")) or pct_to_float(uo.get("2.5"))
+    result["under25_pct"] = pct_to_float(uo.get("under", {}).get("2.5"))
+    result["btts_pct"]    = pct_to_float(pred.get("goals", {}).get("both"))
 
     # Ataque/defesa relativo (0-100) que a API fornece
     att_h = pct_to_float(comp.get("att", {}).get("home"))
@@ -520,17 +519,19 @@ def calcular_scores(jogo: dict) -> dict:
     shots_n= n(avg_shots, 0, 40)
     cards_n= n(avg_cards, 0, 8)
 
-    # Over 1.5
-    if exg_n is not None:
-        s15 = ws([(o15g,30),(o15cf,18),(h2h_nv,12),(ppg_n,12),(af_n,8),(exg_n,15),(prob_o15 or 50,5)])
-    else:
-        s15 = ws([(o15g,35),(o15cf,22),(h2h_nv,15),(ppg_n,15),(af_n,13)])
+    # Over 1.5 — Modo API
+    # score_15 = over15_g (probabilidade do endpoint predictions)
+    # Via 4: predictions >= 85% já é filtro de qualidade da API
+    s15 = float(o15g) if o15g is not None else ws([(ppg_n,50),(af_n,30),(exg_n or 50,20)])
 
     via1 = exg_tot is not None and exg_tot >= 4.5
-    via2 = exg_tot is not None and exg_tot >= 2.0 and ppg_min >= 1.0
-    via3 = exg_tot is None and (o15g or 0) >= 90 and (ppg_avg or 0) >= 2.0
-    passou = via1 or via2 or via3
-    via_str = "Via 1" if via1 else "Via 2" if via2 else "Via 3" if via3 else "Reprovado"
+    via2 = exg_tot is not None and exg_tot >= 2.0 and ppg_min >= 0.7
+    via3 = exg_tot is None and (o15g or 0) >= 90 and (ppg_avg or 0) >= 1.5
+    via4 = (o15g or 0) >= 85   # predictions alta = qualidade garantida pela API
+    passou = via1 or via2 or via3 or via4
+    via_str = "Via 1" if via1 else "Via 2" if via2 else "Via 3" if via3 else "Via 4" if via4 else "Reprovado"
+
+
 
     # Over 2.5
     if exg_n is not None:
@@ -744,8 +745,8 @@ def processar_data(client: APIClient, date_str: str) -> list:
                 # Over gols
                 "over15_g": o15g,
                 "over25_g": o25g,
-                "over15_h": ts_h.get("btts_pct"),   # proxy
-                "over15_a": ts_a.get("btts_pct"),
+                "over15_h": None,  # não disponível via /teams/statistics
+                "over15_a": None,  # score usa over15_g como fallback
                 "over25_h": None, "over25_a": None,
 
                 # xG
@@ -833,10 +834,41 @@ def gravar_dia(date_str_api: str, jogos: list):
     aprovados_cart= [j for j in jogos if j['score_cards25'] >= 75]
     premium       = [j for j in jogos if j.get('best_grade') in ('A+','A')]
 
+    # Preservar resultados já confirmados do JSON anterior
+    out_path = os.path.join(OUT_DIR, f"{date_fmt}.json")
+    resultado_confirmado = False
+    resultado_stats      = {}
+    resultados_existentes = {}
+
+    if os.path.exists(out_path):
+        try:
+            with open(out_path, encoding="utf-8") as f:
+                old_json = json.load(f)
+            resultado_confirmado = old_json.get("resultado_confirmado", False)
+            resultado_stats      = old_json.get("resultado_stats", {})
+            # Mapear resultados por nome do jogo
+            for j in old_json.get("jogos", []):
+                if j.get("resultado"):
+                    resultados_existentes[j["jogo"]] = {
+                        "resultado": j["resultado"],
+                        "acertos":   j.get("acertos", {}),
+                    }
+        except:
+            pass
+
+    # Reinjetar resultados preservados nos novos jogos
+    for j in jogos:
+        existente = resultados_existentes.get(j["jogo"])
+        if existente:
+            j["resultado"] = existente["resultado"]
+            j["acertos"]   = existente["acertos"]
+
     dia_json = {
         "date":  date_fmt,
         "jogos": jogos,
         "top5":  [j['jogo'] for j in sorted(jogos, key=lambda x: x['best_score'], reverse=True)[:5]],
+        "resultado_confirmado": resultado_confirmado,
+        "resultado_stats":      resultado_stats,
         "stats": {
             "total":            len(jogos),
             "over15_aprovados": len(aprovados15),
@@ -846,10 +878,9 @@ def gravar_dia(date_str_api: str, jogos: list):
         }
     }
 
-    out_path = os.path.join(OUT_DIR, f"{date_fmt}.json")
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(dia_json, f, ensure_ascii=False, indent=2)
-    print(f"\n✓ {out_path} gravado ({len(jogos)} jogos)")
+    print(f"\n✓ {out_path} gravado ({len(jogos)} jogos) | resultados preservados: {len(resultados_existentes)}")
 
     # Atualizar index.json
     index_path = os.path.join(OUT_DIR, "index.json")
@@ -896,9 +927,9 @@ def main():
     # Verificar quota
     used, limit = client.remaining()
     if limit > 0:
-            print(f"   Quota API: {used}/{limit} chamadas hoje")
-            if limit - used < 500:
-                print(f"   ⚠ ATENÇÃO: menos de 500 chamadas restantes!")
+        print(f"   Quota API: {used}/{limit} chamadas hoje")
+        if limit - used < 50:
+            print(f"   ⚠ ATENÇÃO: menos de 50 chamadas restantes!")
 
     jogos = processar_data(client, date_str)
 
