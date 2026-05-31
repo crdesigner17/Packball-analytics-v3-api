@@ -82,11 +82,9 @@ def day_panel_html(d, day_data):
       <div class="mkt-tab active" data-mkt="visao"      onclick="switchMkt('{d}','visao')">📊 Visão Geral</div>
       <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Ranking <span class="cnt g">{nprem}</span></div>
       <div class="mkt-tab"       data-mkt="over15"      onclick="switchMkt('{d}','over15')">⚽ Over 1.5 <span class="cnt b">{n15}</span></div>
-      <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">⚽ Over 2.5</div>
-      <div class="mkt-tab"       data-mkt="ht"          onclick="switchMkt('{d}','ht')">⏱ HT / Under</div>
+      <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">🔽 Under 4.5</div>
       <div class="mkt-tab"       data-mkt="escanteios"  onclick="switchMkt('{d}','escanteios')">🚩 Escanteios <span class="cnt g">{nesc}</span></div>
       <div class="mkt-tab"       data-mkt="cartoes"     onclick="switchMkt('{d}','cartoes')">🟨 Cartões <span class="cnt g">{ncart}</span></div>
-      <div class="mkt-tab"       data-mkt="btts"        onclick="switchMkt('{d}','btts')">🎯 BTTS</div>
       <div class="mkt-tab"       data-mkt="historico_dia" onclick="switchMkt('{d}','historico_dia')">{res_badge} Resultados</div>
     </div>
   </div>
@@ -95,10 +93,8 @@ def day_panel_html(d, day_data):
     <div id="mkt-{d}-ranking"      class="mkt-panel"></div>
     <div id="mkt-{d}-over15"       class="mkt-panel"></div>
     <div id="mkt-{d}-over25"       class="mkt-panel"></div>
-    <div id="mkt-{d}-ht"           class="mkt-panel"></div>
     <div id="mkt-{d}-escanteios"   class="mkt-panel"></div>
     <div id="mkt-{d}-cartoes"      class="mkt-panel"></div>
-    <div id="mkt-{d}-btts"         class="mkt-panel"></div>
     <div id="mkt-{d}-historico_dia" class="mkt-panel"></div>
   </div>
 </div>'''
@@ -534,7 +530,6 @@ function renderGlobalKpis(){{
     <div class="hkpi"><div class="hkpi-val g">${{g.total_acertos}}</div><div class="hkpi-lbl">Acertos</div></div>
     <div class="hkpi"><div class="hkpi-val r">${{g.total_erros}}</div><div class="hkpi-lbl">Erros</div></div>
     <div class="hkpi"><div class="hkpi-val b">${{g.total_palpites}}</div><div class="hkpi-lbl">Palpites</div></div>
-    <div class="hkpi"><div class="hkpi-val y">${{g.dias_confirmados}}</div><div class="hkpi-lbl">Dias</div></div>
   `;
 }}
 
@@ -563,7 +558,7 @@ function renderVisao(date,jogos){{
     <div class="kpi"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos</div></div>
     <div class="kpi"><div class="kpi-val p">${{aprem}}</div><div class="kpi-lbl">Premium A+/A</div></div>
     <div class="kpi"><div class="kpi-val g">${{a15}}</div><div class="kpi-lbl">Over 1.5 ≥85%</div></div>
-    <div class="kpi"><div class="kpi-val o">${{a05ht}}</div><div class="kpi-lbl">Over 0.5 HT ≥75%</div></div>
+
     <div class="kpi"><div class="kpi-val b">${{aesc}}</div><div class="kpi-lbl">Esc 8.5 ≥75%</div></div>
     <div class="kpi"><div class="kpi-val g">${{acart}}</div><div class="kpi-lbl">Cart 2.5 ≥75%</div></div>
     ${{taxaDia}}
@@ -682,55 +677,12 @@ function renderOver15(date,jogos){{
     </table></div>`;
 }}
 
-// ── Over 2.5 ───────────────────────────────────────────────────────
+// ── Under 4.5 ────────────────────────────────────────────────────
 function renderOver25(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over25');
-  const rows=[...jogos].sort((a,b)=>b.score_25-a.score_25);
-  el.innerHTML=`
-    <div class="callout warn"><strong>Over 2.5 Gols</strong> · Mercado em análise.</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>Over 2.5%</th><th>xG</th><th>Poisson</th><th>Placar</th><th>Resultado</th></tr></thead>
-      <tbody>${{rows.map((d,i)=>{{
-        const rc=rowClass(d,'over25_ok');
-        return`<tr class="${{rc}}">
-          <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
-          <td class="mono muted">${{d.hora}}</td>
-          <td>${{bar(d.score_25)}}</td><td>${{gradeHtml(d.grade_25)}}</td>
-          <td class="mono">${{pct(d.over25_g)}}</td>
-          <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
-          <td class="mono" style="color:var(--purple)">${{d.poisson_o25?d.poisson_o25+'%':'—'}}</td>
-          ${{placarCell(d)}}<td>${{resBadge(d,'over25_ok')}}</td>
-        </tr>`;
-      }}).join('')}}</tbody>
-    </table></div>`;
-}}
-
-// ── HT / Under ─────────────────────────────────────────────────────
-function renderHT(date,jogos){{
-  const el=document.getElementById('mkt-'+date+'-ht');
-  const r05=[...jogos].sort((a,b)=>b.score_05ht-a.score_05ht);
   const ru45=[...jogos].sort((a,b)=>b.score_u45-a.score_u45);
   el.innerHTML=`
-    <div class="sec-title">⏱ Over 0.5 HT</div>
-    <div class="callout info"><strong>Over 0.5 HT</strong> · Pelo menos 1 gol no 1º tempo.</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>O0.5HT%</th><th>O1.5HT%</th><th>xG</th><th>Placar HT</th><th>Resultado</th></tr></thead>
-      <tbody>${{r05.map((d,i)=>{{
-        const rc=rowClass(d,'over05_ht_ok');
-        const res=getResultado(d);
-        const pht=res?`<td class="mono">${{res.placar_ht}}</td>`:'<td class="mono muted">—</td>';
-        return`<tr class="${{rc}}">
-          <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
-          <td class="mono muted">${{d.hora}}</td>
-          <td>${{bar(d.score_05ht)}}</td><td>${{gradeHtml(d.grade_05ht)}}</td>
-          <td class="mono">${{pct(d.over05_ht)}}</td><td class="mono">${{pct(d.over15_ht)}}</td>
-          <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
-          ${{pht}}<td>${{resBadge(d,'over05_ht_ok')}}</td>
-        </tr>`;
-      }}).join('')}}</tbody>
-    </table></div>
-    <div class="sec-title" style="margin-top:22px">🔽 Under 4.5 Gols</div>
-    <div class="callout ok"><strong>Under 4.5</strong> · Alta taxa base. Ideal para combos.</div>
+    <div class="callout ok"><strong>Under 4.5 Gols</strong> · Alta taxa base (~95%). Ideal para combos e acumuladores.</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>Poisson U4.5</th><th>xG</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{ru45.map((d,i)=>{{
@@ -799,29 +751,6 @@ function renderCart(date,jogos){{
           <td class="mono" style="color:var(--yellow)">${{d.avg_cards||'—'}}</td>
           <td class="mono">${{pct(d.over25_cards)}}</td><td class="mono">${{pct(d.over35_cards)}}</td>
           ${{cartReal}}<td>${{resBadge(d,'cart25_ok')}}</td>
-        </tr>`;
-      }}).join('')}}</tbody>
-    </table></div>`;
-}}
-
-// ── BTTS ───────────────────────────────────────────────────────────
-function renderBtts(date,jogos){{
-  const el=document.getElementById('mkt-'+date+'-btts');
-  const rows=[...jogos].sort((a,b)=>b.score_btts-a.score_btts);
-  el.innerHTML=`
-    <div class="callout warn"><strong>BTTS</strong> · Acerto histórico 61.5%. Use como complemento.</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>BTTS Casa</th><th>BTTS Fora</th><th>Médio</th><th>xG</th><th>Placar</th><th>Resultado</th></tr></thead>
-      <tbody>${{rows.map((d,i)=>{{
-        const rc=rowClass(d,'btts');
-        return`<tr class="${{rc}}">
-          <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
-          <td class="mono muted">${{d.hora}}</td>
-          <td>${{bar(d.score_btts)}}</td><td>${{gradeHtml(d.grade_btts)}}</td>
-          <td class="mono">${{pct(d.btts_h)}}</td><td class="mono">${{pct(d.btts_a)}}</td>
-          <td class="mono">${{d.btts_cf!=null?d.btts_cf+'%':'—'}}</td>
-          <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
-          ${{placarCell(d)}}<td>${{resBadge(d,'btts')}}</td>
         </tr>`;
       }}).join('')}}</tbody>
     </table></div>`;
@@ -965,7 +894,7 @@ function renderHistoricoGlobal(){{
       <div class="kpi"><div class="kpi-val g">${{g.total_acertos}}</div><div class="kpi-lbl">Total Acertos</div></div>
       <div class="kpi"><div class="kpi-val r">${{g.total_erros}}</div><div class="kpi-lbl">Total Erros</div></div>
       <div class="kpi"><div class="kpi-val b">${{g.total_palpites}}</div><div class="kpi-lbl">Total Palpites</div></div>
-      <div class="kpi"><div class="kpi-val y">${{g.dias_confirmados}}</div><div class="kpi-lbl">Dias Confirmados</div></div>
+
     </div>
     <div class="sec-title">📊 Taxa por Mercado (acumulado)</div>
     <div class="hist-grid">${{mktCards}}</div>
@@ -1021,10 +950,8 @@ function renderMkt(date,mkt){{
   else if(mkt==='ranking')   renderRanking(date,jogos);
   else if(mkt==='over15')    renderOver15(date,jogos);
   else if(mkt==='over25')    renderOver25(date,jogos);
-  else if(mkt==='ht')        renderHT(date,jogos);
   else if(mkt==='escanteios')renderEsc(date,jogos);
   else if(mkt==='cartoes')   renderCart(date,jogos);
-  else if(mkt==='btts')      renderBtts(date,jogos);
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
 }}
 
