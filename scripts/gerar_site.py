@@ -33,7 +33,7 @@ def calcular_acertos_globais(all_data):
     """Calcula taxa de acerto acumulada para todos os dias confirmados."""
     mercados = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5',
                 'Esc 7.5','Esc 8.5','Cart 2.5','Cart 3.5']
-    totais = {m: {'p':0,'a':0,'e':0} for m in mercados}
+    totais = {m: {'palpites':0,'acertos':0,'erros':0} for m in mercados}
     dias_confirmados = 0
 
     for date_str, day_data in all_data.items():
@@ -43,17 +43,17 @@ def calcular_acertos_globais(all_data):
         stats = day_data.get('resultado_stats', {})
         for m in mercados:
             s = stats.get(m, {})
-            totais[m]['p'] += s.get('palpites', 0)
-            totais[m]['a'] += s.get('acertos', 0)
-            totais[m]['e'] += s.get('erros', 0)
+            totais[m]['palpites'] += s.get('palpites', 0)
+            totais[m]['acertos'] += s.get('acertos', 0)
+            totais[m]['erros'] += s.get('erros', 0)
 
     for m in totais:
-        v = totais[m]['a'] + totais[m]['e']
-        totais[m]['taxa'] = round(totais[m]['a']/v*100,1) if v > 0 else None
+        v = totais[m]['acertos'] + totais[m]['erros']
+        totais[m]['taxa'] = round(totais[m]['acertos']/v*100,1) if v > 0 else None
 
-    total_p = sum(v['p'] for v in totais.values())
-    total_a = sum(v['a'] for v in totais.values())
-    total_e = sum(v['e'] for v in totais.values())
+    total_p = sum(v['palpites'] for v in totais.values())
+    total_a = sum(v['acertos'] for v in totais.values())
+    total_e = sum(v['erros'] for v in totais.values())
     taxa_geral = round(total_a/(total_a+total_e)*100,1) if (total_a+total_e) > 0 else None
 
     return {
@@ -373,7 +373,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
 <div class="header">
   <div class="logo">
-    <svg width="160" height="40" viewBox="0 0 340 110" role="img" style="flex-shrink:0">
+    <svg width="220" height="55" viewBox="0 0 340 110" role="img" style="flex-shrink:0">
       <title>WinMetrics</title>
       <defs><clipPath id="bc"><circle cx="31" cy="55" r="28"/></clipPath></defs>
       <circle cx="31" cy="55" r="28" fill="#f97316"/>
