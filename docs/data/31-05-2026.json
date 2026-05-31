@@ -101,7 +101,9 @@
       "best_risk": "Baixo",
       "justif_15": "O1.5 70% · xG 4.3 · PPG 1.1 · H2H 2.9 gols · Via 2 ✓",
       "justif_esc": "Média 11.0 cant · O8.5: 66.7% · O7.5: 100.0%",
-      "justif_cards": "Média 4.33 cart · O2.5: 88.9% · O3.5: 66.7%"
+      "justif_cards": "Média 4.33 cart · O2.5: 88.9% · O3.5: 66.7%",
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -113,5 +115,71 @@
     "esc85_aprovados": 0,
     "cart25_aprovados": 0,
     "premium": 1
-  }
+  },
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_confirmado": true
 }
