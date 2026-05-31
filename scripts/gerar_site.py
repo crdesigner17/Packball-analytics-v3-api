@@ -31,7 +31,7 @@ def fmt_date(date_str):
 
 def calcular_acertos_globais(all_data):
     """Calcula taxa de acerto acumulada para todos os dias confirmados."""
-    mercados = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5',
+    mercados = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Under 3.5',
                 'Esc 7.5','Esc 8.5','Cart 2.5','Cart 3.5']
     totais = {m: {'palpites':0,'acertos':0,'erros':0} for m in mercados}
     dias_confirmados = 0
@@ -484,13 +484,14 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 <script>
 const ALL_DATA   = {all_data_json};
 const GLOBAIS    = {globais_json};
-const MERCADOS   = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Esc 7.5','Esc 8.5','Cart 2.5','Cart 3.5'];
+const MERCADOS   = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Under 3.5','Esc 7.5','Esc 8.5','Cart 2.5','Cart 3.5'];
 const MKT_RESULT = {{
   'Over 1.5':    'over15_ok',
   'Over 2.5':    'over25_ok',
   'BTTS':        'btts',
   'Over 0.5 HT': 'over05_ht_ok',
   'Under 4.5':   'under45_ok',
+  'Under 3.5':   'under45_ok',
   'Esc 7.5':     'esc75_ok',
   'Esc 8.5':     'esc85_ok',
   'Cart 2.5':    'cart25_ok',
@@ -498,7 +499,7 @@ const MKT_RESULT = {{
 }};
 const MKT_SCORE = {{
   'Over 1.5':'score_15','Over 2.5':'score_25','BTTS':'score_btts',
-  'Over 0.5 HT':'score_05ht','Under 4.5':'score_u45',
+  'Over 0.5 HT':'score_05ht','Under 4.5':'score_u45','Under 3.5':'score_u35',
   'Esc 7.5':'score_esc75','Esc 8.5':'score_esc85',
   'Cart 2.5':'score_cards25','Cart 3.5':'score_cards35',
 }};
@@ -762,20 +763,30 @@ function renderOver15(date,jogos){{
 // ── Under 4.5 ────────────────────────────────────────────────────
 function renderOver25(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over25');
-  const ru45=[...jogos].sort((a,b)=>b.score_u45-a.score_u45);
+  // Under 3.5: sort by score_u35, fallback to score_u45
+  const ru35=[...jogos].sort((a,b)=>(b.score_u35||b.score_u45||0)-(a.score_u35||a.score_u45||0));
   el.innerHTML=`
-    <div class="callout ok"><strong>Under 3.5 Gols</strong> · Mercado conservador. Ideal para combos.</div>
+    <div class="callout ok"><strong>Under 3.5 Gols</strong> · Foco em jogos de baixa produção ofensiva. Modelo Poisson via xG.</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Grade</th><th>Poisson U3.5</th><th>xG</th><th>Placar</th><th>Resultado</th></tr></thead>
-      <tbody>${{ru45.map((d,i)=>{{
+      <thead><tr>
+        <th>#</th><th>Jogo</th><th>Hora</th>
+        <th style="color:var(--purple)">Poisson U3.5</th>
+        <th style="color:var(--teal)">xG Total</th>
+        <th>Placar</th><th>Resultado</th>
+        <th>Score U3.5</th><th>Grade</th>
+      </tr></thead>
+      <tbody>${{ru35.map((d,i)=>{{
+        const u35prob=d.poisson_u35||null;
+        const probColor=u35prob>=85?'var(--green)':u35prob>=75?'var(--blue)':'var(--muted)';
         const rc=rowClass(d,'under45_ok');
         return`<tr class="${{rc}}">
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
-          <td>${{bar(d.score_u45)}}</td><td>${{gradeHtml(d.grade_u45)}}</td>
-          <td class="mono" style="color:var(--purple)">${{d.poisson_u45?d.poisson_u45+'%':'—'}}</td>
-          <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
+          <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{u35prob?u35prob+'%':'—'}}</span></td>
+          <td class="mono" style="color:var(--teal);font-size:14px;font-weight:600">${{d.exg_tot||'—'}}</td>
           ${{placarCell(d)}}<td>${{resBadge(d,'under45_ok')}}</td>
+          <td>${{bar(d.score_u35||d.score_u45||0)}}</td>
+          <td>${{gradeHtml(d.grade_u35||d.grade_u45||'D')}}</td>
         </tr>`;
       }}).join('')}}</tbody>
     </table></div>`;
