@@ -278,7 +278,7 @@ def get_odds(client: APIClient, fixture_id: int) -> dict:
     for bm in data["response"]:
         for bet in bm.get("bookmakers", [{}])[0].get("bets", []):
             name = bet.get("name", "").lower()
-            vals = {v["value"].lower(): s(v.get("odd")) for v in bet.get("values", [])}
+            vals = {str(v["value"]).lower(): s(v.get("odd")) for v in bet.get("values", [])}
 
             if "match winner" in name:
                 result["odds_h"] = vals.get("home")
