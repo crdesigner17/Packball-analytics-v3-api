@@ -93,8 +93,8 @@ def gerar_site():
     updated = datetime.now().strftime('%d/%m/%Y %H:%M UTC')
     html = build_html(
         updated=updated,
-        date_tabs_html='\\n'.join(date_tabs_html),
-        day_panels_html='\\n'.join(day_panels_html),
+        date_tabs_html='\n'.join(date_tabs_html),
+        day_panels_html='\n'.join(day_panels_html),
         all_data_json=json.dumps(all_data, ensure_ascii=False),
         n_dates=len(index),
     )
