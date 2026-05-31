@@ -895,9 +895,9 @@ def main():
     # Verificar quota
     used, limit = client.remaining()
     if limit > 0:
-        print(f"   Quota API: {used}/{limit} chamadas hoje")
-        if limit - used < 500:
-    print(f"   ⚠ ATENÇÃO: menos de 500 chamadas restantes!")
+            print(f"   Quota API: {used}/{limit} chamadas hoje")
+            if limit - used < 500:
+                print(f"   ⚠ ATENÇÃO: menos de 500 chamadas restantes!")
 
     jogos = processar_data(client, date_str)
 
