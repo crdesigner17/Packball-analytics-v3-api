@@ -290,7 +290,8 @@ def processar_dia(date_str, dfs):
         # Modelo Poisson para xG
         prob_o15_poisson = prob_poisson(exg_tot, 2) if exg_tot else None   # P(gols >= 2)
         prob_o25_poisson = prob_poisson(exg_tot, 3) if exg_tot else None   # P(gols >= 3)
-        prob_u45_poisson = (100 - prob_poisson(exg_tot, 5)) if exg_tot else None  # P(gols < 5) = 1 - P(>=5)
+        prob_u45_poisson = (100 - prob_poisson(exg_tot, 5)) if exg_tot else None  # P(gols < 5)
+        prob_u35_poisson = (100 - prob_poisson(exg_tot, 4)) if exg_tot else None  # P(gols < 4) = Under 3.5
 
         # ── Normalizações ──
         h2h_nv    = n(h2h_g, 0, 5)
@@ -377,20 +378,35 @@ def processar_dia(date_str, dfs):
             ])
 
         # ── Under 4.5 Gols ──
-        # Alta consistência: maioria dos jogos termina abaixo de 4.5
         if prob_u45_poisson is not None:
             s_u45 = ws([
                 (prob_u45_poisson, 35),
                 (u25cf or 50,      25),
-                (100 - (exg_n or 50), 20),   # quanto menor xG, melhor para under
+                (100 - (exg_n or 50), 20),
                 (avg_gl or 50,     10),
-                (50,               10),       # prior conservador
+                (50,               10),
             ])
         else:
             s_u45 = ws([
                 (u25cf or 50, 40),
                 (100 - (ppg_n or 50), 30),
                 (50, 30),
+            ])
+
+        # ── Under 3.5 Gols ──
+        # Mais restritivo que Under 4.5 — foca em jogos de baixa produção
+        if prob_u35_poisson is not None:
+            s_u35 = ws([
+                (prob_u35_poisson,     45),  # Poisson é o sinal mais forte
+                (u25cf or 50,          20),  # histórico under 2.5 como proxy
+                (100 - (exg_n or 50),  25),  # xG baixo = melhor
+                (50,                   10),  # prior conservador
+            ])
+        else:
+            s_u35 = ws([
+                (u25cf or 50,              50),
+                (100 - (ppg_n or 50),      30),
+                (50,                       20),
             ])
 
         # ── Escanteios Over 7.5 ──
@@ -467,6 +483,7 @@ def processar_dia(date_str, dfs):
             ('BTTS',     s_btts, True),
             ('Over 0.5 HT', s_05ht, True),
             ('Under 4.5', s_u45, True),
+            ('Under 3.5', s_u35, True),
             ('Esc 7.5', s_esc75, True),
             ('Esc 8.5', s_esc85, True),
             ('Cart 2.5', s_cards25, True),
@@ -514,6 +531,7 @@ def processar_dia(date_str, dfs):
             'poisson_o15': round(prob_o15_poisson, 1) if prob_o15_poisson else None,
             'poisson_o25': round(prob_o25_poisson, 1) if prob_o25_poisson else None,
             'poisson_u45': round(prob_u45_poisson, 1) if prob_u45_poisson else None,
+            'poisson_u35': round(prob_u35_poisson, 1) if prob_u35_poisson else None,
 
             # Scores principais
             'score_15':       round(s15, 1),
@@ -521,6 +539,7 @@ def processar_dia(date_str, dfs):
             'score_btts':     round(s_btts, 1),
             'score_05ht':     round(s_05ht, 1),
             'score_u45':      round(s_u45, 1),
+            'score_u35':      round(s_u35, 1),
             'score_esc75':    round(s_esc75, 1),
             'score_esc85':    round(s_esc85, 1),
             'score_cards25':  round(s_cards25, 1),
@@ -536,6 +555,7 @@ def processar_dia(date_str, dfs):
             'grade_btts':  grade(s_btts),
             'grade_05ht':  grade(s_05ht),
             'grade_u45':   grade(s_u45),
+            'grade_u35':   grade(s_u35),
             'grade_esc85': grade(s_esc85),
             'grade_esc75': grade(s_esc75),
             'grade_cart25':grade(s_cards25),
