@@ -567,7 +567,9 @@ function renderVisao(date,jogos){{
     Object.values(stats).forEach(s=>{{ta+=s.acertos||0;te+=s.erros||0;}});
     const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
     const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
-    taxaDia=`<div class="kpi"><div class="kpi-val" style="color:${{c}}">${{t!=null?t+'%':'—'}}</div><div class="kpi-lbl">Acerto Dia</div></div>`;
+    const tLabel=t!=null?t+'%':(ta+te===0?'—':'—');
+    const tSub=ta+te>0?`${{ta}}✓ ${{te}}✗`:'sem dados';
+    taxaDia=`<div class="kpi"><div class="kpi-val" style="color:${{c}}">${{tLabel}}</div><div class="kpi-lbl">Acerto do Dia</div><div style="font-size:9px;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace">${{tSub}}</div></div>`;
   }}
 
   const kpi=`<div class="kpi-row">
@@ -597,7 +599,6 @@ function renderVisao(date,jogos){{
         <div class="top-grade-block">${{gradeHtml(d.best_grade)}}<span style="font-size:10px;color:var(--muted)">${{d.best_risk}}</span></div>
       </div>
       ${{placarCard(d, mktKey)}}
-      <div class="top-note">${{d.justif_15||'—'}}</div>
     </div>`;
   }}).join('');
 
@@ -992,8 +993,9 @@ if(dates.length) switchDate(dates[0]);
 const dateBar=document.getElementById('date-bar');
 const btn=document.createElement('div');
 btn.id='btn-historico';
-btn.className='hist-btn';
-btn.innerHTML='📈 Histórico';
+btn.className='date-tab';
+btn.style.cssText='min-width:100px;cursor:pointer';
+btn.innerHTML='<span class="dt-label">📈 Histórico</span><span style="font-size:9px;color:var(--muted);margin-top:2px">geral</span>';
 btn.onclick=showHistoricoGlobal;
 dateBar.appendChild(btn);
 </script>
