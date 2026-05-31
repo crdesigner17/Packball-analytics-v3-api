@@ -1,0 +1,14 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+.env
+venv/
+.venv/
+
+# Dados locais temporários
+data/csv/
+
+# OS
+.DS_Store
+Thumbs.db
