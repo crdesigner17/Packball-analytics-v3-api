@@ -58,8 +58,13 @@ LIGAS = {
     75:  ("Copa do Brasil",     "normal"),
     128: ("Liga Profesional de Fútbol", "normal"),
     131: ("Copa Uruguay",       "normal"),
-    # Regionais BR (IDs aproximados — confirmar no dashboard)
+    # Regionais BR
     74:  ("Copa do Nordeste",   "normal"),
+    # Amistosos internacionais de seleções
+    10:  ("Friendlies",               "normal"),  # International Friendlies (API ID 10)
+    960: ("UEFA Nations League",      "normal"),  # UEFA Nations League
+    29:  ("CONMEBOL Qualifiers",      "normal"),  # South America WC Qual
+    32:  ("FIFA World Cup - Qualification South America", "normal"),
 }
 
 LIGAS_ELITE_IDS = {lid for lid, (_, tier) in LIGAS.items() if tier == "elite"}
