@@ -529,6 +529,10 @@ function bar(s,w){{
   w=w||88;const c=col(s);
   return`<div class="bar-wrap"><span class="bar-num" style="color:${{c}}">${{s}}%</span><div class="bar-track" style="width:${{w}}px"><div class="bar-fill" style="width:${{Math.min(s,100)}}%;background:${{c}}"></div></div></div>`;
 }}
+function odd(v){{
+  if(!v||v==='—')return'—';
+  return parseFloat(v).toFixed(2);
+}}
 function via(v){{
   if(v==='Via 1')return'<span class="via v1">VIA1</span>';
   if(v==='Via 2')return'<span class="via v2">VIA2</span>';
@@ -666,7 +670,7 @@ function renderVisao(date,jogos){{
         <div class="top-grade-block">
           ${{gradeHtml(d.best_grade)}}
           <span style="font-size:10px;color:var(--muted)">${{d.best_risk}}</span>
-          ${{d.odds_h?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">${{d.odds_h}} / ${{d.odds_d}} / ${{d.odds_a}}</span>`:''}}
+          ${{d.odds_h?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">${{odd(d.odds_h)}} · ${{odd(d.odds_d)}} · ${{odd(d.odds_a)}}</span>`:''}}
         </div>
       </div>
       ${{placarCard(d, mktKey)}}
@@ -682,9 +686,9 @@ function renderVisao(date,jogos){{
       <td class="mono" style="color:var(--muted);font-size:11px">${{d.best_mkt}}</td>
       <td>${{bar(d.score_15)}}</td><td>${{bar(d.score_esc85)}}</td><td>${{bar(d.score_cards25)}}</td>
       <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
-      <td class="mono" style="color:var(--yellow);font-weight:600">${{d.odds_h||'—'}}</td>
-      <td class="mono muted">${{d.odds_d||'—'}}</td>
-      <td class="mono" style="color:var(--yellow);font-weight:600">${{d.odds_a||'—'}}</td>
+      <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_h)}}</td>
+      <td class="mono muted">${{odd(d.odds_d)}}</td>
+      <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_a)}}</td>
       ${{placarCell(d)}}
       <td>${{resBadge(d,mktKey)}}</td>
     </tr>`;
@@ -697,7 +701,7 @@ function renderVisao(date,jogos){{
     <div class="top-grid">${{t5}}</div>
     <div class="sec-title">📋 Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Over 1.5</th><th>Esc 8.5</th><th>Cart 2.5</th><th>xG</th><th style="color:var(--yellow)">Odd H</th><th style="color:var(--muted)">Odd D</th><th style="color:var(--yellow)">Odd A</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Over 1.5</th><th>Esc 8.5</th><th>Cart 2.5</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
 }}
@@ -722,16 +726,16 @@ function renderRanking(date,jogos){{
         <td class="mono" style="font-size:11px;color:var(--muted)">${{d.best_mkt}}</td>
         <td>${{bar(d.best_score)}}</td>
         <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
-        <td class="mono" style="color:var(--yellow);font-weight:600">${{d.odds_h||'—'}}</td>
-        <td class="mono muted">${{d.odds_d||'—'}}</td>
-        <td class="mono" style="color:var(--yellow);font-weight:600">${{d.odds_a||'—'}}</td>
+        <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_h)}}</td>
+        <td class="mono muted">${{odd(d.odds_d)}}</td>
+        <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_a)}}</td>
         ${{placarCell(d)}}
         <td>${{resBadge(d,mktKey)}}</td>
       </tr>`;
     }}).join('');
     return`<div class="callout ${{calloutClass}}">${{calloutText}}</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Score</th><th>xG</th><th style="color:var(--yellow)">Odd H</th><th style="color:var(--muted)">Odd D</th><th style="color:var(--yellow)">Odd A</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Score</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
   }}
@@ -757,7 +761,7 @@ function renderOver15(date,jogos){{
       <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
       <td class="mono muted">${{d.hora}}</td>
       <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{d.over15_g||'—'}}%</span></td>
-      <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${{d.odd_over15||'—'}}</td>
+      <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${{odd(d.odd_over15)}}</td>
       ${{placarCell(d)}}
       <td>${{resBadge(d,'over15_ok')}}</td>
       <td>${{bar(d.score_15)}}</td>
