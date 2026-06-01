@@ -103,7 +103,40 @@
       "best_risk": "Confiança Média",
       "justif_15": "O1.5 70% · xG 3.6 · PPG 1.2 · H2H 2.5 gols · Via 2 ✓",
       "justif_esc": "Média 11.15 cant · O8.5: 95.0% · O7.5: 100.0%",
-      "justif_cards": "Média 5.65 cart · O2.5: 90.0% · O3.5: 85.0%"
+      "justif_cards": "Média 5.65 cart · O2.5: 90.0% · O3.5: 85.0%",
+      "resultado": {
+        "fixture_id": 1545548,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 0,
+        "gols_total": 3,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-0",
+        "placar_ht": "0-0",
+        "corners_total": 10,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 80.8,
+          "palpite": true,
+          "acertou": true
+        },
+        "Esc 8.5": {
+          "score": 79.7,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "01-06-2026",
@@ -207,7 +240,9 @@
       "best_risk": "Confiança Média",
       "justif_15": "O1.5 40% · xG 2.0 · PPG 0.8 · H2H 1.3 gols · Via 2 ✓",
       "justif_esc": "Média 12.095 cant · O8.5: 78.9% · O7.5: 89.45%",
-      "justif_cards": "Média 5.65 cart · O2.5: 95.0% · O3.5: 90.0%"
+      "justif_cards": "Média 5.65 cart · O2.5: 95.0% · O3.5: 90.0%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "01-06-2026",
@@ -311,7 +346,9 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 86% · xG 2.9 · PPG 1.7 · H2H 2.9 gols · Via 2 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "01-06-2026",
@@ -415,7 +452,29 @@
       "best_risk": "Moderado",
       "justif_15": "O1.5 60% · xG 1.5 · PPG 0.6 · H2H 1.8 gols",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": {
+        "fixture_id": 1499441,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 0,
+        "gols_total": 2,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "2-0",
+        "placar_ht": "0-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {}
     },
     {
       "date": "01-06-2026",
@@ -519,7 +578,55 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · PPG 3.0 · H2H 4.0 gols · Via 3 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": {
+        "fixture_id": 1542177,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 1,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-1",
+        "placar_ht": "1-1",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": true
+        },
+        "Over 2.5": {
+          "score": 83.7,
+          "palpite": true,
+          "acertou": true
+        },
+        "Esc 8.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": null
+        },
+        "Cart 2.5": {
+          "score": 75.0,
+          "palpite": true,
+          "acertou": null
+        },
+        "Cart 3.5": {
+          "score": 75.0,
+          "palpite": true,
+          "acertou": null
+        }
+      }
     },
     {
       "date": "01-06-2026",
@@ -623,7 +730,40 @@
       "best_risk": "Confiança Média",
       "justif_15": "O1.5 40% · PPG 1.5 · H2H 1.4 gols",
       "justif_esc": "Média 10.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 1.0 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 1.0 cart · O2.5: —% · O3.5: —%",
+      "resultado": {
+        "fixture_id": 1542176,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 81.4,
+          "palpite": true,
+          "acertou": null
+        },
+        "Esc 8.5": {
+          "score": 82.2,
+          "palpite": true,
+          "acertou": null
+        }
+      }
     },
     {
       "date": "01-06-2026",
@@ -727,7 +867,35 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · PPG 0.5 · H2H 3.7 gols · Via 4 ✓",
       "justif_esc": "Média 7.335 cant · O8.5: 16.65% · O7.5: 16.65%",
-      "justif_cards": "Média 0.835 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 0.835 cart · O2.5: —% · O3.5: —%",
+      "resultado": {
+        "fixture_id": 1536927,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 1,
+        "gols_total": 4,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-1",
+        "placar_ht": "3-0",
+        "corners_total": 7,
+        "cards_total": 1,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "01-06-2026",
@@ -831,7 +999,29 @@
       "best_risk": "Moderado",
       "justif_15": "O1.5 50% · PPG 1.0 · H2H 2.0 gols",
       "justif_esc": "Média 11.335 cant · O8.5: 83.35% · O7.5: 83.35%",
-      "justif_cards": "Média 1.0 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 1.0 cart · O2.5: —% · O3.5: —%",
+      "resultado": {
+        "fixture_id": 1543821,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 0,
+        "gols_total": 4,
+        "gols_ht": 2,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "4-0",
+        "placar_ht": "2-0",
+        "corners_total": 14,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {}
     },
     {
       "date": "01-06-2026",
@@ -935,7 +1125,29 @@
       "best_risk": "Moderado",
       "justif_15": "xG 3.5 · PPG 2.5 · H2H 1.0 gols · Via 2 ✓",
       "justif_esc": "Média 7.0 cant · O8.5: 16.65% · O7.5: 33.35%",
-      "justif_cards": "Média 3.335 cart · O2.5: 83.35% · O3.5: 66.65%"
+      "justif_cards": "Média 3.335 cart · O2.5: 83.35% · O3.5: 66.65%",
+      "resultado": {
+        "fixture_id": 1511733,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "0-0",
+        "corners_total": 6,
+        "cards_total": 4,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {}
     },
     {
       "date": "01-06-2026",
@@ -1039,7 +1251,9 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · PPG 0.2 · H2H 4.0 gols · Via 4 ✓",
       "justif_esc": "Média 8.0 cant · O8.5: 50.0% · O7.5: 50.0%",
-      "justif_cards": "Média 2.0 cart · O2.5: 50.0% · O3.5: 50.0%"
+      "justif_cards": "Média 2.0 cart · O2.5: 50.0% · O3.5: 50.0%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "01-06-2026",
@@ -1143,7 +1357,9 @@
       "best_risk": "Confiança Alta",
       "justif_15": "xG 4.0 · PPG 1.8 · Via 2 ✓",
       "justif_esc": "Média 13.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 3.5 cart · O2.5: 100.0% · O3.5: 50.0%"
+      "justif_cards": "Média 3.5 cart · O2.5: 100.0% · O3.5: 50.0%",
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -1156,18 +1372,18 @@
   "resultado_confirmado": true,
   "resultado_stats": {
     "Over 1.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 2,
+      "acertos": 2,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Over 2.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "BTTS": {
       "palpites": 0,
@@ -1191,31 +1407,31 @@
       "taxa": null
     },
     "Esc 7.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 2,
+      "acertos": 1,
       "erros": 0,
-      "sem_dados": 0,
-      "taxa": null
+      "sem_dados": 1,
+      "taxa": 100.0
     },
     "Esc 8.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 3,
+      "acertos": 1,
       "erros": 0,
-      "sem_dados": 0,
-      "taxa": null
+      "sem_dados": 2,
+      "taxa": 100.0
     },
     "Cart 2.5": {
-      "palpites": 0,
+      "palpites": 1,
       "acertos": 0,
       "erros": 0,
-      "sem_dados": 0,
+      "sem_dados": 1,
       "taxa": null
     },
     "Cart 3.5": {
-      "palpites": 0,
+      "palpites": 1,
       "acertos": 0,
       "erros": 0,
-      "sem_dados": 0,
+      "sem_dados": 1,
       "taxa": null
     }
   },
