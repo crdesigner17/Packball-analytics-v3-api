@@ -27,14 +27,17 @@ STATUS_OK = ['NS','INPLAY_1ST_HALF','INPLAY_2ND_HALF','HT','AWAITING_UPDATES','F
 EXCL_KW   = [
     'women','feminin','ladies','frauenliga','femenina','femenino',
     'wpsl','nwsl','u17','u18','u19','u20','u21','u23',
-    'youth','academy','friendly','reserve','reserva','amateur'
+    'youth','academy','reserve','reserva','amateur'
 ]
 LIGAS_OK  = [
     'Champions League','Premier League','La Liga','Serie A','Bundesliga',
     'Europa League','Ligue 1','Eredivisie','Liga Portugal','Superliga',
     'Super Lig','Copa Libertadores','Serie B','Copa do Brasil',
     'Serie C','Copa do Nordeste','Carioca Serie A','Gaucho 1','Mineiro 1',
-    'Paulista A1','Liga Profesional de Fútbol','Copa Uruguay'
+    'Paulista A1','Liga Profesional de Fútbol','Copa Uruguay',
+    # Amistosos de seleções
+    'Friendlies','International Friendlies','Friendly International',
+    'UEFA Nations League','CONMEBOL Qualifiers','FIFA World Cup - Qualification'
 ]
 LIGAS_ELITE = {
     'Champions League','Europa League','Copa Libertadores',
