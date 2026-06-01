@@ -959,7 +959,7 @@ def main():
         print("\n⚠ Nenhum jogo encontrado/processado.")
         sys.exit(0)
 
-    gravar_dia(date_str, jogos, force=args.force)
+    gravar_dia(date_str, jogos, force=getattr(args, 'force', False))
 
     # Regenerar site
     if not args.no_site:
