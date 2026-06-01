@@ -101,7 +101,35 @@
       "best_risk": "Baixo",
       "justif_15": "O1.5 70% · xG 4.3 · PPG 1.1 · H2H 2.9 gols · Via 2 ✓",
       "justif_esc": "Média 11.0 cant · O8.5: 66.7% · O7.5: 100.0%",
-      "justif_cards": "Média 4.33 cart · O2.5: 88.9% · O3.5: 66.7%"
+      "justif_cards": "Média 4.33 cart · O2.5: 88.9% · O3.5: 66.7%",
+      "resultado": {
+        "fixture_id": 1545547,
+        "status": "PEN",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-1",
+        "corners_total": 12,
+        "cards_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 82.5,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     }
   ],
   "top5": [
@@ -145,11 +173,11 @@
       "taxa": null
     },
     "Esc 7.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Esc 8.5": {
       "palpites": 0,
