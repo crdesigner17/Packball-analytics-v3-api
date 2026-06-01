@@ -43,7 +43,10 @@ jobs:
           git config user.name  "PackBall Bot"
           git config user.email "bot@packball.local"
           python scripts/gerar_site.py
-          git add docs/index.html
-          git diff --staged --quiet || git commit -m "📊 Site atualizado $(date -u +'%d/%m/%Y %H:%M UTC')"
+          git add docs/
+          git stash
           git pull origin main --rebase -X ours
+          git stash pop
+          git add docs/
+          git diff --staged --quiet || git commit -m "📊 Site atualizado $(date -u +'%d/%m/%Y %H:%M UTC')"
           git push
