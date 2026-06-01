@@ -103,14 +103,80 @@
       "best_risk": "Médio",
       "justif_15": "O1.5 70% · PPG 0.5 · H2H 2.7 gols",
       "justif_esc": "Média 11.25 cant · O8.5: 90.0% · O7.5: 95.0%",
-      "justif_cards": "Média 6.35 cart · O2.5: 90.0% · O3.5: 85.0%"
+      "justif_cards": "Média 6.35 cart · O2.5: 90.0% · O3.5: 85.0%",
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
     "FC Voluntari x AFC Hermannstadt"
   ],
-  "resultado_confirmado": false,
-  "resultado_stats": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "stats": {
     "total": 1,
     "over15_aprovados": 0,
