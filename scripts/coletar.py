@@ -35,41 +35,41 @@ BASE_URL  = "https://v3.football.api-sports.io"
 OUT_DIR   = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 os.makedirs(OUT_DIR, exist_ok=True)
 
-# Ligas suportadas → (league_id, season)
-# season = ano de início da temporada (2025 para 25/26, 2024 para 24/25...)
+# Ligas suportadas → (league_id, nome, tier, season)
+# Ligas europeias: season=2025 (temporada 2025/26)
+# Ligas sul-americanas: season=2026 (calendário jan-dez)
 LIGAS = {
-    # Europa
-    2:   ("Champions League",   "elite"),
-    3:   ("Europa League",      "elite"),
-    39:  ("Premier League",     "elite"),
-    135: ("Serie A",            "elite"),
-    140: ("La Liga",            "elite"),
-    78:  ("Bundesliga",         "elite"),
-    61:  ("Ligue 1",            "elite"),
-    88:  ("Eredivisie",         "normal"),
-    94:  ("Liga Portugal",      "normal"),
-    283: ("Superliga",          "normal"),
-    203: ("Super Lig",          "normal"),
-    # América do Sul
-    13:  ("Copa Libertadores",  "elite"),
-    71:  ("Serie A",            "normal"),  # Brasil
-    72:  ("Serie B",            "normal"),
-    73:  ("Serie C",            "normal"),
-    75:  ("Copa do Brasil",     "normal"),
-    128: ("Liga Profesional de Fútbol", "normal"),
-    131: ("Copa Uruguay",       "normal"),
-    # Regionais BR
-    74:  ("Copa do Nordeste",   "normal"),
-    # Amistosos internacionais de seleções
-    10:  ("Friendlies",               "normal"),  # International Friendlies (API ID 10)
-    960: ("UEFA Nations League",      "normal"),  # UEFA Nations League
-    29:  ("CONMEBOL Qualifiers",      "normal"),  # South America WC Qual
-    32:  ("FIFA World Cup - Qualification South America", "normal"),
+    # Europa (temporada 2025/26 → season=2025)
+    2:   ("Champions League",   "elite",  2025),
+    3:   ("Europa League",      "elite",  2025),
+    39:  ("Premier League",     "elite",  2025),
+    135: ("Serie A",            "elite",  2025),
+    140: ("La Liga",            "elite",  2025),
+    78:  ("Bundesliga",         "elite",  2025),
+    61:  ("Ligue 1",            "elite",  2025),
+    88:  ("Eredivisie",         "normal", 2025),
+    94:  ("Liga Portugal",      "normal", 2025),
+    283: ("Superliga",          "normal", 2025),
+    203: ("Super Lig",          "normal", 2025),
+    # América do Sul (calendário jan-dez → season=2026)
+    13:  ("Copa Libertadores",  "elite",  2026),
+    71:  ("Serie A",            "normal", 2026),  # Brasileirão
+    72:  ("Serie B",            "normal", 2026),
+    73:  ("Serie C",            "normal", 2026),
+    75:  ("Copa do Brasil",     "normal", 2026),
+    128: ("Liga Profesional de Fútbol", "normal", 2026),
+    131: ("Copa Uruguay",       "normal", 2026),
+    74:  ("Copa do Nordeste",   "normal", 2026),
+    # Amistosos / Seleções
+    10:  ("Friendlies",               "normal", 2026),
+    960: ("UEFA Nations League",      "normal", 2025),
+    29:  ("CONMEBOL Qualifiers",      "normal", 2026),
+    32:  ("FIFA World Cup - Qualification South America", "normal", 2026),
 }
 
-LIGAS_ELITE_IDS = {lid for lid, (_, tier) in LIGAS.items() if tier == "elite"}
+LIGAS_ELITE_IDS = {lid for lid, (nome, tier, season) in LIGAS.items() if tier == "elite"}
 
-SEASON = 2025  # temporada atual — ajuste se necessário
+SEASON = 2025  # fallback — cada liga usa seu próprio season
 
 # Retry / rate-limit
 MAX_RETRIES   = 3
@@ -632,12 +632,14 @@ def processar_data(client: APIClient, date_str: str) -> list:
     team_cache    = {}  # (team_id, league_id) → stats
     fixture_cache = {}  # fixture_id → recent stats
 
-    for league_id, (liga_nome, tier) in LIGAS.items():
+    for league_id, liga_info in LIGAS.items():
+        liga_nome = liga_info[0]; tier = liga_info[1]
         print(f"  🏆 {liga_nome} (liga {league_id})...")
 
+        liga_season = liga_info[2] if len(liga_info) > 2 else SEASON
         data = client.get("/fixtures", {
             "date": date_str, "league": league_id,
-            "season": SEASON, "timezone": "America/Sao_Paulo"
+            "season": liga_season, "timezone": "America/Sao_Paulo"
         })
         if not data or not data.get("response"):
             print(f"     ⏭ Sem jogos")
@@ -669,7 +671,7 @@ def processar_data(client: APIClient, date_str: str) -> list:
             def get_cached_stats(tid):
                 key = (tid, league_id)
                 if key not in team_cache:
-                    team_cache[key] = get_team_stats(client, tid, league_id, SEASON)
+                    team_cache[key] = get_team_stats(client, tid, league_id, liga_season)
                 return team_cache[key]
 
             ts_h = get_cached_stats(home_id)
@@ -679,7 +681,7 @@ def processar_data(client: APIClient, date_str: str) -> list:
             def get_cached_fixture_stats(tid):
                 key = (tid, league_id)
                 if key not in fixture_cache:
-                    fixture_cache[key] = get_recent_fixture_stats(client, tid, league_id, SEASON, n=10)
+                    fixture_cache[key] = get_recent_fixture_stats(client, tid, league_id, liga_season, n=10)
                 return fixture_cache[key]
 
             rs_h = get_cached_fixture_stats(home_id)
@@ -957,7 +959,7 @@ def main():
         print("\n⚠ Nenhum jogo encontrado/processado.")
         sys.exit(0)
 
-    gravar_dia(date_str, jogos, force=getattr(args, 'force', False))
+    gravar_dia(date_str, jogos, force=args.force)
 
     # Regenerar site
     if not args.no_site:
