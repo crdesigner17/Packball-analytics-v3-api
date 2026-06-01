@@ -90,9 +90,9 @@ def risk(score):
     """Nível de risco inverso ao score."""
     if score >= 88: return 'Muito Baixo'
     if score >= 80: return 'Baixo'
-    if score >= 70: return 'Médio'
-    if score >= 60: return 'Alto'
-    return 'Muito Alto'
+    if score >= 65: return 'Moderado'
+    if score >= 50: return 'Arriscado'
+    return 'Evitar'
 
 def odd_justa(prob_pct):
     """Odd justa = 1 / probabilidade."""
