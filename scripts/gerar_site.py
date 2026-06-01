@@ -516,7 +516,6 @@ function col(s){{
   if(s>=50)return'var(--orange)';
   return'var(--red)';
 }}
-}}
 function gradeClass(g){{return g==='A+'?'Aplus':g;}}
 function gradeHtml(g){{return`<span class="grade ${{gradeClass(g)}}">${{g}}</span>`;}}
 function confHtml(s){{
@@ -960,14 +959,14 @@ function renderHistoricoGlobal(){{
   }}
 
   // Cards por mercado
-  const mktCards=MERCADOS.filter(m=>pm[m]&&pm[m].p>0).map(m=>{{
+  const mktCards=MERCADOS.filter(m=>pm[m]&&(pm[m].palpites||pm[m].p||0)>0).map(m=>{{
     const s=pm[m];
     const t=s.taxa;
     const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
     return`<div class="hist-mkt-card">
       <div class="hist-mkt-name">${{m}}</div>
       <div class="hist-taxa-val" style="color:${{c}}">${{t!=null?t+'%':'—'}}</div>
-      <div class="hist-detail">${{s.acertos}}✓ ${{s.erros}}✗ / ${{s.palpites}} palpites</div>
+      <div class="hist-detail">${{s.acertos||0}}✓ ${{s.erros||0}}✗ / ${{s.palpites||0}} palpites</div>
       <div class="hist-bar-track"><div class="hist-bar-fill" style="width:${{t||0}}%;background:${{c}}"></div></div>
     </div>`;
   }}).join('');
