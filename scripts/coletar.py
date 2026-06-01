@@ -74,7 +74,7 @@ SEASON = 2025  # fallback — cada liga usa seu próprio season
 # Retry / rate-limit
 MAX_RETRIES   = 3
 RETRY_DELAY   = 2.0   # segundos entre retries
-CALL_DELAY    = 0.35  # segundos entre chamadas (plano Free = ~100/dia; Pro = 7500/hora)
+CALL_DELAY    = 0.5   # segundos entre chamadas — ~120/min, dentro do limite de 300/min
 
 # ── HTTP helper ─────────────────────────────────────────────────────
 class APIClient:
@@ -959,7 +959,7 @@ def main():
         print("\n⚠ Nenhum jogo encontrado/processado.")
         sys.exit(0)
 
-    gravar_dia(date_str, jogos, force=args.force)
+    gravar_dia(date_str, jogos, force=getattr(args, "force", False))
 
     # Regenerar site
     if not args.no_site:
