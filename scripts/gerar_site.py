@@ -510,8 +510,12 @@ const MKT_MIN = {{
 
 // ── Helpers ────────────────────────────────────────────────────────
 function col(s){{
-  if(s>=88)return'var(--aplus)';if(s>=80)return'var(--green)';
-  if(s>=70)return'var(--blue)';if(s>=60)return'var(--orange)';return'var(--red)';
+  if(s>=85)return'var(--green)';
+  if(s>=75)return'var(--yellow)';
+  if(s>=65)return'var(--blue)';
+  if(s>=50)return'var(--orange)';
+  return'var(--red)';
+}}
 }}
 function gradeClass(g){{return g==='A+'?'Aplus':g;}}
 function gradeHtml(g){{return`<span class="grade ${{gradeClass(g)}}">${{g}}</span>`;}}
