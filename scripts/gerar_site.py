@@ -1152,14 +1152,17 @@ function showHistoricoGlobal(){{
 }}
 
 function switchDate(date){{
-  document.getElementById('panel-historico').style.display='none';
-  document.getElementById('btn-historico').style.color='';
+  const histPanel=document.getElementById('panel-historico');
+  const histBtn=document.getElementById('btn-historico');
+  if(histPanel)histPanel.style.display='none';
+  if(histBtn)histBtn.style.color='';
   historicoVisible=false;
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.date-tab').forEach(t=>t.classList.remove('active'));
   const panel=document.getElementById('day-'+date);
   const tab=document.querySelector(`[data-date="${{date}}"]`);
-  if(panel)panel.classList.add('active');
+  if(!panel){{ console.warn('Panel not found for date:',date); return; }}
+  panel.classList.add('active');
   if(tab){{tab.classList.add('active');tab.scrollIntoView({{behavior:'smooth',block:'nearest',inline:'center'}});}}
   activeDate=date;
   if(!activeMkt[date])activeMkt[date]='visao';
@@ -1190,13 +1193,32 @@ function renderMkt(date,mkt){{
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
 }}
 
-// Init — mover date-bar para abaixo da mkt-bar
+// Init
 renderGlobalKpis();
-const dates=Object.keys(ALL_DATA);
 
-if(dates.length){{
-  const lastDate=dates[dates.length-1];
-  switchDate(lastDate);
+// Ordenar datas corretamente (DD-MM-YYYY)
+const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
+  const [da,ma,ya]=a.split('-').map(Number);
+  const [db,mb,yb]=b.split('-').map(Number);
+  return new Date(ya,ma-1,da)-new Date(yb,mb-1,db);
+}});
+
+// Aguardar DOM completo antes de renderizar
+window.addEventListener('DOMContentLoaded',function(){{
+  if(dates.length){{
+    const lastDate=dates[dates.length-1];
+    switchDate(lastDate);
+  }}
+}});
+
+// Fallback se DOMContentLoaded já disparou
+if(document.readyState==='complete'||document.readyState==='interactive'){{
+  setTimeout(function(){{
+    if(dates.length&&!activeDate){{
+      const lastDate=dates[dates.length-1];
+      switchDate(lastDate);
+    }}
+  }},100);
 }}
 </script>
 
