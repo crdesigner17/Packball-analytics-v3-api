@@ -519,11 +519,11 @@ function col(s){{
 function gradeClass(g){{return g==='A+'?'Aplus':g;}}
 function gradeHtml(g){{return`<span class="grade ${{gradeClass(g)}}">${{g}}</span>`;}}
 function confHtml(s){{
-  if(s>=88)return'<span class="conf MA">M.ALTA</span>';
-  if(s>=80)return'<span class="conf A">ALTA</span>';
-  if(s>=70)return'<span class="conf M">MÉDIA</span>';
-  if(s>=60)return'<span class="conf B">BAIXA</span>';
-  return'<span class="conf R">RISCO</span>';
+  if(s>=85)return'<span class="conf MA">Conf. Alta</span>';
+  if(s>=75)return'<span class="conf A">Conf. Média</span>';
+  if(s>=65)return'<span class="conf M">Moderado</span>';
+  if(s>=50)return'<span class="conf B">Arriscado</span>';
+  return'<span class="conf R">Evitar</span>';
 }}
 function bar(s,w){{
   w=w||88;const c=col(s);
@@ -742,11 +742,11 @@ function renderRanking(date,jogos){{
 
   el.innerHTML=`
     <div class="sec-title">🥇 Entradas Premium (A+ / A)</div>
-    ${{section(premium,'gold','<strong>⭐ Entradas Premium</strong> · Score ≥80% com alta consistência estatística.')}}
+    ${{section(premium,'gold','<strong>⭐ Confiança Alta / Média</strong> · Score ≥75% com alta consistência estatística.')}}
     <div class="sec-title">📊 Boas Entradas (B)</div>
-    ${{section(boas,'ok','<strong>✓ Boas Entradas</strong> · Score 70–79%. Risco médio.')}}
+    ${{section(boas,'ok','<strong>✓ Moderado</strong> · Score 65–74%. Risco moderado.')}}
     <div class="sec-title">⚠ Jogos Perigosos (C / D)</div>
-    ${{section(perigosas,'warn','<strong>⚠ Jogos Perigosos</strong> · Score abaixo de 70%. Alta variância.')}}`;
+    ${{section(perigosas,'warn','<strong>⚠ Arriscado / Evitar</strong> · Score abaixo de 65%. Alta variância.')}}`;
 }}
 
 // ── Over 1.5 ───────────────────────────────────────────────────────
