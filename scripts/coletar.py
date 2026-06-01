@@ -149,18 +149,18 @@ def avg_nn(*vals):
     return float(np.mean(vv)) if vv else None
 
 def grade(score):
-    if score >= 88: return 'A+'
-    if score >= 80: return 'A'
-    if score >= 70: return 'B'
-    if score >= 60: return 'C'
+    if score >= 85: return 'A+'
+    if score >= 75: return 'A'
+    if score >= 65: return 'B'
+    if score >= 50: return 'C'
     return 'D'
 
 def risk(score):
-    if score >= 88: return 'Muito Baixo'
-    if score >= 80: return 'Baixo'
-    if score >= 70: return 'Médio'
-    if score >= 60: return 'Alto'
-    return 'Muito Alto'
+    if score >= 85: return 'Confiança Alta'
+    if score >= 75: return 'Confiança Média'
+    if score >= 65: return 'Moderado'
+    if score >= 50: return 'Arriscado'
+    return 'Evitar'
 
 def odd_justa(prob_pct):
     if prob_pct and prob_pct > 0:
@@ -959,7 +959,7 @@ def main():
         print("\n⚠ Nenhum jogo encontrado/processado.")
         sys.exit(0)
 
-    gravar_dia(date_str, jogos, force=getattr(args, 'force', False))
+    gravar_dia(date_str, jogos, force=args.force)
 
     # Regenerar site
     if not args.no_site:
