@@ -53,6 +53,7 @@ LIGAS = {
     203: ("Super Lig",          "normal", 2025),
     # América do Sul (calendário jan-dez → season=2026)
     13:  ("Copa Libertadores",  "elite",  2026),
+    1:   ("FIFA World Cup",     "elite",  2026),
     71:  ("Serie A",            "normal", 2026),  # Brasileirão
     72:  ("Serie B",            "normal", 2026),
     73:  ("Serie C",            "normal", 2026),
