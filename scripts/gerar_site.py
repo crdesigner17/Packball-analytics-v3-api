@@ -260,7 +260,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .top-placar .icon{{font-size:13px}}
 
 /* GRADE PILLS */
-.grade{{display:inline-block;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace}}
+.grade{{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:'Inter',sans-serif;white-space:nowrap}}
 .grade.Aplus{{background:rgba(255,215,0,.12);color:var(--aplus);border:1px solid rgba(255,215,0,.25)}}
 .grade.A{{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}}
 .grade.B{{background:rgba(59,130,246,.1);color:var(--blue);border:1px solid rgba(59,130,246,.2)}}
@@ -517,7 +517,10 @@ function col(s){{
   return'var(--red)';
 }}
 function gradeClass(g){{return g==='A+'?'Aplus':g;}}
-function gradeHtml(g){{return`<span class="grade ${{gradeClass(g)}}">${{g}}</span>`;}}
+const GRADE_NOME={{'A+':'Confiança Alta','A':'Confiança Média','B':'Moderado','C':'Arriscado','D':'Evitar'}};
+function gradeHtml(g){{
+  return`<span class="grade ${{gradeClass(g)}}" title="${{g}}">${{GRADE_NOME[g]||g}}</span>`;
+}}
 function confHtml(s){{
   if(s>=85)return'<span class="conf MA">Conf. Alta</span>';
   if(s>=75)return'<span class="conf A">Conf. Média</span>';
@@ -645,7 +648,7 @@ function renderVisao(date,jogos){{
 
   const kpi=`<div class="kpi-row">
     <div class="kpi"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos</div></div>
-    <div class="kpi"><div class="kpi-val p">${{aprem}}</div><div class="kpi-lbl">Premium A+/A</div></div>
+    <div class="kpi"><div class="kpi-val p">${{aprem}}</div><div class="kpi-lbl">Alta Confiança</div></div>
     <div class="kpi"><div class="kpi-val g">${{a15}}</div><div class="kpi-lbl">Over 1.5 ≥85%</div></div>
 
     <div class="kpi"><div class="kpi-val b">${{aesc}}</div><div class="kpi-lbl">Esc 8.5 ≥75%</div></div>
@@ -701,7 +704,7 @@ function renderVisao(date,jogos){{
     <div class="top-grid">${{t5}}</div>
     <div class="sec-title">📋 Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Over 1.5</th><th>Esc 8.5</th><th>Cart 2.5</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Over 1.5</th><th>Esc 8.5</th><th>Cart 2.5</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
 }}
@@ -735,17 +738,17 @@ function renderRanking(date,jogos){{
     }}).join('');
     return`<div class="callout ${{calloutClass}}">${{calloutText}}</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Score</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
   }}
 
   el.innerHTML=`
-    <div class="sec-title">🥇 Entradas Premium (A+ / A)</div>
+    <div class="sec-title">🥇 Confiança Alta / Média</div>
     ${{section(premium,'gold','<strong>⭐ Confiança Alta / Média</strong> · Score ≥75% com alta consistência estatística.')}}
-    <div class="sec-title">📊 Boas Entradas (B)</div>
+    <div class="sec-title">📊 Moderado</div>
     ${{section(boas,'ok','<strong>✓ Moderado</strong> · Score 65–74%. Risco moderado.')}}
-    <div class="sec-title">⚠ Jogos Perigosos (C / D)</div>
+    <div class="sec-title">⚠ Arriscado / Evitar</div>
     ${{section(perigosas,'warn','<strong>⚠ Arriscado / Evitar</strong> · Score abaixo de 65%. Alta variância.')}}`;
 }}
 
@@ -773,7 +776,7 @@ function renderOver15(date,jogos){{
   el.innerHTML=`
     <div class="callout info"><strong>Over 1.5 Gols — Validado 88.6%</strong> · ${{total}} jogos aprovados no Filtro 3 Vias.</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Probabilidade</th><th style="color:var(--yellow)">Odd O1.5</th><th>Placar</th><th>Resultado</th><th>Score</th><th>Grade</th><th>xG</th><th>Via</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Probabilidade</th><th style="color:var(--yellow)">Odd O1.5</th><th>Placar</th><th>Resultado</th><th>Score</th><th>Confiança</th><th>xG</th><th>Via</th></tr></thead>
       <tbody>${{html||'<tr><td colspan="10" class="empty">Nenhum jogo passou o Filtro 3 Vias.</td></tr>'}}</tbody>
     </table></div>`;
 }}
@@ -791,7 +794,7 @@ function renderOver25(date,jogos){{
         <th style="color:var(--purple)">Poisson U3.5</th>
         <th style="color:var(--teal)">xG Total</th>
         <th>Placar</th><th>Resultado</th>
-        <th>Score U3.5</th><th>Grade</th>
+        <th>Score U3.5</th><th>Confiança</th>
       </tr></thead>
       <tbody>${{ru35.map((d,i)=>{{
         const u35prob=d.poisson_u35||null;
@@ -854,7 +857,7 @@ function renderCart(date,jogos){{
         <th style="color:var(--yellow)">O2.5%</th>
         <th style="color:var(--orange)">O3.5%</th>
         <th>Real</th><th>Resultado</th>
-        <th>Score 2.5</th><th>Grade</th><th>Score 3.5</th><th>Média</th>
+        <th>Score 2.5</th><th>Confiança</th><th>Score 3.5</th><th>Média</th>
       </tr></thead>
       <tbody>${{rows.map((d,i)=>{{
         const rc=rowClass(d,'cart25_ok');
@@ -896,7 +899,7 @@ function renderHistoricoDia(date,jogos){{
     el.innerHTML=`
       <div class="callout warn"><strong>⏳ Resultados pendentes</strong> · Execute <code>confirmar.py --date ${{date.split('-').reverse().join('-')}}</code> após os jogos.</div>
       <div class="tbl-wrap"><table>
-        <thead><tr><th>Jogo</th><th>Hora</th><th>Grade</th><th>Mercado</th><th>Score</th><th>Status</th></tr></thead>
+        <thead><tr><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>Status</th></tr></thead>
         <tbody>${{rows}}</tbody>
       </table></div>`;
     return;
