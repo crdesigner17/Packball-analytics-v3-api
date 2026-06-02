@@ -68,7 +68,7 @@ def calcular_acertos_globais(all_data):
 def day_panel_html(d, day_data):
     jogos  = day_data.get('jogos', [])
     n15    = sum(1 for j in jogos if j['score_15'] >= 85 and j['passou_filtro'])
-    nesc   = sum(1 for j in jogos if j['score_esc85'] >= 75)
+    nesc   = sum(1 for j in jogos if j['score_esc75'] >= 75)
     ncart  = sum(1 for j in jogos if j['score_cards25'] >= 75)
     nprem  = sum(1 for j in jogos if j.get('best_grade') in ('A+', 'A'))
     fmt, wd = fmt_date(d)
@@ -218,13 +218,13 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 
 /* MAIN */
 .main{{padding:20px 24px;max-width:1500px;margin:0 auto}}
-.day-info{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:right;margin-bottom:14px}}
+.day-info{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px;margin-top:8px}}
 
 /* KPI ROW */
-.kpi-row{{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:20px}}
-.kpi{{background:var(--s1);border:1px solid var(--border);border-radius:9px;padding:14px 18px;text-align:center;min-width:110px;transition:border-color .2s}}
+.kpi-row{{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px;padding:10px 0;border-bottom:1px solid var(--border)}}
+.kpi{{background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:10px 16px;text-align:center;min-width:120px;transition:border-color .2s}}
 .kpi:hover{{border-color:var(--accent)}}
-.kpi-val{{font-size:24px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
+.kpi-val{{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
 .kpi-val.g{{color:var(--green)}}.kpi-val.b{{color:var(--blue)}}
 .kpi-val.o{{color:var(--orange)}}.kpi-val.y{{color:var(--yellow)}}
 .kpi-val.p{{color:var(--aplus)}}.kpi-val.r{{color:var(--red)}}
@@ -661,7 +661,7 @@ function renderVisao(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-visao');
   const conf=isConfirmado(date);
   const a15=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).length;
-  const aesc=jogos.filter(d=>d.score_esc85>=75).length;
+  const aesc=jogos.filter(d=>d.score_esc75>=75).length;
   const acart=jogos.filter(d=>d.score_cards25>=75).length;
   const aprem=jogos.filter(d=>d.best_grade==='A+'||d.best_grade==='A').length;
   const a05ht=jogos.filter(d=>d.score_05ht>=75).length;
@@ -680,12 +680,11 @@ function renderVisao(date,jogos){{
   }}
 
   const kpi=`<div class="kpi-row">
-    <div class="kpi"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos</div></div>
-    <div class="kpi"><div class="kpi-val p">${{aprem}}</div><div class="kpi-lbl">Alta Confiança</div></div>
-    <div class="kpi"><div class="kpi-val g">${{a15}}</div><div class="kpi-lbl">Over 1.5 ≥85%</div></div>
-
-    <div class="kpi"><div class="kpi-val b">${{aesc}}</div><div class="kpi-lbl">Esc 8.5 ≥75%</div></div>
-    <div class="kpi"><div class="kpi-val g">${{acart}}</div><div class="kpi-lbl">Cart 2.5 ≥75%</div></div>
+    <div class="kpi"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos Filtrados</div></div>
+    <div class="kpi"><div class="kpi-val g">${{aprem}}</div><div class="kpi-lbl">Alta Confiança</div></div>
+    <div class="kpi"><div class="kpi-val y">${{a15}}</div><div class="kpi-lbl">Over 1.5</div></div>
+    <div class="kpi"><div class="kpi-val b">${{aesc}}</div><div class="kpi-lbl">Over 7.5 Escanteios</div></div>
+    <div class="kpi"><div class="kpi-val o">${{acart}}</div><div class="kpi-lbl">Over 2.5 Cartões</div></div>
     ${{taxaDia}}
   </div>`;
 
