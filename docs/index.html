@@ -304,7 +304,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   <div class="header-right">
     <span class="badge validated">✓ Over 1.5 · 88.6%</span>
     <span class="badge version">v3.1</span>
-    <span class="badge updated">🕐 02/06/2026 01:25 UTC</span>
+    <span class="badge updated">🕐 02/06/2026 01:41 UTC</span>
   </div>
 </div>
 
@@ -678,6 +678,31 @@ function odd(v){
   if(!v||v==='—')return'—';
   return parseFloat(v).toFixed(2);
 }
+function oddMkt(d){
+  const mkt=d.best_mkt||'';
+  let val=null;
+  if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15;
+  else if(mkt==='Over 2.5') val=d.odds_o25;
+  else if(mkt==='Cart 2.5') val=d.odds_cards_25;
+  else if(mkt==='Cart 3.5') val=d.odds_cards_35;
+  else if(mkt==='Esc 7.5')  val=d.odds_corners_75;
+  else if(mkt==='Esc 8.5')  val=d.odds_corners_85;
+  else if(mkt==='Under 3.5'||mkt==='Under 4.5') val=d.odds_u45;
+  else if(mkt==='BTTS')     val=null;
+  if(!val) return'—';
+  return parseFloat(val).toFixed(2);
+}
+function oddMktLabel(mkt){
+  if(mkt==='Over 1.5')      return'Odd O1.5';
+  if(mkt==='Over 2.5')      return'Odd O2.5';
+  if(mkt==='Cart 2.5')      return'Odd C2.5';
+  if(mkt==='Cart 3.5')      return'Odd C3.5';
+  if(mkt==='Esc 7.5')       return'Odd E7.5';
+  if(mkt==='Esc 8.5')       return'Odd E8.5';
+  if(mkt==='Under 3.5')     return'Odd U3.5';
+  if(mkt==='Under 4.5')     return'Odd U4.5';
+  return'Odd';
+}
 function via(v){
   if(v==='Via 1')return'<span class="via v1">VIA1</span>';
   if(v==='Via 2')return'<span class="via v2">VIA2</span>';
@@ -814,8 +839,7 @@ function renderVisao(date,jogos){
         <div class="top-score" style="color:${c}">${d.best_score}%</div>
         <div class="top-grade-block">
           ${gradeHtml(d.best_grade)}
-          <span style="font-size:10px;color:var(--muted)">${d.best_risk}</span>
-          ${d.odds_h?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">${odd(d.odds_h)} · ${odd(d.odds_d)} · ${odd(d.odds_a)}</span>`:''}
+          ${oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:3px">Odd: ${oddMkt(d)}</span>`:''}
         </div>
       </div>
       ${placarCard(d, mktKey)}
@@ -829,6 +853,7 @@ function renderVisao(date,jogos){
       ${jogoCell(d)}<td class="mono muted">${d.hora}</td>
       <td>${gradeHtml(d.best_grade)}</td>
       <td class="mono" style="color:var(--muted);font-size:11px">${d.best_mkt}</td>
+      <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${oddMkt(d)}</td>
       <td>${bar(d.score_15)}</td><td>${bar(d.score_esc85)}</td><td>${bar(d.score_cards25)}</td>
       <td class="mono" style="color:var(--blue)">${d.exg_tot||'—'}</td>
       <td class="mono" style="color:var(--yellow);font-weight:600">${odd(d.odds_h)}</td>
@@ -846,7 +871,7 @@ function renderVisao(date,jogos){
     <div class="top-grid">${t5}</div>
     <div class="sec-title">📋 Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Over 1.5</th><th>Esc 8.5</th><th>Cart 2.5</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th style="color:var(--yellow)">Odd</th><th>Over 1.5</th><th>Esc 8.5</th><th>Cart 2.5</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
 }
@@ -869,6 +894,7 @@ function renderRanking(date,jogos){
         <td class="mono muted">${d.hora}</td>
         <td>${gradeHtml(d.best_grade)}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${d.best_mkt}</td>
+        <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${oddMkt(d)}</td>
         <td>${bar(d.best_score)}</td>
         <td class="mono" style="color:var(--blue)">${d.exg_tot||'—'}</td>
         <td class="mono" style="color:var(--yellow);font-weight:600">${odd(d.odds_h)}</td>
@@ -880,7 +906,7 @@ function renderRanking(date,jogos){
     }).join('');
     return`<div class="callout ${calloutClass}">${calloutText}</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th style="color:var(--yellow)">Odd</th><th>Score</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
   }
