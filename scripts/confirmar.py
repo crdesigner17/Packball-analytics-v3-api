@@ -1,7 +1,7 @@
 """
-PackBall Analytics — Confirmador de Resultados v1.0
+PackBall Analytics — Confirmador de Resultados v2.0
 Busca os resultados reais na API-Football e compara com os palpites gerados.
-Atualiza o JSON do dia com os resultados e acertos por mercado.
+Conta como palpite oficial apenas o best_mkt de jogos com Confiança Alta/Média (A+/A).
 
 Uso:
   python scripts/confirmar.py --key SUA_CHAVE --date 2026-05-31
@@ -14,23 +14,39 @@ import requests
 BASE_URL = "https://v3.football.api-sports.io"
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 
-CALL_DELAY = 0.5  # segundos entre chamadas
+CALL_DELAY = 0.5
 
-# ── Thresholds por mercado ─────────────────────────────────────────
-# Define quais jogos contam como "palpite dado" e como avaliar o acerto
-MERCADOS = {
+# Grades que contam como palpite oficial
+GRADES_OFICIAIS = {'A+', 'A'}
+
+# Mapeamento best_mkt → campo resultado
+MKT_RESULTADO = {
+    'Over 1.5':    'over15_ok',
+    'Over 2.5':    'over25_ok',
+    'BTTS':        'btts',
+    'Over 0.5 HT': 'over05_ht_ok',
+    'Under 4.5':   'under45_ok',
+    'Under 3.5':   'under45_ok',
+    'Esc 7.5':     'esc75_ok',
+    'Esc 8.5':     'esc85_ok',
+    'Cart 2.5':    'cart25_ok',
+    'Cart 3.5':    'cart35_ok',
+}
+
+# Todos os mercados para stats secundárias
+MERCADOS_TODOS = {
     'Over 1.5':    {'score': 'score_15',      'min': 85, 'filtro': True},
     'Over 2.5':    {'score': 'score_25',      'min': 75, 'filtro': False},
     'BTTS':        {'score': 'score_btts',    'min': 70, 'filtro': False},
     'Over 0.5 HT': {'score': 'score_05ht',   'min': 75, 'filtro': False},
     'Under 4.5':   {'score': 'score_u45',     'min': 75, 'filtro': False},
+    'Under 3.5':   {'score': 'score_u35',     'min': 75, 'filtro': False},
     'Esc 7.5':     {'score': 'score_esc75',   'min': 75, 'filtro': False},
     'Esc 8.5':     {'score': 'score_esc85',   'min': 75, 'filtro': False},
     'Cart 2.5':    {'score': 'score_cards25', 'min': 75, 'filtro': False},
     'Cart 3.5':    {'score': 'score_cards35', 'min': 75, 'filtro': False},
 }
 
-# ── HTTP helper ─────────────────────────────────────────────────────
 class APIClient:
     def __init__(self, api_key):
         self.headers = {
@@ -61,22 +77,16 @@ class APIClient:
                     print(f"  ✗ Exceção: {e}")
         return None
 
-# ── Buscar resultados reais da API ──────────────────────────────────
 def buscar_resultados_api(client, date_str_api):
-    """
-    Busca todos os fixtures de uma data com placar final.
-    Retorna dict: {(home_norm, away_norm): resultado_dict}
-    """
     print(f"\n🔍 Buscando resultados reais da API para {date_str_api}...")
 
     data = client.get("/fixtures", {
         "date": date_str_api,
-        "status": "FT-AET-PEN",  # apenas jogos finalizados
+        "status": "FT-AET-PEN",
         "timezone": "America/Sao_Paulo"
     })
 
     if not data or not data.get("response"):
-        # Tenta sem filtro de status (alguns jogos podem ter status diferente)
         data = client.get("/fixtures", {
             "date": date_str_api,
             "timezone": "America/Sao_Paulo"
@@ -121,10 +131,7 @@ def buscar_resultados_api(client, date_str_api):
             "placar_ht":    f"{gh_ht}-{ga_ht}",
         }
 
-        # Buscar estatísticas do jogo (corners + cards)
-        stat_data = client.get("/fixtures/statistics", {
-            "fixture": fix["fixture"]["id"]
-        })
+        stat_data = client.get("/fixtures/statistics", {"fixture": fix["fixture"]["id"]})
         if stat_data and stat_data.get("response"):
             corners_total = 0
             cards_total   = 0
@@ -153,7 +160,6 @@ def buscar_resultados_api(client, date_str_api):
             resultado["cart25_ok"]      = None
             resultado["cart35_ok"]      = None
 
-        # Indexar por nome normalizado para matching
         key = (normalizar(home), normalizar(away))
         resultados[key] = resultado
         print(f"  ✓ {home} {resultado['placar']} {away} | "
@@ -164,84 +170,38 @@ def buscar_resultados_api(client, date_str_api):
     return resultados
 
 def normalizar(nome):
-    """Normaliza nome de time para matching fuzzy."""
     import unicodedata, re
     nome = unicodedata.normalize('NFD', nome)
     nome = ''.join(c for c in nome if unicodedata.category(c) != 'Mn')
     nome = nome.lower().strip()
     nome = re.sub(r'\s+', ' ', nome)
-    # Remove sufixos comuns
     for sufixo in [' fc', ' cf', ' sc', ' ac', ' fk', ' if', ' bk', ' sk']:
         nome = nome.replace(sufixo, '')
     return nome.strip()
 
 def match_jogo(home_palpite, away_palpite, resultados):
-    """Tenta encontrar o resultado correspondente ao palpite."""
     h = normalizar(home_palpite)
     a = normalizar(away_palpite)
-
-    # Match exato
     if (h, a) in resultados:
         return resultados[(h, a)]
-
-    # Match parcial (um nome contém o outro)
     for (rh, ra), resultado in resultados.items():
         if (h in rh or rh in h) and (a in ra or ra in a):
             return resultado
-        # Invertido (improvável mas seguro)
         if (h in ra or ra in h) and (a in rh or rh in a):
             return resultado
-
     return None
 
-# ── Avaliar acerto por mercado ──────────────────────────────────────
-def avaliar_acerto(jogo, resultado):
-    """
-    Para cada mercado onde o modelo deu palpite (score >= threshold),
-    verifica se o resultado confirmou.
-    Retorna dict com acertos/erros por mercado.
-    """
-    if resultado is None:
-        return {}
-
-    mapa_resultado = {
-        'Over 1.5':    resultado.get('over15_ok'),
-        'Over 2.5':    resultado.get('over25_ok'),
-        'BTTS':        resultado.get('btts'),
-        'Over 0.5 HT': resultado.get('over05_ht_ok'),
-        'Under 4.5':   resultado.get('under45_ok'),
-        'Esc 7.5':     resultado.get('esc75_ok'),
-        'Esc 8.5':     resultado.get('esc85_ok'),
-        'Cart 2.5':    resultado.get('cart25_ok'),
-        'Cart 3.5':    resultado.get('cart35_ok'),
-    }
-
-    acertos = {}
-    for mkt, cfg in MERCADOS.items():
-        score = jogo.get(cfg['score'], 0) or 0
-        filtro_ok = (not cfg['filtro']) or jogo.get('passou_filtro', False)
-
-        # Só avalia se o modelo deu palpite nesse mercado
-        if score >= cfg['min'] and filtro_ok:
-            resultado_ok = mapa_resultado.get(mkt)
-            acertos[mkt] = {
-                'score':     score,
-                'palpite':   True,
-                'acertou':   resultado_ok,   # True/False/None (sem dados)
-            }
-
-    return acertos
-
-# ── Processar JSON do dia ───────────────────────────────────────────
 def processar_confirmacao(date_str_api, resultados_api, data_json):
-    """
-    Itera sobre os jogos do JSON do dia, faz o match com os resultados
-    e anota o acerto em cada jogo.
-    """
     jogos = data_json.get("jogos", [])
     nao_encontrados = []
-    stats_mercados  = {mkt: {"palpites": 0, "acertos": 0, "erros": 0, "sem_dados": 0}
-                       for mkt in MERCADOS}
+
+    # Stats oficiais: apenas best_mkt de jogos A+/A
+    stats_oficiais = {mkt: {"palpites": 0, "acertos": 0, "erros": 0, "sem_dados": 0}
+                      for mkt in MKT_RESULTADO}
+
+    # Stats secundárias: todos os mercados por threshold (para referência)
+    stats_todos = {mkt: {"palpites": 0, "acertos": 0, "erros": 0, "sem_dados": 0}
+                   for mkt in MERCADOS_TODOS}
 
     for jogo in jogos:
         resultado = match_jogo(jogo["home"], jogo["away"], resultados_api)
@@ -252,29 +212,56 @@ def processar_confirmacao(date_str_api, resultados_api, data_json):
             nao_encontrados.append(jogo["jogo"])
             continue
 
-        # Anotar resultado no jogo
         jogo["resultado"] = resultado
-        jogo["acertos"]   = avaliar_acerto(jogo, resultado)
 
-        # Acumular stats por mercado
-        for mkt, info in jogo["acertos"].items():
-            stats_mercados[mkt]["palpites"] += 1
-            if info["acertou"] is True:
-                stats_mercados[mkt]["acertos"] += 1
-            elif info["acertou"] is False:
-                stats_mercados[mkt]["erros"] += 1
-            else:
-                stats_mercados[mkt]["sem_dados"] += 1
+        # ── Palpite oficial: apenas best_mkt de jogos A+/A ──
+        best_grade = jogo.get("best_grade", "D")
+        best_mkt   = jogo.get("best_mkt", "")
+        acertos    = {}
 
-    # Taxa de acerto por mercado
-    for mkt, s in stats_mercados.items():
-        if s["palpites"] > 0:
-            validos = s["acertos"] + s["erros"]
-            s["taxa"] = round(s["acertos"] / validos * 100, 1) if validos > 0 else None
-        else:
-            s["taxa"] = None
+        if best_grade in GRADES_OFICIAIS and best_mkt in MKT_RESULTADO:
+            campo_res = MKT_RESULTADO[best_mkt]
+            acertou   = resultado.get(campo_res)
+            acertos[best_mkt] = {
+                "score":   jogo.get(f"score_{best_mkt.lower().replace(' ','_').replace('.','')}", 0),
+                "palpite": True,
+                "acertou": acertou,
+            }
+            # Acumular stats oficiais
+            if best_mkt in stats_oficiais:
+                stats_oficiais[best_mkt]["palpites"] += 1
+                if acertou is True:
+                    stats_oficiais[best_mkt]["acertos"] += 1
+                elif acertou is False:
+                    stats_oficiais[best_mkt]["erros"] += 1
+                else:
+                    stats_oficiais[best_mkt]["sem_dados"] += 1
 
-    data_json["resultado_stats"] = stats_mercados
+        jogo["acertos"] = acertos
+
+        # ── Stats secundárias: todos os mercados por threshold ──
+        for mkt, cfg in MERCADOS_TODOS.items():
+            score    = jogo.get(cfg["score"], 0) or 0
+            filtro_ok = (not cfg["filtro"]) or jogo.get("passou_filtro", False)
+            if score >= cfg["min"] and filtro_ok:
+                campo_res = MKT_RESULTADO.get(mkt)
+                acertou   = resultado.get(campo_res) if campo_res else None
+                stats_todos[mkt]["palpites"] += 1
+                if acertou is True:
+                    stats_todos[mkt]["acertos"] += 1
+                elif acertou is False:
+                    stats_todos[mkt]["erros"] += 1
+                else:
+                    stats_todos[mkt]["sem_dados"] += 1
+
+    # Taxa de acerto
+    for s in list(stats_oficiais.values()) + list(stats_todos.values()):
+        validos = s["acertos"] + s["erros"]
+        s["taxa"] = round(s["acertos"] / validos * 100, 1) if validos > 0 else None
+
+    # Salvar apenas stats oficiais no JSON (usadas pelo dashboard)
+    data_json["resultado_stats"]     = stats_oficiais
+    data_json["resultado_stats_full"] = stats_todos  # referência completa
     data_json["resultado_confirmado"] = True
 
     if nao_encontrados:
@@ -282,33 +269,36 @@ def processar_confirmacao(date_str_api, resultados_api, data_json):
         for j in nao_encontrados:
             print(f"     - {j}")
 
-    return data_json, stats_mercados
+    return data_json, stats_oficiais, stats_todos
 
-# ── Imprimir resumo ─────────────────────────────────────────────────
-def imprimir_resumo(date_fmt, stats):
+def imprimir_resumo(date_fmt, stats_oficiais, stats_todos):
     print(f"\n{'='*55}")
-    print(f"  📊 RESULTADOS — {date_fmt}")
+    print(f"  📊 PALPITES OFICIAIS (A+/A best_mkt) — {date_fmt}")
     print(f"{'='*55}")
-    print(f"  {'Mercado':<15} {'Palpites':>8} {'Acertos':>8} {'Erros':>8} {'Taxa':>8}")
-    print(f"  {'-'*51}")
-
-    for mkt, s in stats.items():
-        if s["palpites"] == 0:
-            continue
+    print(f"  {'Mercado':<15} {'Palp':>6} {'✓':>5} {'✗':>5} {'Taxa':>8}")
+    print(f"  {'-'*43}")
+    total_p = total_a = total_e = 0
+    for mkt, s in stats_oficiais.items():
+        if s["palpites"] == 0: continue
         taxa = f"{s['taxa']}%" if s['taxa'] is not None else "—"
         emoji = "✅" if (s['taxa'] or 0) >= 70 else "❌" if (s['taxa'] or 0) < 50 else "⚠️"
-        print(f"  {emoji} {mkt:<14} {s['palpites']:>8} {s['acertos']:>8} "
-              f"{s['erros']:>8} {taxa:>8}")
-
+        print(f"  {emoji} {mkt:<14} {s['palpites']:>6} {s['acertos']:>5} {s['erros']:>5} {taxa:>8}")
+        total_p += s["palpites"]; total_a += s["acertos"]; total_e += s["erros"]
+    taxa_g = round(total_a/(total_a+total_e)*100,1) if (total_a+total_e)>0 else None
+    print(f"  {'-'*43}")
+    print(f"  TOTAL          {total_p:>6} {total_a:>5} {total_e:>5} {str(taxa_g)+'%' if taxa_g else '—':>8}")
+    print(f"\n  📋 Referência completa (todos os mercados por threshold):")
+    for mkt, s in stats_todos.items():
+        if s["palpites"] == 0: continue
+        taxa = f"{s['taxa']}%" if s['taxa'] is not None else "—"
+        print(f"     {mkt:<14} {s['palpites']:>4}p {s['acertos']:>3}✓ {s['erros']:>3}✗ {taxa:>7}")
     print(f"{'='*55}\n")
 
-# ── Entry point ─────────────────────────────────────────────────────
 def main():
-    parser = argparse.ArgumentParser(description="PackBall Analytics — Confirmador de Resultados")
-    parser.add_argument("--key",  required=True, help="Chave API-Football")
-    parser.add_argument("--date", default="yesterday",
-                        help="Data YYYY-MM-DD, 'today' ou 'yesterday' (padrão: ontem)")
-    parser.add_argument("--no-site", action="store_true", help="Não regenerar o HTML")
+    parser = argparse.ArgumentParser(description="PackBall Analytics — Confirmador v2.0")
+    parser.add_argument("--key",  required=True)
+    parser.add_argument("--date", default="yesterday")
+    parser.add_argument("--no-site", action="store_true")
     args = parser.parse_args()
 
     if args.date == "today":
@@ -318,47 +308,41 @@ def main():
     else:
         date_api = args.date
 
-    # Converter para formato do JSON (DD-MM-YYYY)
     d = datetime.strptime(date_api, "%Y-%m-%d")
     date_fmt = d.strftime("%d-%m-%Y")
 
-    print(f"🔎 PackBall Analytics — Confirmador v1.0")
-    print(f"   Confirmando resultados de: {date_fmt}")
+    print(f"🔎 PackBall Analytics — Confirmador v2.0")
+    print(f"   Confirmando: {date_fmt} | Palpites oficiais: A+/A best_mkt")
 
-    # Carregar JSON do dia
     json_path = os.path.join(DATA_DIR, f"{date_fmt}.json")
     if not os.path.exists(json_path):
         print(f"  ✗ JSON não encontrado: {json_path}")
-        print(f"    Execute coletar.py para essa data primeiro.")
         sys.exit(1)
 
     with open(json_path, encoding="utf-8") as f:
         data_json = json.load(f)
 
     jogos = data_json.get("jogos", [])
-    print(f"   {len(jogos)} jogos no JSON do dia")
+    oficiais = [j for j in jogos if j.get("best_grade") in GRADES_OFICIAIS]
+    print(f"   {len(jogos)} jogos no dia | {len(oficiais)} palpites oficiais A+/A")
 
-    # Buscar resultados na API
     client = APIClient(args.key)
     resultados_api = buscar_resultados_api(client, date_api)
 
     if not resultados_api:
         print("\n⚠ Nenhum resultado finalizado encontrado na API.")
-        print("  (Jogos podem ainda estar em andamento ou a data está incorreta)")
         sys.exit(0)
 
-    # Processar e anotar
-    data_json, stats = processar_confirmacao(date_api, resultados_api, data_json)
+    data_json, stats_oficiais, stats_todos = processar_confirmacao(
+        date_api, resultados_api, data_json
+    )
 
-    # Salvar JSON atualizado
     with open(json_path, "w", encoding="utf-8") as f:
         json.dump(data_json, f, ensure_ascii=False, indent=2)
     print(f"\n✓ JSON atualizado: {json_path}")
 
-    # Resumo no log
-    imprimir_resumo(date_fmt, stats)
+    imprimir_resumo(date_fmt, stats_oficiais, stats_todos)
 
-    # Regenerar site
     if not args.no_site:
         site_script = os.path.join(os.path.dirname(__file__), "gerar_site.py")
         if os.path.exists(site_script):
