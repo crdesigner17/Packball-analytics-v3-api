@@ -221,10 +221,27 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .day-info{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px;margin-top:8px}}
 
 /* KPI ROW */
-.kpi-row{{display:flex;justify-content:center;gap:6px;flex-wrap:wrap;margin-bottom:16px;padding:10px 0;border-bottom:1px solid var(--border)}}
-.kpi{{background:var(--s2);border:1px solid var(--border);border-radius:9px;padding:10px 16px;text-align:center;min-width:120px;transition:border-color .2s}}
+.kpi-row{{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 0;border-bottom:1px solid var(--border)}}
+.kpi{{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px 18px;text-align:center;min-width:120px;transition:all .2s;cursor:default}}
 .kpi:hover{{border-color:var(--accent)}}
-.kpi-val{{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
+.kpi.clickable{{cursor:pointer}}
+.kpi.clickable:hover{{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}}
+.kpi.active{{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}}
+.kpi.kpi-blue{{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.06)}}
+.kpi.kpi-blue.active,.kpi.kpi-blue:hover{{border-color:var(--blue);background:rgba(59,130,246,.12)}}
+.kpi.kpi-green{{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.06)}}
+.kpi.kpi-green.active,.kpi.kpi-green:hover{{border-color:var(--green);background:rgba(34,197,94,.12)}}
+.kpi.kpi-yellow{{border-color:rgba(234,179,8,.3);background:rgba(234,179,8,.06)}}
+.kpi.kpi-yellow.active,.kpi.kpi-yellow:hover{{border-color:var(--yellow);background:rgba(234,179,8,.12)}}
+.kpi.kpi-teal{{border-color:rgba(20,184,166,.3);background:rgba(20,184,166,.06)}}
+.kpi.kpi-teal.active,.kpi.kpi-teal:hover{{border-color:var(--teal);background:rgba(20,184,166,.12)}}
+.kpi.kpi-orange{{border-color:rgba(249,115,22,.3);background:rgba(249,115,22,.06)}}
+.kpi.kpi-orange.active,.kpi.kpi-orange:hover{{border-color:var(--orange);background:rgba(249,115,22,.12)}}
+.kpi-filter-panel{{background:var(--s1);border:1px solid var(--border);border-radius:10px;padding:16px;margin-bottom:16px;animation:fadeIn .2s ease}}
+@keyframes fadeIn{{from{{opacity:0;transform:translateY(-6px)}}to{{opacity:1;transform:translateY(0)}}}}
+.kpi-filter-title{{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:12px;display:flex;align-items:center;gap:8px}}
+.kpi-filter-title::after{{content:'';flex:1;height:1px;background:var(--border)}}
+.kpi-val{{font-size:28px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
 .kpi-val.g{{color:var(--green)}}.kpi-val.b{{color:var(--blue)}}
 .kpi-val.o{{color:var(--orange)}}.kpi-val.y{{color:var(--yellow)}}
 .kpi-val.p{{color:var(--aplus)}}.kpi-val.r{{color:var(--red)}}
@@ -517,6 +534,69 @@ const MKT_MIN = {{
 }};
 
 // ── Helpers ────────────────────────────────────────────────────────
+// ── KPI Filter ────────────────────────────────────────────────────
+let activeKpi = {{}};
+function kpiFilter(date, tipo, count){{
+  const panel = document.getElementById('kpi-panel-'+date);
+  const jogos = getJogos(date);
+  // Toggle
+  if(activeKpi[date]===tipo){{
+    activeKpi[date]=null;
+    panel.style.display='none';
+    document.querySelectorAll(`[id^="kpi-"][id$="-${{date}}"]`).forEach(el=>el.classList.remove('active'));
+    return;
+  }}
+  activeKpi[date]=tipo;
+  // Highlight ativo
+  document.querySelectorAll(`[id^="kpi-"][id$="-${{date}}"]`).forEach(el=>el.classList.remove('active'));
+  document.getElementById(`kpi-${{tipo}}-${{date}}`).classList.add('active');
+  // Filtrar jogos
+  let filtrados=[], titulo='', cor='var(--text)';
+  if(tipo==='prem'){{
+    filtrados=jogos.filter(d=>d.best_grade==='A+'||d.best_grade==='A').sort((a,b)=>b.best_score-a.best_score);
+    titulo='🟢 Alta Confiança'; cor='var(--green)';
+  }} else if(tipo==='15'){{
+    filtrados=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).sort((a,b)=>b.score_15-a.score_15);
+    titulo='🟡 Over 1.5 ≥85%'; cor='var(--yellow)';
+  }} else if(tipo==='esc'){{
+    filtrados=jogos.filter(d=>d.score_esc75>=75).sort((a,b)=>b.score_esc75-a.score_esc75);
+    titulo='🔵 Over 7.5 Escanteios ≥75%'; cor='var(--teal)';
+  }} else if(tipo==='cart'){{
+    filtrados=jogos.filter(d=>d.score_cards25>=75).sort((a,b)=>b.score_cards25-a.score_cards25);
+    titulo='🟠 Over 2.5 Cartões ≥75%'; cor='var(--orange)';
+  }}
+  if(!filtrados.length){{
+    panel.innerHTML=`<div class="kpi-filter-panel"><div class="kpi-filter-title" style="color:${{cor}}">${{titulo}}</div><div class="empty">Nenhum jogo neste filtro.</div></div>`;
+    panel.style.display='block'; return;
+  }}
+  const rows=filtrados.map((d,i)=>{{
+    const mktKey=MKT_RESULT[d.best_mkt]||'over15_ok';
+    const rc=rowClass(d,mktKey);
+    const scoreField=tipo==='prem'?d.best_score:tipo==='15'?d.score_15:tipo==='esc'?d.score_esc75:d.score_cards25;
+    const mktShow=tipo==='prem'?d.best_mkt:tipo==='15'?'Over 1.5':tipo==='esc'?'Esc 7.5':'Cart 2.5';
+    return`<tr class="${{rc}}">
+      <td class="mono muted">${{i+1}}</td>
+      ${{jogoCell(d)}}
+      <td class="mono muted">${{d.hora}}</td>
+      <td>${{gradeHtml(d.best_grade)}}</td>
+      <td class="mono" style="font-size:11px;color:var(--muted)">${{mktShow}}</td>
+      <td>${{bar(scoreField)}}</td>
+      <td class="mono" style="color:var(--yellow);font-weight:700">${{oddMkt(d)}}</td>
+      ${{placarCell(d)}}
+      <td>${{resBadge(d,mktKey)}}</td>
+    </tr>`;
+  }}).join('');
+  panel.innerHTML=`<div class="kpi-filter-panel">
+    <div class="kpi-filter-title" style="color:${{cor}}">${{titulo}} · ${{filtrados.length}} jogos</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th style="color:var(--yellow)">Odd</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <tbody>${{rows}}</tbody>
+    </table></div>
+  </div>`;
+  panel.style.display='block';
+  panel.scrollIntoView({{behavior:'smooth',block:'nearest'}});
+}}
+
 function col(s){{
   if(s>=85)return'var(--green)';
   if(s>=75)return'var(--yellow)';
@@ -679,14 +759,15 @@ function renderVisao(date,jogos){{
     taxaDia=`<div class="kpi"><div class="kpi-val" style="color:${{c}}">${{tLabel}}</div><div class="kpi-lbl">Acerto do Dia</div><div style="font-size:9px;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace">${{tSub}}</div></div>`;
   }}
 
-  const kpi=`<div class="kpi-row">
-    <div class="kpi"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos Filtrados</div></div>
-    <div class="kpi"><div class="kpi-val g">${{aprem}}</div><div class="kpi-lbl">Alta Confiança</div></div>
-    <div class="kpi"><div class="kpi-val y">${{a15}}</div><div class="kpi-lbl">Over 1.5</div></div>
-    <div class="kpi"><div class="kpi-val b">${{aesc}}</div><div class="kpi-lbl">Over 7.5 Escanteios</div></div>
-    <div class="kpi"><div class="kpi-val o">${{acart}}</div><div class="kpi-lbl">Over 2.5 Cartões</div></div>
+  const kpi=`<div class="kpi-row" id="kpi-row-${{date}}">
+    <div class="kpi kpi-blue"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos Filtrados</div></div>
+    <div class="kpi kpi-green clickable" id="kpi-prem-${{date}}" onclick="kpiFilter('${{date}}','prem')"><div class="kpi-val g">${{aprem}}</div><div class="kpi-lbl">Alta Confiança</div></div>
+    <div class="kpi kpi-yellow clickable" id="kpi-15-${{date}}" onclick="kpiFilter('${{date}}','15')"><div class="kpi-val y">${{a15}}</div><div class="kpi-lbl">Over 1.5</div></div>
+    <div class="kpi kpi-teal clickable" id="kpi-esc-${{date}}" onclick="kpiFilter('${{date}}','esc')"><div class="kpi-val t">${{aesc}}</div><div class="kpi-lbl">Over 7.5 Escanteios</div></div>
+    <div class="kpi kpi-orange clickable" id="kpi-cart-${{date}}" onclick="kpiFilter('${{date}}','cart')"><div class="kpi-val o">${{acart}}</div><div class="kpi-lbl">Over 2.5 Cartões</div></div>
     ${{taxaDia}}
-  </div>`;
+  </div>
+  <div id="kpi-panel-${{date}}" style="display:none"></div>`;
 
   const top=[...jogos].sort((a,b)=>b.best_score-a.best_score).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
