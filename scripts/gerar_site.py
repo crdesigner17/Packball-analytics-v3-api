@@ -80,7 +80,7 @@ def day_panel_html(d, day_data):
   <div class="mkt-bar">
     <div class="mkt-tabs">
       <div class="mkt-tab active" data-mkt="visao"      onclick="switchMkt('{d}','visao')">📊 Visão Geral</div>
-      <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Ranking <span class="cnt g">{nprem}</span></div>
+      <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Melhores Previsões <span class="cnt g">{nprem}</span></div>
       <div class="mkt-tab"       data-mkt="over15"      onclick="switchMkt('{d}','over15')">⚽ Over 1.5 <span class="cnt b">{n15}</span></div>
       <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">🔽 Under 3.5</div>
       <div class="mkt-tab"       data-mkt="escanteios"  onclick="switchMkt('{d}','escanteios')">🚩 Escanteios <span class="cnt g">{nesc}</span></div>
@@ -106,10 +106,18 @@ def gerar_site():
 
     all_data, date_tabs_html, day_panels_html = {}, [], []
 
+    today = datetime.now().date()
     for entry in sorted(index, key=lambda x: datetime.strptime(x['date'], '%d-%m-%Y')):
         d = entry['date']
         day_data = load_day(d)
         if not day_data: continue
+        # Não mostrar datas futuras sem jogos confirmados
+        try:
+            day_date = datetime.strptime(d, '%d-%m-%Y').date()
+            if day_date > today and not day_data.get('jogos'):
+                continue
+        except:
+            pass
         fmt, wd  = fmt_date(d)
         n15      = entry.get('over15', 0)
         nesc     = entry.get('esc85', 0)
@@ -186,10 +194,10 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .date-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:8px 16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;justify-content:center;position:sticky;top:61px;z-index:95}}
 .date-bar::-webkit-scrollbar{{height:3px}}
 .date-bar::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
-.date-tab{{padding:7px 14px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:7px;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:center;gap:3px;background:var(--s2)}}
+.date-tab{{padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:7px;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s2);height:40px;min-width:80px}}
 .date-tab:hover{{color:var(--text);border-color:var(--accent)}}
 .date-tab.active{{color:var(--accent);border-color:var(--accent);background:rgba(249,115,22,.07)}}
-.dt-label{{font-weight:700;font-size:12px}}
+.dt-label{{font-weight:700;font-size:12px;line-height:1;text-align:center}}
 .dt-kpis{{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}}
 .dt-kpi{{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:1px 4px;border-radius:3px}}
 .dt-kpi.g{{background:rgba(34,197,94,.1);color:var(--green)}}
@@ -261,8 +269,8 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 
 /* GRADE PILLS */
 .grade{{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:'Inter',sans-serif;white-space:nowrap}}
-.grade.Aplus{{background:rgba(255,215,0,.12);color:var(--aplus);border:1px solid rgba(255,215,0,.25)}}
-.grade.A{{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}}
+.grade.Aplus{{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.3)}}
+.grade.A{{background:rgba(234,179,8,.1);color:var(--yellow);border:1px solid rgba(234,179,8,.3)}}
 .grade.B{{background:rgba(59,130,246,.1);color:var(--blue);border:1px solid rgba(59,130,246,.2)}}
 .grade.C{{background:rgba(249,115,22,.1);color:var(--orange);border:1px solid rgba(249,115,22,.2)}}
 .grade.D{{background:rgba(239,68,68,.1);color:var(--red);border:1px solid rgba(239,68,68,.2)}}
@@ -1259,14 +1267,14 @@ const dateBar=document.getElementById('date-bar');
 const btn=document.createElement('div');
 btn.id='btn-historico';
 btn.className='date-tab';
-btn.style.cssText='min-width:100px;cursor:pointer';
+btn.style.cssText='min-width:100px;cursor:pointer;height:40px;justify-content:center';
 btn.innerHTML='<span class="dt-label">📈 Histórico</span><span style="font-size:9px;color:var(--muted);margin-top:2px">Visão geral</span>';
 btn.onclick=showHistoricoGlobal;
 dateBar.appendChild(btn);
 
 const calBtn=document.createElement('div');
 calBtn.className='date-tab';
-calBtn.style.cssText='min-width:100px;cursor:pointer;border-color:rgba(249,115,22,.3)';
+calBtn.style.cssText='min-width:100px;cursor:pointer;border-color:rgba(249,115,22,.3);height:40px;justify-content:center';
 calBtn.innerHTML='<span class="dt-label">📅 Data</span><span style="font-size:9px;color:var(--accent);margin-top:2px">selecionar</span>';
 calBtn.onclick=openCal;
 dateBar.appendChild(calBtn);
