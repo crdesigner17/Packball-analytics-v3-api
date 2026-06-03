@@ -81,6 +81,7 @@ def day_panel_html(d, day_data):
     <div class="mkt-tabs">
       <div class="mkt-tab active" data-mkt="visao"      onclick="switchMkt('{d}','visao')">📊 Visão Geral</div>
       <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Melhores Previsões <span class="cnt g">{nprem}</span></div>
+      <div class="mkt-tab"       data-mkt="bilhetes"    onclick="switchMkt('{d}','bilhetes')">🎯 Bilhetes</div>
       <div class="mkt-tab"       data-mkt="over15"      onclick="switchMkt('{d}','over15')">⚽ Over 1.5 <span class="cnt b">{n15}</span></div>
       <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">🔽 Under 3.5</div>
       <div class="mkt-tab"       data-mkt="escanteios"  onclick="switchMkt('{d}','escanteios')">🚩 Escanteios <span class="cnt g">{nesc}</span></div>
@@ -91,6 +92,7 @@ def day_panel_html(d, day_data):
   <div class="main">
     <div id="mkt-{d}-visao"        class="mkt-panel active"></div>
     <div id="mkt-{d}-ranking"      class="mkt-panel"></div>
+    <div id="mkt-{d}-bilhetes"     class="mkt-panel"></div>
     <div id="mkt-{d}-over15"       class="mkt-panel"></div>
     <div id="mkt-{d}-over25"       class="mkt-panel"></div>
     <div id="mkt-{d}-escanteios"   class="mkt-panel"></div>
@@ -370,6 +372,31 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .day-hist-bar{{flex:1;height:20px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden;position:relative}}
 .day-hist-fill{{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff;min-width:2px}}
 .day-hist-info{{font-family:'JetBrains Mono',monospace;font-size:11px;min-width:90px;text-align:right}}
+
+/* BILHETES */
+.bilhete-card{{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}}
+.bilhete-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px}}
+.bilhete-premium::before{{background:linear-gradient(90deg,var(--green),var(--teal))}}
+.bilhete-equilibrado::before{{background:linear-gradient(90deg,var(--yellow),var(--orange))}}
+.bilhete-conservador::before{{background:linear-gradient(90deg,var(--blue),var(--purple))}}
+.bilhete-win::after{{content:'';position:absolute;inset:0;background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.2);border-radius:11px;pointer-events:none}}
+.bilhete-loss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.2);border-radius:11px;pointer-events:none}}
+.bilhete-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}}
+.bilhete-title{{font-size:13px;font-weight:700;color:var(--text)}}
+.bilhete-odd-total{{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--yellow)}}
+.bilhete-odd-label{{font-size:10px;color:var(--muted);margin-top:1px;text-align:right}}
+.bilhete-row{{display:flex;align-items:center;gap:8px;padding:7px 0;border-bottom:1px solid rgba(35,40,64,.5)}}
+.bilhete-row:last-child{{border-bottom:none}}
+.bilhete-num{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);min-width:18px}}
+.bilhete-jogo{{flex:1;font-size:12px;font-weight:600;min-width:0}}
+.bilhete-liga{{font-size:10px;color:var(--muted)}}
+.bilhete-mkt{{font-size:10px;color:var(--accent);font-weight:600;min-width:70px;text-align:center}}
+.bilhete-odd-val{{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--yellow);min-width:42px;text-align:right}}
+.bilhete-score-bar{{min-width:80px}}
+.bilhete-res{{min-width:70px;text-align:right}}
+.bilhete-footer{{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;gap:6px}}
+.bilhete-sels{{font-size:11px;color:var(--muted)}}
+.bilhete-status{{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}}
 
 /* PANELS */
 .day-panel{{display:none}}.day-panel.active{{display:block}}
@@ -993,6 +1020,172 @@ function renderCart(date,jogos){{
     </table></div>`;
 }}
 
+// ── Bilhetes ───────────────────────────────────────────────────────
+function gerarBilhetes(jogos){{
+  const SCORE_FIELD = {{
+    'Over 1.5':'score_15','Over 2.5':'score_25','BTTS':'score_btts',
+    'Over 0.5 HT':'score_05ht','Under 3.5':'score_u35','Under 4.5':'score_u45',
+    'Esc 7.5':'score_esc75','Esc 8.5':'score_esc85',
+    'Cart 2.5':'score_cards25','Cart 3.5':'score_cards35',
+  }};
+
+  // Selecionar candidatos — jogo + melhor mercado + odd disponível
+  const candidatos = [];
+  for(const j of jogos){{
+    const grade = j.best_grade;
+    if(!['A+','A','B'].includes(grade)) continue;
+    const score = j.best_score || 0;
+    if(score < 65) continue;
+
+    // Odd do mercado sugerido
+    let oddVal = parseFloat(oddMkt(j));
+    if(isNaN(oddVal) || oddVal < 1.10) {{
+      // fallback: usar odd justa
+      const justaMap = {{'Over 1.5':j.odd_justa_15,'Over 2.5':j.odd_justa_25,'BTTS':j.odd_justa_btts,'Over 0.5 HT':j.odd_justa_05ht,'Esc 8.5':j.odd_justa_esc85,'Cart 2.5':j.odd_justa_cart25}};
+      const justa = justaMap[j.best_mkt];
+      oddVal = justa ? parseFloat(justa) : null;
+    }}
+    if(!oddVal || oddVal < 1.10) continue;
+
+    candidatos.push({{
+      jogo: j.jogo, liga: j.liga, hora: j.hora,
+      mkt: j.best_mkt, score, grade, oddVal,
+      resultado: j.resultado, acertos: j.acertos || {{}},
+    }});
+  }}
+
+  // Ordenar por score desc
+  candidatos.sort((a,b) => b.score - a.score);
+
+  // Bilhete 1 — Premium: só A+/A, max odd combinada
+  const prem = candidatos.filter(c => c.grade==='A+'||c.grade==='A');
+  // Bilhete 2 — Equilibrado: A+/A+B ordenado por odd desc para chegar em ≥5
+  const equil = [...candidatos].sort((a,b) => b.oddVal - a.oddVal);
+  // Bilhete 3 — Conservador: melhores scores independente de odd
+  const cons = [...candidatos];
+
+  function montarBilhete(pool, minJogos=6){{
+    const sels = pool.slice(0, Math.max(minJogos, pool.length));
+    if(sels.length < 3) return null;
+    const oddTotal = sels.reduce((acc,s) => acc * s.oddVal, 1);
+    return {{sels, oddTotal: Math.round(oddTotal*100)/100}};
+  }}
+
+  const b1 = montarBilhete(prem);
+  const b2 = montarBilhete(equil);
+  const b3 = montarBilhete(cons);
+
+  // Deduplicar bilhetes iguais
+  const bilhetes = [];
+  const seen = new Set();
+  for(const [tipo, b, cls, label] of [
+    ['premium', b1, 'bilhete-premium', '🥇 Bilhete Premium — A+ / A'],
+    ['equilibrado', b2, 'bilhete-equilibrado', '⚖️ Bilhete Equilibrado — Odd alta'],
+    ['conservador', b3, 'bilhete-conservador', '🛡️ Bilhete Conservador — Maior score'],
+  ]){{
+    if(!b) continue;
+    const key = b.sels.map(s=>s.jogo+s.mkt).sort().join('|');
+    if(seen.has(key)) continue;
+    seen.add(key);
+    bilhetes.push({{tipo, b, cls, label}});
+  }}
+  return bilhetes;
+}}
+
+function avaliarBilhete(sels, confirmado){{
+  if(!confirmado) return {{status:'pending', acertos:0, total:sels.length}};
+  let acertos=0, erros=0, sd=0;
+  for(const s of sels){{
+    const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
+    const res = s.resultado;
+    if(!res){{ sd++; continue; }}
+    const ok = res[mktKey];
+    if(ok===true) acertos++;
+    else if(ok===false) erros++;
+    else sd++;
+  }}
+  if(erros>0) return {{status:'loss', acertos, erros, sd, total:sels.length}};
+  if(sd>0) return {{status:'partial', acertos, erros, sd, total:sels.length}};
+  return {{status:'win', acertos, erros:0, sd:0, total:sels.length}};
+}}
+
+function renderBilhetes(date, jogos){{
+  const el = document.getElementById('mkt-'+date+'-bilhetes');
+  const confirmado = isConfirmado(date);
+  const bilhetes = gerarBilhetes(jogos);
+
+  if(!bilhetes || bilhetes.length===0){{
+    el.innerHTML=`<div class="empty">Nenhum jogo com dados suficientes para gerar bilhetes hoje.</div>`;
+    return;
+  }}
+
+  const html = bilhetes.map((item)=>{{ const {{tipo, b, cls, label}} = item;
+    const av = avaliarBilhete(b.sels, confirmado);
+    const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
+    const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
+
+    const rows = b.sels.map((s,i)=>{{
+      const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
+      const res = s.resultado;
+      let resHtml = '<span class="res-badge pending">⏳</span>';
+      if(confirmado && res){{
+        const ok = res[mktKey];
+        if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
+        else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
+        else resHtml='<span class="res-badge pending">? S/D</span>';
+      }}
+      const scoreVal = s.score || 0;
+      const sc = col(scoreVal);
+      return`<div class="bilhete-row">
+        <span class="bilhete-num">${{i+1}}</span>
+        <div style="flex:1;min-width:0">
+          <div class="bilhete-jogo">${{s.jogo}}</div>
+          <div class="bilhete-liga">${{s.liga}} · ${{s.hora}}</div>
+        </div>
+        <span class="bilhete-mkt">${{s.mkt}}</span>
+        <div class="bilhete-score-bar">${{bar(scoreVal,60)}}</div>
+        <span class="bilhete-odd-val">${{s.oddVal.toFixed(2)}}</span>
+        <div class="bilhete-res">${{resHtml}}</div>
+      </div>`;
+    }}).join('');
+
+    let statusHtml = '';
+    if(!confirmado){{
+      statusHtml = '<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando resultados</span>';
+    }} else if(av.status==='win'){{
+      statusHtml = `<span class="bilhete-status" style="color:var(--green)">✅ BILHETE GREEN! Odd: ${{b.oddTotal.toFixed(2)}}</span>`;
+    }} else if(av.status==='loss'){{
+      statusHtml = `<span class="bilhete-status" style="color:var(--red)">✗ Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
+    }} else if(av.status==='partial'){{
+      statusHtml = `<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${{av.sd}} sem dados</span>`;
+    }}
+
+    return`<div class="bilhete-card ${{cls}}${{overlayClass}}">
+      <div class="bilhete-header">
+        <div>
+          <div class="bilhete-title">${{label}}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções</div>
+        </div>
+        <div style="text-align:right">
+          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{b.oddTotal.toFixed(2)}}</div>
+          <div class="bilhete-odd-label">Odd combinada</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid var(--border);padding-top:10px">${{rows}}</div>
+      <div class="bilhete-footer">
+        <span class="bilhete-sels">${{b.sels.filter(s=>s.grade==='A+'||s.grade==='A').length}} A+/A · ${{b.sels.filter(s=>s.grade==='B').length}} B</span>
+        ${{statusHtml}}
+      </div>
+    </div>`;
+  }}).join('');
+
+  const callout = confirmado
+    ? '<div class="callout ok"><strong>✅ Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
+    : '<div class="callout info"><strong>🎯 Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
+
+  el.innerHTML = callout + html;
+}}
+
 // ── Resultados do Dia ──────────────────────────────────────────────
 function renderHistoricoDia(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-historico_dia');
@@ -1325,6 +1518,7 @@ function renderMkt(date,mkt){{
   else if(mkt==='over25')    renderOver25(date,jogos);
   else if(mkt==='escanteios')renderEsc(date,jogos);
   else if(mkt==='cartoes')   renderCart(date,jogos);
+  else if(mkt==='bilhetes')     renderBilhetes(date,jogos);
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
 }}
 
