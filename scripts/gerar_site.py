@@ -190,24 +190,24 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .desemp-card{{
   display:flex;align-items:center;gap:16px;
   background:var(--s2);border:1px solid var(--border);border-radius:11px;
-  padding:10px 16px;cursor:pointer;transition:all .2s;
+  padding:14px 20px;cursor:pointer;transition:all .2s;
   flex-wrap:wrap;
 }}
 .desemp-card:hover{{border-color:var(--green);background:rgba(34,197,94,.05);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.3)}}
 .desemp-label{{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}}
 .desemp-kpis{{display:flex;align-items:center;gap:10px}}
 .desemp-kpi{{display:flex;flex-direction:column;align-items:center;min-width:44px}}
-.desemp-kpi-val{{font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
+.desemp-kpi-val{{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
 .desemp-kpi-lbl{{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}}
 .desemp-divider{{width:1px;height:40px;background:var(--border);flex-shrink:0}}
 .desemp-bars{{display:flex;flex-direction:column;gap:3px}}
 .desemp-bars-label{{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}}
-.desemp-bars-chart{{display:flex;align-items:flex-end;gap:4px;height:36px}}
+.desemp-bars-chart{{display:flex;align-items:flex-end;gap:4px;height:52px}}
 .desemp-bar-col{{display:flex;flex-direction:column;align-items:center;gap:2px}}
-.desemp-bar{{border-radius:3px 3px 0 0;min-width:18px;transition:opacity .2s}}
+.desemp-bar{{border-radius:3px 3px 0 0;min-width:22px;transition:opacity .2s}}
 .desemp-bar:hover{{opacity:.8}}
-.desemp-bar-lbl{{font-size:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}}
-.desemp-bar-pct{{font-size:8px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
+.desemp-bar-lbl{{font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}}
+.desemp-bar-pct{{font-size:9px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
 .header-right{{display:flex;align-items:center;gap:6px;flex-wrap:wrap}}
 .badge{{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:10px;font-weight:600;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
 .badge.validated{{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}}
@@ -791,7 +791,7 @@ function renderGlobalKpis(){{
     }})
     .slice(-7);
 
-  const barCols = diasConf.map(([d,v])=>{{
+  const barCols = diasConf.map(([dateKey,v])=>{{
     const s=v.resultado_stats||{{}};
     let ta=0,te=0;
     Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
@@ -799,16 +799,16 @@ function renderGlobalKpis(){{
     const [dd,mm]=d.split('-');
     const col=t==null?'var(--muted)':t>=80?'var(--green)':t>=60?'var(--yellow)':'var(--red)';
     const h=t?Math.max(6,Math.round(t*0.32)):4;
-    return{{t,dd,mm,col,h}};
+    return{{t,dd,mm,col,h,dateKey}};
   }});
 
-  const barsHtml=barCols.map(b=>{{
-    return`<div class="desemp-bar-col" title="${{b.dd}}/${{b.mm}} · ${{b.t!=null?b.t+'%':'?'}}">
-      <div class="desemp-bar-pct" style="color:${{b.col}}">${{b.t!=null?b.t+'%':'?'}}</div>
-      <div class="desemp-bar" style="height:${{b.h}}px;background:${{b.col}};width:22px"></div>
-      <div class="desemp-bar-lbl">${{b.dd}}/${{b.mm}}</div>
+const barsHtml=barCols.map(b=>{
+    return`<div class="desemp-bar-col" title="${b.dd}/${b.mm} · ${b.t!=null?b.t+'%':'?'}" onclick="switchDate('${b.dateKey}');setTimeout(()=>switchMkt('${b.dateKey}','ranking'),80)" style="cursor:pointer">
+      <div class="desemp-bar-pct" style="color:${b.col}">${b.t!=null?b.t+'%':'?'}</div>
+      <div class="desemp-bar" style="height:${b.h}px;background:${b.col};width:22px"></div>
+      <div class="desemp-bar-lbl">${b.dd}/${b.mm}</div>
     </div>`;
-  }}).join('');
+  }).join('');
 
   document.getElementById('global-kpis').innerHTML=`
     <div class="desemp-card" style="border-color:${{bordColor}}" onclick="showHistoricoGlobal()">
