@@ -497,27 +497,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
  <div class="logo">
   <img src="assets/logo.png" style="height:52px;flex-shrink:0;object-fit:contain" alt="WinMetrics Analytics">
 </div>
-      <title>WinMetrics</title>
-      <defs><clipPath id="bc"><circle cx="31" cy="55" r="28"/></clipPath></defs>
-      <circle cx="31" cy="55" r="28" fill="#f97316"/>
-      <polygon points="31,29 39,36 36,46 26,46 23,36" fill="#1a1a2e" opacity="0.85"/>
-      <polygon points="52,47 58,55 53,63 45,61 43,52" fill="#1a1a2e" opacity="0.85"/>
-      <polygon points="44,68 47,77 39,82 31,77 31,68" fill="#1a1a2e" opacity="0.85"/>
-      <polygon points="19,68 12,77 13,82 22,82 25,73" fill="#1a1a2e" opacity="0.75" clip-path="url(#bc)"/>
-      <polygon points="10,47 4,55 9,63 17,61 19,52" fill="#1a1a2e" opacity="0.75" clip-path="url(#bc)"/>
-      <rect x="42" y="48" width="6" height="18" rx="1.5" fill="#fff" opacity="0.95" clip-path="url(#bc)"/>
-      <rect x="50" y="42" width="6" height="24" rx="1.5" fill="#fff" opacity="0.95" clip-path="url(#bc)"/>
-      <rect x="42" y="28" width="6" height="14" rx="1.5" fill="#f97316" opacity="0.6"/>
-      <rect x="50" y="22" width="6" height="18" rx="1.5" fill="#f97316" opacity="0.8"/>
-      <rect x="58" y="16" width="6" height="24" rx="1.5" fill="#f97316" opacity="1"/>
-      <polyline points="45,42 53,35 61,28" fill="none" stroke="#f97316" stroke-width="1.5" stroke-linecap="round"/>
-      <circle cx="61" cy="28" r="2.5" fill="#f97316"/>
-      <text x="72" y="46" font-family="Inter,sans-serif" font-size="22" font-weight="700" fill="#f97316" letter-spacing="-0.5">Win</text>
-      <text x="111" y="46" font-family="Inter,sans-serif" font-size="22" font-weight="300" fill="#e2e8f0" letter-spacing="-0.5">Metrics</text>
-      <rect x="72" y="52" width="196" height="0.8" rx="0" fill="#f97316" opacity="0.3"/>
-      <text x="73" y="66" font-family="Inter,sans-serif" font-size="8" font-weight="400" fill="#64748b" letter-spacing="1.8">AI SPORTS ANALYTICS</text>
-    </svg>
-  </div>
+      
   <div class="hkpi-row" id="global-kpis">
     <!-- preenchido pelo JS -->
   </div>
