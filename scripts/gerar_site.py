@@ -1224,7 +1224,7 @@ function renderBilhetes(date, jogos){{
         const ok = res[mktKey];
         if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
         else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
-        else resHtml='<span class="res-badge pending">? S/D</span>';
+        else resHtml='<span class="res-badge pending">⚠ Não confirmado</span>';
       }}
       const scoreVal = s.score || 0;
       return`<div class="bilhete-row">
