@@ -495,7 +495,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
 <div class="header">
  <div class="logo">
-  <img src="assets/LOGO.png" style="height:52px;flex-shrink:0;object-fit:contain" alt="WinMetrics Analytics">
+  <img src="assets/LOGO.png" style="height:150px;flex-shrink:0;object-fit:contain" alt="WinMetrics Analytics">
 </div>
       
   <div class="hkpi-row" id="global-kpis">
