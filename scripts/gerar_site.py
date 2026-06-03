@@ -815,7 +815,8 @@ function renderVisao(date,jogos){{
         <div class="top-score" style="color:${{c}}">${{d.best_score}}%</div>
         <div class="top-grade-block">
           ${{gradeHtml(d.best_grade)}}
-          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:3px">Odd: ${{oddMkt(d)}}</span>`:''}}
+          <span style="font-size:10px;color:var(--muted);margin-top:1px">${{GRADE_NOME[d.best_grade]||''}}</span>
+          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
         </div>
       </div>
       ${{placarCard(d, mktKey)}}
@@ -1083,9 +1084,8 @@ function gerarBilhetes(jogos){{
   }}
   // Bilhete do Dia — A+ primeiro, completa com A se necessário
   const topAplus = candidatos.filter(x=>x.grade==='A+').sort((a,b)=>b.score-a.score);
-  const topA     = candidatos.filter(x=>x.grade==='A').sort((a,b)=>b.score-a.score);
-  let diaPool    = [...topAplus];
-  if(diaPool.length < 3) diaPool = [...topAplus,...topA];
+  // Bilhete do Dia: apenas A+ (Confiança Alta)
+  let diaPool = [...topAplus];
   const bDia = diaPool.length >= 2 ? {{
     sels: diaPool,
     oddTotal: Math.round(diaPool.reduce((acc,s)=>acc*s.oddVal,1)*100)/100
