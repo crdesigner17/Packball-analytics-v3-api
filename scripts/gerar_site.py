@@ -803,7 +803,7 @@ function renderGlobalKpis(){{
   }});
 
 const barsHtml=barCols.map(b=>{{
-    return`<div class="desemp-bar-col" title="${{b.dd}}/${{b.mm}} · ${{b.t!=null?b.t+'%':'?'}}" onclick="activeMkt['${{b.dateKey}}']='ranking';switchDate('${{b.dateKey}}')" style="cursor:pointer">
+    return`<div class="desemp-bar-col" title="${{b.dd}}/${{b.mm}} · ${{b.t!=null?b.t+'%':'?'}}" onclick="event.stopPropagation();activeMkt['${{b.dateKey}}']='ranking';switchDate('${{b.dateKey}}')" style="cursor:pointer">
       <div class="desemp-bar-pct" style="color:${{b.col}}">${{b.t!=null?b.t+'%':'?'}}</div>
       <div class="desemp-bar" style="height:${{b.h}}px;background:${{b.col}};width:22px"></div>
       <div class="desemp-bar-lbl">${{b.dd}}/${{b.mm}}</div>
@@ -811,7 +811,7 @@ const barsHtml=barCols.map(b=>{{
   }}).join('');
 
   document.getElementById('global-kpis').innerHTML=`
-    <div class="desemp-card" style="border-color:${{bordColor}}" onclick="showHistoricoGlobal()">
+    <div class="desemp-card" style="border-color:${{bordColor}}">
       <div>
         <div class="desemp-label">Desempenho das Melhores Previsões</div>
         <div class="desemp-kpis">
@@ -821,9 +821,9 @@ const barsHtml=barCols.map(b=>{{
           <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--blue)">${{g.total_palpites}}</div><div class="desemp-kpi-lbl">Palpites</div></div>
         </div>
       </div>
-      ${{barCols.length>0?`<div class="desemp-divider"></div>
+${{barCols.length>0?`<div class="desemp-divider"></div>
       <div class="desemp-bars">
-        <div class="desemp-bars-label">Últimos 7 dias</div>
+        <div class="desemp-bars-label" style="margin-bottom:6px">Últimos 7 dias</div>
         <div class="desemp-bars-chart">${{barsHtml}}</div>
       </div>`:''}}
     </div>
