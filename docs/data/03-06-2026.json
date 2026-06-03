@@ -103,7 +103,9 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · H2H 4.0 gols · Via 4 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -207,7 +209,9 @@
       "best_risk": "Moderado",
       "justif_15": "xG 2.5 · PPG 1.5 · Via 2 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -311,7 +315,9 @@
       "best_risk": "Arriscado",
       "justif_15": "Dados insuficientes",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -415,7 +421,9 @@
       "best_risk": "Confiança Média",
       "justif_15": "O1.5 83% · PPG 0.5 · H2H 2.5 gols",
       "justif_esc": "Média 13.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -519,7 +527,9 @@
       "best_risk": "Confiança Alta",
       "justif_15": "PPG 3.0",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -623,7 +633,9 @@
       "best_risk": "Arriscado",
       "justif_15": "Dados insuficientes",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -727,7 +739,9 @@
       "best_risk": "Arriscado",
       "justif_15": "PPG 1.2 · H2H 1.0 gols",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -831,7 +845,9 @@
       "best_risk": "Arriscado",
       "justif_15": "Dados insuficientes",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -935,7 +951,9 @@
       "best_risk": "Confiança Média",
       "justif_15": "xG 5.0 · PPG 2.0 · Via 1 ✓",
       "justif_esc": "Média 11.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 4.5 cart · O2.5: 75.0% · O3.5: 50.0%"
+      "justif_cards": "Média 4.5 cart · O2.5: 75.0% · O3.5: 50.0%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -1039,7 +1057,9 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · PPG 1.0 · H2H 3.0 gols · Via 4 ✓",
       "justif_esc": "Média 5.0 cant · O8.5: 25.0% · O7.5: 25.0%",
-      "justif_cards": "Média 3.5 cart · O2.5: 75.0% · O3.5: 25.0%"
+      "justif_cards": "Média 3.5 cart · O2.5: 75.0% · O3.5: 25.0%",
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-06-2026",
@@ -1143,7 +1163,9 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · PPG 1.0 · H2H 2.0 gols · Via 4 ✓",
       "justif_esc": "Média 10.0 cant · O8.5: 66.7% · O7.5: 100.0%",
-      "justif_cards": "Média 1.67 cart · O2.5: 33.3% · O3.5: 33.3%"
+      "justif_cards": "Média 1.67 cart · O2.5: 33.3% · O3.5: 33.3%",
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -1153,13 +1175,156 @@
     "South Korea x El Salvador",
     "Albania x Israel"
   ],
-  "resultado_confirmado": false,
-  "resultado_stats": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "stats": {
     "total": 11,
     "over15_aprovados": 3,
     "esc85_aprovados": 3,
     "cart25_aprovados": 1,
     "premium": 6
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
   }
 }
