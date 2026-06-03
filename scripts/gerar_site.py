@@ -1031,41 +1031,39 @@ function gerarBilhetes(jogos){{
     .filter(j=>j.best_grade==='A+'||j.best_grade==='A')
     .sort((a,b)=>b.best_score-a.best_score)
     .map(j=>{{
-      const oddVal = parseFloat(oddMkt(j)) || null;
+      const oddVal = parseFloat(oddMkt(j))||null;
       return {{
-        jogo: j.jogo, liga: j.liga, hora: j.hora,
-        mkt: j.best_mkt, score: j.best_score, grade: j.best_grade,
-        oddVal, resultado: j.resultado, acertos: j.acertos||{{}},
+        jogo:j.jogo, liga:j.liga, hora:j.hora,
+        mkt:j.best_mkt, score:j.best_score, grade:j.best_grade,
+        oddVal, resultado:j.resultado, acertos:j.acertos||{{}},
       }};
     }});
 
   function montar(pool, min=2){{
     if(pool.length < min) return null;
     const oddTotal = pool.reduce((acc,s)=>acc*(s.oddVal||1),1);
-    return {{sels: pool, oddTotal: Math.round(oddTotal*100)/100}};
+    return {{sels:pool, oddTotal:Math.round(oddTotal*100)/100}};
   }}
 
   // Bilhete do Dia — só A+ score>=90%, máx 8
   const diaPool = altaConf.filter(x=>x.grade==='A+'&&x.score>=90).slice(0,8);
-  const bDia = diaPool.length >= 2 ? {{
-    sels: diaPool,
-    oddTotal: Math.round(diaPool.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100
+  const bDia = diaPool.length>=2 ? {{
+    sels:diaPool,
+    oddTotal:Math.round(diaPool.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100
   }} : null;
 
-  // Bilhete 1 — Premium: top A+/A por score
+  // Bilhete 1 — Premium: todos A+/A por score
   const b1 = montar([...altaConf]);
 
-  // Bilhete 2 — Confiança: todos A+/A do dia
-  const b2Pool = [...altaConf];
-  const b2 = b2Pool.length >= 2 && JSON.stringify(b2Pool.map(s=>s.jogo+s.mkt)) !== JSON.stringify(altaConf.map(s=>s.jogo+s.mkt))
-    ? montar(b2Pool)
-    : null;
+  // Bilhete 2 — Só A+: filtro mais restrito
+  const somenteAplus = altaConf.filter(x=>x.grade==='A+');
+  const b2 = somenteAplus.length>=2 ? montar(somenteAplus) : null;
 
   const bilhetes = [];
   const seen = new Set();
   const defs = [
-    ['b1', b1, 'bilhete-premium',     '🥇 Premium — A+/A por Score'],
-    ['b2', b2, 'bilhete-conservador', '🛡️ Confiança — Todos A+/A do Dia'],
+    ['b1', b1, 'bilhete-premium',     '🥇 Premium — Todos A+/A por Score'],
+    ['b2', b2, 'bilhete-conservador', '⭐ Confiança Alta — Só A+'],
   ];
   for(const [tipo, b, cls, label] of defs){{
     if(!b) continue;
@@ -1109,8 +1107,16 @@ function renderBilhetes(date, jogos){{
   if(bilheteDia){{
     const av = avaliarBilhete(bilheteDia.sels, confirmado);
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
-    const oddColor = bilheteDia.oddTotal>=5?'var(--green)':bilheteDia.oddTotal>=3?'var(--yellow)':'var(--orange)';
+    const oddColor = !bilheteDia.oddTotal?'var(--muted)':bilheteDia.oddTotal>=5?'var(--green)':bilheteDia.oddTotal>=3?'var(--yellow)':'var(--orange)';
     const scoreMedia = Math.round(bilheteDia.sels.reduce((a,s)=>a+s.score,0)/bilheteDia.sels.length);
+    const diaHeader = `<div class="bilhete-row" style="border-bottom:1px solid rgba(34,197,94,.2);margin-bottom:4px;padding-bottom:6px">
+      <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
+      <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
+      <span class="bilhete-mkt" style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.7px">Mercado</span>
+      <div class="bilhete-score-bar" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Confiança</div>
+      <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
+      <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
+    </div>`;
     const rows = bilheteDia.sels.map((s,i)=>{{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
@@ -1126,7 +1132,7 @@ function renderBilhetes(date, jogos){{
         <div style="flex:1;min-width:0"><div class="bilhete-jogo">${{s.jogo}}</div><div class="bilhete-liga">${{s.liga}} · ${{s.hora}}</div></div>
         <span class="bilhete-mkt">${{s.mkt}}</span>
         <div class="bilhete-score-bar">${{bar(s.score,60)}}</div>
-        <span class="bilhete-odd-val">${{s.oddVal.toFixed(2)}}</span>
+        <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
         <div class="bilhete-res">${{resHtml}}</div>
       </div>`;
     }}).join('');
@@ -1142,11 +1148,11 @@ function renderBilhetes(date, jogos){{
         <div><div class="bilhete-title" style="font-size:15px">Os mais assertivos do dia</div>
         <div style="font-size:10px;color:var(--muted);margin-top:2px">${{bilheteDia.sels.length}} seleções · Score médio ${{scoreMedia}}%</div></div>
         <div style="text-align:right">
-          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{bilheteDia.oddTotal.toFixed(2)}}</div>
+          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{bilheteDia.oddTotal?bilheteDia.oddTotal.toFixed(2):'—'}}</div>
           <div class="bilhete-odd-label">Odd combinada</div>
         </div>
       </div>
-      <div style="border-top:1px solid rgba(34,197,94,.2);padding-top:10px">${{rows}}</div>
+      <div style="border-top:1px solid rgba(34,197,94,.2);padding-top:10px">${{diaHeader}}${{rows}}</div>
       <div class="bilhete-footer"><span class="bilhete-sels">${{bilheteDia.sels.filter(s=>s.grade==='A+').length}} A+ · ${{bilheteDia.sels.filter(s=>s.grade==='A').length}} A</span>${{statusHtml}}</div>
     </div>
     <div class="sec-title">📋 Todos os Bilhetes</div>`;
@@ -1157,6 +1163,14 @@ function renderBilhetes(date, jogos){{
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
     const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
 
+    const bilheteHeader = `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
+      <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
+      <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
+      <span class="bilhete-mkt" style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.7px">Mercado</span>
+      <div class="bilhete-score-bar" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Confiança</div>
+      <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
+      <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
+    </div>`;
     const rows = b.sels.map((s,i)=>{{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
@@ -1168,7 +1182,6 @@ function renderBilhetes(date, jogos){{
         else resHtml='<span class="res-badge pending">? S/D</span>';
       }}
       const scoreVal = s.score || 0;
-      const sc = col(scoreVal);
       return`<div class="bilhete-row">
         <span class="bilhete-num">${{i+1}}</span>
         <div style="flex:1;min-width:0">
@@ -1177,7 +1190,7 @@ function renderBilhetes(date, jogos){{
         </div>
         <span class="bilhete-mkt">${{s.mkt}}</span>
         <div class="bilhete-score-bar">${{bar(scoreVal,60)}}</div>
-        <span class="bilhete-odd-val">${{s.oddVal.toFixed(2)}}</span>
+        <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
         <div class="bilhete-res">${{resHtml}}</div>
       </div>`;
     }}).join('');
@@ -1200,11 +1213,11 @@ function renderBilhetes(date, jogos){{
           <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções</div>
         </div>
         <div style="text-align:right">
-          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{b.oddTotal.toFixed(2)}}</div>
+          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{b.oddTotal?b.oddTotal.toFixed(2):'—'}}</div>
           <div class="bilhete-odd-label">Odd combinada</div>
         </div>
       </div>
-      <div style="border-top:1px solid var(--border);padding-top:10px">${{rows}}</div>
+      <div style="border-top:1px solid var(--border);padding-top:10px">${{bilheteHeader}}${{rows}}</div>
       <div class="bilhete-footer">
         <span class="bilhete-sels">${{b.sels.filter(s=>s.grade==='A+'||s.grade==='A').length}} A+/A · ${{b.sels.filter(s=>s.grade==='B').length}} B</span>
         ${{statusHtml}}
