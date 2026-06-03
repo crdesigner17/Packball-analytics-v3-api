@@ -689,8 +689,19 @@ function via(v){{
 }}
 function pct(v){{return v!=null?v+'%':'—';}}
 function pyramid(d){{
-  const rows=[['6.5',d.over65_c,'var(--green)'],['7.5',d.over75_c,'var(--teal)'],['8.5',d.over85_c,'var(--blue)'],['9.5',d.over95_c,'var(--orange)'],['10.5',d.over105_c,'var(--red)']];
-  return'<div class="cpyr">'+rows.map(([l,v,c])=>{{const w=v?Math.round(v*.36):0;return`<div class="cpyr-row"><span class="cpyr-lbl">${{l}}</span><div class="cpyr-bar" style="width:${{w}}px;background:${{c}}"></div><span class="cpyr-val">${{v!=null?v+'%':'—'}}</span></div>`;}}).join('')+'</div>';
+  const rows=[['6.5',d.over65_c],['7.5',d.over75_c],['8.5',d.over85_c],['9.5',d.over95_c],['10.5',d.over105_c]];
+  return'<div style="display:flex;flex-direction:column;gap:3px;min-width:120px">'+rows.map(([l,v])=>{{
+    const pct=v!=null?v:0;
+    const c=pct>=80?'var(--green)':pct>=60?'var(--teal)':pct>=40?'var(--yellow)':pct>=20?'var(--orange)':'var(--red)';
+    const w=Math.round(pct*0.7);
+    return`<div style="display:flex;align-items:center;gap:5px">
+      <span style="font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;min-width:28px;text-align:right">${{l}}</span>
+      <div style="flex:1;height:6px;background:rgba(255,255,255,.06);border-radius:3px;overflow:hidden;max-width:70px">
+        <div style="height:100%;width:${{w}}%;background:${{c}};border-radius:3px"></div>
+      </div>
+      <span style="font-size:9px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{c}};min-width:32px">${{v!=null?v+'%':'—'}}</span>
+    </div>`;
+  }}).join('')+'</div>';
 }}
 function jogoCell(d){{
   return`<td><div class="jogo-main">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div><div class="jogo-sub">${{d.liga}}</div></td>`;
