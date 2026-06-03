@@ -34,6 +34,28 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .hkpi{display:flex;flex-direction:column;align-items:center;padding:5px 12px;border-radius:7px;background:var(--s2);border:1px solid var(--border);min-width:70px}
 .hkpi-val{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}
 .hkpi-lbl{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+/* DESEMPENHO CARD */
+.desemp-card{
+  display:flex;align-items:center;gap:16px;
+  background:var(--s2);border:1px solid var(--border);border-radius:11px;
+  padding:10px 16px;cursor:pointer;transition:all .2s;
+  flex-wrap:wrap;
+}
+.desemp-card:hover{border-color:var(--green);background:rgba(34,197,94,.05);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.3)}
+.desemp-label{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
+.desemp-kpis{display:flex;align-items:center;gap:10px}
+.desemp-kpi{display:flex;flex-direction:column;align-items:center;min-width:44px}
+.desemp-kpi-val{font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}
+.desemp-kpi-lbl{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
+.desemp-divider{width:1px;height:40px;background:var(--border);flex-shrink:0}
+.desemp-bars{display:flex;flex-direction:column;gap:3px}
+.desemp-bars-label{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
+.desemp-bars-chart{display:flex;align-items:flex-end;gap:4px;height:36px}
+.desemp-bar-col{display:flex;flex-direction:column;align-items:center;gap:2px}
+.desemp-bar{border-radius:3px 3px 0 0;min-width:18px;transition:opacity .2s}
+.desemp-bar:hover{opacity:.8}
+.desemp-bar-lbl{font-size:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}
+.desemp-bar-pct{font-size:8px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}
 .header-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:10px;font-weight:600;font-family:'JetBrains Mono',monospace;white-space:nowrap}
 .badge.validated{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
@@ -346,10 +368,9 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   <div class="hkpi-row" id="global-kpis">
     <!-- preenchido pelo JS -->
   </div>
-  <div class="header-right">
-    <span class="badge validated">✓ Over 1.5 · 88.6%</span>
+  <div class="header-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
+    <span style="font-size:12px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace">🕐 03/06/2026 13:00 UTC</span>
     <span class="badge version">v3.1</span>
-    <span class="badge updated">🕐 03/06/2026 12:49 UTC</span>
   </div>
 </div>
 
@@ -939,55 +960,54 @@ function renderGlobalKpis(){
     return;
   }
   const taxa=g.taxa_geral;
-  const c=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
+  const bordColor=taxa==null?'var(--border)':taxa>=70?'rgba(34,197,94,.4)':taxa>=50?'rgba(234,179,8,.4)':'rgba(239,68,68,.4)';
+  const taxaColor=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
 
-  // Sparkline — taxa por dia confirmado
+  // Últimos 7 dias confirmados
   const diasConf = Object.entries(ALL_DATA)
     .filter(([d,v])=>v.resultado_confirmado)
     .sort(([a],[b])=>{
       const [da,ma,ya]=a.split('-').map(Number);
       const [db,mb,yb]=b.split('-').map(Number);
       return new Date(ya,ma-1,da)-new Date(yb,mb-1,db);
-    });
+    })
+    .slice(-7);
 
-  const taxasPorDia = diasConf.map(([d,v])=>{
+  const barCols = diasConf.map(([d,v])=>{
     const s=v.resultado_stats||{};
     let ta=0,te=0;
     Object.values(s).forEach(x=>{ta+=x.acertos||0;te+=x.erros||0;});
-    return ta+te>0?Math.round(ta/(ta+te)*100):null;
-  }).filter(x=>x!==null);
+    const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
+    const [dd,mm]=d.split('-');
+    const col=t==null?'var(--muted)':t>=80?'var(--green)':t>=60?'var(--yellow)':'var(--red)';
+    const h=t?Math.max(6,Math.round(t*0.32)):4;
+    return{t,dd,mm,col,h};
+  });
 
-  // Gerar sparkline SVG
-  let sparkHtml='';
-  if(taxasPorDia.length>0){
-    const max=100, min=0, w=120, h=28, pad=2;
-    const bw=Math.max(4, Math.floor((w-pad*(taxasPorDia.length-1))/taxasPorDia.length));
-    const bars=taxasPorDia.map((t,i)=>{
-      const bh=Math.max(2,Math.round((t/max)*(h-4)));
-      const x=i*(bw+pad);
-      const y=h-bh;
-      const col=t>=80?'#22c55e':t>=60?'#eab308':'#ef4444';
-      return`<rect x="${x}" y="${y}" width="${bw}" height="${bh}" rx="1" fill="${col}" opacity="0.85">
-        <title>${diasConf[i][0].slice(0,5)} · ${t}%</title>
-      </rect>`;
-    }).join('');
-    const totalW=(bw+pad)*taxasPorDia.length-pad;
-    sparkHtml=`<div style="display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-left:8px;border-left:1px solid var(--border);padding-left:10px">
-      <span style="font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase">Acerto por dia</span>
-      <svg width="${totalW}" height="${h}" viewBox="0 0 ${totalW} ${h}">${bars}</svg>
+  const barsHtml=barCols.map(b=>{
+    return`<div class="desemp-bar-col" title="${b.dd}/${b.mm} · ${b.t!=null?b.t+'%':'?'}">
+      <div class="desemp-bar-pct" style="color:${b.col}">${b.t!=null?b.t+'%':'?'}</div>
+      <div class="desemp-bar" style="height:${b.h}px;background:${b.col};width:22px"></div>
+      <div class="desemp-bar-lbl">${b.dd}/${b.mm}</div>
     </div>`;
-  }
+  }).join('');
 
   document.getElementById('global-kpis').innerHTML=`
-    <div style="display:flex;flex-direction:column;gap:4px">
-      <span style="font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1px;text-transform:uppercase">Desempenho das Melhores Previsões</span>
-      <div style="display:flex;align-items:center;gap:6px;flex-wrap:wrap">
-        <div class="hkpi"><div class="hkpi-val" style="color:${c}">${taxa!=null?taxa+'%':'—'}</div><div class="hkpi-lbl">Taxa Geral</div></div>
-        <div class="hkpi"><div class="hkpi-val g">${g.total_acertos}</div><div class="hkpi-lbl">Acertos</div></div>
-        <div class="hkpi"><div class="hkpi-val r">${g.total_erros}</div><div class="hkpi-lbl">Erros</div></div>
-        <div class="hkpi"><div class="hkpi-val b">${g.total_palpites}</div><div class="hkpi-lbl">Palpites</div></div>
-        ${sparkHtml}
+    <div class="desemp-card" style="border-color:${bordColor}" onclick="showHistoricoGlobal()">
+      <div>
+        <div class="desemp-label">Desempenho das Melhores Previsões</div>
+        <div class="desemp-kpis">
+          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:${taxaColor}">${taxa!=null?taxa+'%':'—'}</div><div class="desemp-kpi-lbl">Taxa Geral</div></div>
+          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--green)">${g.total_acertos}</div><div class="desemp-kpi-lbl">Acertos</div></div>
+          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--red)">${g.total_erros}</div><div class="desemp-kpi-lbl">Erros</div></div>
+          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--blue)">${g.total_palpites}</div><div class="desemp-kpi-lbl">Palpites</div></div>
+        </div>
       </div>
+      ${barCols.length>0?`<div class="desemp-divider"></div>
+      <div class="desemp-bars">
+        <div class="desemp-bars-label">Últimos 7 dias</div>
+        <div class="desemp-bars-chart">${barsHtml}</div>
+      </div>`:''}
     </div>
   `;
 }
