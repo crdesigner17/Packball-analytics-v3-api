@@ -81,7 +81,6 @@ def day_panel_html(d, day_data):
     <div class="mkt-tabs">
       <div class="mkt-tab active" data-mkt="visao"      onclick="switchMkt('{d}','visao')">📊 Visão Geral</div>
       <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Melhores Previsões <span class="cnt g">{nprem}</span></div>
-      <div class="mkt-tab"       data-mkt="bilhetes"    onclick="switchMkt('{d}','bilhetes')">🎯 Bilhetes</div>
       <div class="mkt-tab"       data-mkt="over15"      onclick="switchMkt('{d}','over15')">⚽ Over 1.5 <span class="cnt b">{n15}</span></div>
       <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">🔽 Under 3.5</div>
       <div class="mkt-tab"       data-mkt="escanteios"  onclick="switchMkt('{d}','escanteios')">🚩 Escanteios <span class="cnt g">{nesc}</span></div>
@@ -92,7 +91,6 @@ def day_panel_html(d, day_data):
   <div class="main">
     <div id="mkt-{d}-visao"        class="mkt-panel active"></div>
     <div id="mkt-{d}-ranking"      class="mkt-panel"></div>
-    <div id="mkt-{d}-bilhetes"     class="mkt-panel"></div>
     <div id="mkt-{d}-over15"       class="mkt-panel"></div>
     <div id="mkt-{d}-over25"       class="mkt-panel"></div>
     <div id="mkt-{d}-escanteios"   class="mkt-panel"></div>
@@ -186,28 +184,6 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .hkpi{{display:flex;flex-direction:column;align-items:center;padding:5px 12px;border-radius:7px;background:var(--s2);border:1px solid var(--border);min-width:70px}}
 .hkpi-val{{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
 .hkpi-lbl{{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}}
-/* DESEMPENHO CARD */
-.desemp-card{{
-  display:flex;align-items:center;gap:16px;
-  background:var(--s2);border:1px solid var(--border);border-radius:11px;
-  padding:10px 16px;cursor:pointer;transition:all .2s;
-  flex-wrap:wrap;
-}}
-.desemp-card:hover{{border-color:var(--green);background:rgba(34,197,94,.05);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.3)}}
-.desemp-label{{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}}
-.desemp-kpis{{display:flex;align-items:center;gap:10px}}
-.desemp-kpi{{display:flex;flex-direction:column;align-items:center;min-width:44px}}
-.desemp-kpi-val{{font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
-.desemp-kpi-lbl{{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}}
-.desemp-divider{{width:1px;height:40px;background:var(--border);flex-shrink:0}}
-.desemp-bars{{display:flex;flex-direction:column;gap:3px}}
-.desemp-bars-label{{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}}
-.desemp-bars-chart{{display:flex;align-items:flex-end;gap:4px;height:36px}}
-.desemp-bar-col{{display:flex;flex-direction:column;align-items:center;gap:2px}}
-.desemp-bar{{border-radius:3px 3px 0 0;min-width:18px;transition:opacity .2s}}
-.desemp-bar:hover{{opacity:.8}}
-.desemp-bar-lbl{{font-size:8px;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}}
-.desemp-bar-pct{{font-size:8px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
 .header-right{{display:flex;align-items:center;gap:6px;flex-wrap:wrap}}
 .badge{{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:10px;font-weight:600;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
 .badge.validated{{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}}
@@ -395,34 +371,6 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .day-hist-fill{{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff;min-width:2px}}
 .day-hist-info{{font-family:'JetBrains Mono',monospace;font-size:11px;min-width:90px;text-align:right}}
 
-/* BILHETES */
-.bilhete-dia{{background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(20,184,166,.06));border:2px solid rgba(34,197,94,.4);border-radius:13px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden}}
-.bilhete-dia::before{{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--teal),var(--blue))}}
-.bilhete-dia-badge{{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--green);margin-bottom:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px}}
-.bilhete-card{{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}}
-.bilhete-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px}}
-.bilhete-premium::before{{background:linear-gradient(90deg,var(--green),var(--teal))}}
-.bilhete-equilibrado::before{{background:linear-gradient(90deg,var(--yellow),var(--orange))}}
-.bilhete-conservador::before{{background:linear-gradient(90deg,var(--blue),var(--purple))}}
-.bilhete-win::after{{content:'';position:absolute;inset:0;background:rgba(34,197,94,.04);border:1px solid rgba(34,197,94,.2);border-radius:11px;pointer-events:none}}
-.bilhete-loss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.2);border-radius:11px;pointer-events:none}}
-.bilhete-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}}
-.bilhete-title{{font-size:13px;font-weight:700;color:var(--text)}}
-.bilhete-odd-total{{font-family:'JetBrains Mono',monospace;font-size:22px;font-weight:700;color:var(--yellow)}}
-.bilhete-odd-label{{font-size:10px;color:var(--muted);margin-top:1px;text-align:right}}
-.bilhete-row{{display:flex;align-items:center;gap:0;padding:7px 0;border-bottom:1px solid rgba(35,40,64,.5)}}
-.bilhete-row:last-child{{border-bottom:none}}
-.bilhete-num{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);width:22px;flex-shrink:0}}
-.bilhete-jogo{{flex:1;font-size:12px;font-weight:600;min-width:0;padding-right:8px}}
-.bilhete-liga{{font-size:10px;color:var(--muted)}}
-.bilhete-mkt{{font-size:10px;color:var(--accent);font-weight:700;width:80px;flex-shrink:0;text-align:left;padding-right:8px}}
-.bilhete-odd-val{{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--yellow);width:48px;flex-shrink:0;text-align:center}}
-.bilhete-score-bar{{width:100px;flex-shrink:0;padding-right:8px}}
-.bilhete-res{{width:80px;flex-shrink:0;text-align:right}}
-.bilhete-footer{{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;gap:6px}}
-.bilhete-sels{{font-size:11px;color:var(--muted)}}
-.bilhete-status{{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}}
-
 /* PANELS */
 .day-panel{{display:none}}.day-panel.active{{display:block}}
 .mkt-panel{{display:none}}.mkt-panel.active{{display:block}}
@@ -520,9 +468,10 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   <div class="hkpi-row" id="global-kpis">
     <!-- preenchido pelo JS -->
   </div>
-  <div class="header-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-    <span style="font-size:12px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace">🕐 {updated}</span>
+  <div class="header-right">
+    <span class="badge validated">✓ Over 1.5 · 88.6%</span>
     <span class="badge version">v3.1</span>
+    <span class="badge updated">🕐 {updated}</span>
   </div>
 </div>
 
@@ -778,55 +727,12 @@ function renderGlobalKpis(){{
     return;
   }}
   const taxa=g.taxa_geral;
-  const bordColor=taxa==null?'var(--border)':taxa>=70?'rgba(34,197,94,.4)':taxa>=50?'rgba(234,179,8,.4)':'rgba(239,68,68,.4)';
-  const taxaColor=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
-
-  // Últimos 7 dias confirmados
-  const diasConf = Object.entries(ALL_DATA)
-    .filter(([d,v])=>v.resultado_confirmado)
-    .sort(([a],[b])=>{{
-      const [da,ma,ya]=a.split('-').map(Number);
-      const [db,mb,yb]=b.split('-').map(Number);
-      return new Date(ya,ma-1,da)-new Date(yb,mb-1,db);
-    }})
-    .slice(-7);
-
-  const barCols = diasConf.map(([d,v])=>{{
-    const s=v.resultado_stats||{{}};
-    let ta=0,te=0;
-    Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
-    const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
-    const [dd,mm]=d.split('-');
-    const col=t==null?'var(--muted)':t>=80?'var(--green)':t>=60?'var(--yellow)':'var(--red)';
-    const h=t?Math.max(6,Math.round(t*0.32)):4;
-    return{{t,dd,mm,col,h}};
-  }});
-
-  const barsHtml=barCols.map(b=>{{
-    return`<div class="desemp-bar-col" title="${{b.dd}}/${{b.mm}} · ${{b.t!=null?b.t+'%':'?'}}">
-      <div class="desemp-bar-pct" style="color:${{b.col}}">${{b.t!=null?b.t+'%':'?'}}</div>
-      <div class="desemp-bar" style="height:${{b.h}}px;background:${{b.col}};width:22px"></div>
-      <div class="desemp-bar-lbl">${{b.dd}}/${{b.mm}}</div>
-    </div>`;
-  }}).join('');
-
+  const c=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
   document.getElementById('global-kpis').innerHTML=`
-    <div class="desemp-card" style="border-color:${{bordColor}}" onclick="showHistoricoGlobal()">
-      <div>
-        <div class="desemp-label">Desempenho das Melhores Previsões</div>
-        <div class="desemp-kpis">
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:${{taxaColor}}">${{taxa!=null?taxa+'%':'—'}}</div><div class="desemp-kpi-lbl">Taxa Geral</div></div>
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--green)">${{g.total_acertos}}</div><div class="desemp-kpi-lbl">Acertos</div></div>
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--red)">${{g.total_erros}}</div><div class="desemp-kpi-lbl">Erros</div></div>
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--blue)">${{g.total_palpites}}</div><div class="desemp-kpi-lbl">Palpites</div></div>
-        </div>
-      </div>
-      ${{barCols.length>0?`<div class="desemp-divider"></div>
-      <div class="desemp-bars">
-        <div class="desemp-bars-label">Últimos 7 dias</div>
-        <div class="desemp-bars-chart">${{barsHtml}}</div>
-      </div>`:''}}
-    </div>
+    <div class="hkpi"><div class="hkpi-val" style="color:${{c}}">${{taxa!=null?taxa+'%':'—'}}</div><div class="hkpi-lbl">Taxa Geral</div></div>
+    <div class="hkpi"><div class="hkpi-val g">${{g.total_acertos}}</div><div class="hkpi-lbl">Acertos</div></div>
+    <div class="hkpi"><div class="hkpi-val r">${{g.total_erros}}</div><div class="hkpi-lbl">Erros</div></div>
+    <div class="hkpi"><div class="hkpi-val b">${{g.total_palpites}}</div><div class="hkpi-lbl">Palpites</div></div>
   `;
 }}
 
@@ -879,8 +785,7 @@ function renderVisao(date,jogos){{
         <div class="top-score" style="color:${{c}}">${{d.best_score}}%</div>
         <div class="top-grade-block">
           ${{gradeHtml(d.best_grade)}}
-          <span style="font-size:10px;color:var(--muted);margin-top:1px">${{GRADE_NOME[d.best_grade]||''}}</span>
-          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
+          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:3px">Odd: ${{oddMkt(d)}}</span>`:''}}
         </div>
       </div>
       ${{placarCard(d, mktKey)}}
@@ -1086,214 +991,6 @@ function renderCart(date,jogos){{
         </tr>`;
       }}).join('')}}</tbody>
     </table></div>`;
-}}
-
-// ── Bilhetes ───────────────────────────────────────────────────────
-function gerarBilhetes(jogos){{
-  // Candidatos: apenas A+/A — qualidade como único critério
-  const altaConf = jogos
-    .filter(j=>j.best_grade==='A+'||j.best_grade==='A')
-    .sort((a,b)=>b.best_score-a.best_score)
-    .map(j=>{{
-      const oddVal = parseFloat(oddMkt(j))||null;
-      return {{
-        jogo:j.jogo, liga:j.liga, hora:j.hora,
-        mkt:j.best_mkt, score:j.best_score, grade:j.best_grade,
-        oddVal, resultado:j.resultado, acertos:j.acertos||{{}},
-      }};
-    }});
-
-  function montar(pool, min=2){{
-    if(pool.length < min) return null;
-    const oddTotal = pool.reduce((acc,s)=>acc*(s.oddVal||1),1);
-    return {{sels:pool, oddTotal:Math.round(oddTotal*100)/100}};
-  }}
-
-  // Bilhete do Dia — só A+ score>=90%, máx 8
-  const diaPool = altaConf.filter(x=>x.grade==='A+'&&x.score>=90).slice(0,8);
-  const bDia = diaPool.length>=2 ? {{
-    sels:diaPool,
-    oddTotal:Math.round(diaPool.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100
-  }} : null;
-
-  // Bilhete 1 — Premium: todos A+/A por score
-  const b1 = montar([...altaConf]);
-
-  // Bilhete 2 — Só A+: filtro mais restrito
-  const somenteAplus = altaConf.filter(x=>x.grade==='A+');
-  const b2 = somenteAplus.length>=2 ? montar(somenteAplus) : null;
-
-  const bilhetes = [];
-  const seen = new Set();
-  const defs = [
-    ['b1', b1, 'bilhete-premium',     '🥇 Premium — Todos A+/A por Score'],
-    ['b2', b2, 'bilhete-conservador', '⭐ Confiança Alta — Só A+'],
-  ];
-  for(const [tipo, b, cls, label] of defs){{
-    if(!b) continue;
-    const key = b.sels.map(s=>s.jogo+s.mkt).sort().join('|');
-    if(seen.has(key)) continue;
-    seen.add(key);
-    bilhetes.push({{tipo, b, cls, label}});
-  }}
-  return {{bilhetes, bilheteDia: bDia}};
-}}
-function avaliarBilhete(sels, confirmado){{
-  if(!confirmado) return {{status:'pending', acertos:0, total:sels.length}};
-  let acertos=0, erros=0, sd=0;
-  for(const s of sels){{
-    const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
-    const res = s.resultado;
-    if(!res){{ sd++; continue; }}
-    const ok = res[mktKey];
-    if(ok===true) acertos++;
-    else if(ok===false) erros++;
-    else sd++;
-  }}
-  if(erros>0) return {{status:'loss', acertos, erros, sd, total:sels.length}};
-  if(sd>0) return {{status:'partial', acertos, erros, sd, total:sels.length}};
-  return {{status:'win', acertos, erros:0, sd:0, total:sels.length}};
-}}
-
-function renderBilhetes(date, jogos){{
-  const el = document.getElementById('mkt-'+date+'-bilhetes');
-  const confirmado = isConfirmado(date);
-  const resultado = gerarBilhetes(jogos);
-  const {{bilhetes, bilheteDia}} = resultado;
-
-  if((!bilhetes || bilhetes.length===0) && !bilheteDia){{
-    el.innerHTML=`<div class="empty">Nenhum jogo com dados suficientes para gerar bilhetes hoje.</div>`;
-    return;
-  }}
-
-  // Bilhete do Dia
-  let diaHtml = '';
-  if(bilheteDia){{
-    const av = avaliarBilhete(bilheteDia.sels, confirmado);
-    const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
-    const oddColor = !bilheteDia.oddTotal?'var(--muted)':bilheteDia.oddTotal>=5?'var(--green)':bilheteDia.oddTotal>=3?'var(--yellow)':'var(--orange)';
-    const scoreMedia = Math.round(bilheteDia.sels.reduce((a,s)=>a+s.score,0)/bilheteDia.sels.length);
-    const diaHeader = `<div class="bilhete-row" style="border-bottom:1px solid rgba(34,197,94,.2);margin-bottom:4px;padding-bottom:6px">
-      <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
-      <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
-      <span class="bilhete-mkt" style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.7px">Mercado</span>
-      <div class="bilhete-score-bar" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Confiança</div>
-      <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
-      <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
-    </div>`;
-    const rows = bilheteDia.sels.map((s,i)=>{{
-      const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
-      const res = s.resultado;
-      let resHtml = '<span class="res-badge pending">⏳</span>';
-      if(confirmado && res){{
-        const ok = res[mktKey];
-        if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
-        else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
-        else resHtml='<span class="res-badge pending">? S/D</span>';
-      }}
-      return`<div class="bilhete-row">
-        <span class="bilhete-num">${{i+1}}</span>
-        <div style="flex:1;min-width:0"><div class="bilhete-jogo">${{s.jogo}}</div><div class="bilhete-liga">${{s.liga}} · ${{s.hora}}</div></div>
-        <span class="bilhete-mkt">${{s.mkt}}</span>
-        <div class="bilhete-score-bar">${{bar(s.score,60)}}</div>
-        <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
-        <div class="bilhete-res">${{resHtml}}</div>
-      </div>`;
-    }}).join('');
-    let statusHtml = '';
-    if(!confirmado) statusHtml='<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando</span>';
-    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)">✅ GREEN! Odd: ${{bilheteDia.oddTotal.toFixed(2)}}</span>`;
-    else if(av.status==='loss') statusHtml=`<span class="bilhete-status" style="color:var(--red)">✗ Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
-    else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${{av.sd}} sem dados</span>`;
-
-    diaHtml=`<div class="bilhete-dia${{overlayClass}}">
-      <div class="bilhete-dia-badge">🏆 BILHETE DO DIA</div>
-      <div class="bilhete-header">
-        <div><div class="bilhete-title" style="font-size:15px">Os mais assertivos do dia</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:2px">${{bilheteDia.sels.length}} seleções · Score médio ${{scoreMedia}}%</div></div>
-        <div style="text-align:right">
-          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{bilheteDia.oddTotal?bilheteDia.oddTotal.toFixed(2):'—'}}</div>
-          <div class="bilhete-odd-label">Odd combinada</div>
-        </div>
-      </div>
-      <div style="border-top:1px solid rgba(34,197,94,.2);padding-top:10px">${{diaHeader}}${{rows}}</div>
-      <div class="bilhete-footer"><span class="bilhete-sels">${{bilheteDia.sels.filter(s=>s.grade==='A+').length}} A+ · ${{bilheteDia.sels.filter(s=>s.grade==='A').length}} A</span>${{statusHtml}}</div>
-    </div>
-    <div class="sec-title">📋 Todos os Bilhetes</div>`;
-  }}
-
-  const html = bilhetes.map((item)=>{{ const {{tipo, b, cls, label}} = item;
-    const av = avaliarBilhete(b.sels, confirmado);
-    const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
-    const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
-
-    const bilheteHeader = `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
-      <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
-      <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
-      <span class="bilhete-mkt" style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.7px">Mercado</span>
-      <div class="bilhete-score-bar" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Confiança</div>
-      <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
-      <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
-    </div>`;
-    const rows = b.sels.map((s,i)=>{{
-      const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
-      const res = s.resultado;
-      let resHtml = '<span class="res-badge pending">⏳</span>';
-      if(confirmado && res){{
-        const ok = res[mktKey];
-        if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
-        else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
-        else resHtml='<span class="res-badge pending">? S/D</span>';
-      }}
-      const scoreVal = s.score || 0;
-      return`<div class="bilhete-row">
-        <span class="bilhete-num">${{i+1}}</span>
-        <div style="flex:1;min-width:0">
-          <div class="bilhete-jogo">${{s.jogo}}</div>
-          <div class="bilhete-liga">${{s.liga}} · ${{s.hora}}</div>
-        </div>
-        <span class="bilhete-mkt">${{s.mkt}}</span>
-        <div class="bilhete-score-bar">${{bar(scoreVal,60)}}</div>
-        <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
-        <div class="bilhete-res">${{resHtml}}</div>
-      </div>`;
-    }}).join('');
-
-    let statusHtml = '';
-    if(!confirmado){{
-      statusHtml = '<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando resultados</span>';
-    }} else if(av.status==='win'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--green)">✅ BILHETE GREEN! Odd: ${{b.oddTotal.toFixed(2)}}</span>`;
-    }} else if(av.status==='loss'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--red)">✗ Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
-    }} else if(av.status==='partial'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${{av.sd}} sem dados</span>`;
-    }}
-
-    return`<div class="bilhete-card ${{cls}}${{overlayClass}}">
-      <div class="bilhete-header">
-        <div>
-          <div class="bilhete-title">${{label}}</div>
-          <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções</div>
-        </div>
-        <div style="text-align:right">
-          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{b.oddTotal?b.oddTotal.toFixed(2):'—'}}</div>
-          <div class="bilhete-odd-label">Odd combinada</div>
-        </div>
-      </div>
-      <div style="border-top:1px solid var(--border);padding-top:10px">${{bilheteHeader}}${{rows}}</div>
-      <div class="bilhete-footer">
-        <span class="bilhete-sels">${{b.sels.filter(s=>s.grade==='A+'||s.grade==='A').length}} A+/A · ${{b.sels.filter(s=>s.grade==='B').length}} B</span>
-        ${{statusHtml}}
-      </div>
-    </div>`;
-  }}).join('');
-
-  const callout = confirmado
-    ? '<div class="callout ok"><strong>✅ Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
-    : '<div class="callout info"><strong>🎯 Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
-
-  el.innerHTML = callout + diaHtml + html;
 }}
 
 // ── Resultados do Dia ──────────────────────────────────────────────
@@ -1628,7 +1325,6 @@ function renderMkt(date,mkt){{
   else if(mkt==='over25')    renderOver25(date,jogos);
   else if(mkt==='escanteios')renderEsc(date,jogos);
   else if(mkt==='cartoes')   renderCart(date,jogos);
-  else if(mkt==='bilhetes')     renderBilhetes(date,jogos);
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
 }}
 
