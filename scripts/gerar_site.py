@@ -1026,12 +1026,13 @@ function renderCart(date,jogos){{
 
 // ── Bilhetes ───────────────────────────────────────────────────────
 function gerarBilhetes(jogos){{
+  // Candidatos: apenas A+/A com odd disponível
   const candidatos = [];
   for(const j of jogos){{
     const grade = j.best_grade;
-    if(!['A+','A','B'].includes(grade)) continue;
+    if(!['A+','A'].includes(grade)) continue;
     const score = j.best_score || 0;
-    if(score < 65) continue;
+    if(score < 75) continue;
     let oddVal = parseFloat(oddMkt(j));
     if(isNaN(oddVal) || oddVal < 1.10) {{
       const justaMap = {{'Over 1.5':j.odd_justa_15,'Over 2.5':j.odd_justa_25,'BTTS':j.odd_justa_btts,'Over 0.5 HT':j.odd_justa_05ht,'Esc 8.5':j.odd_justa_esc85,'Cart 2.5':j.odd_justa_cart25}};
@@ -1046,34 +1047,31 @@ function gerarBilhetes(jogos){{
     }});
   }}
 
-  // Pools
-  const aplus    = candidatos.filter(c=>c.grade==='A+').sort((a,b)=>b.score-a.score);
-  const altaConf = candidatos.filter(c=>c.grade==='A+'||c.grade==='A').sort((a,b)=>b.score-a.score);
-  const altaOdd  = [...altaConf].sort((a,b)=>b.oddVal-a.oddVal);
-  const mixOdd   = [...candidatos].sort((a,b)=>b.oddVal-a.oddVal);
-  const porScore = [...candidatos].sort((a,b)=>b.score-a.score);
-
-  function montar(pool, minJogos=6){{
-    const sels = pool.slice(0, Math.max(minJogos, pool.length));
-    if(sels.length < 3) return null;
-    const oddTotal = sels.reduce((acc,s)=>acc*s.oddVal,1);
-    return {{sels, oddTotal: Math.round(oddTotal*100)/100}};
+  function montar(pool, min=2){{
+    if(pool.length < min) return null;
+    const oddTotal = pool.reduce((acc,s)=>acc*s.oddVal,1);
+    return {{sels: pool, oddTotal: Math.round(oddTotal*100)/100}};
   }}
 
-  const b1 = montar(aplus);
-  const b2 = montar(altaConf);
-  const b3 = montar(altaOdd);
-  const b4 = montar(mixOdd);
-  const b5 = montar(porScore);
+  // Bilhete 1 — Premium: A+/A por score
+  const b1 = montar([...candidatos].sort((a,b)=>b.score-a.score));
 
+  // Bilhete 2 — Valor Máximo: A+/A por odd maior
+  const b2 = montar([...candidatos].sort((a,b)=>b.oddVal-a.oddVal));
+
+  // Bilhete do Dia — só A+ score>=90%, máx 8
+  const diaPool = candidatos.filter(x=>x.grade==='A+'&&x.score>=90).slice(0,8);
+  const bDia = diaPool.length >= 2 ? {{
+    sels: diaPool,
+    oddTotal: Math.round(diaPool.reduce((acc,s)=>acc*s.oddVal,1)*100)/100
+  }} : null;
+
+  // Deduplicar bilhetes iguais
   const bilhetes = [];
   const seen = new Set();
   const defs = [
-    ['b1', b1, 'bilhete-premium',     '🥇 Premium Puro — Só A+'],
-    ['b2', b2, 'bilhete-premium',     '⭐ Alta Confiança — A+ / A'],
-    ['b3', b3, 'bilhete-equilibrado', '💰 Valor Máximo — A+/A por Odd'],
-    ['b4', b4, 'bilhete-equilibrado', '⚖️ Equilibrado — Mix + Odd Alta'],
-    ['b5', b5, 'bilhete-conservador', '🛡️ Conservador — Maior Score'],
+    ['b1', b1, 'bilhete-premium',     '🥇 Premium — A+/A por Score'],
+    ['b2', b2, 'bilhete-equilibrado', '💰 Valor Máximo — A+/A por Odd'],
   ];
   for(const [tipo, b, cls, label] of defs){{
     if(!b) continue;
@@ -1082,15 +1080,6 @@ function gerarBilhetes(jogos){{
     seen.add(key);
     bilhetes.push({{tipo, b, cls, label}});
   }}
-  // Bilhete do Dia — A+ primeiro, completa com A se necessário
-  const topAplus = candidatos.filter(x=>x.grade==='A+').sort((a,b)=>b.score-a.score);
-  // Bilhete do Dia: apenas A+ score>=90%, máximo 8 seleções
-  const diaPool = topAplus.filter(x=>x.score>=90).slice(0,8);
-  const bDia = diaPool.length >= 2 ? {{
-    sels: diaPool,
-    oddTotal: Math.round(diaPool.reduce((acc,s)=>acc*s.oddVal,1)*100)/100
-  }} : null;
-
   return {{bilhetes, bilheteDia: bDia}};
 }}
 function avaliarBilhete(sels, confirmado){{
