@@ -1084,8 +1084,8 @@ function gerarBilhetes(jogos){{
   }}
   // Bilhete do Dia — A+ primeiro, completa com A se necessário
   const topAplus = candidatos.filter(x=>x.grade==='A+').sort((a,b)=>b.score-a.score);
-  // Bilhete do Dia: apenas A+ (Confiança Alta)
-  let diaPool = [...topAplus];
+  // Bilhete do Dia: apenas A+ score>=90%, máximo 8 seleções
+  const diaPool = topAplus.filter(x=>x.score>=90).slice(0,8);
   const bDia = diaPool.length >= 2 ? {{
     sels: diaPool,
     oddTotal: Math.round(diaPool.reduce((acc,s)=>acc*s.oddVal,1)*100)/100
