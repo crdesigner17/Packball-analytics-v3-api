@@ -650,6 +650,13 @@ def processar_data(client: APIClient, date_str: str) -> list:
         # Filtrar apenas status relevantes
         STATUS_OK = {"NS","1H","HT","2H","ET","P","LIVE","FT","AET","PEN"}
         fixtures = [f for f in fixtures if f.get("fixture",{}).get("status",{}).get("short","") in STATUS_OK]
+        # Filtrar seleções sub-20 e sub-21
+        EXCLUIR_SUB = ['U20','U21','U-20','U-21','Under-20','Under-21','Under 20','Under 21']
+        fixtures = [f for f in fixtures if not any(
+            sub.lower() in f["teams"]["home"]["name"].lower() or
+            sub.lower() in f["teams"]["away"]["name"].lower()
+            for sub in EXCLUIR_SUB
+        )]
 
         if not fixtures:
             print(f"     ⏭ Sem fixtures válidos")
