@@ -369,7 +369,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
     <!-- preenchido pelo JS -->
   </div>
   <div class="header-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-    <span style="font-size:12px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace">🕐 03/06/2026 17:22 UTC</span>
+    <span style="font-size:12px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace">🕐 03/06/2026 17:33 UTC</span>
     <span class="badge version">v3.1</span>
   </div>
 </div>
@@ -985,7 +985,7 @@ function renderGlobalKpis(){
   });
 
 const barsHtml=barCols.map(b=>{
-    return`<div class="desemp-bar-col" title="${b.dd}/${b.mm} · ${b.t!=null?b.t+'%':'?'}" onclick="switchDate('${b.dateKey}');setTimeout(()=>switchMkt('${b.dateKey}','ranking'),80)" style="cursor:pointer">
+    return`<div class="desemp-bar-col" title="${b.dd}/${b.mm} · ${b.t!=null?b.t+'%':'?'}" onclick="activeMkt['${b.dateKey}']='ranking';switchDate('${b.dateKey}')" style="cursor:pointer">
       <div class="desemp-bar-pct" style="color:${b.col}">${b.t!=null?b.t+'%':'?'}</div>
       <div class="desemp-bar" style="height:${b.h}px;background:${b.col};width:22px"></div>
       <div class="desemp-bar-lbl">${b.dd}/${b.mm}</div>
