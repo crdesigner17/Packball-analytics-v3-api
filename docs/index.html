@@ -50,7 +50,7 @@ body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-
 .desemp-divider{width:1px;height:40px;background:var(--border);flex-shrink:0}
 .desemp-bars{display:flex;flex-direction:column;gap:3px}
 .desemp-bars-label{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
-.desemp-bars-chart{display:flex;align-items:flex-end;gap:4px;height:52px}
+.desemp-bars-chart{display:flex;align-items:flex-end;gap:4px;height:68px}
 .desemp-bar-col{display:flex;flex-direction:column;align-items:center;gap:2px}
 .desemp-bar{border-radius:3px 3px 0 0;min-width:22px;transition:opacity .2s}
 .desemp-bar:hover{opacity:.8}
@@ -369,7 +369,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
     <!-- preenchido pelo JS -->
   </div>
   <div class="header-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-    <span style="font-size:12px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace">🕐 03/06/2026 17:40 UTC</span>
+    <span style="font-size:12px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace">🕐 03/06/2026 17:42 UTC</span>
     <span class="badge version">v3.1</span>
   </div>
 </div>
@@ -980,7 +980,7 @@ function renderGlobalKpis(){
     const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
     const [dd,mm]=dateKey.split('-');
     const col=t==null?'var(--muted)':t>=80?'var(--green)':t>=60?'var(--yellow)':'var(--red)';
-    const h=t?Math.max(6,Math.round(t*0.32)):4;
+    const h=t?Math.max(6,Math.round(t*0.28)):4;
     return{t,dd,mm,col,h,dateKey};
   });
 
