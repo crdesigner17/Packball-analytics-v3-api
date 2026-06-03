@@ -127,7 +127,7 @@
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 76.5,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -259,7 +259,7 @@
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 78.4,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -391,7 +391,7 @@
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 78.2,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -523,7 +523,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -653,13 +653,7 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {
-        "Cart 3.5": {
-          "score": 76.5,
-          "palpite": true,
-          "acertou": true
-        }
-      }
+      "acertos": {}
     },
     {
       "date": "26-05-2026",
@@ -787,12 +781,7 @@
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 77.9,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 8.5": {
-          "score": 75.5,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -1428,7 +1417,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -1960,63 +1949,63 @@
       "over25_a": null,
       "exg_h": null,
       "exg_a": null,
-      "ppg_h": 2.33,
+      "ppg_h": 2.5,
       "ppg_a": 0.0,
       "h2h_goals": 3.0,
       "h2h_n": 3,
-      "avg_sc_h": 2.7,
+      "avg_sc_h": 3.0,
       "avg_sc_a": 0.0,
-      "avg_co_h": 0.7,
+      "avg_co_h": 0.5,
       "avg_co_a": 5.0,
-      "btts_h": 66.7,
+      "btts_h": 50.0,
       "btts_a": 100.0,
-      "over05_ht": 0.0,
-      "over15_ht": 0.0,
-      "avg_shots_h": 18.5,
+      "over05_ht": 33.3,
+      "over15_ht": 33.3,
+      "avg_shots_h": 19.67,
       "avg_shots_a": null,
-      "avg_sot_h": 8.0,
+      "avg_sot_h": 8.67,
       "avg_sot_a": null,
-      "avg_sot": 8.0,
-      "avg_shots": 18.5,
-      "avg_corners": 3.5,
-      "avg_corners_h": 3.5,
+      "avg_sot": 8.67,
+      "avg_shots": 19.67,
+      "avg_corners": 6.67,
+      "avg_corners_h": 6.67,
       "avg_corners_a": null,
-      "over65_c": 0.0,
-      "over75_c": 0.0,
-      "over85_c": 0.0,
-      "over95_c": 0.0,
-      "over105_c": 0.0,
+      "over65_c": 33.3,
+      "over75_c": 33.3,
+      "over85_c": 33.3,
+      "over95_c": 33.3,
+      "over105_c": 33.3,
       "avg_cards": 5.0,
       "avg_cards_h": 5.0,
       "avg_cards_a": null,
-      "over25_cards": 50.0,
-      "over35_cards": 50.0,
-      "over45_cards": 50.0,
+      "over25_cards": 66.7,
+      "over35_cards": 66.7,
+      "over45_cards": 66.7,
       "pred_winner": "Morocco",
       "pred_advice": "Combo Winner : Morocco and -3.5 goals",
       "win_home": 50.0,
       "win_away": 0.0,
-      "form_h": "DWW",
+      "form_h": "DWWW",
       "form_a": "L",
       "under25_h": null,
       "under25_a": null,
       "exg_tot": null,
-      "ppg_avg": 1.17,
+      "ppg_avg": 1.25,
       "ppg_min": 0.0,
-      "btts_cf": 83.3,
+      "btts_cf": 75.0,
       "poisson_o15": null,
       "poisson_o25": null,
       "poisson_u45": null,
       "poisson_u35": null,
       "score_15": 66.7,
-      "score_25": 54.6,
-      "score_btts": 62.4,
-      "score_05ht": 43.0,
-      "score_u45": 53.4,
-      "score_esc75": 23.2,
-      "score_esc85": 17.7,
-      "score_cards25": 53.3,
-      "score_cards35": 52.6,
+      "score_25": 55.7,
+      "score_btts": 60.0,
+      "score_05ht": 36.2,
+      "score_u45": 52.5,
+      "score_esc75": 40.6,
+      "score_esc85": 40.3,
+      "score_cards25": 61.1,
+      "score_cards35": 61.3,
       "passou_filtro": false,
       "via": "Reprovado",
       "grade_15": "D",
@@ -2030,17 +2019,17 @@
       "grade_cart25": "C",
       "odd_justa_15": 1.5,
       "odd_justa_25": 1.5,
-      "odd_justa_btts": 1.2,
-      "odd_justa_05ht": null,
-      "odd_justa_esc85": null,
-      "odd_justa_cart25": 2.0,
-      "best_mkt": "BTTS",
-      "best_score": 62.4,
+      "odd_justa_btts": 1.33,
+      "odd_justa_05ht": 3.0,
+      "odd_justa_esc85": 3.0,
+      "odd_justa_cart25": 1.5,
+      "best_mkt": "Cart 2.5",
+      "best_score": 61.1,
       "best_grade": "C",
       "best_risk": "Arriscado",
       "justif_15": "O1.5 67% · PPG 1.2 · H2H 3.0 gols",
-      "justif_esc": "Média 3.5 cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média 5.0 cart · O2.5: 50.0% · O3.5: 50.0%",
+      "justif_esc": "Média 6.67 cant · O8.5: 33.3% · O7.5: 33.3%",
+      "justif_cards": "Média 5.0 cart · O2.5: 66.7% · O3.5: 66.7%",
       "resultado": {
         "fixture_id": 1545261,
         "status": "FT",
@@ -2190,12 +2179,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "Over 2.5": {
-          "score": 78.2,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2327,12 +2311,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "BTTS": {
-          "score": 74.6,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2608,6 +2587,85 @@
       "taxa": 100.0
     },
     "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 2,
+      "acertos": 2,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 2,
+      "acertos": 2,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "stats": {
+    "total": 20,
+    "over15_aprovados": 4,
+    "esc85_aprovados": 1,
+    "cart25_aprovados": 2,
+    "premium": 8
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 4,
+      "acertos": 4,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Over 2.5": {
       "palpites": 1,
       "acertos": 1,
       "erros": 0,
@@ -2629,6 +2687,13 @@
       "taxa": null
     },
     "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
       "palpites": 0,
       "acertos": 0,
       "erros": 0,
@@ -2663,12 +2728,5 @@
       "sem_dados": 0,
       "taxa": 100.0
     }
-  },
-  "stats": {
-    "total": 20,
-    "over15_aprovados": 4,
-    "esc85_aprovados": 1,
-    "cart25_aprovados": 2,
-    "premium": 8
   }
 }

@@ -127,7 +127,7 @@
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 76.5,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -257,7 +257,13 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "29-05-2026",
@@ -383,7 +389,13 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {
+        "Under 3.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "29-05-2026",
@@ -511,17 +523,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "Over 2.5": {
-          "score": 75.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "BTTS": {
-          "score": 70.3,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -651,7 +653,13 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {
+        "Under 3.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "29-05-2026",
@@ -778,13 +786,8 @@
         "cart35_ok": null
       },
       "acertos": {
-        "Esc 7.5": {
-          "score": 86.4,
-          "palpite": true,
-          "acertou": null
-        },
         "Esc 8.5": {
-          "score": 87.0,
+          "score": 0,
           "palpite": true,
           "acertou": null
         }
@@ -927,6 +930,85 @@
   "resultado_confirmado": true,
   "resultado_stats": {
     "Over 1.5": {
+      "palpites": 2,
+      "acertos": 2,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 2,
+      "acertos": 2,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Esc 7.5": {
+      "palpites": 1,
+      "acertos": 1,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Esc 8.5": {
+      "palpites": 1,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 1,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "stats": {
+    "total": 7,
+    "over15_aprovados": 1,
+    "esc85_aprovados": 1,
+    "cart25_aprovados": 0,
+    "premium": 6
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
       "palpites": 1,
       "acertos": 1,
       "erros": 0,
@@ -961,6 +1043,13 @@
       "sem_dados": 0,
       "taxa": null
     },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
     "Esc 7.5": {
       "palpites": 2,
       "acertos": 1,
@@ -989,12 +1078,5 @@
       "sem_dados": 0,
       "taxa": null
     }
-  },
-  "stats": {
-    "total": 7,
-    "over15_aprovados": 1,
-    "esc85_aprovados": 1,
-    "cart25_aprovados": 0,
-    "premium": 6
   }
 }

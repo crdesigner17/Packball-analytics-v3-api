@@ -127,7 +127,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 85.7,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -637,7 +637,7 @@
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 80.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -1273,12 +1273,7 @@
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 82.8,
-          "palpite": true,
-          "acertou": true
-        },
-        "Cart 3.5": {
-          "score": 83.5,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -1408,7 +1403,13 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {
+        "Under 3.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "30-05-2026",
@@ -1662,7 +1663,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -1794,7 +1795,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2304,22 +2305,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "BTTS": {
-          "score": 74.3,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 7.5": {
-          "score": 78.8,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 8.5": {
-          "score": 79.4,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2703,7 +2689,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2860,6 +2846,85 @@
       "taxa": null
     },
     "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 1,
+      "acertos": 1,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 2,
+      "acertos": 2,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "stats": {
+    "total": 22,
+    "over15_aprovados": 5,
+    "esc85_aprovados": 1,
+    "cart25_aprovados": 2,
+    "premium": 8
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 5,
+      "acertos": 5,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
       "palpites": 1,
       "acertos": 1,
       "erros": 0,
@@ -2874,6 +2939,13 @@
       "taxa": null
     },
     "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
       "palpites": 0,
       "acertos": 0,
       "erros": 0,
@@ -2908,12 +2980,5 @@
       "sem_dados": 0,
       "taxa": 100.0
     }
-  },
-  "stats": {
-    "total": 22,
-    "over15_aprovados": 5,
-    "esc85_aprovados": 1,
-    "cart25_aprovados": 2,
-    "premium": 8
   }
 }

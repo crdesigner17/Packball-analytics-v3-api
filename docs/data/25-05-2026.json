@@ -12,9 +12,9 @@
       "home_id": 185,
       "away_id": 161,
       "is_elite": true,
-      "odds_h": 3.5,
-      "odds_d": 3.25,
-      "odds_a": 2.08,
+      "odds_h": null,
+      "odds_d": null,
+      "odds_a": null,
       "over15_g": 85.7,
       "over25_g": 42.9,
       "over15_h": null,
@@ -127,7 +127,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 85.7,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -144,9 +144,9 @@
       "home_id": 6231,
       "away_id": 632,
       "is_elite": false,
-      "odds_h": 2.62,
-      "odds_d": 3.15,
-      "odds_a": 2.54,
+      "odds_h": null,
+      "odds_d": null,
+      "odds_a": null,
       "over15_g": 70.0,
       "over25_g": 50.0,
       "over15_h": null,
@@ -270,9 +270,9 @@
       "home_id": 147,
       "away_id": 118,
       "is_elite": false,
-      "odds_h": 2.5,
-      "odds_d": 3.3,
-      "odds_a": 2.75,
+      "odds_h": null,
+      "odds_d": null,
+      "odds_a": null,
       "over15_g": 70.0,
       "over25_g": 60.0,
       "over15_h": null,
@@ -396,26 +396,26 @@
       "home_id": 2618,
       "away_id": 13975,
       "is_elite": false,
-      "odds_h": 1.9,
-      "odds_d": 3.15,
-      "odds_a": 4.45,
+      "odds_h": null,
+      "odds_d": null,
+      "odds_a": null,
       "over15_g": 100.0,
       "over25_g": 66.7,
       "over15_h": null,
       "over15_a": null,
       "over25_h": null,
       "over25_a": null,
-      "exg_h": 1.1,
+      "exg_h": 1.0,
       "exg_a": 1.2,
-      "ppg_h": 0.9,
+      "ppg_h": 0.91,
       "ppg_a": 1.55,
       "h2h_goals": 2.67,
       "h2h_n": 3,
-      "avg_sc_h": 1.1,
+      "avg_sc_h": 1.0,
       "avg_sc_a": 1.2,
-      "avg_co_h": 1.1,
+      "avg_co_h": 1.0,
       "avg_co_a": 1.0,
-      "btts_h": 90.0,
+      "btts_h": 81.8,
       "btts_a": 81.8,
       "over05_ht": 55.0,
       "over15_ht": 20.0,
@@ -443,23 +443,23 @@
       "pred_advice": "Double chance : draw or Athletic Club",
       "win_home": 10.0,
       "win_away": 45.0,
-      "form_h": "DDLLL",
+      "form_h": "DLLLD",
       "form_a": "DDDWW",
       "under25_h": null,
       "under25_a": null,
-      "exg_tot": 2.3,
+      "exg_tot": 2.2,
       "ppg_avg": 1.23,
-      "ppg_min": 0.9,
-      "btts_cf": 85.9,
-      "poisson_o15": 66.9,
-      "poisson_o25": 40.4,
-      "poisson_u45": 91.6,
-      "poisson_u35": 79.9,
+      "ppg_min": 0.91,
+      "btts_cf": 81.8,
+      "poisson_o15": 64.5,
+      "poisson_o25": 37.7,
+      "poisson_u45": 92.8,
+      "poisson_u35": 81.9,
       "score_15": 100.0,
-      "score_25": 51.4,
-      "score_btts": 65.1,
-      "score_05ht": 41.8,
-      "score_u45": 65.4,
+      "score_25": 50.7,
+      "score_btts": 63.2,
+      "score_05ht": 41.6,
+      "score_u45": 66.2,
       "score_esc75": 78.3,
       "score_esc85": 73.3,
       "score_cards25": 77.2,
@@ -468,16 +468,16 @@
       "via": "Via 2",
       "grade_15": "A+",
       "grade_25": "C",
-      "grade_btts": "B",
+      "grade_btts": "C",
       "grade_05ht": "D",
       "grade_u45": "B",
-      "grade_u35": "C",
+      "grade_u35": "B",
       "grade_esc85": "B",
       "grade_esc75": "A",
       "grade_cart25": "A",
       "odd_justa_15": 1.0,
       "odd_justa_25": 1.5,
-      "odd_justa_btts": 1.16,
+      "odd_justa_btts": 1.22,
       "odd_justa_05ht": 1.82,
       "odd_justa_esc85": 1.33,
       "odd_justa_cart25": 1.05,
@@ -485,7 +485,7 @@
       "best_score": 100.0,
       "best_grade": "A+",
       "best_risk": "Confiança Alta",
-      "justif_15": "O1.5 100% · xG 2.3 · PPG 1.2 · H2H 2.7 gols · Via 2 ✓",
+      "justif_15": "O1.5 100% · xG 2.2 · PPG 1.2 · H2H 2.7 gols · Via 2 ✓",
       "justif_esc": "Média 11.45 cant · O8.5: 75.0% · O7.5: 90.0%",
       "justif_cards": "Média 5.8 cart · O2.5: 95.0% · O3.5: 95.0%",
       "resultado": {
@@ -511,22 +511,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 7.5": {
-          "score": 78.3,
-          "palpite": true,
-          "acertou": true
-        },
-        "Cart 2.5": {
-          "score": 77.2,
-          "palpite": true,
-          "acertou": true
-        },
-        "Cart 3.5": {
-          "score": 78.3,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -543,9 +528,9 @@
       "home_id": 149,
       "away_id": 7774,
       "is_elite": false,
-      "odds_h": 1.95,
-      "odds_d": 2.95,
-      "odds_a": 3.95,
+      "odds_h": null,
+      "odds_d": null,
+      "odds_a": null,
       "over15_g": 80.0,
       "over25_g": 40.0,
       "over15_h": null,
@@ -656,7 +641,13 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "25-05-2026",
@@ -669,9 +660,9 @@
       "home_id": 7779,
       "away_id": 1197,
       "is_elite": false,
-      "odds_h": 1.95,
-      "odds_d": 3.2,
-      "odds_a": 3.75,
+      "odds_h": null,
+      "odds_d": null,
+      "odds_a": null,
       "over15_g": 50.0,
       "over25_g": 50.0,
       "over15_h": null,
@@ -795,9 +786,9 @@
       "home_id": 9982,
       "away_id": 1811,
       "is_elite": false,
-      "odds_h": 1.64,
-      "odds_d": 3.55,
-      "odds_a": 5.0,
+      "odds_h": null,
+      "odds_d": null,
+      "odds_a": null,
       "over15_g": 75.0,
       "over25_g": 62.5,
       "over15_h": null,
@@ -908,7 +899,13 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "25-05-2026",
@@ -1036,17 +1033,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "Over 2.5": {
-          "score": 77.5,
-          "palpite": true,
-          "acertou": true
-        },
-        "BTTS": {
-          "score": 73.4,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -1062,6 +1049,85 @@
   ],
   "resultado_confirmado": true,
   "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 5,
+      "acertos": 5,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "stats": {
+    "total": 8,
+    "over15_aprovados": 3,
+    "esc85_aprovados": 0,
+    "cart25_aprovados": 1,
+    "premium": 5
+  },
+  "resultado_stats_full": {
     "Over 1.5": {
       "palpites": 3,
       "acertos": 3,
@@ -1097,6 +1163,13 @@
       "sem_dados": 0,
       "taxa": null
     },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
     "Esc 7.5": {
       "palpites": 1,
       "acertos": 1,
@@ -1125,12 +1198,5 @@
       "sem_dados": 0,
       "taxa": 100.0
     }
-  },
-  "stats": {
-    "total": 8,
-    "over15_aprovados": 3,
-    "esc85_aprovados": 0,
-    "cart25_aprovados": 1,
-    "premium": 5
   }
 }

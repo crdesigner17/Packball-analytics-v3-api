@@ -125,7 +125,13 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -253,7 +259,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 90.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -509,7 +515,13 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": false
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -637,7 +649,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -769,12 +781,7 @@
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 82.1,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 8.5": {
-          "score": 81.3,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -904,7 +911,13 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -1030,7 +1043,13 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -1158,7 +1177,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 90.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -1288,7 +1307,13 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -1540,7 +1565,13 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": false
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -2046,7 +2077,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2304,12 +2335,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 7.5": {
-          "score": 77.3,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2441,7 +2467,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 90.0,
+          "score": 0,
           "palpite": true,
           "acertou": false
         }
@@ -2573,12 +2599,7 @@
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 80.8,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 8.5": {
-          "score": 79.7,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -2962,7 +2983,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -3220,7 +3241,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -3352,7 +3373,7 @@
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 76.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -3379,17 +3400,17 @@
       "over25_h": null,
       "over25_a": null,
       "exg_h": 1.5,
-      "exg_a": 0.9,
+      "exg_a": 0.8,
       "ppg_h": 1.27,
-      "ppg_a": 0.7,
+      "ppg_a": 0.73,
       "h2h_goals": 2.7,
       "h2h_n": 10,
       "avg_sc_h": 1.5,
-      "avg_sc_a": 0.9,
+      "avg_sc_a": 0.8,
       "avg_co_h": 1.5,
-      "avg_co_a": 2.0,
+      "avg_co_a": 1.8,
       "btts_h": 90.9,
-      "btts_a": 90.0,
+      "btts_a": 81.8,
       "over05_ht": 75.0,
       "over15_ht": 45.0,
       "avg_shots_h": 29.5,
@@ -3417,40 +3438,40 @@
       "win_home": 45.0,
       "win_away": 10.0,
       "form_h": "WWWWL",
-      "form_a": "WLLLL",
+      "form_a": "LLLLD",
       "under25_h": null,
       "under25_a": null,
-      "exg_tot": 2.4,
-      "ppg_avg": 0.98,
-      "ppg_min": 0.7,
-      "btts_cf": 90.5,
-      "poisson_o15": 69.2,
-      "poisson_o25": 43.0,
-      "poisson_u45": 90.4,
-      "poisson_u35": 77.9,
+      "exg_tot": 2.3,
+      "ppg_avg": 1.0,
+      "ppg_min": 0.73,
+      "btts_cf": 86.3,
+      "poisson_o15": 66.9,
+      "poisson_o25": 40.4,
+      "poisson_u45": 91.6,
+      "poisson_u35": 79.9,
       "score_15": 60.0,
-      "score_25": 41.9,
-      "score_btts": 62.1,
-      "score_05ht": 54.8,
-      "score_u45": 64.5,
+      "score_25": 41.2,
+      "score_btts": 60.3,
+      "score_05ht": 54.7,
+      "score_u45": 65.4,
       "score_esc75": 72.6,
       "score_esc85": 68.9,
       "score_cards25": 74.6,
-      "score_cards35": 70.4,
+      "score_cards35": 70.5,
       "passou_filtro": true,
       "via": "Via 2",
       "grade_15": "C",
       "grade_25": "D",
       "grade_btts": "C",
       "grade_05ht": "C",
-      "grade_u45": "C",
+      "grade_u45": "B",
       "grade_u35": "C",
       "grade_esc85": "B",
       "grade_esc75": "B",
       "grade_cart25": "B",
       "odd_justa_15": 1.67,
       "odd_justa_25": 2.5,
-      "odd_justa_btts": 1.11,
+      "odd_justa_btts": 1.16,
       "odd_justa_05ht": 1.33,
       "odd_justa_esc85": 1.54,
       "odd_justa_cart25": 1.11,
@@ -3458,7 +3479,7 @@
       "best_score": 74.6,
       "best_grade": "B",
       "best_risk": "Moderado",
-      "justif_15": "O1.5 60% · xG 2.4 · PPG 1.0 · H2H 2.7 gols · Via 2 ✓",
+      "justif_15": "O1.5 60% · xG 2.3 · PPG 1.0 · H2H 2.7 gols · Via 2 ✓",
       "justif_esc": "Média 11.25 cant · O8.5: 65.0% · O7.5: 70.0%",
       "justif_cards": "Média 5.9 cart · O2.5: 90.0% · O3.5: 80.0%",
       "resultado": {
@@ -3610,12 +3631,7 @@
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 79.8,
-          "palpite": true,
-          "acertou": true
-        },
-        "Cart 3.5": {
-          "score": 80.5,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -3747,7 +3763,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 90.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -3878,13 +3894,8 @@
         "cart35_ok": true
       },
       "acertos": {
-        "Esc 7.5": {
-          "score": 76.7,
-          "palpite": true,
-          "acertou": true
-        },
-        "Esc 8.5": {
-          "score": 75.7,
+        "Over 1.5": {
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -4036,17 +4047,17 @@
       "over15_a": null,
       "over25_h": null,
       "over25_a": null,
-      "exg_h": 1.6,
+      "exg_h": 1.7,
       "exg_a": 0.7,
-      "ppg_h": 2.12,
+      "ppg_h": 2.0,
       "ppg_a": 0.56,
       "h2h_goals": 2.0,
       "h2h_n": 2,
-      "avg_sc_h": 1.6,
+      "avg_sc_h": 1.7,
       "avg_sc_a": 0.7,
-      "avg_co_h": 0.9,
+      "avg_co_h": 1.0,
       "avg_co_a": 1.4,
-      "btts_h": 75.0,
+      "btts_h": 77.8,
       "btts_a": 88.9,
       "over05_ht": null,
       "over15_ht": null,
@@ -4074,49 +4085,49 @@
       "pred_advice": "Winner : Brusque",
       "win_home": 45.0,
       "win_away": 10.0,
-      "form_h": "WDWLW",
+      "form_h": "DWLWD",
       "form_a": "LLDLD",
       "under25_h": null,
       "under25_a": null,
-      "exg_tot": 2.3,
-      "ppg_avg": 1.34,
+      "exg_tot": 2.4,
+      "ppg_avg": 1.28,
       "ppg_min": 0.56,
-      "btts_cf": 82.0,
-      "poisson_o15": 66.9,
-      "poisson_o25": 40.4,
-      "poisson_u45": 91.6,
-      "poisson_u35": 79.9,
+      "btts_cf": 83.3,
+      "poisson_o15": 69.2,
+      "poisson_o25": 43.0,
+      "poisson_u45": 90.4,
+      "poisson_u35": 77.9,
       "score_15": 50.0,
-      "score_25": 44.3,
-      "score_btts": 57.1,
-      "score_05ht": 41.5,
-      "score_u45": 65.4,
-      "score_esc75": 48.2,
-      "score_esc85": 44.7,
-      "score_cards25": 47.3,
-      "score_cards35": 47.3,
+      "score_25": 44.7,
+      "score_btts": 57.6,
+      "score_05ht": 41.1,
+      "score_u45": 64.5,
+      "score_esc75": 47.6,
+      "score_esc85": 42.7,
+      "score_cards25": 46.3,
+      "score_cards35": 46.3,
       "passou_filtro": false,
       "via": "Reprovado",
       "grade_15": "D",
       "grade_25": "D",
       "grade_btts": "C",
       "grade_05ht": "D",
-      "grade_u45": "B",
+      "grade_u45": "C",
       "grade_u35": "C",
       "grade_esc85": "D",
       "grade_esc75": "D",
       "grade_cart25": "D",
       "odd_justa_15": 2.0,
       "odd_justa_25": 2.0,
-      "odd_justa_btts": 1.22,
+      "odd_justa_btts": 1.2,
       "odd_justa_05ht": null,
       "odd_justa_esc85": null,
       "odd_justa_cart25": null,
       "best_mkt": "Under 4.5",
-      "best_score": 65.4,
-      "best_grade": "B",
-      "best_risk": "Moderado",
-      "justif_15": "O1.5 50% · xG 2.3 · PPG 1.3 · H2H 2.0 gols",
+      "best_score": 64.5,
+      "best_grade": "C",
+      "best_risk": "Arriscado",
+      "justif_15": "O1.5 50% · xG 2.4 · PPG 1.3 · H2H 2.0 gols",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "resultado": {
@@ -4392,7 +4403,13 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {
+        "Under 3.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -4520,7 +4537,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -4652,17 +4669,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 88.9,
-          "palpite": true,
-          "acertou": true
-        },
-        "Cart 2.5": {
-          "score": 76.8,
-          "palpite": true,
-          "acertou": true
-        },
-        "Cart 3.5": {
-          "score": 77.7,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -4794,7 +4801,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -4924,7 +4931,13 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "24-05-2026",
@@ -5052,7 +5065,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -5184,7 +5197,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -5316,7 +5329,7 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 100.0,
+          "score": 0,
           "palpite": true,
           "acertou": true
         }
@@ -5332,6 +5345,85 @@
   ],
   "resultado_confirmado": true,
   "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 23,
+      "acertos": 20,
+      "erros": 3,
+      "sem_dados": 0,
+      "taxa": 87.0
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 1,
+      "acertos": 1,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Esc 7.5": {
+      "palpites": 3,
+      "acertos": 3,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 1,
+      "acertos": 1,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "stats": {
+    "total": 41,
+    "over15_aprovados": 15,
+    "esc85_aprovados": 3,
+    "cart25_aprovados": 2,
+    "premium": 28
+  },
+  "resultado_stats_full": {
     "Over 1.5": {
       "palpites": 15,
       "acertos": 14,
@@ -5367,6 +5459,13 @@
       "sem_dados": 0,
       "taxa": null
     },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
     "Esc 7.5": {
       "palpites": 5,
       "acertos": 5,
@@ -5395,12 +5494,5 @@
       "sem_dados": 0,
       "taxa": 100.0
     }
-  },
-  "stats": {
-    "total": 41,
-    "over15_aprovados": 15,
-    "esc85_aprovados": 3,
-    "cart25_aprovados": 2,
-    "premium": 28
   }
 }
