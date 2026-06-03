@@ -1626,8 +1626,13 @@ const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
 // Aguardar DOM completo antes de renderizar
 window.addEventListener('DOMContentLoaded',function(){{
   if(dates.length){{
-    const lastDate=dates[dates.length-1];
-    switchDate(lastDate);
+    const today = new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
+const todayKey = today;
+const targetDate = dates.includes(todayKey) ? todayKey : dates.filter(d=>{{
+  const [dd,mm,yyyy]=d.split('-').map(Number);
+  return new Date(yyyy,mm-1,dd) <= new Date();
+}}).pop() || dates[dates.length-1];
+switchDate(targetDate);
   }}
 }});
 
@@ -1635,8 +1640,13 @@ window.addEventListener('DOMContentLoaded',function(){{
 if(document.readyState==='complete'||document.readyState==='interactive'){{
   setTimeout(function(){{
     if(dates.length&&!activeDate){{
-      const lastDate=dates[dates.length-1];
-      switchDate(lastDate);
+      const today = new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
+const todayKey = today;
+const targetDate = dates.includes(todayKey) ? todayKey : dates.filter(d=>{{
+  const [dd,mm,yyyy]=d.split('-').map(Number);
+  return new Date(yyyy,mm-1,dd) <= new Date();
+}}).pop() || dates[dates.length-1];
+switchDate(targetDate);
     }}
   }},100);
 }}
