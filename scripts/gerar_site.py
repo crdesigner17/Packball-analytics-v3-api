@@ -796,7 +796,7 @@ function renderGlobalKpis(){{
     let ta=0,te=0;
     Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
     const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
-    const [dd,mm]=d.split('-');
+    const [dd,mm]=dateKey.split('-');
     const col=t==null?'var(--muted)':t>=80?'var(--green)':t>=60?'var(--yellow)':'var(--red)';
     const h=t?Math.max(6,Math.round(t*0.32)):4;
     return{{t,dd,mm,col,h,dateKey}};
