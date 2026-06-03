@@ -222,6 +222,9 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 .day-hist-info{font-family:'JetBrains Mono',monospace;font-size:11px;min-width:90px;text-align:right}
 
 /* BILHETES */
+.bilhete-dia{background:linear-gradient(135deg,rgba(34,197,94,.08),rgba(20,184,166,.06));border:2px solid rgba(34,197,94,.4);border-radius:13px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden}
+.bilhete-dia::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--teal),var(--blue))}
+.bilhete-dia-badge{display:inline-flex;align-items:center;gap:6px;background:rgba(34,197,94,.15);border:1px solid rgba(34,197,94,.3);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--green);margin-bottom:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px}
 .bilhete-card{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden}
 .bilhete-card::before{content:'';position:absolute;top:0;left:0;right:0;height:3px}
 .bilhete-premium::before{background:linear-gradient(90deg,var(--green),var(--teal))}
@@ -346,7 +349,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   <div class="header-right">
     <span class="badge validated">✓ Over 1.5 · 88.6%</span>
     <span class="badge version">v3.1</span>
-    <span class="badge updated">🕐 03/06/2026 02:13 UTC</span>
+    <span class="badge updated">🕐 03/06/2026 02:23 UTC</span>
   </div>
 </div>
 
@@ -1232,7 +1235,17 @@ function gerarBilhetes(jogos){
     seen.add(key);
     bilhetes.push({tipo, b, cls, label});
   }
-  return bilhetes;
+  // Bilhete do Dia — A+ primeiro, completa com A se necessário
+  const topAplus = candidatos.filter(x=>x.grade==='A+').sort((a,b)=>b.score-a.score);
+  const topA     = candidatos.filter(x=>x.grade==='A').sort((a,b)=>b.score-a.score);
+  let diaPool    = [...topAplus];
+  if(diaPool.length < 3) diaPool = [...topAplus,...topA];
+  const bDia = diaPool.length >= 2 ? {
+    sels: diaPool,
+    oddTotal: Math.round(diaPool.reduce((acc,s)=>acc*s.oddVal,1)*100)/100
+  } : null;
+
+  return {bilhetes, bilheteDia: bDia};
 }
 function avaliarBilhete(sels, confirmado){
   if(!confirmado) return {status:'pending', acertos:0, total:sels.length};
@@ -1254,11 +1267,60 @@ function avaliarBilhete(sels, confirmado){
 function renderBilhetes(date, jogos){
   const el = document.getElementById('mkt-'+date+'-bilhetes');
   const confirmado = isConfirmado(date);
-  const bilhetes = gerarBilhetes(jogos);
+  const resultado = gerarBilhetes(jogos);
+  const {bilhetes, bilheteDia} = resultado;
 
-  if(!bilhetes || bilhetes.length===0){
+  if((!bilhetes || bilhetes.length===0) && !bilheteDia){
     el.innerHTML=`<div class="empty">Nenhum jogo com dados suficientes para gerar bilhetes hoje.</div>`;
     return;
+  }
+
+  // Bilhete do Dia
+  let diaHtml = '';
+  if(bilheteDia){
+    const av = avaliarBilhete(bilheteDia.sels, confirmado);
+    const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
+    const oddColor = bilheteDia.oddTotal>=5?'var(--green)':bilheteDia.oddTotal>=3?'var(--yellow)':'var(--orange)';
+    const scoreMedia = Math.round(bilheteDia.sels.reduce((a,s)=>a+s.score,0)/bilheteDia.sels.length);
+    const rows = bilheteDia.sels.map((s,i)=>{
+      const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
+      const res = s.resultado;
+      let resHtml = '<span class="res-badge pending">⏳</span>';
+      if(confirmado && res){
+        const ok = res[mktKey];
+        if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
+        else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
+        else resHtml='<span class="res-badge pending">? S/D</span>';
+      }
+      return`<div class="bilhete-row">
+        <span class="bilhete-num">${i+1}</span>
+        <div style="flex:1;min-width:0"><div class="bilhete-jogo">${s.jogo}</div><div class="bilhete-liga">${s.liga} · ${s.hora}</div></div>
+        <span class="bilhete-mkt">${s.mkt}</span>
+        <div class="bilhete-score-bar">${bar(s.score,60)}</div>
+        <span class="bilhete-odd-val">${s.oddVal.toFixed(2)}</span>
+        <div class="bilhete-res">${resHtml}</div>
+      </div>`;
+    }).join('');
+    let statusHtml = '';
+    if(!confirmado) statusHtml='<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando</span>';
+    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)">✅ GREEN! Odd: ${bilheteDia.oddTotal.toFixed(2)}</span>`;
+    else if(av.status==='loss') statusHtml=`<span class="bilhete-status" style="color:var(--red)">✗ Perdeu (${av.erros} erro${av.erros>1?'s':''})</span>`;
+    else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${av.sd} sem dados</span>`;
+
+    diaHtml=`<div class="bilhete-dia${overlayClass}">
+      <div class="bilhete-dia-badge">🏆 BILHETE DO DIA</div>
+      <div class="bilhete-header">
+        <div><div class="bilhete-title" style="font-size:15px">Os mais assertivos do dia</div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${bilheteDia.sels.length} seleções · Score médio ${scoreMedia}%</div></div>
+        <div style="text-align:right">
+          <div class="bilhete-odd-total" style="color:${oddColor}">${bilheteDia.oddTotal.toFixed(2)}</div>
+          <div class="bilhete-odd-label">Odd combinada</div>
+        </div>
+      </div>
+      <div style="border-top:1px solid rgba(34,197,94,.2);padding-top:10px">${rows}</div>
+      <div class="bilhete-footer"><span class="bilhete-sels">${bilheteDia.sels.filter(s=>s.grade==='A+').length} A+ · ${bilheteDia.sels.filter(s=>s.grade==='A').length} A</span>${statusHtml}</div>
+    </div>
+    <div class="sec-title">📋 Todos os Bilhetes</div>`;
   }
 
   const html = bilhetes.map((item)=>{ const {tipo, b, cls, label} = item;
@@ -1325,7 +1387,7 @@ function renderBilhetes(date, jogos){
     ? '<div class="callout ok"><strong>✅ Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
     : '<div class="callout info"><strong>🎯 Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
 
-  el.innerHTML = callout + html;
+  el.innerHTML = callout + diaHtml + html;
 }
 
 // ── Resultados do Dia ──────────────────────────────────────────────
