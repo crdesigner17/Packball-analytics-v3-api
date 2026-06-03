@@ -323,7 +323,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .res-badge{{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
 .res-badge.hit{{background:rgba(34,197,94,.12);color:var(--green);border:1px solid rgba(34,197,94,.25)}}
 .res-badge.miss{{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}}
-.res-badge.pending{{background:rgba(234,179,8,.08);color:var(--yellow);border:1px solid rgba(234,179,8,.2)}}
+.res-badge.pending{{background:rgba(59,130,246,.08);color:var(--blue);border:1px solid rgba(59,130,246,.2)}}
 .placar-cell{{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700}}
 .placar-ht{{font-size:10px;color:var(--muted)}}
 
