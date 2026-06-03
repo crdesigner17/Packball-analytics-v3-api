@@ -803,7 +803,7 @@ function renderGlobalKpis(){{
   }});
 
 const barsHtml=barCols.map(b=>{{
-    return`<div class="desemp-bar-col" title="${{b.dd}}/${{b.mm}} · ${{b.t!=null?b.t+'%':'?'}}" onclick="switchDate('${{b.dateKey}}');setTimeout(()=>switchMkt('${{b.dateKey}}','ranking'),80)" style="cursor:pointer">
+    return`<div class="desemp-bar-col" title="${{b.dd}}/${{b.mm}} · ${{b.t!=null?b.t+'%':'?'}}" onclick="activeMkt['${{b.dateKey}}']='ranking';switchDate('${{b.dateKey}}')" style="cursor:pointer">
       <div class="desemp-bar-pct" style="color:${{b.col}}">${{b.t!=null?b.t+'%':'?'}}</div>
       <div class="desemp-bar" style="height:${{b.h}}px;background:${{b.col}};width:22px"></div>
       <div class="desemp-bar-lbl">${{b.dd}}/${{b.mm}}</div>
