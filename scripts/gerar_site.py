@@ -707,7 +707,7 @@ function resBadge(jogo, mktKey){{
   const ok=res[mktKey];
   if(ok===true) return'<span class="res-badge hit">✓ GREEN</span>';
   if(ok===false)return'<span class="res-badge miss">✗ RED</span>';
-  return'<span class="res-badge pending">? S/D</span>';
+  return'<span class="res-badge pending">⚠ Não confirmado</span>';
 }}
 
 function rowClass(jogo, mktKey){{
