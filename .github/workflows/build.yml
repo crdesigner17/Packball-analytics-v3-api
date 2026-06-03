@@ -1,5 +1,4 @@
 name: PackBall Analytics — Build Diário
-
 on:
   schedule:
    - cron: '0 7 * * *'
@@ -11,42 +10,35 @@ on:
         description: 'Data para processar (YYYY-MM-DD ou "today")'
         required: false
         default: 'today'
-
 jobs:
   build:
     runs-on: ubuntu-latest
     permissions:
       contents: write
-
     steps:
       - name: Checkout
         uses: actions/checkout@v4
-
+        with:
+          fetch-depth: 0
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
-
       - name: Instalar dependências
         run: pip install requests pandas numpy
-
       - name: Coletar dados da API e gerar site
         env:
           API_KEY: ${{ secrets.APIFOOTBALL_KEY }}
         run: |
           DATE="${{ github.event.inputs.date || 'today' }}"
           python scripts/coletar.py --key "$API_KEY" --date "$DATE"
-
       - name: Commit e push do site atualizado
         run: |
           git config user.name  "PackBall Bot"
           git config user.email "bot@packball.local"
-          python scripts/gerar_site.py
-          git add docs/
-          git stash
           git pull origin main --rebase -X ours
-          git stash pop
+          python scripts/gerar_site.py
           git add docs/
           git diff --staged --quiet || git commit -m "📊 Site atualizado $(date -u +'%d/%m/%Y %H:%M UTC')"
           git push
