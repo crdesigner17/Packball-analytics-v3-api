@@ -494,8 +494,9 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 <body>
 
 <div class="header">
-  <div class="logo">
-    <svg width="320" height="80" viewBox="0 0 340 110" role="img" style="flex-shrink:0">
+ <div class="logo">
+  <img src="assets/logo.png" style="height:52px;flex-shrink:0;object-fit:contain" alt="WinMetrics Analytics">
+</div>
       <title>WinMetrics</title>
       <defs><clipPath id="bc"><circle cx="31" cy="55" r="28"/></clipPath></defs>
       <circle cx="31" cy="55" r="28" fill="#f97316"/>
