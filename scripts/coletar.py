@@ -949,6 +949,7 @@ def main():
     parser.add_argument("--date", default="today", help="Data YYYY-MM-DD ou 'today' (padrão: hoje)")
     parser.add_argument("--season", type=int, default=SEASON, help=f"Temporada (padrão: {SEASON})")
     parser.add_argument("--no-site", action="store_true", help="Não regenerar o HTML após coletar")
+    parser.add_argument("--force", action="store_true", help="Forçar sobrescrita mesmo se arquivo existir")
     args = parser.parse_args()
 
     if args.date == "today":
