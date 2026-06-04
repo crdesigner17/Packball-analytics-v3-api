@@ -479,12 +479,12 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 /* MARKET TABS */
 .mkt-cat-bar{
   background:var(--s2);border-bottom:1px solid var(--border);
-  display:flex;padding:0;
+  display:flex;align-items:stretch;padding:0;
   position:sticky;top:calc(56px + 53px);z-index:90;
   width:100%;
 }
 .mkt-cat-tab{
-  flex:1;padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);
+  flex:1;padding:10px 16px;font-size:13px;font-weight:500;color:var(--muted);
   cursor:pointer;border-bottom:2px solid transparent;
   transition:all .15s;white-space:nowrap;
   display:flex;align-items:center;justify-content:center;gap:7px;
@@ -544,27 +544,23 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   </div>
 </nav>
 
-<div id="global-kpis-wrap" style="background:linear-gradient(135deg,#0f1420,#141928);border-bottom:1px solid var(--border);padding:6px 24px">
-  <div id="global-kpis"><!-- preenchido pelo JS --></div>
-</div>
-
 <div class="app-layout">
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-section">
-      <div class="sidebar-group-label">Principal</div>
       <div class="sidebar-item active" id="sb-visao" onclick="sidebarNav('visao')">
         <i data-lucide="grid-2x2" style="width:16px;height:16px"></i> Visão Geral
       </div>
+      <div class="sidebar-divider"></div>
       <div class="sidebar-item" id="sb-ranking" onclick="sidebarNav('ranking')">
         <i data-lucide="star" style="width:16px;height:16px"></i> Melhores Previsões
         <span style="margin-left:auto;font-size:9px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px">PRO</span>
       </div>
       <div class="sidebar-divider"></div>
-      <div class="sidebar-group-label">Análise</div>
       <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
         <i data-lucide="trending-up" style="width:16px;height:16px"></i> Histórico Global
       </div>
+      <div class="sidebar-divider"></div>
       <div class="sidebar-item" id="sb-resultados" onclick="sidebarNav('historico_dia')">
         <i data-lucide="circle-check" style="width:16px;height:16px"></i> Resultado do Dia
       </div>
@@ -635,6 +631,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 
     <!-- MARKET CATEGORY BAR -->
     <div class="mkt-cat-bar" id="mkt-cat-bar">
+      <div id="global-kpis" style="display:flex;align-items:center;padding:0 16px;border-right:1px solid var(--border);flex-shrink:0"></div>
       <div class="mkt-cat-tab" data-cat="resultado" onclick="switchCat('resultado')">
         <i data-lucide="shield-check" style="width:14px;height:14px"></i> Resultado Final
         <span style="font-size:9px;background:rgba(100,116,139,.12);color:var(--muted);padding:1px 6px;border-radius:3px;margin-left:4px;letter-spacing:.3px;font-weight:500">Em breve</span>
@@ -1092,7 +1089,7 @@ function renderGlobalKpis(){
   const g=GLOBAIS;
   if(!g||g.dias_confirmados===0){
     document.getElementById('global-kpis').innerHTML=
-      '<span style="font-size:11px;color:var(--muted)">Sem resultados confirmados ainda</span>';
+      '<span style="font-size:11px;color:var(--muted);padding:0 8px">Sem dados</span>';
     return;
   }
   const taxa=g.taxa_geral;
