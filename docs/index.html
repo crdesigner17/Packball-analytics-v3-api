@@ -14,6 +14,7 @@
   --orange:#f97316;--red:#ef4444;--yellow:#eab308;--teal:#14b8a6;
   --purple:#a855f7;--pink:#ec4899;--text:#e2e8f0;--muted:#64748b;
   --dim:#1e2436;--aplus:#ffd700;
+  --nav-h:56px;--date-strip-h:53px;--market-bar-h:42px;
 }
 [data-theme="light"]{
   --bg:#f0f4f8;--s1:#ffffff;--s2:#f5f7fa;--s3:#eef0f6;--border:#dde1ef;
@@ -35,7 +36,7 @@ button,input,select{font-family:'Inter',sans-serif}
 .navbar{
   background:rgba(9,11,20,.92);backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(59,130,246,.15);
-  padding:0 32px;height:56px;
+  padding:0 32px;height:var(--nav-h);
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:200;
   box-shadow:0 2px 20px rgba(0,0,0,.5);
@@ -381,11 +382,11 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 
 
 /* SIDEBAR */
-.app-layout{display:flex;min-height:calc(100vh - 56px)}
+.app-layout{display:flex;min-height:calc(100vh - var(--nav-h))}
 .sidebar{
   width:220px;flex-shrink:0;background:var(--s1);
   border-right:1px solid var(--border);
-  position:sticky;top:56px;height:calc(100vh - 56px);
+  position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));
   overflow-y:auto;z-index:80;
   display:flex;flex-direction:column;
   padding:12px 0;
@@ -432,7 +433,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   display:flex;overflow-x:auto;
   padding:0 16px;
   scrollbar-width:thin;scrollbar-color:var(--border) transparent;
-  position:sticky;top:56px;z-index:95;
+  position:sticky;top:var(--nav-h);z-index:120;
   border-left:none;
 }
 .date-strip::-webkit-scrollbar{height:3px}
@@ -456,7 +457,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 .mkt-cat-bar{
   background:var(--s2);border-bottom:1px solid var(--border);
   display:flex;align-items:stretch;padding:0;
-  position:sticky;top:calc(56px + 53px);z-index:90;
+  position:sticky;top:calc(var(--nav-h) + var(--date-strip-h));z-index:115;
   width:100%;
 }
 .mkt-cat-tab{
@@ -472,9 +473,9 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 .sub-filter-bar{
   background:var(--s1);border-bottom:1px solid var(--border);
   display:none;padding:8px 16px;gap:8px;flex-wrap:wrap;
-  position:sticky;top:calc(56px + 53px + 45px);z-index:85;
+  position:sticky;top:calc(var(--nav-h) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
 }
-.sub-filter-bar.visible{display:flex}
+.sub-filter-bar.visible{display:flex;justify-content:center;align-items:center}
 .sub-filter-btn{
   padding:6px 16px;font-size:12px;font-weight:600;
   border:1px solid var(--border);border-radius:20px;
