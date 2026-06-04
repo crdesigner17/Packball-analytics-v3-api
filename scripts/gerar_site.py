@@ -167,6 +167,17 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
   --purple:#a855f7;--pink:#ec4899;--text:#e2e8f0;--muted:#64748b;
   --dim:#1e2436;--aplus:#ffd700;
 }}
+[data-theme="light"]{{
+  --bg:#f0f2f7;--s1:#ffffff;--s2:#f8f9fc;--s3:#eef0f6;--border:#dde1ef;
+  --text:#1a1f36;--muted:#64748b;--dim:#e2e6f3;
+}}
+[data-theme="light"] .navbar{{background:rgba(255,255,255,.95)}}
+[data-theme="light"] .navbar-logo-name{{color:#1a1f36}}
+[data-theme="light"] .navbar-link{{color:rgba(26,31,54,.6)}}
+[data-theme="light"] .navbar-link:hover{{color:#1a1f36;background:rgba(0,0,0,.05)}}
+[data-theme="light"] .navbar-link.active{{color:#2563eb;background:rgba(37,99,235,.08)}}
+[data-theme="light"] .date-bar{{background:#ffffff}}
+[data-theme="light"] .mkt-bar{{background:#ffffff}}
 body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:.01em}}
 h1,h2,h3,h4,h5,h6{{font-family:'Inter',sans-serif;font-weight:700}}
 button,input,select{{font-family:'Inter',sans-serif}}
@@ -185,12 +196,12 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .navbar-logo-text{{display:flex;flex-direction:column;line-height:1}}
 .navbar-logo-name{{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}}
 .navbar-logo-sub{{font-size:9px;color:#3b82f6;letter-spacing:2px;font-weight:500;text-transform:uppercase}}
-.navbar-links{{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;min-width:0}}
+.navbar-links{{display:flex;align-items:center;gap:2px;flex-shrink:0}}
 .navbar-link{{
   padding:7px 14px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);
   cursor:pointer;border-radius:7px;transition:all .18s;white-space:nowrap;
   display:inline-flex;align-items:center;gap:6px;letter-spacing:.1px;
-  font-family:'Inter',sans-serif;width:auto;
+  font-family:'Inter',sans-serif;flex-shrink:0;
 }}
 .navbar-link:hover{{color:#fff;background:rgba(255,255,255,.08);transform:translateY(-1px)}}
 .navbar-link.active{{color:#fff;background:rgba(59,130,246,.18);font-weight:600}}
@@ -590,7 +601,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <span id="navbar-clock" style="font-size:8px;font-weight:600;color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace"></span>
       <span style="font-size:9px;color:rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">v3.1</span>
     </div>
-    <div class="navbar-theme" title="Alternar tema"><i data-lucide="sun" style="width:15px;height:15px"></i></div>
+    <div class="navbar-theme" id="theme-btn" title="Alternar tema" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon" style="width:15px;height:15px"></i></div>
     <div class="navbar-btn-entrar"><i data-lucide="log-in" style="width:14px;height:14px"></i> Entrar <i data-lucide="chevron-down" style="width:12px;height:12px"></i></div>
     <div class="navbar-btn-criar"><i data-lucide="rocket" style="width:14px;height:14px"></i> Criar conta grátis <i data-lucide="arrow-right" style="width:14px;height:14px"></i></div>
   </div>
@@ -1765,6 +1776,33 @@ function updateClock(){{
 }}
 updateClock();
 setInterval(updateClock, 30000);
+
+// ── Tema claro/escuro ──────────────────────────────────────────────
+function toggleTheme(){{
+  const html = document.documentElement;
+  const btn = document.getElementById('theme-btn');
+  const isLight = html.getAttribute('data-theme') === 'light';
+  if(isLight){{
+    html.removeAttribute('data-theme');
+    localStorage.setItem('wm_theme','dark');
+    btn.innerHTML='<i data-lucide="sun" style="width:15px;height:15px"></i>';
+  }} else {{
+    html.setAttribute('data-theme','light');
+    localStorage.setItem('wm_theme','light');
+    btn.innerHTML='<i data-lucide="moon" style="width:15px;height:15px"></i>';
+  }}
+  if(typeof lucide !== 'undefined') lucide.createIcons();
+}}
+// Restaurar tema salvo
+(function(){{
+  const saved = localStorage.getItem('wm_theme');
+  if(saved === 'light'){{
+    document.documentElement.setAttribute('data-theme','light');
+    const btn = document.getElementById('theme-btn');
+    if(btn) btn.innerHTML='<i data-lucide="moon" style="width:15px;height:15px"></i>';
+    if(typeof lucide !== 'undefined') lucide.createIcons();
+  }}
+}})();
 
 // Ordenar datas corretamente (DD-MM-YYYY)
 const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
