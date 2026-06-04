@@ -691,19 +691,19 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-section">
-      <div class="sidebar-group-label">Principal</div>
       <div class="sidebar-item active" id="sb-visao" onclick="sidebarNav('visao')">
         <i data-lucide="grid-2x2" style="width:16px;height:16px"></i> Visão Geral
       </div>
+      <div class="sidebar-divider"></div>
       <div class="sidebar-item" id="sb-ranking" onclick="sidebarNav('ranking')">
         <i data-lucide="star" style="width:16px;height:16px"></i> Melhores Previsões
         <span style="margin-left:auto;font-size:9px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px">PRO</span>
       </div>
       <div class="sidebar-divider"></div>
-      <div class="sidebar-group-label">Análise</div>
       <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
         <i data-lucide="trending-up" style="width:16px;height:16px"></i> Histórico Global
       </div>
+      <div class="sidebar-divider"></div>
       <div class="sidebar-item" id="sb-resultados" onclick="sidebarNav('historico_dia')">
         <i data-lucide="circle-check" style="width:16px;height:16px"></i> Resultado do Dia
       </div>
