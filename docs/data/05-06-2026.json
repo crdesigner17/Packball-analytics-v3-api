@@ -1512,7 +1512,7 @@
       "is_elite": false,
       "odds_h": 2.05,
       "odds_d": 3.1,
-      "odds_a": 3.45,
+      "odds_a": 3.35,
       "over15_g": null,
       "over25_g": null,
       "over15_h": null,
@@ -2259,7 +2259,7 @@
   "resultado_confirmado": false,
   "resultado_stats": {},
   "stats": {
-    "total": 23,
+    "total": 21,
     "over15_aprovados": 5,
     "esc85_aprovados": 8,
     "cart25_aprovados": 3,

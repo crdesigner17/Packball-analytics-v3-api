@@ -2473,11 +2473,10 @@
   "resultado_confirmado": false,
   "resultado_stats": {},
   "stats": {
-    "total": 34,
-    "over15_aprovados": 8,
-    "esc85_aprovados": 7,
-    "cart25_aprovados": 2,
-    "premium": 15
-  },
-  "ignorados": []
+    "total": 23,
+    "over15_aprovados": 7,
+    "esc85_aprovados": 5,
+    "cart25_aprovados": 1,
+    "premium": 12
+  }
 }
