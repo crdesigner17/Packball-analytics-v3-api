@@ -651,7 +651,14 @@ def processar_data(client: APIClient, date_str: str) -> list:
         STATUS_OK = {"NS","1H","HT","2H","ET","P","LIVE","FT","AET","PEN"}
         fixtures = [f for f in fixtures if f.get("fixture",{}).get("status",{}).get("short","") in STATUS_OK]
         # Filtrar seleções sub-20 e sub-21
-        EXCLUIR_SUB = ['U20','U21','U-20','U-21','Under-20','Under-21','Under 20','Under 21']
+        EXCLUIR_SUB = [
+            'U17','U18','U19','U20','U21','U23',
+            'U-17','U-18','U-19','U-20','U-21','U-23',
+            'Under-17','Under-18','Under-19','Under-20','Under-21','Under-23',
+            'Under 17','Under 18','Under 19','Under 20','Under 21','Under 23',
+            'Youth','Academy','Reserve','Reserves','Amateur',
+            'Women','Womens','Feminino','Femenino','Feminina','Ladies'
+        ]
         fixtures = [f for f in fixtures if not any(
             sub.lower() in f["teams"]["home"]["name"].lower() or
             sub.lower() in f["teams"]["away"]["name"].lower()
