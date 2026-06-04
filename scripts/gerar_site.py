@@ -179,28 +179,28 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .navbar{{
   background:rgba(9,11,20,.92);backdrop-filter:blur(12px);
   border-bottom:1px solid rgba(59,130,246,.15);
-  padding:0 32px;height:var(--nav-h);
+  padding:0 24px;height:var(--nav-h);gap:18px;
   display:flex;align-items:center;justify-content:space-between;
   position:sticky;top:0;z-index:200;
   box-shadow:0 2px 20px rgba(0,0,0,.5);
 }}
-.navbar-logo{{display:flex;align-items:center;gap:20px;text-decoration:none}}
+.navbar-logo{{display:flex;align-items:center;gap:14px;text-decoration:none;flex:0 0 auto;min-width:max-content}}
 .navbar-logo-icon{{width:32px;height:32px}}
 .navbar-logo-text{{display:flex;flex-direction:column;line-height:1}}
 .navbar-logo-name{{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}}
 .navbar-logo-sub{{font-size:9px;color:#3b82f6;letter-spacing:2px;font-weight:500;text-transform:uppercase}}
-.navbar-links{{display:flex;align-items:center;gap:2px;flex-shrink:0}}
+.navbar-links{{display:flex;align-items:center;justify-content:center;gap:4px;flex:1 1 auto;min-width:0;overflow:hidden}}
 .navbar-link{{
-  padding:7px 14px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);
-  cursor:pointer;border-radius:7px;transition:all .18s;white-space:nowrap;
-  display:inline-flex;align-items:center;gap:6px;letter-spacing:.1px;
-  font-family:'Inter',sans-serif;flex-shrink:0;
+  height:34px;min-width:0;max-width:132px;padding:0 12px;font-size:clamp(11px,1vw,13px);font-weight:500;color:rgba(255,255,255,.65);
+  cursor:pointer;border-radius:7px;transition:all .18s;white-space:nowrap;line-height:1;
+  display:inline-flex;align-items:center;justify-content:center;gap:6px;letter-spacing:0;
+  font-family:'Inter',sans-serif;flex:0 1 auto;text-align:center;overflow:hidden;text-overflow:ellipsis;
 }}
 .navbar-link:hover{{color:#fff;background:rgba(255,255,255,.08);transform:translateY(-1px)}}
 .navbar-link.active{{color:#fff;background:rgba(59,130,246,.18);font-weight:600}}
 
 .navbar-link svg{{width:14px;height:14px;opacity:.7}}
-.navbar-actions{{display:flex;align-items:center;gap:8px}}
+.navbar-actions{{display:flex;align-items:center;justify-content:flex-end;gap:8px;flex:0 0 auto}}
 .navbar-theme{{
   width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.12);
   background:rgba(255,255,255,.05);cursor:pointer;display:flex;align-items:center;
@@ -208,20 +208,20 @@ button,input,select{{font-family:'Inter',sans-serif}}
 }}
 .navbar-theme:hover{{background:rgba(255,255,255,.1);color:#fff}}
 .navbar-btn-entrar{{
-  padding:7px 16px;font-size:13px;font-weight:600;
+  height:34px;min-width:0;padding:0 14px;font-size:clamp(11px,1vw,13px);font-weight:600;line-height:1;
   border:1px solid rgba(59,130,246,.5);color:#60a5fa;
   border-radius:8px;cursor:pointer;transition:all .2s;
-  background:rgba(59,130,246,.08);display:flex;align-items:center;gap:6px;
-  letter-spacing:.2px;
+  background:rgba(59,130,246,.08);display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  letter-spacing:0;white-space:nowrap;text-align:center;overflow:hidden;text-overflow:ellipsis;
 }}
 .navbar-btn-entrar:hover{{background:rgba(59,130,246,.18);border-color:#3b82f6;color:#93c5fd;transform:translateY(-1px)}}
 .navbar-btn-criar{{
-  padding:7px 18px;font-size:13px;font-weight:600;color:#fff;
+  height:34px;min-width:0;padding:0 16px;font-size:clamp(11px,1vw,13px);font-weight:600;color:#fff;line-height:1;
   background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);
   border:none;border-radius:8px;cursor:pointer;transition:all .2s;
-  display:flex;align-items:center;gap:7px;white-space:nowrap;
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;white-space:nowrap;text-align:center;
   box-shadow:0 0 24px rgba(37,99,235,.35),inset 0 1px 0 rgba(255,255,255,.1);
-  letter-spacing:.2px;position:relative;overflow:hidden;
+  letter-spacing:0;position:relative;overflow:hidden;text-overflow:ellipsis;
 }}
 .navbar-btn-criar::before{{
   content:'';position:absolute;inset:0;
@@ -573,7 +573,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 /* NEW DATE BAR */
 .date-strip{{
   background:var(--s1);border-bottom:1px solid var(--border);
-  display:flex;overflow-x:auto;
+  display:flex;align-items:center;overflow-x:auto;
   padding:0 16px;
   scrollbar-width:thin;scrollbar-color:var(--border) transparent;
   position:sticky;top:var(--nav-h);z-index:120;
@@ -583,10 +583,10 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .date-strip::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
 .date-strip-item{{
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:10px 18px;min-width:72px;cursor:pointer;
+  height:var(--date-strip-h);padding:0 18px;min-width:72px;cursor:pointer;
   border-bottom:3px solid transparent;transition:all .15s;
-  color:var(--muted);font-family:'Inter',sans-serif;gap:2px;
-  white-space:nowrap;flex-shrink:0;
+  color:var(--muted);font-family:'Inter',sans-serif;gap:3px;line-height:1;
+  white-space:nowrap;flex-shrink:0;text-align:center;
 }}
 .date-strip-item:hover{{color:var(--text);background:rgba(255,255,255,.03)}}
 .date-strip-item.active{{
@@ -599,32 +599,32 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 /* MARKET TABS */
 .mkt-cat-bar{{
   background:var(--s2);border-bottom:1px solid var(--border);
-  display:flex;align-items:stretch;padding:0;
+  display:flex;align-items:center;padding:0;
   position:sticky;top:calc(var(--nav-h) + var(--date-strip-h));z-index:115;
   width:100%;
 }}
 .mkt-cat-tab{{
-  flex:1;padding:10px 16px;font-size:13px;font-weight:500;color:var(--muted);
+  flex:1;min-width:0;height:var(--market-bar-h);padding:0 16px;font-size:clamp(11px,1vw,13px);font-weight:500;color:var(--muted);
   cursor:pointer;border-bottom:2px solid transparent;
-  transition:all .15s;white-space:nowrap;
+  transition:all .15s;white-space:nowrap;line-height:1;
   display:flex;align-items:center;justify-content:center;gap:7px;
-  font-family:'Inter',sans-serif;
+  font-family:'Inter',sans-serif;text-align:center;overflow:hidden;text-overflow:ellipsis;
 }}
 .mkt-cat-tab:hover{{color:var(--text)}}
 .mkt-cat-tab.active{{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}}
 /* SUB FILTER BAR */
 .sub-filter-bar{{
   background:var(--s1);border-bottom:1px solid var(--border);
-  display:none;padding:8px 16px;gap:8px;flex-wrap:wrap;
+  display:none;min-height:42px;padding:6px 16px;gap:8px;flex-wrap:wrap;
   position:sticky;top:calc(var(--nav-h) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
 }}
 .sub-filter-bar.visible{{display:flex;justify-content:center;align-items:center}}
 .sub-filter-btn{{
-  padding:6px 16px;font-size:12px;font-weight:600;
+  height:30px;min-width:0;padding:0 16px;font-size:clamp(11px,1vw,12px);font-weight:600;line-height:1;
   border:1px solid var(--border);border-radius:20px;
   color:var(--muted);background:var(--s2);
   cursor:pointer;transition:all .15s;white-space:nowrap;
-  font-family:'Inter',sans-serif;
+  font-family:'Inter',sans-serif;display:inline-flex;align-items:center;justify-content:center;text-align:center;overflow:hidden;text-overflow:ellipsis;
 }}
 .sub-filter-btn:hover{{color:var(--text);border-color:var(--accent)}}
 .sub-filter-btn.active{{
@@ -634,11 +634,30 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
 /* MOBILE */
 @media(max-width:640px){{
+  :root{{--nav-h:52px}}
+  .navbar{{padding:0 10px;gap:8px}}
+  .navbar-logo{{gap:8px}}
+  .navbar-logo-icon{{width:28px;height:28px}}
+  .navbar-logo-name{{font-size:14px}}
+  .navbar-logo-sub{{font-size:8px;letter-spacing:1.4px}}
+  .navbar-links{{justify-content:flex-start;overflow-x:auto;scrollbar-width:none}}
+  .navbar-links::-webkit-scrollbar{{display:none}}
+  .navbar-link{{height:32px;max-width:none;padding:0 10px;font-size:12px;flex:0 0 auto}}
+  .navbar-actions{{gap:5px}}
+  .navbar-actions>div:first-child{{display:none!important}}
+  .navbar-btn-entrar{{height:32px;padding:0 10px;font-size:12px}}
+  .navbar-btn-criar{{height:32px;padding:0 10px;font-size:12px}}
+  .navbar-theme{{width:32px;height:32px}}
   .header{{padding:10px 14px}}
   .main{{padding:12px 12px}}
   .kpi{{min-width:85px;padding:10px 12px}}
   .kpi-val{{font-size:20px}}
   .mkt-tab{{padding:9px 11px;font-size:12px}}
+  .date-strip{{padding:0 8px}}
+  .date-strip-item{{min-width:64px;padding:0 12px}}
+  .mkt-cat-tab{{padding:0 8px;font-size:12px}}
+  .sub-filter-bar{{padding:6px 8px}}
+  .sub-filter-btn{{height:30px;padding:0 12px;font-size:12px}}
   .top-card{{min-width:230px}}
 }}
 </style>
@@ -694,6 +713,10 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <div class="sidebar-item" id="sb-ranking" onclick="sidebarNav('ranking')">
         <i data-lucide="star" style="width:16px;height:16px"></i> Melhores Previsões
         <span class="sidebar-pro">PRO</span>
+      </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-item" id="sb-bilhetes" onclick="sidebarNav('bilhetes')">
+        <i data-lucide="ticket" style="width:16px;height:16px"></i> Bilhetes
       </div>
       <div class="sidebar-divider"></div>
       <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
