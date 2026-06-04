@@ -29,6 +29,7 @@ import os, sys, json, time, argparse
 from datetime import datetime, date
 import requests
 import numpy as np
+from ligas_config import blocked_name, favorite_league_names
 
 # ── Configuração ────────────────────────────────────────────────────
 BASE_URL  = "https://v3.football.api-sports.io"
@@ -56,13 +57,23 @@ LIGAS = {
     1:   ("FIFA World Cup",     "elite",  2026),
     71:  ("Serie A",            "normal", 2026),  # Brasileirão
     72:  ("Serie B",            "normal", 2026),
+    73:  ("Serie C",            "normal", 2026),
     75:  ("Copa do Brasil",     "normal", 2026),
     128: ("Liga Profesional de Fútbol", "normal", 2026),
+    131: ("Copa Uruguay",       "normal", 2026),
+    74:  ("Copa do Nordeste",   "normal", 2026),
     # Amistosos / Seleções
     10:  ("Friendlies",               "normal", 2026),
     960: ("UEFA Nations League",      "normal", 2025),
     29:  ("CONMEBOL Qualifiers",      "normal", 2026),
     32:  ("FIFA World Cup - Qualification South America", "normal", 2026),
+}
+
+LIGAS_PERMITIDAS = favorite_league_names(info[0] for info in LIGAS.values())
+LIGAS = {
+    league_id: info
+    for league_id, info in LIGAS.items()
+    if info[0] in LIGAS_PERMITIDAS
 }
 
 LIGAS_ELITE_IDS = {lid for lid, (nome, tier, season) in LIGAS.items() if tier == "elite"}
@@ -648,18 +659,8 @@ def processar_data(client: APIClient, date_str: str) -> list:
         STATUS_OK = {"NS","1H","HT","2H","ET","P","LIVE","FT","AET","PEN"}
         fixtures = [f for f in fixtures if f.get("fixture",{}).get("status",{}).get("short","") in STATUS_OK]
         # Filtrar seleções sub-20 e sub-21
-        EXCLUIR_SUB = [
-            'U17','U18','U19','U20','U21','U23',
-            'U-17','U-18','U-19','U-20','U-21','U-23',
-            'Under-17','Under-18','Under-19','Under-20','Under-21','Under-23',
-            'Under 17','Under 18','Under 19','Under 20','Under 21','Under 23',
-            'Youth','Academy','Reserve','Reserves','Amateur',
-            'Women','Womens','Feminino','Femenino','Feminina','Ladies'
-        ]
-        fixtures = [f for f in fixtures if not any(
-            sub.lower() in f["teams"]["home"]["name"].lower() or
-            sub.lower() in f["teams"]["away"]["name"].lower()
-            for sub in EXCLUIR_SUB
+        fixtures = [f for f in fixtures if not blocked_name(
+            f"{f['league']['name']} {f['teams']['home']['name']} {f['teams']['away']['name']}"
         )]
 
         if not fixtures:

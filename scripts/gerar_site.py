@@ -7,9 +7,27 @@ WinMetrics — Gerador de Site v3.1
 """
 import json, os
 from datetime import datetime
+from ligas_config import blocked_name, favorite_league_names
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 OUT_FILE = os.path.join(os.path.dirname(__file__), '..', 'docs', 'index.html')
+FAVORITE_LEAGUES = favorite_league_names()
+
+def filter_favorite_leagues(day_data):
+    if not FAVORITE_LEAGUES or not isinstance(day_data, dict):
+        return day_data
+    filtered = dict(day_data)
+    filtered['jogos'] = [
+        j for j in day_data.get('jogos', [])
+        if (
+            not isinstance(j, dict) or
+            (
+                j.get('liga') in FAVORITE_LEAGUES and
+                not blocked_name(' '.join(str(j.get(k, '')) for k in ('liga', 'jogo', 'home', 'away')))
+            )
+        )
+    ]
+    return filtered
 
 def load_index():
     path = os.path.join(DATA_DIR, 'index.json')
@@ -19,7 +37,8 @@ def load_index():
 def load_day(date_str):
     path = os.path.join(DATA_DIR, f'{date_str}.json')
     if not os.path.exists(path): return None
-    with open(path, encoding='utf-8') as f: return json.load(f)
+    with open(path, encoding='utf-8') as f:
+        return filter_favorite_leagues(json.load(f))
 
 def fmt_date(date_str):
     try:
@@ -168,6 +187,8 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
 [data-theme="light"] .navbar-link{{color:rgba(26,31,54,.55)}}
 [data-theme="light"] .navbar-link:hover{{color:#1a1f36;background:rgba(0,0,0,.05)}}
 [data-theme="light"] .navbar-link.active{{color:#2563eb;background:rgba(37,99,235,.08)}}
+[data-theme="light"] .navbar-theme{{color:rgba(26,31,54,.72);border-color:rgba(26,31,54,.14);background:rgba(26,31,54,.04)}}
+[data-theme="light"] .navbar-theme:hover{{color:#1a1f36;background:rgba(26,31,54,.08)}}
 [data-theme="light"] .sidebar{{background:#ffffff;border-right-color:#e2e6f3}}
 [data-theme="light"] .date-strip{{background:#ffffff}}
 [data-theme="light"] .mkt-cat-bar{{background:#f5f7fa}}
@@ -232,6 +253,9 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .navbar-btn-criar:hover::before{{opacity:1}}
 .navbar-link i,.navbar-btn-entrar i,.navbar-btn-criar i,.navbar-theme i{{
   display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}}
+.navbar-theme svg{{
+  width:15px;height:15px;display:block;stroke:currentColor;flex-shrink:0;
 }}
 
 /* HEADER */
@@ -1949,32 +1973,31 @@ function renderCatContent(date, cat, subKey){{
 if(typeof lucide !== 'undefined') lucide.createIcons();
 
 // ── Tema claro/escuro ──────────────────────────────────────────────
+function setThemeIcon(icon){{
+  const btn = document.getElementById('theme-btn');
+  if(!btn) return;
+  btn.innerHTML=`<i data-lucide="${{icon}}" id="theme-icon" style="width:15px;height:15px"></i>`;
+  if(typeof lucide !== 'undefined') lucide.createIcons();
+}}
 function toggleTheme(){{
   const html = document.documentElement;
   const isLight = html.getAttribute('data-theme') === 'light';
   if(isLight){{
     html.removeAttribute('data-theme');
     localStorage.setItem('wm_theme','dark');
-    const btn = document.getElementById('theme-btn');
-    if(btn) btn.innerHTML='<i data-lucide="sun" id="theme-icon" style="width:15px;height:15px"></i>';
+    setThemeIcon('sun');
   }} else {{
     html.setAttribute('data-theme','light');
     localStorage.setItem('wm_theme','light');
-    const btn = document.getElementById('theme-btn');
-    if(btn) btn.innerHTML='<i data-lucide="moon" id="theme-icon" style="width:15px;height:15px"></i>';
+    setThemeIcon('moon');
   }}
-  if(typeof lucide !== 'undefined') lucide.createIcons();
 }}
 // Restaurar tema salvo
 (function(){{
   const saved = localStorage.getItem('wm_theme');
   if(saved === 'light'){{
     document.documentElement.setAttribute('data-theme','light');
-    setTimeout(()=>{{
-      const btn = document.getElementById('theme-btn');
-      if(btn) btn.innerHTML='<i data-lucide="moon" style="width:15px;height:15px"></i>';
-      if(typeof lucide !== 'undefined') lucide.createIcons();
-    }},100);
+    setTimeout(()=>setThemeIcon('moon'),100);
   }}
 }})();
 

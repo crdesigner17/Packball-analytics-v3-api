@@ -11,6 +11,7 @@ import os
 import sys
 from datetime import datetime
 import warnings
+from ligas_config import blocked_name, favorite_countries, favorite_league_names
 warnings.filterwarnings('ignore')
 
 # ── Configuração ───────────────────────────────────────────────────
@@ -24,11 +25,6 @@ COUNTRIES_OK = [
     'South America','Brazil','Argentina','Uruguay','Canada'
 ]
 STATUS_OK = ['NS','INPLAY_1ST_HALF','INPLAY_2ND_HALF','HT','AWAITING_UPDATES','FT','FT_PEN','AET']
-EXCL_KW   = [
-    'women','feminin','ladies','frauenliga','femenina','femenino',
-    'wpsl','nwsl','u17','u18','u19','u20','u21','u23',
-    'youth','academy','reserve','reserva','amateur'
-]
 LIGAS_OK  = [
     'Champions League','Premier League','La Liga','Serie A','Bundesliga',
     'Europa League','Ligue 1','Eredivisie','Liga Portugal','Superliga',
@@ -42,6 +38,8 @@ LIGAS_ELITE = {
     'Champions League','Europa League','Copa Libertadores',
     'Premier League','La Liga','Serie A','Bundesliga','Ligue 1'
 }
+COUNTRIES_OK = sorted(favorite_countries(COUNTRIES_OK))
+LIGAS_OK = sorted(favorite_league_names(LIGAS_OK))
 
 # ── Helpers ────────────────────────────────────────────────────────
 def cp(v):
@@ -116,14 +114,14 @@ def fex(raw, idx_map):
     df = df[df.iloc[:, 4].isin(STATUS_OK)]
     df = df[df.iloc[:, 0].isin(COUNTRIES_OK)]
     ll = df.iloc[:, 2].str.lower().fillna('')
-    df = df[~ll.apply(lambda x: any(k in x for k in EXCL_KW))]
+    df = df[~ll.apply(blocked_name)]
     if df.shape[1] < 10:
         return pd.DataFrame(columns=['home','away','league','hour'])
     teams = (
         df.iloc[:, 5].astype(str).str.lower().fillna('') + ' ' +
         df.iloc[:, 8].astype(str).str.lower().fillna('')
     )
-    df = df[~teams.apply(lambda x: any(k in x for k in EXCL_KW))]
+    df = df[~teams.apply(blocked_name)]
     df = df[df.iloc[:, 2].str.strip().isin(LIGAS_OK)]
     df = df.drop_duplicates(
         subset=[raw.columns[5], raw.columns[8], raw.columns[2]]
