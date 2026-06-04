@@ -127,8 +127,11 @@ def gerar_site():
         nprem    = entry.get('premium', 0)
         conf     = day_data.get('resultado_confirmado', False)
 
-        date_tabs_html.append(f'''<div class="date-tab" data-date="{d}" onclick="switchDate('{d}')">
-  <span class="dt-label">{wd} {fmt}</span>
+        is_today = (day_date == today)
+        today_cls = ' today' if is_today else ''
+        date_tabs_html.append(f'''<div class="date-strip-item{today_cls}" data-date="{d}" onclick="switchDate('{d}')">
+  <span class="date-strip-dow">{wd}</span>
+  <span class="date-strip-day">{fmt.replace('/',  '.')}</span>
 </div>''')
         day_panels_html.append(day_panel_html(d, day_data))
         all_data[d] = day_data
@@ -167,17 +170,6 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
   --purple:#a855f7;--pink:#ec4899;--text:#e2e8f0;--muted:#64748b;
   --dim:#1e2436;--aplus:#ffd700;
 }}
-[data-theme="light"]{{
-  --bg:#f0f2f7;--s1:#ffffff;--s2:#f8f9fc;--s3:#eef0f6;--border:#dde1ef;
-  --text:#1a1f36;--muted:#64748b;--dim:#e2e6f3;
-}}
-[data-theme="light"] .navbar{{background:rgba(255,255,255,.95)}}
-[data-theme="light"] .navbar-logo-name{{color:#1a1f36}}
-[data-theme="light"] .navbar-link{{color:rgba(26,31,54,.6)}}
-[data-theme="light"] .navbar-link:hover{{color:#1a1f36;background:rgba(0,0,0,.05)}}
-[data-theme="light"] .navbar-link.active{{color:#2563eb;background:rgba(37,99,235,.08)}}
-[data-theme="light"] .date-bar{{background:#ffffff}}
-[data-theme="light"] .mkt-bar{{background:#ffffff}}
 body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:.01em}}
 h1,h2,h3,h4,h5,h6{{font-family:'Inter',sans-serif;font-weight:700}}
 button,input,select{{font-family:'Inter',sans-serif}}
@@ -555,6 +547,88 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .cal-leg{{display:flex;align-items:center;gap:4px;font-size:10px;color:var(--muted)}}
 .cal-leg-dot{{width:8px;height:8px;border-radius:2px}}
 
+
+/* SIDEBAR */
+.app-layout{{display:flex;min-height:calc(100vh - 56px)}}
+.sidebar{{
+  width:220px;flex-shrink:0;background:var(--s1);
+  border-right:1px solid var(--border);
+  position:sticky;top:56px;height:calc(100vh - 56px);
+  overflow-y:auto;z-index:80;
+  display:flex;flex-direction:column;
+  padding:12px 0;
+}}
+.sidebar::-webkit-scrollbar{{width:3px}}
+.sidebar::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
+.sidebar-section{{padding:0 8px;margin-bottom:4px}}
+.sidebar-label{{
+  font-size:10px;font-weight:700;color:var(--muted);
+  letter-spacing:1.2px;text-transform:uppercase;
+  padding:8px 10px 4px;
+}}
+.sidebar-item{{
+  display:flex;align-items:center;gap:10px;
+  padding:9px 12px;border-radius:8px;
+  font-size:13px;font-weight:500;color:var(--muted);
+  cursor:pointer;transition:all .15s;margin-bottom:2px;
+  font-family:'Inter',sans-serif;
+}}
+.sidebar-item:hover{{color:var(--text);background:rgba(255,255,255,.05)}}
+.sidebar-item.active{{
+  color:var(--green);background:rgba(34,197,94,.08);
+  font-weight:600;border-left:3px solid var(--green);
+  padding-left:9px;
+}}
+.sidebar-item i{{width:16px;height:16px;flex-shrink:0}}
+.sidebar-divider{{height:1px;background:var(--border);margin:8px 10px}}
+.sidebar-cnt{{
+  margin-left:auto;font-family:'JetBrains Mono',monospace;
+  font-size:10px;font-weight:700;padding:2px 6px;
+  border-radius:4px;background:rgba(34,197,94,.12);color:var(--green);
+}}
+/* CONTENT AREA */
+.content-area{{flex:1;min-width:0;display:flex;flex-direction:column}}
+/* NEW DATE BAR */
+.date-strip{{
+  background:var(--s1);border-bottom:1px solid var(--border);
+  display:flex;overflow-x:auto;
+  padding:0 16px;
+  scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+  position:sticky;top:56px;z-index:95;
+  border-left:none;
+}}
+.date-strip::-webkit-scrollbar{{height:3px}}
+.date-strip::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
+.date-strip-item{{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  padding:10px 18px;min-width:72px;cursor:pointer;
+  border-bottom:3px solid transparent;transition:all .15s;
+  color:var(--muted);font-family:'Inter',sans-serif;gap:2px;
+  white-space:nowrap;flex-shrink:0;
+}}
+.date-strip-item:hover{{color:var(--text);background:rgba(255,255,255,.03)}}
+.date-strip-item.active{{
+  color:var(--green);border-bottom-color:var(--green);
+  background:rgba(34,197,94,.04);font-weight:600;
+}}
+.date-strip-item.today{{color:var(--green)}}
+.date-strip-dow{{font-size:11px;font-weight:600;letter-spacing:.5px;text-transform:uppercase}}
+.date-strip-day{{font-size:13px;font-weight:700;font-family:'JetBrains Mono',monospace}}
+/* MARKET TABS */
+.mkt-cat-bar{{
+  background:var(--s2);border-bottom:1px solid var(--border);
+  display:flex;padding:0 20px;
+  position:sticky;top:calc(56px + 53px);z-index:90;
+}}
+.mkt-cat-tab{{
+  padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);
+  cursor:pointer;border-bottom:2px solid transparent;
+  transition:all .15s;white-space:nowrap;
+  display:flex;align-items:center;gap:7px;
+  font-family:'Inter',sans-serif;
+}}
+.mkt-cat-tab:hover{{color:var(--text)}}
+.mkt-cat-tab.active{{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}}
 /* MOBILE */
 @media(max-width:640px){{
   .header{{padding:10px 14px}}
@@ -601,23 +675,71 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <span id="navbar-clock" style="font-size:8px;font-weight:600;color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace"></span>
       <span style="font-size:9px;color:rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">v3.1</span>
     </div>
-    <div class="navbar-theme" id="theme-btn" title="Alternar tema" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon" style="width:15px;height:15px"></i></div>
+    <div class="navbar-theme" title="Alternar tema"><i data-lucide="sun" style="width:15px;height:15px"></i></div>
     <div class="navbar-btn-entrar"><i data-lucide="log-in" style="width:14px;height:14px"></i> Entrar <i data-lucide="chevron-down" style="width:12px;height:12px"></i></div>
     <div class="navbar-btn-criar"><i data-lucide="rocket" style="width:14px;height:14px"></i> Criar conta grátis <i data-lucide="arrow-right" style="width:14px;height:14px"></i></div>
   </div>
 </nav>
 
-<div style="background:linear-gradient(135deg,#0f1420,#141928);border-bottom:1px solid var(--border);padding:10px 28px">
-  <div id="global-kpis">
-    <!-- preenchido pelo JS -->
+<div style="background:linear-gradient(135deg,#0f1420,#141928);border-bottom:1px solid var(--border);padding:8px 24px">
+  <div id="global-kpis"><!-- preenchido pelo JS --></div>
+</div>
+
+<div class="app-layout">
+  <!-- SIDEBAR -->
+  <aside class="sidebar" id="sidebar">
+    <div class="sidebar-section">
+      <div class="sidebar-item active" id="sb-visao" onclick="sidebarNav('visao')">
+        <i data-lucide="layout-dashboard"></i> Visão Geral
+      </div>
+      <div class="sidebar-item" id="sb-ranking" onclick="sidebarNav('ranking')">
+        <i data-lucide="trophy"></i> Melhores Previsões
+        <span class="sidebar-cnt" id="sb-cnt-ranking">—</span>
+      </div>
+      <div class="sidebar-item" id="sb-bilhetes" onclick="sidebarNav('bilhetes')">
+        <i data-lucide="ticket"></i> Bilhetes
+      </div>
+    </div>
+    <div class="sidebar-divider"></div>
+    <div class="sidebar-section">
+      <div class="sidebar-label">Histórico</div>
+      <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
+        <i data-lucide="bar-chart-2"></i> Histórico Global
+      </div>
+      <div class="sidebar-item" id="sb-resultados" onclick="sidebarNav('historico_dia')">
+        <i data-lucide="check-circle-2"></i> Resultados
+      </div>
+    </div>
+  </aside>
+
+  <!-- CONTENT -->
+  <div class="content-area">
+    <!-- DATE STRIP -->
+    <div class="date-strip" id="date-strip">
+      {date_tabs_html}
+    </div>
+
+    <!-- MARKET CATEGORY BAR -->
+    <div class="mkt-cat-bar" id="mkt-cat-bar">
+      <div class="mkt-cat-tab active" data-cat="gols" onclick="switchCat('gols')">
+        <i data-lucide="circle-dot" style="width:14px;height:14px"></i> Gols
+      </div>
+      <div class="mkt-cat-tab" data-cat="escanteios" onclick="switchCat('escanteios')">
+        <i data-lucide="flag" style="width:14px;height:14px"></i> Escanteios
+      </div>
+      <div class="mkt-cat-tab" data-cat="cartoes" onclick="switchCat('cartoes')">
+        <i data-lucide="square" style="width:14px;height:14px"></i> Cartões
+      </div>
+      <div class="mkt-cat-tab" data-cat="resultado" onclick="switchCat('resultado')">
+        <i data-lucide="lock" style="width:14px;height:14px"></i> Resultado Final
+        <span style="font-size:9px;background:rgba(249,115,22,.15);color:var(--accent);padding:1px 5px;border-radius:3px;margin-left:2px">PRO</span>
+      </div>
+    </div>
+
+    <!-- DAY PANELS -->
+    {day_panels_html}
   </div>
 </div>
-
-<div class="date-bar" id="date-bar">
-{date_tabs_html}
-</div>
-
-{day_panels_html}
 
 <!-- MODAL CALENDÁRIO -->
 <div class="cal-modal hidden" id="cal-modal" onclick="if(event.target===this)closeCal()">
@@ -882,35 +1004,7 @@ function renderGlobalKpis(){{
   const bordColor=taxa==null?'var(--border)':taxa>=70?'rgba(34,197,94,.4)':taxa>=50?'rgba(234,179,8,.4)':'rgba(239,68,68,.4)';
   const taxaColor=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
 
-  // Últimos 7 dias confirmados
-  const diasConf = Object.entries(ALL_DATA)
-    .filter(([d,v])=>v.resultado_confirmado)
-    .sort(([a],[b])=>{{
-      const [da,ma,ya]=a.split('-').map(Number);
-      const [db,mb,yb]=b.split('-').map(Number);
-      return new Date(ya,ma-1,da)-new Date(yb,mb-1,db);
-    }})
-    .slice(-7);
-
-  const barCols = diasConf.map(([dateKey,v])=>{{
-    const s=v.resultado_stats||{{}};
-    let ta=0,te=0;
-    Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
-    const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
-    const [dd,mm]=dateKey.split('-');
-    const col=t==null?'var(--muted)':t>=80?'var(--green)':t>=60?'var(--yellow)':'var(--red)';
-    const h=t?Math.max(6,Math.round(t*0.28)):4;
-    return{{t,dd,mm,col,h,dateKey}};
-  }});
-
-const barsHtml=barCols.map(b=>{{
-    return`<div class="desemp-bar-col" title="${{b.dd}}/${{b.mm}} · ${{b.t!=null?b.t+'%':'?'}}" onclick="event.stopPropagation();activeMkt['${{b.dateKey}}']='ranking';switchDate('${{b.dateKey}}')" style="cursor:pointer">
-      <div class="desemp-bar-pct" style="color:${{b.col}}">${{b.t!=null?b.t+'%':'?'}}</div>
-      <div class="desemp-bar" style="height:${{b.h}}px;background:${{b.col}};width:22px"></div>
-      <div class="desemp-bar-lbl">${{b.dd}}/${{b.mm}}</div>
-    </div>`;
-  }}).join('');
-
+  
   // Calcular total sem dados
   let totalSd = 0;
   Object.values(GLOBAIS.por_mercado||{{}}).forEach(s=>{{totalSd+=s.sem_dados||0;}});
@@ -930,14 +1024,7 @@ const barsHtml=barCols.map(b=>{{
           </div>
         </div>
 
-        ${{barCols.length>0?`
-        <div class="desemp-divider" style="align-self:stretch;height:auto"></div>
 
-        <!-- Bloco 2: Últimos 7 dias -->
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="desemp-label" style="text-align:center;margin-bottom:8px">Últimos 7 dias</div>
-          <div class="desemp-bars-chart">${{barsHtml}}</div>
-        </div>`:''}}
 
         ${{totalSd>0?`
         <div class="desemp-divider" style="align-self:stretch;height:auto"></div>
@@ -1708,7 +1795,7 @@ let historicoVisible=false;
 
 function showHistoricoGlobal(){{
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.date-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.date-strip-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('panel-historico').style.display='block';
   document.getElementById('btn-historico').style.color='var(--accent)';
   historicoVisible=true;
@@ -1719,15 +1806,17 @@ function switchDate(date){{
   const histPanel=document.getElementById('panel-historico');
   const histBtn=document.getElementById('btn-historico');
   if(histPanel)histPanel.style.display='none';
-  if(histBtn)histBtn.style.color='';
+
   historicoVisible=false;
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.date-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelectorAll('.date-strip-item').forEach(t=>t.classList.remove('active'));
   const panel=document.getElementById('day-'+date);
   const tab=document.querySelector(`[data-date="${{date}}"]`);
   if(!panel){{ console.warn('Panel not found for date:',date); return; }}
   panel.classList.add('active');
   if(tab){{tab.classList.add('active');tab.scrollIntoView({{behavior:'smooth',block:'nearest',inline:'center'}});}}
+  // Update sidebar active state
+  updateSidebarActive(activeMkt[date]||'visao');
   activeDate=date;
   if(!activeMkt[date])activeMkt[date]='visao';
   switchMkt(date,activeMkt[date]);
@@ -1760,6 +1849,48 @@ function renderMkt(date,mkt){{
 
 // Init
 renderGlobalKpis();
+
+// ── Sidebar navigation ──────────────────────────────────────────────
+function sidebarNav(mkt){{
+  if(!activeDate) return;
+  switchMkt(activeDate, mkt);
+  updateSidebarActive(mkt);
+}}
+
+function updateSidebarActive(mkt){{
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+  const map = {{
+    'visao':'sb-visao','ranking':'sb-ranking','bilhetes':'sb-bilhetes',
+    'historico_dia':'sb-resultados'
+  }};
+  const id = map[mkt];
+  if(id) document.getElementById(id)?.classList.add('active');
+  // Update sidebar counts
+  if(activeDate){{
+    const jogos = getJogos(activeDate);
+    const nprem = jogos.filter(j=>j.best_grade==='A+'||j.best_grade==='A').length;
+    const el = document.getElementById('sb-cnt-ranking');
+    if(el) el.textContent = nprem || '—';
+  }}
+}}
+
+// ── Market category ─────────────────────────────────────────────────
+let activeCat = 'gols';
+function switchCat(cat){{
+  activeCat = cat;
+  document.querySelectorAll('.mkt-cat-tab').forEach(t=>t.classList.remove('active'));
+  document.querySelector(`[data-cat="${{cat}}"]`)?.classList.add('active');
+  if(!activeDate) return;
+  const mktMap = {{
+    'gols': 'over15',
+    'escanteios': 'escanteios',
+    'cartoes': 'cartoes',
+    'resultado': 'ranking',
+  }};
+  const mkt = mktMap[cat] || 'over15';
+  switchMkt(activeDate, mkt);
+  updateSidebarActive(mkt);
+}}
 // Inicializar ícones Lucide
 if(typeof lucide !== 'undefined') lucide.createIcons();
 
@@ -1776,33 +1907,6 @@ function updateClock(){{
 }}
 updateClock();
 setInterval(updateClock, 30000);
-
-// ── Tema claro/escuro ──────────────────────────────────────────────
-function toggleTheme(){{
-  const html = document.documentElement;
-  const btn = document.getElementById('theme-btn');
-  const isLight = html.getAttribute('data-theme') === 'light';
-  if(isLight){{
-    html.removeAttribute('data-theme');
-    localStorage.setItem('wm_theme','dark');
-    btn.innerHTML='<i data-lucide="sun" style="width:15px;height:15px"></i>';
-  }} else {{
-    html.setAttribute('data-theme','light');
-    localStorage.setItem('wm_theme','light');
-    btn.innerHTML='<i data-lucide="moon" style="width:15px;height:15px"></i>';
-  }}
-  if(typeof lucide !== 'undefined') lucide.createIcons();
-}}
-// Restaurar tema salvo
-(function(){{
-  const saved = localStorage.getItem('wm_theme');
-  if(saved === 'light'){{
-    document.documentElement.setAttribute('data-theme','light');
-    const btn = document.getElementById('theme-btn');
-    if(btn) btn.innerHTML='<i data-lucide="moon" style="width:15px;height:15px"></i>';
-    if(typeof lucide !== 'undefined') lucide.createIcons();
-  }}
-}})();
 
 // Ordenar datas corretamente (DD-MM-YYYY)
 const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
@@ -1851,22 +1955,7 @@ switchDate(targetDate);
 .hist-btn:hover{{color:var(--text);border-color:var(--accent)}}
 </style>
 <script>
-// Adiciona botão Histórico na date-bar
-const dateBar=document.getElementById('date-bar');
-const btn=document.createElement('div');
-btn.id='btn-historico';
-btn.className='date-tab';
-btn.style.cssText='min-width:100px;cursor:pointer;height:40px;justify-content:center';
-btn.innerHTML='<span class="dt-label">📈 Histórico</span><span style="font-size:9px;color:var(--muted);margin-top:2px">Visão geral</span>';
-btn.onclick=showHistoricoGlobal;
-dateBar.appendChild(btn);
 
-const calBtn=document.createElement('div');
-calBtn.className='date-tab';
-calBtn.style.cssText='min-width:100px;cursor:pointer;border-color:rgba(249,115,22,.3);height:40px;justify-content:center';
-calBtn.innerHTML='<span class="dt-label">📅 Data</span><span style="font-size:9px;color:var(--accent);margin-top:2px">selecionar</span>';
-calBtn.onclick=openCal;
-dateBar.appendChild(calBtn);
 </script>
 </body>
 </html>'''
