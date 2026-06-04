@@ -168,6 +168,52 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
 }}
 body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5}}
 
+/* NAVBAR */
+.navbar{{
+  background:rgba(9,11,20,.92);backdrop-filter:blur(12px);
+  border-bottom:1px solid rgba(59,130,246,.15);
+  padding:0 32px;height:56px;
+  display:flex;align-items:center;justify-content:space-between;
+  position:sticky;top:0;z-index:200;
+  box-shadow:0 2px 20px rgba(0,0,0,.5);
+}}
+.navbar-logo{{display:flex;align-items:center;gap:10px;text-decoration:none}}
+.navbar-logo-icon{{width:32px;height:32px}}
+.navbar-logo-text{{display:flex;flex-direction:column;line-height:1}}
+.navbar-logo-name{{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}}
+.navbar-logo-sub{{font-size:9px;color:#3b82f6;letter-spacing:2px;font-weight:500;text-transform:uppercase}}
+.navbar-links{{display:flex;align-items:center;gap:4px}}
+.navbar-link{{
+  padding:7px 14px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);
+  cursor:pointer;border-radius:7px;transition:all .15s;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;
+}}
+.navbar-link:hover{{color:#fff;background:rgba(255,255,255,.07)}}
+.navbar-link.active{{color:#fff;background:rgba(59,130,246,.15)}}
+.navbar-link svg{{width:14px;height:14px;opacity:.7}}
+.navbar-actions{{display:flex;align-items:center;gap:8px}}
+.navbar-theme{{
+  width:34px;height:34px;border-radius:8px;border:1px solid rgba(255,255,255,.12);
+  background:rgba(255,255,255,.05);cursor:pointer;display:flex;align-items:center;
+  justify-content:center;color:rgba(255,255,255,.6);transition:all .15s;font-size:14px;
+}}
+.navbar-theme:hover{{background:rgba(255,255,255,.1);color:#fff}}
+.navbar-btn-entrar{{
+  padding:7px 16px;font-size:13px;font-weight:600;
+  border:1px solid rgba(59,130,246,.6);color:#3b82f6;
+  border-radius:8px;cursor:pointer;transition:all .15s;
+  background:rgba(59,130,246,.08);display:flex;align-items:center;gap:5px;
+}}
+.navbar-btn-entrar:hover{{background:rgba(59,130,246,.15);border-color:#3b82f6}}
+.navbar-btn-criar{{
+  padding:7px 16px;font-size:13px;font-weight:600;color:#fff;
+  background:linear-gradient(135deg,#2563eb,#7c3aed);
+  border:none;border-radius:8px;cursor:pointer;transition:all .15s;
+  display:flex;align-items:center;gap:6px;white-space:nowrap;
+  box-shadow:0 0 20px rgba(37,99,235,.3);
+}}
+.navbar-btn-criar:hover{{box-shadow:0 0 28px rgba(37,99,235,.5);transform:translateY(-1px)}}
+
 /* HEADER */
 .header{{
   background:linear-gradient(135deg,#0f1420,#141928);
@@ -215,7 +261,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .badge.updated{{background:rgba(100,116,139,.1);color:var(--muted);border:1px solid var(--border);font-size:9px}}
 
 /* DATE TABS */
-.date-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:8px 16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;justify-content:center;position:sticky;top:61px;z-index:95}}
+.date-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:8px 16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;justify-content:center;position:sticky;top:117px;z-index:95}}
 .date-bar::-webkit-scrollbar{{height:3px}}
 .date-bar::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
 .date-tab{{padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:7px;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s2);height:40px;min-width:80px}}
@@ -230,7 +276,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .dt-kpi.prem{{background:rgba(255,215,0,.12);color:var(--aplus)}}
 
 /* MKT BAR */
-.mkt-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:109px;z-index:90}}
+.mkt-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:165px;z-index:90}}
 .mkt-tabs{{display:flex;overflow-x:auto;gap:0;padding:0 6px;scrollbar-width:none}}
 .mkt-tabs::-webkit-scrollbar{{display:none}}
 .mkt-tab{{padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:5px}}
@@ -492,6 +538,40 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 </style>
 </head>
 <body>
+
+<!-- NAVBAR -->
+<nav class="navbar">
+  <a class="navbar-logo" href="#">
+    <svg class="navbar-logo-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg">
+      <defs>
+        <linearGradient id="wg1" x1="0%" y1="0%" x2="100%" y2="100%">
+          <stop offset="0%" style="stop-color:#2563EB"/>
+          <stop offset="100%" style="stop-color:#7C3AED"/>
+        </linearGradient>
+      </defs>
+      <path d="M4,28 L10,12 L16,24 L20,16 L24,24 L30,12 L36,28" fill="none" stroke="url(#wg1)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+      <path d="M26,10 L32,4" fill="none" stroke="#00C896" stroke-width="2.5" stroke-linecap="round"/>
+      <polygon points="32,4 28,6 30,10" fill="#00C896"/>
+    </svg>
+    <div class="navbar-logo-text">
+      <span class="navbar-logo-name">WinMetrics</span>
+      <span class="navbar-logo-sub">Analytics</span>
+    </div>
+  </a>
+  <div class="navbar-links">
+    <div class="navbar-link active">📊 Dashboard</div>
+    <div class="navbar-link" onclick="alert('Em breve!')">📈 Análises</div>
+    <div class="navbar-link" onclick="alert('Em breve!')">🎯 Mercados</div>
+    <div class="navbar-link" onclick="alert('Em breve!')">🤖 IA Preditiva</div>
+    <div class="navbar-link" onclick="alert('Em breve!')">💼 Planos</div>
+    <div class="navbar-link" onclick="alert('Em breve!')">ℹ️ Sobre</div>
+  </div>
+  <div class="navbar-actions">
+    <div class="navbar-theme" title="Tema">☀️</div>
+    <div class="navbar-btn-entrar">Entrar ▾</div>
+    <div class="navbar-btn-criar">Criar conta grátis →</div>
+  </div>
+</nav>
 
 <div class="header">
  <div class="logo">
