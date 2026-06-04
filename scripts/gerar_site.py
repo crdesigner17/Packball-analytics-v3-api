@@ -802,22 +802,47 @@ const barsHtml=barCols.map(b=>{{
     </div>`;
   }}).join('');
 
+  // Calcular total sem dados
+  let totalSd = 0;
+  Object.values(GLOBAIS.por_mercado||{{}}).forEach(s=>{{totalSd+=s.sem_dados||0;}});
+
   document.getElementById('global-kpis').innerHTML=`
     <div class="desemp-card" style="border-color:${{bordColor}}">
-      <div>
-        <div class="desemp-label">Desempenho das Melhores Previsões</div>
-        <div class="desemp-kpis">
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:${{taxaColor}}">${{taxa!=null?taxa+'%':'—'}}</div><div class="desemp-kpi-lbl">Taxa Geral</div></div>
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--green)">${{g.total_acertos}}</div><div class="desemp-kpi-lbl">Acertos</div></div>
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--red)">${{g.total_erros}}</div><div class="desemp-kpi-lbl">Erros</div></div>
-          <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--blue)">${{g.total_palpites}}</div><div class="desemp-kpi-lbl">Palpites</div></div>
+      <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
+
+        <!-- Bloco 1: Desempenho -->
+        <div>
+          <div class="desemp-label">Desempenho das Melhores Previsões</div>
+          <div class="desemp-kpis" style="margin-top:6px">
+            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:${{taxaColor}}">${{taxa!=null?taxa+'%':'—'}}</div><div class="desemp-kpi-lbl">Taxa Geral</div></div>
+            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--green)">${{g.total_acertos}}</div><div class="desemp-kpi-lbl">Acertos</div></div>
+            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--red)">${{g.total_erros}}</div><div class="desemp-kpi-lbl">Erros</div></div>
+            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--blue)">${{g.total_palpites}}</div><div class="desemp-kpi-lbl">Palpites</div></div>
+          </div>
         </div>
+
+        ${{barCols.length>0?`
+        <div class="desemp-divider" style="align-self:stretch"></div>
+
+        <!-- Bloco 2: Últimos 7 dias -->
+        <div>
+          <div class="desemp-label">Últimos 7 dias</div>
+          <div class="desemp-bars-chart" style="margin-top:6px">${{barsHtml}}</div>
+        </div>`:''}}
+
+        ${{totalSd>0?`
+        <div class="desemp-divider" style="align-self:stretch"></div>
+
+        <!-- Bloco 3: Sem dados -->
+        <div>
+          <div class="desemp-label">⚠ Sem Dados</div>
+          <div style="margin-top:6px">
+            <div class="desemp-kpi-val" style="color:var(--yellow);font-size:22px">${{totalSd}}</div>
+            <div class="desemp-kpi-lbl" style="margin-top:2px">jogos sem confirmação</div>
+          </div>
+        </div>`:''}}
+
       </div>
-${{barCols.length>0?`<div class="desemp-divider"></div>
-      <div class="desemp-bars">
-        <div class="desemp-bars-label" style="margin-bottom:6px">Últimos 7 dias</div>
-        <div class="desemp-bars-chart">${{barsHtml}}</div>
-      </div>`:''}}
     </div>
   `;
 }}
