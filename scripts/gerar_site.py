@@ -185,12 +185,12 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .navbar-logo-text{{display:flex;flex-direction:column;line-height:1}}
 .navbar-logo-name{{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}}
 .navbar-logo-sub{{font-size:9px;color:#3b82f6;letter-spacing:2px;font-weight:500;text-transform:uppercase}}
-.navbar-links{{display:flex;align-items:center;gap:2px;flex-shrink:0}}
+.navbar-links{{display:flex;align-items:center;gap:2px;flex:1;justify-content:center;min-width:0}}
 .navbar-link{{
   padding:7px 14px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);
   cursor:pointer;border-radius:7px;transition:all .18s;white-space:nowrap;
   display:inline-flex;align-items:center;gap:6px;letter-spacing:.1px;
-  font-family:'Inter',sans-serif;flex-shrink:0;
+  font-family:'Inter',sans-serif;width:auto;
 }}
 .navbar-link:hover{{color:#fff;background:rgba(255,255,255,.08);transform:translateY(-1px)}}
 .navbar-link.active{{color:#fff;background:rgba(59,130,246,.18);font-weight:600}}
