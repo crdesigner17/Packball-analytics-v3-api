@@ -546,7 +546,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   padding:9px 12px;border-radius:8px;
   font-size:13px;font-weight:500;color:var(--muted);
   cursor:pointer;transition:all .15s;margin-bottom:2px;
-  font-family:'Inter',sans-serif;
+  font-family:'Inter',sans-serif;white-space:nowrap;
 }}
 .sidebar-item:hover{{color:var(--text);background:rgba(255,255,255,.05)}}
 .sidebar-item.active{{
@@ -555,6 +555,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   padding-left:9px;
 }}
 .sidebar-item i{{width:16px;height:16px;flex-shrink:0}}
+.sidebar-pro{{margin-left:auto;font-size:9px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px;flex-shrink:0}}
 .sidebar-divider{{height:1px;background:var(--border);margin:12px 16px}}
 .sidebar-group-label{{
   font-size:10px;font-weight:700;color:var(--muted);
@@ -691,7 +692,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <div class="sidebar-divider"></div>
       <div class="sidebar-item" id="sb-ranking" onclick="sidebarNav('ranking')">
         <i data-lucide="star" style="width:16px;height:16px"></i> Melhores Previsões
-        <span style="margin-left:auto;font-size:9px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px">PRO</span>
+        <span class="sidebar-pro">PRO</span>
       </div>
       <div class="sidebar-divider"></div>
       <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
@@ -717,7 +718,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
         <i data-lucide="shield-check" style="width:14px;height:14px"></i> Resultado Final
         <span style="font-size:9px;background:rgba(100,116,139,.12);color:var(--muted);padding:1px 6px;border-radius:3px;margin-left:4px;letter-spacing:.3px;font-weight:500">Em breve</span>
       </div>
-      <div class="mkt-cat-tab active" data-cat="gols" onclick="switchCat('gols')">
+      <div class="mkt-cat-tab" data-cat="gols" onclick="switchCat('gols')">
         <i data-lucide="crosshair" style="width:14px;height:14px"></i> Gols
       </div>
       <div class="mkt-cat-tab" data-cat="escanteios" onclick="switchCat('escanteios')">
@@ -1764,14 +1765,12 @@ function switchDate(date){{
   updateSidebarActive(activeMkt[date]||'visao');
   activeDate=date;
   if(!activeMkt[date])activeMkt[date]='visao';
-  // Render category content instead of mkt tabs
-  renderSubFilters(activeCat);
-  renderCatContent(date, activeCat, activeSubFilter);
-  updateSidebarActive('visao');
+  switchMkt(date, activeMkt[date]);
 }}
 
 function switchMkt(date,mkt){{
   activeMkt[date]=mkt;
+  clearMarketCategoryState();
   const panel=document.getElementById('day-'+date);
   if(!panel)return;
   panel.querySelectorAll('.mkt-panel').forEach(p=>p.classList.remove('active'));
@@ -1825,7 +1824,7 @@ function updateSidebarActive(mkt){{
 }}
 
 // ── Market category & sub-filters ──────────────────────────────────
-let activeCat = 'gols';
+let activeCat = null;
 let activeSubFilter = null;
 
 const CAT_SUBFILTERS = {{
@@ -1834,6 +1833,17 @@ const CAT_SUBFILTERS = {{
   'cartoes':    [{{key:'cart25',  label:'Over 2.5'}}, {{key:'cart35', label:'Over 3.5'}}],
   'resultado':  [],
 }};
+
+function clearMarketCategoryState(){{
+  activeCat = null;
+  activeSubFilter = null;
+  document.querySelectorAll('.mkt-cat-tab').forEach(t=>t.classList.remove('active'));
+  const bar = document.getElementById('sub-filter-bar');
+  if(bar){{
+    bar.classList.remove('visible');
+    bar.innerHTML = '';
+  }}
+}}
 
 function renderSubFilters(cat){{
   const bar = document.getElementById('sub-filter-bar');
@@ -1855,6 +1865,7 @@ function renderSubFilters(cat){{
 }}
 
 function switchSubFilter(key){{
+  if(!activeCat) return;
   activeSubFilter = key;
   // Re-render sub-filter buttons
   renderSubFilters(activeCat);
@@ -1865,6 +1876,7 @@ function switchSubFilter(key){{
 function switchCat(cat){{
   activeCat = cat;
   activeSubFilter = null;
+  updateSidebarActive(null);
   document.querySelectorAll('.mkt-cat-tab').forEach(t=>t.classList.remove('active'));
   document.querySelector(`[data-cat="${{cat}}"]`)?.classList.add('active');
   renderSubFilters(cat);
