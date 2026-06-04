@@ -157,6 +157,7 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>WinMetrics - AI Sports Analytics</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=JetBrains+Mono:wght@400;600&display=swap" rel="stylesheet">
+<script src="https://cdnjs.cloudflare.com/ajax/libs/lucide/0.363.0/umd/lucide.min.js"></script>
 <style>
 *{{box-sizing:border-box;margin:0;padding:0}}
 :root{{
@@ -200,19 +201,30 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .navbar-theme:hover{{background:rgba(255,255,255,.1);color:#fff}}
 .navbar-btn-entrar{{
   padding:7px 16px;font-size:13px;font-weight:600;
-  border:1px solid rgba(59,130,246,.6);color:#3b82f6;
-  border-radius:8px;cursor:pointer;transition:all .15s;
-  background:rgba(59,130,246,.08);display:flex;align-items:center;gap:5px;
+  border:1px solid rgba(59,130,246,.5);color:#60a5fa;
+  border-radius:8px;cursor:pointer;transition:all .2s;
+  background:rgba(59,130,246,.08);display:flex;align-items:center;gap:6px;
+  letter-spacing:.2px;
 }}
-.navbar-btn-entrar:hover{{background:rgba(59,130,246,.15);border-color:#3b82f6}}
+.navbar-btn-entrar:hover{{background:rgba(59,130,246,.18);border-color:#3b82f6;color:#93c5fd;transform:translateY(-1px)}}
 .navbar-btn-criar{{
-  padding:7px 16px;font-size:13px;font-weight:600;color:#fff;
-  background:linear-gradient(135deg,#2563eb,#7c3aed);
-  border:none;border-radius:8px;cursor:pointer;transition:all .15s;
-  display:flex;align-items:center;gap:6px;white-space:nowrap;
-  box-shadow:0 0 20px rgba(37,99,235,.3);
+  padding:7px 18px;font-size:13px;font-weight:600;color:#fff;
+  background:linear-gradient(135deg,#2563eb 0%,#7c3aed 100%);
+  border:none;border-radius:8px;cursor:pointer;transition:all .2s;
+  display:flex;align-items:center;gap:7px;white-space:nowrap;
+  box-shadow:0 0 24px rgba(37,99,235,.35),inset 0 1px 0 rgba(255,255,255,.1);
+  letter-spacing:.2px;position:relative;overflow:hidden;
 }}
-.navbar-btn-criar:hover{{box-shadow:0 0 28px rgba(37,99,235,.5);transform:translateY(-1px)}}
+.navbar-btn-criar::before{{
+  content:'';position:absolute;inset:0;
+  background:linear-gradient(135deg,rgba(255,255,255,.1),transparent);
+  opacity:0;transition:opacity .2s;
+}}
+.navbar-btn-criar:hover{{box-shadow:0 0 32px rgba(37,99,235,.55),inset 0 1px 0 rgba(255,255,255,.15);transform:translateY(-1px)}}
+.navbar-btn-criar:hover::before{{opacity:1}}
+.navbar-link i,.navbar-btn-entrar i,.navbar-btn-criar i,.navbar-theme i{{
+  display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
+}}
 
 /* HEADER */
 .header{{
@@ -559,17 +571,17 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
     </div>
   </a>
   <div class="navbar-links">
-    <div class="navbar-link active">📊 Dashboard</div>
-    <div class="navbar-link" onclick="alert('Em breve!')">📈 Análises</div>
-    <div class="navbar-link" onclick="alert('Em breve!')">🎯 Mercados</div>
-    <div class="navbar-link" onclick="alert('Em breve!')">🤖 IA Preditiva</div>
-    <div class="navbar-link" onclick="alert('Em breve!')">💼 Planos</div>
-    <div class="navbar-link" onclick="alert('Em breve!')">ℹ️ Sobre</div>
+    <div class="navbar-link active"><i data-lucide="layout-dashboard" style="width:14px;height:14px"></i> Dashboard</div>
+    <div class="navbar-link" onclick="alert('Em breve!')"><i data-lucide="bar-chart-2" style="width:14px;height:14px"></i> Análises</div>
+    <div class="navbar-link" onclick="alert('Em breve!')"><i data-lucide="target" style="width:14px;height:14px"></i> Mercados</div>
+    <div class="navbar-link" onclick="alert('Em breve!')"><i data-lucide="brain-circuit" style="width:14px;height:14px"></i> IA Preditiva</div>
+    <div class="navbar-link" onclick="alert('Em breve!')"><i data-lucide="credit-card" style="width:14px;height:14px"></i> Planos</div>
+    <div class="navbar-link" onclick="alert('Em breve!')"><i data-lucide="info" style="width:14px;height:14px"></i> Sobre</div>
   </div>
   <div class="navbar-actions">
-    <div class="navbar-theme" title="Tema">☀️</div>
-    <div class="navbar-btn-entrar">Entrar ▾</div>
-    <div class="navbar-btn-criar">Criar conta grátis →</div>
+    <div class="navbar-theme" title="Alternar tema"><i data-lucide="sun" style="width:15px;height:15px"></i></div>
+    <div class="navbar-btn-entrar"><i data-lucide="log-in" style="width:14px;height:14px"></i> Entrar <i data-lucide="chevron-down" style="width:12px;height:12px"></i></div>
+    <div class="navbar-btn-criar"><i data-lucide="rocket" style="width:14px;height:14px"></i> Criar conta grátis <i data-lucide="arrow-right" style="width:14px;height:14px"></i></div>
   </div>
 </nav>
 
@@ -1731,6 +1743,8 @@ function renderMkt(date,mkt){{
 
 // Init
 renderGlobalKpis();
+// Inicializar ícones Lucide
+if(typeof lucide !== 'undefined') lucide.createIcons();
 
 // Ordenar datas corretamente (DD-MM-YYYY)
 const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
