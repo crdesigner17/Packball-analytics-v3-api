@@ -2,7 +2,7 @@ name: PackBall Analytics — Build Diário
 
 on:
   schedule:
-    - cron: '0 7 * * *'
+    - cron: '0 7 * * *'  # 04h Brasília
   push:
     branches: [main]
   workflow_dispatch:
@@ -26,19 +26,41 @@ jobs:
         uses: actions/checkout@v4
         with:
           fetch-depth: 0
+
       - name: Setup Python
         uses: actions/setup-python@v5
         with:
           python-version: '3.11'
           cache: 'pip'
+
       - name: Instalar dependências
         run: pip install requests pandas numpy
-      - name: Coletar dados da API e gerar site
+
+      - name: Coletar dados da API
         env:
           API_KEY: ${{ secrets.APIFOOTBALL_KEY }}
         run: |
           DATE="${{ github.event.inputs.date || 'today' }}"
-          python scripts/coletar.py --key "$API_KEY" --date "$DATE"
+
+          if [ "$DATE" = "today" ]; then
+            # Calcular datas em Brasília (UTC-3)
+            TODAY=$(TZ="America/Sao_Paulo" date +%Y-%m-%d)
+            D1=$(TZ="America/Sao_Paulo" date -d "+1 day" +%Y-%m-%d)
+            D2=$(TZ="America/Sao_Paulo" date -d "+2 days" +%Y-%m-%d)
+
+            echo "📅 Coletando janela: $TODAY | $D1 | $D2"
+
+            # D0 (hoje) — só coleta se ainda não existe
+            python scripts/coletar.py --key "$API_KEY" --date "$TODAY"
+
+            # D+1 e D+2 — sempre atualiza (dados melhoram conforme aproxima)
+            python scripts/coletar.py --key "$API_KEY" --date "$D1" --force
+            python scripts/coletar.py --key "$API_KEY" --date "$D2" --force
+          else
+            # Coleta manual de data específica
+            python scripts/coletar.py --key "$API_KEY" --date "$DATE"
+          fi
+
       - name: Commit e push do site atualizado
         run: |
           git config user.name  "PackBall Bot"
