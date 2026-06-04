@@ -120,6 +120,11 @@ def fex(raw, idx_map):
     df = df[~ll.apply(lambda x: any(k in x for k in EXCL_KW))]
     if df.shape[1] < 10:
         return pd.DataFrame(columns=['home','away','league','hour'])
+    teams = (
+        df.iloc[:, 5].astype(str).str.lower().fillna('') + ' ' +
+        df.iloc[:, 8].astype(str).str.lower().fillna('')
+    )
+    df = df[~teams.apply(lambda x: any(k in x for k in EXCL_KW))]
     df = df[df.iloc[:, 2].str.strip().isin(LIGAS_OK)]
     df = df.drop_duplicates(
         subset=[raw.columns[5], raw.columns[8], raw.columns[2]]
