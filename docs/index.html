@@ -103,31 +103,6 @@ button,input,select{font-family:'Inter',sans-serif}
 .logo-text .name{font-size:17px;font-weight:700;letter-spacing:-.3px}
 .logo-text .name em{font-style:normal;color:var(--accent)}
 .logo-text .sub{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}
-/* Header KPIs globais */
-.hkpi-row{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
-.hkpi{display:flex;flex-direction:column;align-items:center;padding:5px 12px;border-radius:7px;background:var(--s2);border:1px solid var(--border);min-width:70px}
-.hkpi-val{font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}
-.hkpi-lbl{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-/* DESEMPENHO CARD */
-.desemp-card{
-  display:flex;align-items:center;gap:20px;
-  background:transparent;border:none;border-radius:0;
-  padding:0;transition:all .2s;flex-wrap:wrap;
-}
-.desemp-label{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}
-.desemp-kpis{display:flex;align-items:center;gap:10px}
-.desemp-kpi{display:flex;flex-direction:column;align-items:center;min-width:44px}
-.desemp-kpi-val{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}
-.desemp-kpi-lbl{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}
-.desemp-divider{width:1px;height:40px;background:var(--border);flex-shrink:0}
-.desemp-bars{display:flex;flex-direction:column;gap:3px}
-.desemp-bars-label{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:.8px;text-transform:uppercase}
-.desemp-bars-chart{display:flex;align-items:flex-end;gap:4px;height:68px}
-.desemp-bar-col{display:flex;flex-direction:column;align-items:center;gap:2px}
-.desemp-bar{border-radius:3px 3px 0 0;min-width:22px;transition:opacity .2s}
-.desemp-bar:hover{opacity:.8}
-.desemp-bar-lbl{font-size:9px;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}
-.desemp-bar-pct{font-size:9px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}
 .header-right{display:flex;align-items:center;gap:6px;flex-wrap:wrap}
 .badge{display:inline-flex;align-items:center;gap:4px;padding:3px 9px;border-radius:5px;font-size:10px;font-weight:600;font-family:'JetBrains Mono',monospace;white-space:nowrap}
 .badge.validated{background:rgba(34,197,94,.1);color:var(--green);border:1px solid rgba(34,197,94,.2)}
@@ -520,7 +495,6 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   .kpi-val{font-size:20px}
   .mkt-tab{padding:9px 11px;font-size:12px}
   .top-card{min-width:230px}
-  .hkpi-row{display:none}
 }
 </style>
 </head>
@@ -651,7 +625,6 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 
     <!-- MARKET CATEGORY BAR -->
     <div class="mkt-cat-bar" id="mkt-cat-bar">
-      <div id="global-kpis" style="display:flex;align-items:center;padding:0 16px;border-right:1px solid var(--border);flex-shrink:0"></div>
       <div class="mkt-cat-tab" data-cat="resultado" onclick="switchCat('resultado')">
         <i data-lucide="shield-check" style="width:14px;height:14px"></i> Resultado Final
         <span style="font-size:9px;background:rgba(100,116,139,.12);color:var(--muted);padding:1px 6px;border-radius:3px;margin-left:4px;letter-spacing:.3px;font-weight:500">Em breve</span>
@@ -1108,55 +1081,6 @@ function cardOverlayClass(jogo){
 }
 
 // ── Render Global KPIs (header) ────────────────────────────────────
-function renderGlobalKpis(){
-  const g=GLOBAIS;
-  if(!g||g.dias_confirmados===0){
-    document.getElementById('global-kpis').innerHTML=
-      '<span style="font-size:11px;color:var(--muted);padding:0 8px">Sem dados</span>';
-    return;
-  }
-  const taxa=g.taxa_geral;
-  const bordColor=taxa==null?'var(--border)':taxa>=70?'rgba(34,197,94,.4)':taxa>=50?'rgba(234,179,8,.4)':'rgba(239,68,68,.4)';
-  const taxaColor=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
-
-  
-  // Calcular total sem dados
-  let totalSd = 0;
-  Object.values(GLOBAIS.por_mercado||{}).forEach(s=>{totalSd+=s.sem_dados||0;});
-
-  document.getElementById('global-kpis').innerHTML=`
-    <div class="desemp-card" style="border-color:${bordColor};width:100%;justify-content:center">
-      <div style="display:flex;align-items:center;gap:40px;flex-wrap:wrap;justify-content:center;width:100%">
-
-        <!-- Bloco 1: Desempenho -->
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="desemp-label" style="text-align:center;margin-bottom:8px">Desempenho das Melhores Previsões</div>
-          <div class="desemp-kpis" style="gap:24px">
-            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:${taxaColor}">${taxa!=null?taxa+'%':'—'}</div><div class="desemp-kpi-lbl">Taxa Geral</div></div>
-            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--green)">${g.total_acertos}</div><div class="desemp-kpi-lbl">Acertos</div></div>
-            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--red)">${g.total_erros}</div><div class="desemp-kpi-lbl">Erros</div></div>
-            <div class="desemp-kpi"><div class="desemp-kpi-val" style="color:var(--blue)">${g.total_palpites}</div><div class="desemp-kpi-lbl">Palpites</div></div>
-          </div>
-        </div>
-
-
-
-        ${totalSd>0?`
-        <div class="desemp-divider" style="align-self:stretch;height:auto"></div>
-
-        <!-- Bloco 3: Sem dados -->
-        <div style="display:flex;flex-direction:column;align-items:center">
-          <div class="desemp-label" style="text-align:center;margin-bottom:8px">⚠ Sem Dados</div>
-          <div style="text-align:center">
-            <div class="desemp-kpi-val" style="color:var(--yellow);font-size:22px">${totalSd}</div>
-            <div class="desemp-kpi-lbl" style="margin-top:4px">sem confirmação</div>
-          </div>
-        </div>`:''}
-
-      </div>
-    </div>
-  `;
-}
 
 // ── Visão Geral ────────────────────────────────────────────────────
 function renderVisao(date,jogos){
@@ -1963,9 +1887,6 @@ function renderMkt(date,mkt){
   else if(mkt==='bilhetes')     renderBilhetes(date,jogos);
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
 }
-
-// Init
-renderGlobalKpis();
 
 // ── Sidebar navigation ──────────────────────────────────────────────
 function sidebarNav(mkt){
