@@ -77,18 +77,6 @@ def day_panel_html(d, day_data):
 
     return f'''
 <div id="day-{d}" class="day-panel">
-  <div class="mkt-bar">
-    <div class="mkt-tabs">
-
-      <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Melhores Previsões <span class="cnt g">{nprem}</span></div>
-      <div class="mkt-tab"       data-mkt="bilhetes"    onclick="switchMkt('{d}','bilhetes')">🎯 Bilhetes</div>
-      <div class="mkt-tab"       data-mkt="over15"      onclick="switchMkt('{d}','over15')">⚽ Over 1.5 <span class="cnt b">{n15}</span></div>
-      <div class="mkt-tab"       data-mkt="over25"      onclick="switchMkt('{d}','over25')">🔽 Under 3.5</div>
-      <div class="mkt-tab"       data-mkt="escanteios"  onclick="switchMkt('{d}','escanteios')">🚩 Escanteios <span class="cnt g">{nesc}</span></div>
-      <div class="mkt-tab"       data-mkt="cartoes"     onclick="switchMkt('{d}','cartoes')">🟨 Cartões <span class="cnt g">{ncart}</span></div>
-      <div class="mkt-tab"       data-mkt="historico_dia" onclick="switchMkt('{d}','historico_dia')">{res_badge} Resultados</div>
-    </div>
-  </div>
   <div class="main">
     <div id="mkt-{d}-visao"        class="mkt-panel active"></div>
     <div id="mkt-{d}-ranking"      class="mkt-panel"></div>
@@ -592,7 +580,12 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   padding-left:9px;
 }}
 .sidebar-item i{{width:16px;height:16px;flex-shrink:0}}
-.sidebar-divider{{height:1px;background:var(--border);margin:8px 10px}}
+.sidebar-divider{{height:1px;background:var(--border);margin:12px 16px}}
+.sidebar-group-label{{
+  font-size:10px;font-weight:700;color:var(--muted);
+  letter-spacing:1.5px;text-transform:uppercase;
+  padding:10px 16px 4px;opacity:.6;
+}}
 .sidebar-cnt{{
   margin-left:auto;font-family:'JetBrains Mono',monospace;
   font-size:10px;font-weight:700;padding:2px 6px;
@@ -694,7 +687,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   </div>
 </nav>
 
-<div style="background:linear-gradient(135deg,#0f1420,#141928);border-bottom:1px solid var(--border);padding:8px 24px">
+<div id="global-kpis-wrap" style="background:linear-gradient(135deg,#0f1420,#141928);border-bottom:1px solid var(--border);padding:6px 24px">
   <div id="global-kpis"><!-- preenchido pelo JS --></div>
 </div>
 
@@ -702,6 +695,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-section">
+      <div class="sidebar-group-label">Principal</div>
       <div class="sidebar-item active" id="sb-visao" onclick="sidebarNav('visao')">
         <i data-lucide="grid-2x2" style="width:16px;height:16px"></i> Visão Geral
       </div>
@@ -709,6 +703,8 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
         <i data-lucide="star" style="width:16px;height:16px"></i> Melhores Previsões
         <span style="margin-left:auto;font-size:9px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px">PRO</span>
       </div>
+      <div class="sidebar-divider"></div>
+      <div class="sidebar-group-label">Análise</div>
       <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
         <i data-lucide="trending-up" style="width:16px;height:16px"></i> Histórico Global
       </div>
@@ -1810,7 +1806,6 @@ function showHistoricoGlobal(){{
 
 function switchDate(date){{
   const histPanel=document.getElementById('panel-historico');
-  const histBtn=document.getElementById('btn-historico');
   if(histPanel)histPanel.style.display='none';
 
   historicoVisible=false;
@@ -1858,7 +1853,12 @@ renderGlobalKpis();
 
 // ── Sidebar navigation ──────────────────────────────────────────────
 function sidebarNav(mkt){{
-  if(!activeDate) return;
+  // If no date active, use the most recent one
+  if(!activeDate){{
+    const d = dates[dates.length-1];
+    if(d) switchDate(d);
+    else return;
+  }}
   switchMkt(activeDate, mkt);
   updateSidebarActive(mkt);
 }}
