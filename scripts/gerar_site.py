@@ -79,7 +79,7 @@ def day_panel_html(d, day_data):
 <div id="day-{d}" class="day-panel">
   <div class="mkt-bar">
     <div class="mkt-tabs">
-      <div class="mkt-tab active" data-mkt="visao"      onclick="switchMkt('{d}','visao')">📊 Visão Geral</div>
+
       <div class="mkt-tab"       data-mkt="ranking"     onclick="switchMkt('{d}','ranking')">🏅 Melhores Previsões <span class="cnt g">{nprem}</span></div>
       <div class="mkt-tab"       data-mkt="bilhetes"    onclick="switchMkt('{d}','bilhetes')">🎯 Bilhetes</div>
       <div class="mkt-tab"       data-mkt="over15"      onclick="switchMkt('{d}','over15')">⚽ Over 1.5 <span class="cnt b">{n15}</span></div>
@@ -170,6 +170,18 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
   --purple:#a855f7;--pink:#ec4899;--text:#e2e8f0;--muted:#64748b;
   --dim:#1e2436;--aplus:#ffd700;
 }}
+[data-theme="light"]{{
+  --bg:#f0f4f8;--s1:#ffffff;--s2:#f5f7fa;--s3:#eef0f6;--border:#dde1ef;
+  --text:#1a1f36;--muted:#64748b;--dim:#e2e6f3;
+}}
+[data-theme="light"] .navbar{{background:rgba(255,255,255,.96);border-bottom-color:rgba(0,0,0,.08)}}
+[data-theme="light"] .navbar-logo-name{{color:#1a1f36}}
+[data-theme="light"] .navbar-link{{color:rgba(26,31,54,.55)}}
+[data-theme="light"] .navbar-link:hover{{color:#1a1f36;background:rgba(0,0,0,.05)}}
+[data-theme="light"] .navbar-link.active{{color:#2563eb;background:rgba(37,99,235,.08)}}
+[data-theme="light"] .sidebar{{background:#ffffff;border-right-color:#e2e6f3}}
+[data-theme="light"] .date-strip{{background:#ffffff}}
+[data-theme="light"] .mkt-cat-bar{{background:#f5f7fa}}
 body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:.01em}}
 h1,h2,h3,h4,h5,h6{{font-family:'Inter',sans-serif;font-weight:700}}
 button,input,select{{font-family:'Inter',sans-serif}}
@@ -617,14 +629,15 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 /* MARKET TABS */
 .mkt-cat-bar{{
   background:var(--s2);border-bottom:1px solid var(--border);
-  display:flex;padding:0 20px;
+  display:flex;padding:0;
   position:sticky;top:calc(56px + 53px);z-index:90;
+  width:100%;
 }}
 .mkt-cat-tab{{
-  padding:10px 20px;font-size:13px;font-weight:500;color:var(--muted);
+  flex:1;padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);
   cursor:pointer;border-bottom:2px solid transparent;
   transition:all .15s;white-space:nowrap;
-  display:flex;align-items:center;gap:7px;
+  display:flex;align-items:center;justify-content:center;gap:7px;
   font-family:'Inter',sans-serif;
 }}
 .mkt-cat-tab:hover{{color:var(--text)}}
@@ -675,7 +688,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <span id="navbar-clock" style="font-size:8px;font-weight:600;color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace"></span>
       <span style="font-size:9px;color:rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">v3.1</span>
     </div>
-    <div class="navbar-theme" title="Alternar tema"><i data-lucide="sun" style="width:15px;height:15px"></i></div>
+    <div class="navbar-theme" id="theme-btn" title="Alternar tema" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon" style="width:15px;height:15px"></i></div>
     <div class="navbar-btn-entrar"><i data-lucide="log-in" style="width:14px;height:14px"></i> Entrar <i data-lucide="chevron-down" style="width:12px;height:12px"></i></div>
     <div class="navbar-btn-criar"><i data-lucide="rocket" style="width:14px;height:14px"></i> Criar conta grátis <i data-lucide="arrow-right" style="width:14px;height:14px"></i></div>
   </div>
@@ -690,24 +703,17 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   <aside class="sidebar" id="sidebar">
     <div class="sidebar-section">
       <div class="sidebar-item active" id="sb-visao" onclick="sidebarNav('visao')">
-        <i data-lucide="layout-dashboard"></i> Visão Geral
+        <i data-lucide="grid-2x2" style="width:16px;height:16px"></i> Visão Geral
       </div>
       <div class="sidebar-item" id="sb-ranking" onclick="sidebarNav('ranking')">
-        <i data-lucide="trophy"></i> Melhores Previsões
-        <span class="sidebar-cnt" id="sb-cnt-ranking">—</span>
+        <i data-lucide="star" style="width:16px;height:16px"></i> Melhores Previsões
+        <span style="margin-left:auto;font-size:9px;background:linear-gradient(135deg,#2563eb,#7c3aed);color:#fff;padding:1px 6px;border-radius:3px;font-weight:700;letter-spacing:.3px">PRO</span>
       </div>
-      <div class="sidebar-item" id="sb-bilhetes" onclick="sidebarNav('bilhetes')">
-        <i data-lucide="ticket"></i> Bilhetes
-      </div>
-    </div>
-    <div class="sidebar-divider"></div>
-    <div class="sidebar-section">
-      <div class="sidebar-label">Histórico</div>
       <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
-        <i data-lucide="bar-chart-2"></i> Histórico Global
+        <i data-lucide="trending-up" style="width:16px;height:16px"></i> Histórico Global
       </div>
       <div class="sidebar-item" id="sb-resultados" onclick="sidebarNav('historico_dia')">
-        <i data-lucide="check-circle-2"></i> Resultados
+        <i data-lucide="circle-check" style="width:16px;height:16px"></i> Resultado do Dia
       </div>
     </div>
   </aside>
@@ -721,18 +727,18 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
     <!-- MARKET CATEGORY BAR -->
     <div class="mkt-cat-bar" id="mkt-cat-bar">
+      <div class="mkt-cat-tab" data-cat="resultado" onclick="switchCat('resultado')">
+        <i data-lucide="shield-check" style="width:14px;height:14px"></i> Resultado Final
+        <span style="font-size:9px;background:rgba(100,116,139,.12);color:var(--muted);padding:1px 6px;border-radius:3px;margin-left:4px;letter-spacing:.3px;font-weight:500">Em breve</span>
+      </div>
       <div class="mkt-cat-tab active" data-cat="gols" onclick="switchCat('gols')">
-        <i data-lucide="circle-dot" style="width:14px;height:14px"></i> Gols
+        <i data-lucide="crosshair" style="width:14px;height:14px"></i> Gols
       </div>
       <div class="mkt-cat-tab" data-cat="escanteios" onclick="switchCat('escanteios')">
-        <i data-lucide="flag" style="width:14px;height:14px"></i> Escanteios
+        <i data-lucide="corner-up-right" style="width:14px;height:14px"></i> Escanteios
       </div>
       <div class="mkt-cat-tab" data-cat="cartoes" onclick="switchCat('cartoes')">
-        <i data-lucide="square" style="width:14px;height:14px"></i> Cartões
-      </div>
-      <div class="mkt-cat-tab" data-cat="resultado" onclick="switchCat('resultado')">
-        <i data-lucide="lock" style="width:14px;height:14px"></i> Resultado Final
-        <span style="font-size:9px;background:rgba(249,115,22,.15);color:var(--accent);padding:1px 5px;border-radius:3px;margin-left:2px">PRO</span>
+        <i data-lucide="layers" style="width:14px;height:14px"></i> Cartões
       </div>
     </div>
 
@@ -1893,6 +1899,36 @@ function switchCat(cat){{
 }}
 // Inicializar ícones Lucide
 if(typeof lucide !== 'undefined') lucide.createIcons();
+
+// ── Tema claro/escuro ──────────────────────────────────────────────
+function toggleTheme(){{
+  const html = document.documentElement;
+  const isLight = html.getAttribute('data-theme') === 'light';
+  if(isLight){{
+    html.removeAttribute('data-theme');
+    localStorage.setItem('wm_theme','dark');
+    const btn = document.getElementById('theme-btn');
+    if(btn) btn.innerHTML='<i data-lucide="sun" id="theme-icon" style="width:15px;height:15px"></i>';
+  }} else {{
+    html.setAttribute('data-theme','light');
+    localStorage.setItem('wm_theme','light');
+    const btn = document.getElementById('theme-btn');
+    if(btn) btn.innerHTML='<i data-lucide="moon" id="theme-icon" style="width:15px;height:15px"></i>';
+  }}
+  if(typeof lucide !== 'undefined') lucide.createIcons();
+}}
+// Restaurar tema salvo
+(function(){{
+  const saved = localStorage.getItem('wm_theme');
+  if(saved === 'light'){{
+    document.documentElement.setAttribute('data-theme','light');
+    setTimeout(()=>{{
+      const btn = document.getElementById('theme-btn');
+      if(btn) btn.innerHTML='<i data-lucide="moon" style="width:15px;height:15px"></i>';
+      if(typeof lucide !== 'undefined') lucide.createIcons();
+    }},100);
+  }}
+}})();
 
 // Relógio navbar
 function updateClock(){{
