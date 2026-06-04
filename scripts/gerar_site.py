@@ -929,6 +929,7 @@ function odd(v){{
   return parseFloat(v).toFixed(2);
 }}
 function oddMkt(d){{
+  if(d.oddVal) return parseFloat(d.oddVal).toFixed(2);
   const mkt=getPalpiteMkt(d);
   let val=null;
   if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15;
@@ -983,9 +984,9 @@ function getJogos(date){{return(ALL_DATA[date]||{{}}).jogos||[];}}
 // ── Resultado helpers ──────────────────────────────────────────────
 function getResultado(jogo){{return jogo.resultado||null;}}
 function isConfirmado(date){{return !!(ALL_DATA[date]||{{}}).resultado_confirmado;}}
-function getPalpiteMkt(jogo){{return jogo.palpite_mkt||jogo.best_mkt||'';}}
-function getPalpiteGrade(jogo){{return jogo.palpite_grade||jogo.best_grade||'D';}}
-function getPalpiteScore(jogo){{return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score||0);}}
+function getPalpiteMkt(jogo){{return jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';}}
+function getPalpiteGrade(jogo){{return jogo.palpite_grade||jogo.best_grade||jogo.grade||'D';}}
+function getPalpiteScore(jogo){{return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score!=null?jogo.best_score:(jogo.score||0));}}
 
 function resBadge(jogo, mktKey){{
   const res=getResultado(jogo);
@@ -1042,10 +1043,11 @@ function cardOverlayClass(jogo){{
 function renderVisao(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-visao');
   const conf=isConfirmado(date);
+  const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
   const a15=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).length;
   const aesc=jogos.filter(d=>d.score_esc75>=75).length;
   const acart=jogos.filter(d=>d.score_cards25>=75).length;
-  const aprem=jogos.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A').length;
+  const aprem=snap.length||jogos.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A').length;
   const a05ht=jogos.filter(d=>d.score_05ht>=75).length;
 
   // Taxa do dia (se confirmado)
@@ -1071,7 +1073,7 @@ function renderVisao(date,jogos){{
   </div>
   <div id="kpi-panel-${{date}}" style="display:none"></div>`;
 
-  const top=[...jogos].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a)).slice(0,5);
+  const top=[...(snap.length?snap:jogos)].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a)).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{{
     const c=col(getPalpiteScore(d));
@@ -1128,7 +1130,9 @@ function renderVisao(date,jogos){{
 // ── Ranking ────────────────────────────────────────────────────────
 function renderRanking(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-ranking');
-  const sorted=[...jogos].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a));
+  const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
+  const base=snap.length?snap:jogos;
+  const sorted=[...base].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a));
   const premium=sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A');
   const boas=sorted.filter(d=>getPalpiteGrade(d)==='B');
   const perigosas=sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D');
@@ -1366,7 +1370,8 @@ function avaliarBilhete(sels, confirmado){{
 function renderBilhetes(date, jogos){{
   const el = document.getElementById('mkt-'+date+'-bilhetes');
   const confirmado = isConfirmado(date);
-  const resultado = gerarBilhetes(jogos);
+  const snap=(ALL_DATA[date]||{{}}).bilhetes_snapshot;
+  const resultado = snap || gerarBilhetes(jogos);
   const {{bilhetes, bilheteDia}} = resultado;
 
   if((!bilhetes || bilhetes.length===0) && !bilheteDia){{

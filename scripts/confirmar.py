@@ -10,6 +10,7 @@ Uso:
 import os, sys, json, argparse, time
 from datetime import datetime, date, timedelta
 import requests
+from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
 
 BASE_URL = "https://v3.football.api-sports.io"
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
@@ -207,6 +208,10 @@ def match_jogo(home_palpite, away_palpite, resultados):
 def processar_confirmacao(date_str_api, resultados_api, data_json):
     jogos = data_json.get("jogos", [])
     nao_encontrados = []
+    if not data_json.get("palpites_snapshot"):
+        data_json["palpites_snapshot"] = build_palpites_snapshot(jogos)
+    if not data_json.get("bilhetes_snapshot"):
+        data_json["bilhetes_snapshot"] = build_bilhetes_snapshot(jogos)
 
     # Stats oficiais: apenas best_mkt de jogos A+/A
     stats_oficiais = {mkt: {"palpites": 0, "acertos": 0, "erros": 0, "sem_dados": 0}
@@ -287,6 +292,7 @@ def processar_confirmacao(date_str_api, resultados_api, data_json):
     data_json["resultado_stats"]     = stats_oficiais
     data_json["resultado_stats_full"] = stats_todos  # referência completa
     data_json["resultado_confirmado"] = True
+    data_json = attach_results_to_snapshots(data_json)
 
     if nao_encontrados:
         print(f"\n  ⚠ {len(nao_encontrados)} jogos sem resultado encontrado:")

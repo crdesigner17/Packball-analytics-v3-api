@@ -30,6 +30,7 @@ from datetime import datetime, date
 import requests
 import numpy as np
 from ligas_config import blocked_name, favorite_league_names
+from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
 
 # ── Configuração ────────────────────────────────────────────────────
 BASE_URL  = "https://v3.football.api-sports.io"
@@ -864,6 +865,9 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
     out_path = os.path.join(OUT_DIR, f"{date_fmt}.json")
     resultado_confirmado = False
     resultado_stats      = {}
+    resultado_stats_full = {}
+    palpites_snapshot    = None
+    bilhetes_snapshot    = None
     resultados_existentes = {}
     jogos_existentes_count = 0
 
@@ -873,6 +877,9 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
                 old_json = json.load(f)
             resultado_confirmado  = old_json.get("resultado_confirmado", False)
             resultado_stats       = old_json.get("resultado_stats", {})
+            resultado_stats_full  = old_json.get("resultado_stats_full", {})
+            palpites_snapshot     = old_json.get("palpites_snapshot")
+            bilhetes_snapshot     = old_json.get("bilhetes_snapshot")
             jogos_existentes_count = len(old_json.get("jogos", []))
             # Mapear palpites/resultados por nome do jogo. O palpite original
             # precisa sobreviver ao reprocessamento para RED continuar RED.
@@ -923,12 +930,20 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
         j.setdefault("palpite_grade", j.get("best_grade"))
         j.setdefault("palpite_score", j.get("best_score"))
 
+    if not palpites_snapshot or force:
+        palpites_snapshot = build_palpites_snapshot(jogos)
+    if not bilhetes_snapshot or force:
+        bilhetes_snapshot = build_bilhetes_snapshot(jogos)
+
     dia_json = {
         "date":  date_fmt,
         "jogos": jogos,
         "top5":  [j['jogo'] for j in sorted(jogos, key=lambda x: x['best_score'], reverse=True)[:5]],
+        "palpites_snapshot": palpites_snapshot,
+        "bilhetes_snapshot": bilhetes_snapshot,
         "resultado_confirmado": resultado_confirmado,
         "resultado_stats":      resultado_stats,
+        "resultado_stats_full": resultado_stats_full,
         "stats": {
             "total":            len(jogos),
             "over15_aprovados": len(aprovados15),
@@ -937,6 +952,7 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
             "premium":          len(premium),
         }
     }
+    dia_json = attach_results_to_snapshots(dia_json)
 
     with open(out_path, "w", encoding="utf-8") as f:
         json.dump(dia_json, f, ensure_ascii=False, indent=2)

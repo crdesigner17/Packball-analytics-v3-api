@@ -12,6 +12,7 @@ import sys
 from datetime import datetime
 import warnings
 from ligas_config import blocked_name, favorite_countries, favorite_league_names
+from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
 warnings.filterwarnings('ignore')
 
 # ── Configuração ───────────────────────────────────────────────────
@@ -607,6 +608,8 @@ def consolidar_historico(all_results):
             'date':   date_str,
             'jogos':  jogos,
             'top5':   [j['jogo'] for j in top5],
+            'palpites_snapshot': build_palpites_snapshot(jogos),
+            'bilhetes_snapshot': build_bilhetes_snapshot(jogos),
             'stats': {
                 'total':           len(jogos),
                 'over15_aprovados': len(aprovados15),
@@ -616,6 +619,20 @@ def consolidar_historico(all_results):
             }
         }
         out_path = os.path.join(OUT_DIR, f'{date_str}.json')
+        if os.path.exists(out_path):
+            try:
+                with open(out_path, encoding='utf-8') as f:
+                    old_json = json.load(f)
+                if old_json.get('palpites_snapshot'):
+                    dia_json['palpites_snapshot'] = old_json['palpites_snapshot']
+                if old_json.get('bilhetes_snapshot'):
+                    dia_json['bilhetes_snapshot'] = old_json['bilhetes_snapshot']
+                for key in ('resultado_confirmado', 'resultado_stats', 'resultado_stats_full'):
+                    if key in old_json:
+                        dia_json[key] = old_json[key]
+            except Exception:
+                pass
+        dia_json = attach_results_to_snapshots(dia_json)
         with open(out_path, 'w', encoding='utf-8') as f:
             json.dump(dia_json, f, ensure_ascii=False)
 
