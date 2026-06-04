@@ -194,8 +194,7 @@ button,input,select{{font-family:'Inter',sans-serif}}
 }}
 .navbar-link:hover{{color:#fff;background:rgba(255,255,255,.08);transform:translateY(-1px)}}
 .navbar-link.active{{color:#fff;background:rgba(59,130,246,.18);font-weight:600}}
-.navbar-link:hover{{color:#fff;background:rgba(255,255,255,.07)}}
-.navbar-link.active{{color:#fff;background:rgba(59,130,246,.15)}}
+
 .navbar-link svg{{width:14px;height:14px;opacity:.7}}
 .navbar-actions{{display:flex;align-items:center;gap:8px}}
 .navbar-theme{{
@@ -311,8 +310,9 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .kpi{{background:var(--s2);border:1px solid var(--border);border-radius:10px;padding:12px 18px;text-align:center;min-width:120px;transition:all .2s;cursor:default}}
 .kpi:hover{{border-color:var(--accent)}}
 .kpi.clickable{{cursor:pointer}}
-.kpi.clickable:hover{{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}}
-.kpi.active{{transform:translateY(-2px);box-shadow:0 4px 16px rgba(0,0,0,.3)}}
+.kpi.clickable:hover{{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.4)}}
+.kpi.clickable:active{{transform:translateY(0);box-shadow:none}}
+.kpi.active{{transform:translateY(-2px);box-shadow:0 4px 20px rgba(0,0,0,.4)}}
 .kpi.kpi-blue{{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.06)}}
 .kpi.kpi-blue.active,.kpi.kpi-blue:hover{{border-color:var(--blue);background:rgba(59,130,246,.12)}}
 .kpi.kpi-green{{border-color:rgba(34,197,94,.3);background:rgba(34,197,94,.06)}}
