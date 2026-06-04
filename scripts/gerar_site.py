@@ -737,6 +737,13 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
     <!-- DAY PANELS -->
     {day_panels_html}
+
+    <!-- HISTÓRICO GLOBAL -->
+    <div id="panel-historico" style="display:none">
+      <div class="main">
+        <div id="historico-content"></div>
+      </div>
+    </div>
   </div>
 </div>
 
@@ -755,13 +762,6 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <div class="cal-leg"><div class="cal-leg-dot" style="background:rgba(59,130,246,.4)"></div>Com dados</div>
       <div class="cal-leg"><div class="cal-leg-dot" style="background:rgba(249,115,22,.8)"></div>Hoje</div>
     </div>
-  </div>
-</div>
-
-<!-- ABA HISTÓRICO GLOBAL -->
-<div id="panel-historico" style="display:none">
-  <div class="main">
-    <div id="historico-content"></div>
   </div>
 </div>
 
@@ -1796,7 +1796,7 @@ function showHistoricoGlobal(){{
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.date-strip-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('panel-historico').style.display='block';
-  document.getElementById('btn-historico').style.color='var(--accent)';
+
   historicoVisible=true;
   renderHistoricoGlobal();
 }}
