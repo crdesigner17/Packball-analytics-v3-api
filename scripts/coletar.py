@@ -56,11 +56,8 @@ LIGAS = {
     1:   ("FIFA World Cup",     "elite",  2026),
     71:  ("Serie A",            "normal", 2026),  # Brasileirão
     72:  ("Serie B",            "normal", 2026),
-    73:  ("Serie C",            "normal", 2026),
     75:  ("Copa do Brasil",     "normal", 2026),
     128: ("Liga Profesional de Fútbol", "normal", 2026),
-    131: ("Copa Uruguay",       "normal", 2026),
-    74:  ("Copa do Nordeste",   "normal", 2026),
     # Amistosos / Seleções
     10:  ("Friendlies",               "normal", 2026),
     960: ("UEFA Nations League",      "normal", 2025),

@@ -33,8 +33,7 @@ LIGAS_OK  = [
     'Champions League','Premier League','La Liga','Serie A','Bundesliga',
     'Europa League','Ligue 1','Eredivisie','Liga Portugal','Superliga',
     'Super Lig','Copa Libertadores','Serie B','Copa do Brasil',
-    'Serie C','Copa do Nordeste','Carioca Serie A','Gaucho 1','Mineiro 1',
-    'Paulista A1','Liga Profesional de Fútbol','Copa Uruguay',
+    'Liga Profesional de Fútbol',
     # Amistosos de seleções
     'Friendlies','International Friendlies','Friendly International',
     'UEFA Nations League','CONMEBOL Qualifiers','FIFA World Cup - Qualification'
