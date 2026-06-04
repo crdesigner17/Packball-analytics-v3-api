@@ -306,7 +306,6 @@ button,input,select{{font-family:'Inter',sans-serif}}
 
 /* MAIN */
 .main{{padding:20px 24px;max-width:1500px;margin:0 auto}}
-.day-info{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);text-align:center;margin-bottom:10px;margin-top:8px}}
 
 /* KPI ROW */
 .kpi-row{{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 0;border-bottom:1px solid var(--border)}}
@@ -1116,7 +1115,6 @@ function renderVisao(date,jogos){{
   }}).join('');
 
   el.innerHTML=`
-    <div class="day-info">${{jogos.length}} jogos · ${{date}}${{conf?' · ✅ Confirmado':''}}</div>
     ${{kpi}}
     <div class="sec-title">🏆 Top 5 Palpites do Dia</div>
     <div class="top-grid">${{t5}}</div>
