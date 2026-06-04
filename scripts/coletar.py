@@ -873,8 +873,11 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
             for j in old_json.get("jogos", []):
                 if j.get("resultado"):
                     resultados_existentes[j["jogo"]] = {
-                        "resultado": j["resultado"],
-                        "acertos":   j.get("acertos", {}),
+                        "resultado":  j["resultado"],
+                        "acertos":    j.get("acertos", {}),
+                        "best_mkt":   j.get("best_mkt"),
+                        "best_grade": j.get("best_grade"),
+                        "best_score": j.get("best_score"),
                     }
         except:
             pass
@@ -892,6 +895,10 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
         if existente:
             j["resultado"] = existente["resultado"]
             j["acertos"]   = existente["acertos"]
+            if existente.get("best_mkt"):
+                j["best_mkt"]   = existente["best_mkt"]
+                j["best_grade"] = existente["best_grade"]
+                j["best_score"] = existente["best_score"]
 
     dia_json = {
         "date":  date_fmt,
