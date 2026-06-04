@@ -103,7 +103,10 @@
       "best_risk": "Confiança Média",
       "justif_15": "O1.5 50% · xG 1.9 · PPG 1.4 · H2H 2.0 gols",
       "justif_esc": "Média 10.15 cant · O8.5: 65.0% · O7.5: 70.0%",
-      "justif_cards": "Média 6.05 cart · O2.5: 95.0% · O3.5: 85.0%"
+      "justif_cards": "Média 6.05 cart · O2.5: 95.0% · O3.5: 85.0%",
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "A",
+      "palpite_score": 79.1
     },
     {
       "date": "05-06-2026",
@@ -207,7 +210,10 @@
       "best_risk": "Moderado",
       "justif_15": "O1.5 14% · xG 1.8 · PPG 0.9 · H2H 0.7 gols",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 71.1
     },
     {
       "date": "05-06-2026",
@@ -311,7 +317,10 @@
       "best_risk": "Moderado",
       "justif_15": "O1.5 33% · xG 2.3 · PPG 1.8 · H2H 1.3 gols · Via 2 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "B",
+      "palpite_score": 65.4
     },
     {
       "date": "05-06-2026",
@@ -415,7 +424,10 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · xG 6.0 · PPG 2.0 · H2H 4.5 gols · Via 1 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "05-06-2026",
@@ -519,7 +531,10 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · H2H 4.5 gols · Via 4 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "05-06-2026",
@@ -623,7 +638,10 @@
       "best_risk": "Arriscado",
       "justif_15": "Dados insuficientes",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "C",
+      "palpite_score": 50.0
     },
     {
       "date": "05-06-2026",
@@ -727,7 +745,10 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · H2H 4.0 gols · Via 4 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "05-06-2026",
@@ -831,7 +852,10 @@
       "best_risk": "Moderado",
       "justif_15": "O1.5 50% · H2H 1.5 gols",
       "justif_esc": "Média 8.0 cant · O8.5: —% · O7.5: 100.0%",
-      "justif_cards": "Média 3.0 cart · O2.5: 100.0% · O3.5: —%"
+      "justif_cards": "Média 3.0 cart · O2.5: 100.0% · O3.5: —%",
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 72.2
     },
     {
       "date": "05-06-2026",
@@ -935,7 +959,10 @@
       "best_risk": "Confiança Média",
       "justif_15": "PPG 3.0 · H2H 1.0 gols",
       "justif_esc": "Média 9.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 5.0 cart · O2.5: 100.0% · O3.5: 100.0%"
+      "justif_cards": "Média 5.0 cart · O2.5: 100.0% · O3.5: 100.0%",
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "A",
+      "palpite_score": 81.9
     },
     {
       "date": "05-06-2026",
@@ -1039,7 +1066,10 @@
       "best_risk": "Confiança Média",
       "justif_15": "PPG 1.7",
       "justif_esc": "Média 13.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 84.8
     },
     {
       "date": "05-06-2026",
@@ -1143,7 +1173,10 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · xG 3.7 · PPG 2.5 · H2H 4.0 gols · Via 2 ✓",
       "justif_esc": "Média 10.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 1.0 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 1.0 cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "05-06-2026",
@@ -1247,7 +1280,10 @@
       "best_risk": "Confiança Média",
       "justif_15": "xG 4.0 · PPG 1.7 · Via 2 ✓",
       "justif_esc": "Média 11.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 3.33 cart · O2.5: 100.0% · O3.5: 33.3%"
+      "justif_cards": "Média 3.33 cart · O2.5: 100.0% · O3.5: 33.3%",
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 81.9
     },
     {
       "date": "05-06-2026",
@@ -1351,7 +1387,10 @@
       "best_risk": "Moderado",
       "justif_15": "Dados insuficientes",
       "justif_esc": "Média 5.0 cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Over 0.5 HT",
+      "palpite_grade": "B",
+      "palpite_score": 66.4
     },
     {
       "date": "05-06-2026",
@@ -1455,7 +1494,10 @@
       "best_risk": "Confiança Alta",
       "justif_15": "PPG 0.2",
       "justif_esc": "Média 13.0 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 6.0 cart · O2.5: 100.0% · O3.5: 100.0%"
+      "justif_cards": "Média 6.0 cart · O2.5: 100.0% · O3.5: 100.0%",
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A+",
+      "palpite_score": 88.6
     },
     {
       "date": "05-06-2026",
@@ -1559,7 +1601,10 @@
       "best_risk": "Confiança Média",
       "justif_15": "O1.5 50% · PPG 1.0 · H2H 1.5 gols",
       "justif_esc": "Média 11.75 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 1.75 cart · O2.5: 50.0% · O3.5: 25.0%"
+      "justif_cards": "Média 1.75 cart · O2.5: 50.0% · O3.5: 25.0%",
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 82.9
     },
     {
       "date": "05-06-2026",
@@ -1663,7 +1708,10 @@
       "best_risk": "Arriscado",
       "justif_15": "O1.5 50% · H2H 1.2 gols",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "BTTS",
+      "palpite_grade": "C",
+      "palpite_score": 53.1
     },
     {
       "date": "05-06-2026",
@@ -1767,7 +1815,10 @@
       "best_risk": "Moderado",
       "justif_15": "PPG 2.0",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "B",
+      "palpite_score": 66.7
     },
     {
       "date": "05-06-2026",
@@ -1871,7 +1922,10 @@
       "best_risk": "Confiança Alta",
       "justif_15": "O1.5 100% · xG 1.5 · PPG 1.0 · H2H 2.0 gols · Via 4 ✓",
       "justif_esc": "Média 6.0 cant · O8.5: 25.0% · O7.5: 25.0%",
-      "justif_cards": "Média 5.75 cart · O2.5: 75.0% · O3.5: 50.0%"
+      "justif_cards": "Média 5.75 cart · O2.5: 75.0% · O3.5: 50.0%",
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "05-06-2026",
@@ -1975,7 +2029,10 @@
       "best_risk": "Arriscado",
       "justif_15": "Dados insuficientes",
       "justif_esc": "Média 6.33 cant · O8.5: 33.3% · O7.5: 33.3%",
-      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%"
+      "justif_cards": "Média 2.0 cart · O2.5: —% · O3.5: —%",
+      "palpite_mkt": "BTTS",
+      "palpite_grade": "C",
+      "palpite_score": 58.4
     },
     {
       "date": "05-06-2026",
@@ -2079,7 +2136,10 @@
       "best_risk": "Confiança Média",
       "justif_15": "xG 3.3 · PPG 2.2 · Via 2 ✓",
       "justif_esc": "Média 11.335 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 2.5 cart · O2.5: 50.0% · O3.5: 33.35%"
+      "justif_cards": "Média 2.5 cart · O2.5: 50.0% · O3.5: 33.35%",
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 82.5
     },
     {
       "date": "05-06-2026",
@@ -2183,7 +2243,10 @@
       "best_risk": "Confiança Média",
       "justif_15": "xG 2.7 · PPG 0.9 · H2H 1.0 gols",
       "justif_esc": "Média 12.75 cant · O8.5: 100.0% · O7.5: 100.0%",
-      "justif_cards": "Média 2.25 cart · O2.5: 25.0% · O3.5: 25.0%"
+      "justif_cards": "Média 2.25 cart · O2.5: 25.0% · O3.5: 25.0%",
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 84.2
     }
   ],
   "top5": [
