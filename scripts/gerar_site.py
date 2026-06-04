@@ -167,7 +167,9 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
   --purple:#a855f7;--pink:#ec4899;--text:#e2e8f0;--muted:#64748b;
   --dim:#1e2436;--aplus:#ffd700;
 }}
-body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5}}
+body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:.01em}}
+h1,h2,h3,h4,h5,h6{{font-family:'Inter',sans-serif;font-weight:700}}
+button,input,select{{font-family:'Inter',sans-serif}}
 
 /* NAVBAR */
 .navbar{{
@@ -178,17 +180,20 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
   position:sticky;top:0;z-index:200;
   box-shadow:0 2px 20px rgba(0,0,0,.5);
 }}
-.navbar-logo{{display:flex;align-items:center;gap:10px;text-decoration:none}}
+.navbar-logo{{display:flex;align-items:center;gap:20px;text-decoration:none}}
 .navbar-logo-icon{{width:32px;height:32px}}
 .navbar-logo-text{{display:flex;flex-direction:column;line-height:1}}
 .navbar-logo-name{{font-size:16px;font-weight:700;color:#fff;letter-spacing:-.3px}}
 .navbar-logo-sub{{font-size:9px;color:#3b82f6;letter-spacing:2px;font-weight:500;text-transform:uppercase}}
-.navbar-links{{display:flex;align-items:center;gap:4px}}
+.navbar-links{{display:flex;align-items:center;gap:2px}}
 .navbar-link{{
-  padding:7px 14px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);
-  cursor:pointer;border-radius:7px;transition:all .15s;white-space:nowrap;
-  display:flex;align-items:center;gap:6px;
+  padding:7px 12px;font-size:13px;font-weight:500;color:rgba(255,255,255,.65);
+  cursor:pointer;border-radius:7px;transition:all .18s;white-space:nowrap;
+  display:flex;align-items:center;gap:6px;letter-spacing:.1px;
+  font-family:'Inter',sans-serif;
 }}
+.navbar-link:hover{{color:#fff;background:rgba(255,255,255,.08);transform:translateY(-1px)}}
+.navbar-link.active{{color:#fff;background:rgba(59,130,246,.18);font-weight:600}}
 .navbar-link:hover{{color:#fff;background:rgba(255,255,255,.07)}}
 .navbar-link.active{{color:#fff;background:rgba(59,130,246,.15)}}
 .navbar-link svg{{width:14px;height:14px;opacity:.7}}
@@ -275,7 +280,8 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .date-bar::-webkit-scrollbar{{height:3px}}
 .date-bar::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
 .date-tab{{padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:7px;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s2);height:40px;min-width:80px}}
-.date-tab:hover{{color:var(--text);border-color:var(--accent)}}
+.date-tab:hover{{color:var(--text);border-color:var(--accent);transform:translateY(-1px);box-shadow:0 2px 12px rgba(249,115,22,.15)}}
+.date-tab:active{{transform:translateY(0)}}
 .date-tab.active{{color:var(--accent);border-color:var(--accent);background:rgba(249,115,22,.07)}}
 .dt-label{{font-weight:700;font-size:12px;line-height:1;text-align:center}}
 .dt-kpis{{display:flex;gap:3px;flex-wrap:wrap;justify-content:center}}
@@ -290,7 +296,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .mkt-tabs{{display:flex;overflow-x:auto;gap:0;padding:0 6px;scrollbar-width:none}}
 .mkt-tabs::-webkit-scrollbar{{display:none}}
 .mkt-tab{{padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:5px}}
-.mkt-tab:hover{{color:var(--text)}}
+.mkt-tab:hover{{color:var(--text);background:rgba(255,255,255,.04);border-radius:6px 6px 0 0}}
 .mkt-tab.active{{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}}
 .cnt{{font-family:'JetBrains Mono',monospace;font-size:10px;font-weight:700;padding:2px 5px;border-radius:4px}}
 .cnt.b{{color:var(--blue);background:rgba(59,130,246,.12)}}
@@ -578,7 +584,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   </div>
   <div class="navbar-actions">
     <div style="display:flex;flex-direction:column;align-items:flex-end;margin-right:8px">
-      <span id="navbar-clock" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace"></span>
+      <span id="navbar-clock" style="font-size:8px;font-weight:600;color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace"></span>
       <span style="font-size:9px;color:rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">v3.1</span>
     </div>
     <div class="navbar-theme" title="Alternar tema"><i data-lucide="sun" style="width:15px;height:15px"></i></div>
@@ -894,7 +900,7 @@ const barsHtml=barCols.map(b=>{{
 
   document.getElementById('global-kpis').innerHTML=`
     <div class="desemp-card" style="border-color:${{bordColor}}">
-      <div style="display:flex;align-items:flex-start;gap:20px;flex-wrap:wrap">
+      <div style="display:flex;align-items:flex-start;gap:32px;flex-wrap:wrap;justify-content:center">
 
         <!-- Bloco 1: Desempenho -->
         <div>
@@ -908,7 +914,7 @@ const barsHtml=barCols.map(b=>{{
         </div>
 
         ${{barCols.length>0?`
-        <div class="desemp-divider" style="align-self:stretch"></div>
+        <div class="desemp-divider" style="text-align:center"></div>
 
         <!-- Bloco 2: Últimos 7 dias -->
         <div>
@@ -917,7 +923,7 @@ const barsHtml=barCols.map(b=>{{
         </div>`:''}}
 
         ${{totalSd>0?`
-        <div class="desemp-divider" style="align-self:stretch"></div>
+        <div class="desemp-divider" style="text-align:center"></div>
 
         <!-- Bloco 3: Sem dados -->
         <div>
