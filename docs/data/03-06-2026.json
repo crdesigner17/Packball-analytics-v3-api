@@ -127,11 +127,14 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 0,
+          "score": 100.0,
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "03-06-2026",
@@ -259,11 +262,14 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 0,
+          "score": 100.0,
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "03-06-2026",
@@ -391,11 +397,14 @@
       },
       "acertos": {
         "Esc 8.5": {
-          "score": 0,
+          "score": 77.5,
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 77.5
     },
     {
       "date": "03-06-2026",
@@ -521,7 +530,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "C",
+      "palpite_score": 50.0
     },
     {
       "date": "03-06-2026",
@@ -649,11 +661,14 @@
       },
       "acertos": {
         "Over 0.5 HT": {
-          "score": 0,
+          "score": 78.4,
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 0.5 HT",
+      "palpite_grade": "A",
+      "palpite_score": 78.4
     },
     {
       "date": "03-06-2026",
@@ -781,11 +796,14 @@
       },
       "acertos": {
         "Esc 8.5": {
-          "score": 0,
+          "score": 81.7,
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 81.7
     },
     {
       "date": "03-06-2026",
@@ -913,11 +931,14 @@
       },
       "acertos": {
         "Esc 8.5": {
-          "score": 0,
+          "score": 78.7,
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 78.7
     },
     {
       "date": "03-06-2026",
@@ -1045,11 +1066,14 @@
       },
       "acertos": {
         "Over 1.5": {
-          "score": 0,
+          "score": 100.0,
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "03-06-2026",
@@ -1175,7 +1199,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "C",
+      "palpite_score": 58.5
     }
   ],
   "top5": [
