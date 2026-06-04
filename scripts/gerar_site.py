@@ -340,10 +340,10 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .sec-title::after{{content:'';flex:1;height:1px;background:var(--border)}}
 
 /* TOP CARDS */
-.top-grid{{display:flex;overflow-x:auto;gap:10px;margin-bottom:20px;padding-bottom:5px;align-items:stretch}}
+.top-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:20px;align-items:stretch;max-width:100%;min-width:0}}
 .top-grid::-webkit-scrollbar{{height:3px}}
 .top-grid::-webkit-scrollbar-thumb{{background:var(--accent);border-radius:2px}}
-.top-card{{min-width:255px;max-width:255px;flex-shrink:0;background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}}
+.top-card{{width:100%;min-width:0;background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}}
 .top-card:hover{{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}}
 .top-card:active{{transform:translateY(0);box-shadow:none}}
 .top-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px}}
@@ -356,8 +356,8 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .tc-hit::after{{content:'';position:absolute;inset:0;background:rgba(34,197,94,.06);border:1px solid rgba(34,197,94,.25);border-radius:11px;pointer-events:none}}
 .tc-miss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-radius:11px;pointer-events:none}}
 .top-rank{{position:absolute;top:10px;right:12px;font-size:18px;font-weight:700;color:rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace}}
-.top-liga{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px}}
-.top-jogo{{font-size:13px;font-weight:700;margin-bottom:2px;padding-right:22px;line-height:1.3}}
+.top-liga{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:24px}}
+.top-jogo{{font-size:13px;font-weight:700;margin-bottom:2px;padding-right:22px;line-height:1.3;overflow-wrap:anywhere}}
 .top-hora{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:8px}}
 .top-mkt{{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}}
 .top-bottom{{display:flex;align-items:center;justify-content:space-between;margin-top:6px}}
@@ -404,8 +404,8 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .elite{{background:rgba(249,115,22,.15);color:var(--accent);border:1px solid rgba(249,115,22,.3);font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;margin-left:4px}}
 
 /* TABLE */
-.tbl-wrap{{overflow-x:auto;border-radius:9px;border:1px solid var(--border);margin-bottom:18px}}
-table{{width:100%;border-collapse:collapse;font-size:13px}}
+.tbl-wrap{{width:100%;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;border-radius:9px;border:1px solid var(--border);margin-bottom:18px}}
+table{{width:100%;min-width:980px;border-collapse:collapse;font-size:13px}}
 thead th{{background:var(--s2);padding:9px 12px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;font-family:'Inter',sans-serif}}
 tbody tr{{border-bottom:1px solid rgba(35,40,64,.7);transition:background .1s}}
 tbody tr:last-child{{border-bottom:none}}
@@ -492,7 +492,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
 /* PANELS */
 .day-panel{{display:none}}.day-panel.active{{display:block}}
-.mkt-panel{{display:none}}.mkt-panel.active{{display:block}}
+.mkt-panel{{display:none;min-width:0;max-width:100%}}.mkt-panel.active{{display:block}}
 .empty{{padding:36px;text-align:center;color:var(--muted);font-size:13px}}
 
 /* CALENDAR */
@@ -681,7 +681,8 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   .mkt-cat-tab{{padding:0 8px;font-size:12px}}
   .sub-filter-bar{{padding:6px 8px}}
   .sub-filter-btn{{height:30px;padding:0 12px;font-size:12px}}
-  .top-card{{min-width:230px}}
+  .top-grid{{grid-template-columns:1fr}}
+  table{{min-width:760px}}
 }}
 </style>
 </head>
