@@ -635,6 +635,26 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 }}
 .mkt-cat-tab:hover{{color:var(--text)}}
 .mkt-cat-tab.active{{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}}
+/* SUB FILTER BAR */
+.sub-filter-bar{{
+  background:var(--s1);border-bottom:1px solid var(--border);
+  display:none;padding:8px 16px;gap:8px;flex-wrap:wrap;
+  position:sticky;top:calc(56px + 53px + 45px);z-index:85;
+}}
+.sub-filter-bar.visible{{display:flex}}
+.sub-filter-btn{{
+  padding:6px 16px;font-size:12px;font-weight:600;
+  border:1px solid var(--border);border-radius:20px;
+  color:var(--muted);background:var(--s2);
+  cursor:pointer;transition:all .15s;white-space:nowrap;
+  font-family:'Inter',sans-serif;
+}}
+.sub-filter-btn:hover{{color:var(--text);border-color:var(--accent)}}
+.sub-filter-btn.active{{
+  color:var(--bg);background:var(--green);
+  border-color:var(--green);
+}}
+
 /* MOBILE */
 @media(max-width:640px){{
   .header{{padding:10px 14px}}
@@ -734,6 +754,9 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
         <i data-lucide="layers" style="width:14px;height:14px"></i> Cartões
       </div>
     </div>
+
+    <!-- SUB FILTER BAR -->
+    <div class="sub-filter-bar" id="sub-filter-bar"></div>
 
     <!-- DAY PANELS -->
     {day_panels_html}
@@ -1817,7 +1840,10 @@ function switchDate(date){{
   updateSidebarActive(activeMkt[date]||'visao');
   activeDate=date;
   if(!activeMkt[date])activeMkt[date]='visao';
-  switchMkt(date,activeMkt[date]);
+  // Render category content instead of mkt tabs
+  renderSubFilters(activeCat);
+  renderCatContent(date, activeCat, activeSubFilter);
+  updateSidebarActive('visao');
 }}
 
 function switchMkt(date,mkt){{
@@ -1877,22 +1903,90 @@ function updateSidebarActive(mkt){{
   }}
 }}
 
-// ── Market category ─────────────────────────────────────────────────
+// ── Market category & sub-filters ──────────────────────────────────
 let activeCat = 'gols';
+let activeSubFilter = null;
+
+const CAT_SUBFILTERS = {{
+  'gols':       [{{key:'over15',  label:'Over 1.5'}}, {{key:'over25', label:'Under 3.5'}}],
+  'escanteios': [{{key:'esc75',   label:'Over 7.5'}}, {{key:'esc85',  label:'Over 8.5'}}],
+  'cartoes':    [{{key:'cart25',  label:'Over 2.5'}}, {{key:'cart35', label:'Over 3.5'}}],
+  'resultado':  [],
+}};
+
+function renderSubFilters(cat){{
+  const bar = document.getElementById('sub-filter-bar');
+  if(!bar) return;
+  const filters = CAT_SUBFILTERS[cat] || [];
+  if(!filters.length){{
+    bar.classList.remove('visible');
+    bar.innerHTML = '';
+    return;
+  }}
+  bar.classList.add('visible');
+  // Default first sub-filter active
+  if(!activeSubFilter || !filters.find(f=>f.key===activeSubFilter)){{
+    activeSubFilter = filters[0].key;
+  }}
+  bar.innerHTML = filters.map(f=>
+    `<div class="sub-filter-btn${{activeSubFilter===f.key?' active':''}}" onclick="switchSubFilter('${{f.key}}')">${{f.label}}</div>`
+  ).join('');
+}}
+
+function switchSubFilter(key){{
+  activeSubFilter = key;
+  // Re-render sub-filter buttons
+  renderSubFilters(activeCat);
+  if(!activeDate) return;
+  renderCatContent(activeDate, activeCat, key);
+}}
+
 function switchCat(cat){{
   activeCat = cat;
+  activeSubFilter = null;
   document.querySelectorAll('.mkt-cat-tab').forEach(t=>t.classList.remove('active'));
   document.querySelector(`[data-cat="${{cat}}"]`)?.classList.add('active');
+  renderSubFilters(cat);
   if(!activeDate) return;
-  const mktMap = {{
-    'gols': 'over15',
-    'escanteios': 'escanteios',
-    'cartoes': 'cartoes',
-    'resultado': 'ranking',
-  }};
-  const mkt = mktMap[cat] || 'over15';
-  switchMkt(activeDate, mkt);
-  updateSidebarActive(mkt);
+  const filters = CAT_SUBFILTERS[cat];
+  const firstKey = filters && filters.length ? filters[0].key : null;
+  if(firstKey) activeSubFilter = firstKey;
+  renderCatContent(activeDate, cat, firstKey);
+}}
+
+function renderCatContent(date, cat, subKey){{
+  const jogos = getJogos(date);
+  if(cat === 'gols'){{
+    if(subKey === 'over15') renderOver15(date, jogos);
+    else renderOver25(date, jogos);
+    const panel = document.getElementById('mkt-'+date+'-over15');
+    const panel2 = document.getElementById('mkt-'+date+'-over25');
+    document.querySelectorAll(`#day-${{date}} .mkt-panel`).forEach(p=>p.classList.remove('active'));
+    if(subKey === 'over15' && panel) panel.classList.add('active');
+    else if(panel2) panel2.classList.add('active');
+  }} else if(cat === 'escanteios'){{
+    renderEsc(date, jogos);
+    document.querySelectorAll(`#day-${{date}} .mkt-panel`).forEach(p=>p.classList.remove('active'));
+    const p = document.getElementById('mkt-'+date+'-escanteios');
+    if(p) p.classList.add('active');
+  }} else if(cat === 'cartoes'){{
+    renderCart(date, jogos);
+    document.querySelectorAll(`#day-${{date}} .mkt-panel`).forEach(p=>p.classList.remove('active'));
+    const p = document.getElementById('mkt-'+date+'-cartoes');
+    if(p) p.classList.add('active');
+  }} else if(cat === 'resultado'){{
+    // Em breve
+    document.querySelectorAll(`#day-${{date}} .mkt-panel`).forEach(p=>p.classList.remove('active'));
+    const p = document.getElementById('mkt-'+date+'-visao');
+    if(p){{
+      p.classList.add('active');
+      p.innerHTML=`<div class="empty" style="padding:60px;text-align:center">
+        <div style="font-size:32px;margin-bottom:12px">🔒</div>
+        <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px">Resultado Final</div>
+        <div style="font-size:13px;color:var(--muted)">Esta funcionalidade estará disponível em breve.</div>
+      </div>`;
+    }}
+  }}
 }}
 // Inicializar ícones Lucide
 if(typeof lucide !== 'undefined') lucide.createIcons();
