@@ -131,7 +131,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.8
     },
     {
       "date": "01-06-2026",
@@ -263,7 +266,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 83.7
     },
     {
       "date": "01-06-2026",
@@ -395,7 +401,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 87.5
     },
     {
       "date": "01-06-2026",
@@ -527,7 +536,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "01-06-2026",
@@ -659,7 +671,10 @@
           "palpite": true,
           "acertou": null
         }
-      }
+      },
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 81.2
     },
     {
       "date": "01-06-2026",
@@ -791,7 +806,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "01-06-2026",
@@ -923,7 +941,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 75.3
     },
     {
       "date": "01-06-2026",
@@ -1049,7 +1070,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "C",
+      "palpite_score": 64.3
     },
     {
       "date": "01-06-2026",
@@ -1181,7 +1205,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "01-06-2026",
@@ -1313,7 +1340,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     }
   ],
   "top5": [
@@ -1473,6 +1503,1118 @@
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
+    }
+  },
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1542177,
+      "jogo": "Slovakia x Malta",
+      "home": "Slovakia",
+      "away": "Malta",
+      "liga": "Friendlies",
+      "hora": "13:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1542177,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 1,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-1",
+        "placar_ht": "1-1",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1536927,
+      "jogo": "Norway x Sweden",
+      "home": "Norway",
+      "away": "Sweden",
+      "liga": "Friendlies",
+      "hora": "14:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1536927,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 1,
+        "gols_total": 4,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-1",
+        "placar_ht": "3-0",
+        "corners_total": 7,
+        "cards_total": 1,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1537648,
+      "jogo": "Colombia x Costa Rica",
+      "home": "Colombia",
+      "away": "Costa Rica",
+      "liga": "Friendlies",
+      "hora": "20:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1537648,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 1,
+        "gols_total": 4,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-1",
+        "placar_ht": "2-1",
+        "corners_total": 6,
+        "cards_total": 2,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1514472,
+      "jogo": "Canada x Uzbekistan",
+      "home": "Canada",
+      "away": "Uzbekistan",
+      "liga": "Friendlies",
+      "hora": "22:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1514472,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 0,
+        "gols_total": 2,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "2-0",
+        "placar_ht": "0-0",
+        "corners_total": 10,
+        "cards_total": 4,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1526836,
+      "jogo": "Barra x Brusque",
+      "home": "Barra",
+      "away": "Brusque",
+      "liga": "Copa do Brasil",
+      "hora": "20:00",
+      "mkt": "Over 1.5",
+      "score": 87.5,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1526836,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 2,
+        "gols_total": 4,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-2",
+        "placar_ht": "1-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1520707,
+      "jogo": "Ponte Preta x Botafogo SP",
+      "home": "Ponte Preta",
+      "away": "Botafogo SP",
+      "liga": "Serie B",
+      "hora": "19:00",
+      "mkt": "Esc 7.5",
+      "score": 83.7,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520707,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 0,
+        "gols_total": 0,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-0",
+        "placar_ht": "0-0",
+        "corners_total": 17,
+        "cards_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1542176,
+      "jogo": "Bulgaria x Montenegro",
+      "home": "Bulgaria",
+      "away": "Montenegro",
+      "liga": "Friendlies",
+      "hora": "13:00",
+      "mkt": "Esc 8.5",
+      "score": 81.2,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1542176,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Esc 8.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": null
+        }
+      }
+    },
+    {
+      "fixture_id": 1545548,
+      "jogo": "FC Voluntari x AFC Hermannstadt",
+      "home": "FC Voluntari",
+      "away": "AFC Hermannstadt",
+      "liga": "Superliga",
+      "hora": "14:30",
+      "mkt": "Esc 7.5",
+      "score": 80.8,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545548,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 0,
+        "gols_total": 3,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-0",
+        "placar_ht": "0-0",
+        "corners_total": 10,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1543821,
+      "jogo": "Türkiye x FYR Macedonia",
+      "home": "Türkiye",
+      "away": "FYR Macedonia",
+      "liga": "Friendlies",
+      "hora": "14:30",
+      "mkt": "Esc 8.5",
+      "score": 75.3,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1543821,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 0,
+        "gols_total": 4,
+        "gols_ht": 2,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "4-0",
+        "placar_ht": "2-0",
+        "corners_total": 14,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 8.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1542177,
+              "jogo": "Slovakia x Malta",
+              "home": "Slovakia",
+              "away": "Malta",
+              "liga": "Friendlies",
+              "hora": "13:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1542177,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "1-1",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1536927,
+              "jogo": "Norway x Sweden",
+              "home": "Norway",
+              "away": "Sweden",
+              "liga": "Friendlies",
+              "hora": "14:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1536927,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 1,
+                "gols_total": 4,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-1",
+                "placar_ht": "3-0",
+                "corners_total": 7,
+                "cards_total": 1,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1537648,
+              "jogo": "Colombia x Costa Rica",
+              "home": "Colombia",
+              "away": "Costa Rica",
+              "liga": "Friendlies",
+              "hora": "20:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1537648,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 1,
+                "gols_total": 4,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-1",
+                "placar_ht": "2-1",
+                "corners_total": 6,
+                "cards_total": 2,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1514472,
+              "jogo": "Canada x Uzbekistan",
+              "home": "Canada",
+              "away": "Uzbekistan",
+              "liga": "Friendlies",
+              "hora": "22:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1514472,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 0,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "2-0",
+                "placar_ht": "0-0",
+                "corners_total": 10,
+                "cards_total": 4,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526836,
+              "jogo": "Barra x Brusque",
+              "home": "Barra",
+              "away": "Brusque",
+              "liga": "Copa do Brasil",
+              "hora": "20:00",
+              "mkt": "Over 1.5",
+              "score": 87.5,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526836,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 2,
+                "gols_total": 4,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-2",
+                "placar_ht": "1-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1520707,
+              "jogo": "Ponte Preta x Botafogo SP",
+              "home": "Ponte Preta",
+              "away": "Botafogo SP",
+              "liga": "Serie B",
+              "hora": "19:00",
+              "mkt": "Esc 7.5",
+              "score": 83.7,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520707,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 0,
+                "gols_total": 0,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-0",
+                "placar_ht": "0-0",
+                "corners_total": 17,
+                "cards_total": 8,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1542176,
+              "jogo": "Bulgaria x Montenegro",
+              "home": "Bulgaria",
+              "away": "Montenegro",
+              "liga": "Friendlies",
+              "hora": "13:00",
+              "mkt": "Esc 8.5",
+              "score": 81.2,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1542176,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 1,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-1",
+                "placar_ht": "0-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Esc 8.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": null
+                }
+              }
+            },
+            {
+              "fixture_id": 1545548,
+              "jogo": "FC Voluntari x AFC Hermannstadt",
+              "home": "FC Voluntari",
+              "away": "AFC Hermannstadt",
+              "liga": "Superliga",
+              "hora": "14:30",
+              "mkt": "Esc 7.5",
+              "score": 80.8,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545548,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 0,
+                "gols_total": 3,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-0",
+                "placar_ht": "0-0",
+                "corners_total": 10,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1543821,
+              "jogo": "Türkiye x FYR Macedonia",
+              "home": "Türkiye",
+              "away": "FYR Macedonia",
+              "liga": "Friendlies",
+              "hora": "14:30",
+              "mkt": "Esc 8.5",
+              "score": 75.3,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1543821,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 2,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "2-0",
+                "corners_total": 14,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 8.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      },
+      {
+        "tipo": "b2",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1542177,
+              "jogo": "Slovakia x Malta",
+              "home": "Slovakia",
+              "away": "Malta",
+              "liga": "Friendlies",
+              "hora": "13:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1542177,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "1-1",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1536927,
+              "jogo": "Norway x Sweden",
+              "home": "Norway",
+              "away": "Sweden",
+              "liga": "Friendlies",
+              "hora": "14:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1536927,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 1,
+                "gols_total": 4,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-1",
+                "placar_ht": "3-0",
+                "corners_total": 7,
+                "cards_total": 1,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1537648,
+              "jogo": "Colombia x Costa Rica",
+              "home": "Colombia",
+              "away": "Costa Rica",
+              "liga": "Friendlies",
+              "hora": "20:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1537648,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 1,
+                "gols_total": 4,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-1",
+                "placar_ht": "2-1",
+                "corners_total": 6,
+                "cards_total": 2,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1514472,
+              "jogo": "Canada x Uzbekistan",
+              "home": "Canada",
+              "away": "Uzbekistan",
+              "liga": "Friendlies",
+              "hora": "22:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1514472,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 0,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "2-0",
+                "placar_ht": "0-0",
+                "corners_total": 10,
+                "cards_total": 4,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526836,
+              "jogo": "Barra x Brusque",
+              "home": "Barra",
+              "away": "Brusque",
+              "liga": "Copa do Brasil",
+              "hora": "20:00",
+              "mkt": "Over 1.5",
+              "score": 87.5,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526836,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 2,
+                "gols_total": 4,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-2",
+                "placar_ht": "1-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-conservador",
+        "label": "Confianca Alta - So A+"
+      }
+    ],
+    "bilheteDia": {
+      "sels": [
+        {
+          "fixture_id": 1542177,
+          "jogo": "Slovakia x Malta",
+          "home": "Slovakia",
+          "away": "Malta",
+          "liga": "Friendlies",
+          "hora": "13:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1542177,
+            "status": "FT",
+            "gols_home": 2,
+            "gols_away": 1,
+            "gols_total": 3,
+            "gols_ht": 2,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "2-1",
+            "placar_ht": "1-1",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1536927,
+          "jogo": "Norway x Sweden",
+          "home": "Norway",
+          "away": "Sweden",
+          "liga": "Friendlies",
+          "hora": "14:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1536927,
+            "status": "FT",
+            "gols_home": 3,
+            "gols_away": 1,
+            "gols_total": 4,
+            "gols_ht": 3,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "3-1",
+            "placar_ht": "3-0",
+            "corners_total": 7,
+            "cards_total": 1,
+            "esc75_ok": false,
+            "esc85_ok": false,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1537648,
+          "jogo": "Colombia x Costa Rica",
+          "home": "Colombia",
+          "away": "Costa Rica",
+          "liga": "Friendlies",
+          "hora": "20:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1537648,
+            "status": "FT",
+            "gols_home": 3,
+            "gols_away": 1,
+            "gols_total": 4,
+            "gols_ht": 3,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "3-1",
+            "placar_ht": "2-1",
+            "corners_total": 6,
+            "cards_total": 2,
+            "esc75_ok": false,
+            "esc85_ok": false,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1514472,
+          "jogo": "Canada x Uzbekistan",
+          "home": "Canada",
+          "away": "Uzbekistan",
+          "liga": "Friendlies",
+          "hora": "22:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1514472,
+            "status": "FT",
+            "gols_home": 2,
+            "gols_away": 0,
+            "gols_total": 2,
+            "gols_ht": 0,
+            "btts": false,
+            "over05_ht_ok": false,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "2-0",
+            "placar_ht": "0-0",
+            "corners_total": 10,
+            "cards_total": 4,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": true,
+            "cart35_ok": true
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        }
+      ],
+      "oddTotal": 1
     }
   }
 }

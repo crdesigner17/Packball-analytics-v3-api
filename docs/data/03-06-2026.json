@@ -1363,5 +1363,837 @@
       "sem_dados": 0,
       "taxa": null
     }
+  },
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1545697,
+      "jogo": "Philippines x Guam",
+      "home": "Philippines",
+      "away": "Guam",
+      "liga": "Friendlies",
+      "hora": "08:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545697,
+        "status": "FT",
+        "gols_home": 5,
+        "gols_away": 1,
+        "gols_total": 6,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "5-1",
+        "placar_ht": "3-0",
+        "corners_total": 7,
+        "cards_total": 3,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1545266,
+      "jogo": "Gibraltar x British Virgin Islands",
+      "home": "Gibraltar",
+      "away": "British Virgin Islands",
+      "liga": "Friendlies",
+      "hora": "14:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545266,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 0,
+        "gols_total": 4,
+        "gols_ht": 3,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "4-0",
+        "placar_ht": "3-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1542891,
+      "jogo": "Panama x Dominican Republic",
+      "home": "Panama",
+      "away": "Dominican Republic",
+      "liga": "Friendlies",
+      "hora": "21:45",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1542891,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 2,
+        "gols_total": 6,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "4-2",
+        "placar_ht": "2-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1540589,
+      "jogo": "Luxembourg x Italy",
+      "home": "Luxembourg",
+      "away": "Italy",
+      "liga": "Friendlies",
+      "hora": "15:45",
+      "mkt": "Esc 8.5",
+      "score": 81.7,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1540589,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-0",
+        "corners_total": 11,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 8.5": {
+          "score": 81.7,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1536930,
+      "jogo": "Netherlands x Algeria",
+      "home": "Netherlands",
+      "away": "Algeria",
+      "liga": "Friendlies",
+      "hora": "15:45",
+      "mkt": "Esc 8.5",
+      "score": 78.7,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1536930,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-0",
+        "corners_total": 9,
+        "cards_total": 0,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 8.5": {
+          "score": 78.7,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1539431,
+      "jogo": "Poland x Nigeria",
+      "home": "Poland",
+      "away": "Nigeria",
+      "liga": "Friendlies",
+      "hora": "15:45",
+      "mkt": "Over 0.5 HT",
+      "score": 78.4,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1539431,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 2,
+        "gols_total": 4,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-2",
+        "placar_ht": "1-1",
+        "corners_total": 7,
+        "cards_total": 4,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 0.5 HT": {
+          "score": 78.4,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1544357,
+      "jogo": "Albania x Israel",
+      "home": "Albania",
+      "away": "Israel",
+      "liga": "Friendlies",
+      "hora": "15:00",
+      "mkt": "Esc 8.5",
+      "score": 77.5,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1544357,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-0",
+        "corners_total": 9,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 8.5": {
+          "score": 77.5,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1545697,
+              "jogo": "Philippines x Guam",
+              "home": "Philippines",
+              "away": "Guam",
+              "liga": "Friendlies",
+              "hora": "08:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545697,
+                "status": "FT",
+                "gols_home": 5,
+                "gols_away": 1,
+                "gols_total": 6,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "5-1",
+                "placar_ht": "3-0",
+                "corners_total": 7,
+                "cards_total": 3,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 100.0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545266,
+              "jogo": "Gibraltar x British Virgin Islands",
+              "home": "Gibraltar",
+              "away": "British Virgin Islands",
+              "liga": "Friendlies",
+              "hora": "14:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545266,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 3,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "3-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 100.0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1542891,
+              "jogo": "Panama x Dominican Republic",
+              "home": "Panama",
+              "away": "Dominican Republic",
+              "liga": "Friendlies",
+              "hora": "21:45",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1542891,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 2,
+                "gols_total": 6,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "4-2",
+                "placar_ht": "2-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 100.0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1540589,
+              "jogo": "Luxembourg x Italy",
+              "home": "Luxembourg",
+              "away": "Italy",
+              "liga": "Friendlies",
+              "hora": "15:45",
+              "mkt": "Esc 8.5",
+              "score": 81.7,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1540589,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 1,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-1",
+                "placar_ht": "0-0",
+                "corners_total": 11,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 8.5": {
+                  "score": 81.7,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1536930,
+              "jogo": "Netherlands x Algeria",
+              "home": "Netherlands",
+              "away": "Algeria",
+              "liga": "Friendlies",
+              "hora": "15:45",
+              "mkt": "Esc 8.5",
+              "score": 78.7,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1536930,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 1,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-1",
+                "placar_ht": "0-0",
+                "corners_total": 9,
+                "cards_total": 0,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 8.5": {
+                  "score": 78.7,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1539431,
+              "jogo": "Poland x Nigeria",
+              "home": "Poland",
+              "away": "Nigeria",
+              "liga": "Friendlies",
+              "hora": "15:45",
+              "mkt": "Over 0.5 HT",
+              "score": 78.4,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1539431,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 2,
+                "gols_total": 4,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-2",
+                "placar_ht": "1-1",
+                "corners_total": 7,
+                "cards_total": 4,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 0.5 HT": {
+                  "score": 78.4,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1544357,
+              "jogo": "Albania x Israel",
+              "home": "Albania",
+              "away": "Israel",
+              "liga": "Friendlies",
+              "hora": "15:00",
+              "mkt": "Esc 8.5",
+              "score": 77.5,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1544357,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 1,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-1",
+                "placar_ht": "0-0",
+                "corners_total": 9,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 8.5": {
+                  "score": 77.5,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      },
+      {
+        "tipo": "b2",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1545697,
+              "jogo": "Philippines x Guam",
+              "home": "Philippines",
+              "away": "Guam",
+              "liga": "Friendlies",
+              "hora": "08:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545697,
+                "status": "FT",
+                "gols_home": 5,
+                "gols_away": 1,
+                "gols_total": 6,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "5-1",
+                "placar_ht": "3-0",
+                "corners_total": 7,
+                "cards_total": 3,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 100.0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545266,
+              "jogo": "Gibraltar x British Virgin Islands",
+              "home": "Gibraltar",
+              "away": "British Virgin Islands",
+              "liga": "Friendlies",
+              "hora": "14:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545266,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 3,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "3-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 100.0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1542891,
+              "jogo": "Panama x Dominican Republic",
+              "home": "Panama",
+              "away": "Dominican Republic",
+              "liga": "Friendlies",
+              "hora": "21:45",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1542891,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 2,
+                "gols_total": 6,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "4-2",
+                "placar_ht": "2-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 100.0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-conservador",
+        "label": "Confianca Alta - So A+"
+      }
+    ],
+    "bilheteDia": {
+      "sels": [
+        {
+          "fixture_id": 1545697,
+          "jogo": "Philippines x Guam",
+          "home": "Philippines",
+          "away": "Guam",
+          "liga": "Friendlies",
+          "hora": "08:30",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1545697,
+            "status": "FT",
+            "gols_home": 5,
+            "gols_away": 1,
+            "gols_total": 6,
+            "gols_ht": 3,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": false,
+            "placar": "5-1",
+            "placar_ht": "3-0",
+            "corners_total": 7,
+            "cards_total": 3,
+            "esc75_ok": false,
+            "esc85_ok": false,
+            "cart25_ok": true,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 100.0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1545266,
+          "jogo": "Gibraltar x British Virgin Islands",
+          "home": "Gibraltar",
+          "away": "British Virgin Islands",
+          "liga": "Friendlies",
+          "hora": "14:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1545266,
+            "status": "FT",
+            "gols_home": 4,
+            "gols_away": 0,
+            "gols_total": 4,
+            "gols_ht": 3,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "4-0",
+            "placar_ht": "3-0",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 100.0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1542891,
+          "jogo": "Panama x Dominican Republic",
+          "home": "Panama",
+          "away": "Dominican Republic",
+          "liga": "Friendlies",
+          "hora": "21:45",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1542891,
+            "status": "FT",
+            "gols_home": 4,
+            "gols_away": 2,
+            "gols_total": 6,
+            "gols_ht": 2,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": false,
+            "placar": "4-2",
+            "placar_ht": "2-0",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 100.0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        }
+      ],
+      "oddTotal": 1
+    }
   }
 }

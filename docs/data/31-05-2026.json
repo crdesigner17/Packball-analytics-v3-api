@@ -131,7 +131,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 82.1
     },
     {
       "date": "31-05-2026",
@@ -257,7 +260,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 70.3
     },
     {
       "date": "31-05-2026",
@@ -383,7 +389,10 @@
         "cart25_ok": true,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 74.5
     },
     {
       "date": "31-05-2026",
@@ -515,7 +524,10 @@
           "palpite": true,
           "acertou": false
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "31-05-2026",
@@ -641,7 +653,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "B",
+      "palpite_score": 72.4
     },
     {
       "date": "31-05-2026",
@@ -773,7 +788,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 76.1
     },
     {
       "date": "31-05-2026",
@@ -905,7 +923,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "A",
+      "palpite_score": 76.9
     },
     {
       "date": "31-05-2026",
@@ -1037,7 +1058,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 75.0
     },
     {
       "date": "31-05-2026",
@@ -1169,7 +1193,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.1
     },
     {
       "date": "31-05-2026",
@@ -1295,7 +1322,10 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "B",
+      "palpite_score": 70.0
     },
     {
       "date": "31-05-2026",
@@ -1421,7 +1451,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "B",
+      "palpite_score": 66.7
     },
     {
       "date": "31-05-2026",
@@ -1553,7 +1586,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -1685,7 +1721,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -1811,7 +1850,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 72.3
     },
     {
       "date": "31-05-2026",
@@ -1937,7 +1979,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "B",
+      "palpite_score": 70.0
     },
     {
       "date": "31-05-2026",
@@ -2063,7 +2108,10 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 71.1
     },
     {
       "date": "31-05-2026",
@@ -2195,7 +2243,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -2327,7 +2378,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -2459,7 +2513,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -2591,7 +2648,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -2717,7 +2777,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "C",
+      "palpite_score": 50.0
     },
     {
       "date": "31-05-2026",
@@ -2849,7 +2912,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -2981,7 +3047,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "31-05-2026",
@@ -3113,7 +3182,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     }
   ],
   "top5": [
@@ -3275,5 +3347,1917 @@
       "taxa": 100.0
     }
   },
-  "ignorados": []
+  "ignorados": [],
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1526843,
+      "jogo": "Santa Cruz x Ferroviária",
+      "home": "Santa Cruz",
+      "away": "Ferroviária",
+      "liga": "Copa do Brasil",
+      "hora": "16:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1526843,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-1",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1526841,
+      "jogo": "Inter De Limeira x Ypiranga-RS",
+      "home": "Inter De Limeira",
+      "away": "Ypiranga-RS",
+      "liga": "Copa do Brasil",
+      "hora": "16:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1526841,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 1,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-1",
+        "placar_ht": "0-1",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1544804,
+      "jogo": "Singapore x Mongolia",
+      "home": "Singapore",
+      "away": "Mongolia",
+      "liga": "Friendlies",
+      "hora": "08:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1544804,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 0,
+        "gols_total": 4,
+        "gols_ht": 2,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "4-0",
+        "placar_ht": "2-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1528283,
+      "jogo": "Switzerland x Jordan",
+      "home": "Switzerland",
+      "away": "Jordan",
+      "liga": "Friendlies",
+      "hora": "10:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1528283,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 1,
+        "gols_total": 5,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "4-1",
+        "placar_ht": "3-0",
+        "corners_total": 10,
+        "cards_total": 0,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1545035,
+      "jogo": "Czech Republic x Kosovo",
+      "home": "Czech Republic",
+      "away": "Kosovo",
+      "liga": "Friendlies",
+      "hora": "11:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545035,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 1,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-1",
+        "placar_ht": "2-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1543819,
+      "jogo": "Cape Verde Islands x Serbia",
+      "home": "Cape Verde Islands",
+      "away": "Serbia",
+      "liga": "Friendlies",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1543819,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 0,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-0",
+        "placar_ht": "1-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1501818,
+      "jogo": "Germany x Finland",
+      "home": "Germany",
+      "away": "Finland",
+      "liga": "Friendlies",
+      "hora": "15:45",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1501818,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 0,
+        "gols_total": 4,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "4-0",
+        "placar_ht": "1-0",
+        "corners_total": 13,
+        "cards_total": 0,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1503008,
+      "jogo": "USA x Senegal",
+      "home": "USA",
+      "away": "Senegal",
+      "liga": "Friendlies",
+      "hora": "16:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1503008,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 2,
+        "gols_total": 5,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "3-2",
+        "placar_ht": "2-1",
+        "corners_total": 10,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1536926,
+      "jogo": "Brazil x Panama",
+      "home": "Brazil",
+      "away": "Panama",
+      "liga": "Friendlies",
+      "hora": "18:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1536926,
+        "status": "FT",
+        "gols_home": 6,
+        "gols_away": 2,
+        "gols_total": 8,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "6-2",
+        "placar_ht": "2-1",
+        "corners_total": 2,
+        "cards_total": 1,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1545547,
+      "jogo": "Farul Constanta x Chindia Targoviste",
+      "home": "Farul Constanta",
+      "away": "Chindia Targoviste",
+      "liga": "Superliga",
+      "hora": "14:30",
+      "mkt": "Esc 7.5",
+      "score": 82.1,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545547,
+        "status": "PEN",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-1",
+        "corners_total": 12,
+        "cards_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1520703,
+      "jogo": "Ceara x Operario-PR",
+      "home": "Ceara",
+      "away": "Operario-PR",
+      "liga": "Serie B",
+      "hora": "16:00",
+      "mkt": "Cart 2.5",
+      "score": 80.1,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520703,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "1-0",
+        "corners_total": 9,
+        "cards_total": 12,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Cart 2.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1492289,
+      "jogo": "Vasco DA Gama x Atletico-MG",
+      "home": "Vasco DA Gama",
+      "away": "Atletico-MG",
+      "liga": "Serie A",
+      "hora": "16:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1492289,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-1",
+        "corners_total": 7,
+        "cards_total": 2,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": false
+        }
+      }
+    },
+    {
+      "fixture_id": 1520706,
+      "jogo": "Londrina x Vila Nova",
+      "home": "Londrina",
+      "away": "Vila Nova",
+      "liga": "Serie B",
+      "hora": "11:00",
+      "mkt": "Cart 2.5",
+      "score": 76.9,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520706,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-0",
+        "corners_total": 11,
+        "cards_total": 14,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Cart 2.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1492287,
+      "jogo": "Remo x Sao Paulo",
+      "home": "Remo",
+      "away": "Sao Paulo",
+      "liga": "Serie A",
+      "hora": "20:30",
+      "mkt": "Esc 7.5",
+      "score": 76.1,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1492287,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "0-0",
+        "corners_total": 13,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1520708,
+      "jogo": "São Bernardo x Novorizontino",
+      "home": "São Bernardo",
+      "away": "Novorizontino",
+      "liga": "Serie B",
+      "hora": "11:00",
+      "mkt": "Over 1.5",
+      "score": 75.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520708,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "1-1",
+        "corners_total": 7,
+        "cards_total": 5,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1526843,
+              "jogo": "Santa Cruz x Ferroviária",
+              "home": "Santa Cruz",
+              "away": "Ferroviária",
+              "liga": "Copa do Brasil",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526843,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-1",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526841,
+              "jogo": "Inter De Limeira x Ypiranga-RS",
+              "home": "Inter De Limeira",
+              "away": "Ypiranga-RS",
+              "liga": "Copa do Brasil",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526841,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "0-1",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1544804,
+              "jogo": "Singapore x Mongolia",
+              "home": "Singapore",
+              "away": "Mongolia",
+              "liga": "Friendlies",
+              "hora": "08:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1544804,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 2,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "2-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1528283,
+              "jogo": "Switzerland x Jordan",
+              "home": "Switzerland",
+              "away": "Jordan",
+              "liga": "Friendlies",
+              "hora": "10:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1528283,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 1,
+                "gols_total": 5,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "4-1",
+                "placar_ht": "3-0",
+                "corners_total": 10,
+                "cards_total": 0,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545035,
+              "jogo": "Czech Republic x Kosovo",
+              "home": "Czech Republic",
+              "away": "Kosovo",
+              "liga": "Friendlies",
+              "hora": "11:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545035,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "2-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1543819,
+              "jogo": "Cape Verde Islands x Serbia",
+              "home": "Cape Verde Islands",
+              "away": "Serbia",
+              "liga": "Friendlies",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1543819,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 0,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-0",
+                "placar_ht": "1-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1501818,
+              "jogo": "Germany x Finland",
+              "home": "Germany",
+              "away": "Finland",
+              "liga": "Friendlies",
+              "hora": "15:45",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1501818,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "1-0",
+                "corners_total": 13,
+                "cards_total": 0,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1503008,
+              "jogo": "USA x Senegal",
+              "home": "USA",
+              "away": "Senegal",
+              "liga": "Friendlies",
+              "hora": "16:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1503008,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 2,
+                "gols_total": 5,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "3-2",
+                "placar_ht": "2-1",
+                "corners_total": 10,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1536926,
+              "jogo": "Brazil x Panama",
+              "home": "Brazil",
+              "away": "Panama",
+              "liga": "Friendlies",
+              "hora": "18:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1536926,
+                "status": "FT",
+                "gols_home": 6,
+                "gols_away": 2,
+                "gols_total": 8,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "6-2",
+                "placar_ht": "2-1",
+                "corners_total": 2,
+                "cards_total": 1,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545547,
+              "jogo": "Farul Constanta x Chindia Targoviste",
+              "home": "Farul Constanta",
+              "away": "Chindia Targoviste",
+              "liga": "Superliga",
+              "hora": "14:30",
+              "mkt": "Esc 7.5",
+              "score": 82.1,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545547,
+                "status": "PEN",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-1",
+                "corners_total": 12,
+                "cards_total": 8,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1520703,
+              "jogo": "Ceara x Operario-PR",
+              "home": "Ceara",
+              "away": "Operario-PR",
+              "liga": "Serie B",
+              "hora": "16:00",
+              "mkt": "Cart 2.5",
+              "score": 80.1,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520703,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "1-0",
+                "corners_total": 9,
+                "cards_total": 12,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Cart 2.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1492289,
+              "jogo": "Vasco DA Gama x Atletico-MG",
+              "home": "Vasco DA Gama",
+              "away": "Atletico-MG",
+              "liga": "Serie A",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1492289,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 1,
+                "gols_total": 1,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-1",
+                "placar_ht": "0-1",
+                "corners_total": 7,
+                "cards_total": 2,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": false
+                }
+              }
+            },
+            {
+              "fixture_id": 1520706,
+              "jogo": "Londrina x Vila Nova",
+              "home": "Londrina",
+              "away": "Vila Nova",
+              "liga": "Serie B",
+              "hora": "11:00",
+              "mkt": "Cart 2.5",
+              "score": 76.9,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520706,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 1,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-1",
+                "placar_ht": "0-0",
+                "corners_total": 11,
+                "cards_total": 14,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Cart 2.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1492287,
+              "jogo": "Remo x Sao Paulo",
+              "home": "Remo",
+              "away": "Sao Paulo",
+              "liga": "Serie A",
+              "hora": "20:30",
+              "mkt": "Esc 7.5",
+              "score": 76.1,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1492287,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 0,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-0",
+                "placar_ht": "0-0",
+                "corners_total": 13,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1520708,
+              "jogo": "São Bernardo x Novorizontino",
+              "home": "São Bernardo",
+              "away": "Novorizontino",
+              "liga": "Serie B",
+              "hora": "11:00",
+              "mkt": "Over 1.5",
+              "score": 75.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520708,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "1-1",
+                "corners_total": 7,
+                "cards_total": 5,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      },
+      {
+        "tipo": "b2",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1526843,
+              "jogo": "Santa Cruz x Ferroviária",
+              "home": "Santa Cruz",
+              "away": "Ferroviária",
+              "liga": "Copa do Brasil",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526843,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-1",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526841,
+              "jogo": "Inter De Limeira x Ypiranga-RS",
+              "home": "Inter De Limeira",
+              "away": "Ypiranga-RS",
+              "liga": "Copa do Brasil",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526841,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "0-1",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1544804,
+              "jogo": "Singapore x Mongolia",
+              "home": "Singapore",
+              "away": "Mongolia",
+              "liga": "Friendlies",
+              "hora": "08:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1544804,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 2,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "2-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1528283,
+              "jogo": "Switzerland x Jordan",
+              "home": "Switzerland",
+              "away": "Jordan",
+              "liga": "Friendlies",
+              "hora": "10:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1528283,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 1,
+                "gols_total": 5,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "4-1",
+                "placar_ht": "3-0",
+                "corners_total": 10,
+                "cards_total": 0,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545035,
+              "jogo": "Czech Republic x Kosovo",
+              "home": "Czech Republic",
+              "away": "Kosovo",
+              "liga": "Friendlies",
+              "hora": "11:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545035,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "2-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1543819,
+              "jogo": "Cape Verde Islands x Serbia",
+              "home": "Cape Verde Islands",
+              "away": "Serbia",
+              "liga": "Friendlies",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1543819,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 0,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-0",
+                "placar_ht": "1-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1501818,
+              "jogo": "Germany x Finland",
+              "home": "Germany",
+              "away": "Finland",
+              "liga": "Friendlies",
+              "hora": "15:45",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1501818,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "1-0",
+                "corners_total": 13,
+                "cards_total": 0,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1503008,
+              "jogo": "USA x Senegal",
+              "home": "USA",
+              "away": "Senegal",
+              "liga": "Friendlies",
+              "hora": "16:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1503008,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 2,
+                "gols_total": 5,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "3-2",
+                "placar_ht": "2-1",
+                "corners_total": 10,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1536926,
+              "jogo": "Brazil x Panama",
+              "home": "Brazil",
+              "away": "Panama",
+              "liga": "Friendlies",
+              "hora": "18:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1536926,
+                "status": "FT",
+                "gols_home": 6,
+                "gols_away": 2,
+                "gols_total": 8,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "6-2",
+                "placar_ht": "2-1",
+                "corners_total": 2,
+                "cards_total": 1,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-conservador",
+        "label": "Confianca Alta - So A+"
+      }
+    ],
+    "bilheteDia": {
+      "sels": [
+        {
+          "fixture_id": 1526843,
+          "jogo": "Santa Cruz x Ferroviária",
+          "home": "Santa Cruz",
+          "away": "Ferroviária",
+          "liga": "Copa do Brasil",
+          "hora": "16:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1526843,
+            "status": "FT",
+            "gols_home": 1,
+            "gols_away": 1,
+            "gols_total": 2,
+            "gols_ht": 1,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "1-1",
+            "placar_ht": "0-1",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1526841,
+          "jogo": "Inter De Limeira x Ypiranga-RS",
+          "home": "Inter De Limeira",
+          "away": "Ypiranga-RS",
+          "liga": "Copa do Brasil",
+          "hora": "16:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1526841,
+            "status": "FT",
+            "gols_home": 2,
+            "gols_away": 1,
+            "gols_total": 3,
+            "gols_ht": 1,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "2-1",
+            "placar_ht": "0-1",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1544804,
+          "jogo": "Singapore x Mongolia",
+          "home": "Singapore",
+          "away": "Mongolia",
+          "liga": "Friendlies",
+          "hora": "08:30",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1544804,
+            "status": "FT",
+            "gols_home": 4,
+            "gols_away": 0,
+            "gols_total": 4,
+            "gols_ht": 2,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "4-0",
+            "placar_ht": "2-0",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1528283,
+          "jogo": "Switzerland x Jordan",
+          "home": "Switzerland",
+          "away": "Jordan",
+          "liga": "Friendlies",
+          "hora": "10:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1528283,
+            "status": "FT",
+            "gols_home": 4,
+            "gols_away": 1,
+            "gols_total": 5,
+            "gols_ht": 3,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": false,
+            "placar": "4-1",
+            "placar_ht": "3-0",
+            "corners_total": 10,
+            "cards_total": 0,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1545035,
+          "jogo": "Czech Republic x Kosovo",
+          "home": "Czech Republic",
+          "away": "Kosovo",
+          "liga": "Friendlies",
+          "hora": "11:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1545035,
+            "status": "FT",
+            "gols_home": 2,
+            "gols_away": 1,
+            "gols_total": 3,
+            "gols_ht": 2,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "2-1",
+            "placar_ht": "2-0",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1543819,
+          "jogo": "Cape Verde Islands x Serbia",
+          "home": "Cape Verde Islands",
+          "away": "Serbia",
+          "liga": "Friendlies",
+          "hora": "12:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1543819,
+            "status": "FT",
+            "gols_home": 3,
+            "gols_away": 0,
+            "gols_total": 3,
+            "gols_ht": 1,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "3-0",
+            "placar_ht": "1-0",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1501818,
+          "jogo": "Germany x Finland",
+          "home": "Germany",
+          "away": "Finland",
+          "liga": "Friendlies",
+          "hora": "15:45",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1501818,
+            "status": "FT",
+            "gols_home": 4,
+            "gols_away": 0,
+            "gols_total": 4,
+            "gols_ht": 1,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "4-0",
+            "placar_ht": "1-0",
+            "corners_total": 13,
+            "cards_total": 0,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1503008,
+          "jogo": "USA x Senegal",
+          "home": "USA",
+          "away": "Senegal",
+          "liga": "Friendlies",
+          "hora": "16:30",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1503008,
+            "status": "FT",
+            "gols_home": 3,
+            "gols_away": 2,
+            "gols_total": 5,
+            "gols_ht": 3,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": false,
+            "placar": "3-2",
+            "placar_ht": "2-1",
+            "corners_total": 10,
+            "cards_total": 1,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        }
+      ],
+      "oddTotal": 1
+    }
+  }
 }

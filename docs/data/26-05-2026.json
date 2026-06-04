@@ -131,7 +131,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 76.5
     },
     {
       "date": "26-05-2026",
@@ -263,7 +266,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "A",
+      "palpite_score": 78.4
     },
     {
       "date": "26-05-2026",
@@ -395,7 +401,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "A",
+      "palpite_score": 78.2
     },
     {
       "date": "26-05-2026",
@@ -527,7 +536,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "26-05-2026",
@@ -653,7 +665,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "B",
+      "palpite_score": 74.9
     },
     {
       "date": "26-05-2026",
@@ -785,7 +800,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 77.9
     },
     {
       "date": "26-05-2026",
@@ -911,7 +929,10 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 73.0
     },
     {
       "date": "26-05-2026",
@@ -1037,7 +1058,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "C",
+      "palpite_score": 61.1
     },
     {
       "date": "26-05-2026",
@@ -1163,7 +1187,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "B",
+      "palpite_score": 72.2
     }
   ],
   "top5": [
@@ -1323,5 +1350,423 @@
       "taxa": 100.0
     }
   },
-  "ignorados": []
+  "ignorados": [],
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1535320,
+      "jogo": "Flamengo x Cusco",
+      "home": "Flamengo",
+      "away": "Cusco",
+      "liga": "Copa Libertadores",
+      "hora": "21:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1535320,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 0,
+        "gols_total": 3,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-0",
+        "placar_ht": "0-0",
+        "corners_total": 11,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1535323,
+      "jogo": "Lanus x Mirassol",
+      "home": "Lanus",
+      "away": "Mirassol",
+      "liga": "Copa Libertadores",
+      "hora": "19:00",
+      "mkt": "Cart 2.5",
+      "score": 78.4,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1535323,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "1-0",
+        "corners_total": 11,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Cart 2.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1535324,
+      "jogo": "LDU de Quito x Always Ready",
+      "home": "LDU de Quito",
+      "away": "Always Ready",
+      "liga": "Copa Libertadores",
+      "hora": "19:00",
+      "mkt": "Cart 2.5",
+      "score": 78.2,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1535324,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 2,
+        "gols_total": 5,
+        "gols_ht": 3,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "3-2",
+        "placar_ht": "1-2",
+        "corners_total": 15,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Cart 2.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1535326,
+      "jogo": "Club Nacional x Coquimbo Unido",
+      "home": "Club Nacional",
+      "away": "Coquimbo Unido",
+      "liga": "Copa Libertadores",
+      "hora": "21:30",
+      "mkt": "Esc 7.5",
+      "score": 77.9,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1535326,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "1-0",
+        "corners_total": 10,
+        "cards_total": 6,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1545408,
+      "jogo": "Saint Etienne x Nice",
+      "home": "Saint Etienne",
+      "away": "Nice",
+      "liga": "Ligue 1",
+      "hora": "15:45",
+      "mkt": "Esc 7.5",
+      "score": 76.5,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545408,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 0,
+        "gols_total": 0,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-0",
+        "placar_ht": "0-0",
+        "corners_total": 12,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1535320,
+              "jogo": "Flamengo x Cusco",
+              "home": "Flamengo",
+              "away": "Cusco",
+              "liga": "Copa Libertadores",
+              "hora": "21:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1535320,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 0,
+                "gols_total": 3,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-0",
+                "placar_ht": "0-0",
+                "corners_total": 11,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1535323,
+              "jogo": "Lanus x Mirassol",
+              "home": "Lanus",
+              "away": "Mirassol",
+              "liga": "Copa Libertadores",
+              "hora": "19:00",
+              "mkt": "Cart 2.5",
+              "score": 78.4,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1535323,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 0,
+                "gols_total": 1,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-0",
+                "placar_ht": "1-0",
+                "corners_total": 11,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Cart 2.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1535324,
+              "jogo": "LDU de Quito x Always Ready",
+              "home": "LDU de Quito",
+              "away": "Always Ready",
+              "liga": "Copa Libertadores",
+              "hora": "19:00",
+              "mkt": "Cart 2.5",
+              "score": 78.2,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1535324,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 2,
+                "gols_total": 5,
+                "gols_ht": 3,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "3-2",
+                "placar_ht": "1-2",
+                "corners_total": 15,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Cart 2.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1535326,
+              "jogo": "Club Nacional x Coquimbo Unido",
+              "home": "Club Nacional",
+              "away": "Coquimbo Unido",
+              "liga": "Copa Libertadores",
+              "hora": "21:30",
+              "mkt": "Esc 7.5",
+              "score": 77.9,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1535326,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 0,
+                "gols_total": 1,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-0",
+                "placar_ht": "1-0",
+                "corners_total": 10,
+                "cards_total": 6,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545408,
+              "jogo": "Saint Etienne x Nice",
+              "home": "Saint Etienne",
+              "away": "Nice",
+              "liga": "Ligue 1",
+              "hora": "15:45",
+              "mkt": "Esc 7.5",
+              "score": 76.5,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545408,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 0,
+                "gols_total": 0,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-0",
+                "placar_ht": "0-0",
+                "corners_total": 12,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      }
+    ],
+    "bilheteDia": null
+  }
 }

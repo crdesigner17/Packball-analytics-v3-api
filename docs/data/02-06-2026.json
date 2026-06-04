@@ -125,7 +125,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 0.5 HT",
+      "palpite_grade": "B",
+      "palpite_score": 69.5
     },
     {
       "date": "02-06-2026",
@@ -251,7 +254,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 2.5",
+      "palpite_grade": "B",
+      "palpite_score": 73.1
     },
     {
       "date": "02-06-2026",
@@ -383,7 +389,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "02-06-2026",
@@ -515,7 +524,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "02-06-2026",
@@ -647,7 +659,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     }
   ],
   "top5": [
@@ -807,6 +822,388 @@
       "erros": 0,
       "sem_dados": 0,
       "taxa": null
+    }
+  },
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1536928,
+      "jogo": "Georgia x Romania",
+      "home": "Georgia",
+      "away": "Romania",
+      "liga": "Friendlies",
+      "hora": "14:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1536928,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 0,
+        "btts": true,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1536929,
+      "jogo": "Wales x Ghana",
+      "home": "Wales",
+      "away": "Ghana",
+      "liga": "Friendlies",
+      "hora": "15:45",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1536929,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 0,
+        "btts": true,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-0",
+        "corners_total": 9,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1544806,
+      "jogo": "Haiti x New Zealand",
+      "home": "Haiti",
+      "away": "New Zealand",
+      "liga": "Friendlies",
+      "hora": "21:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1544806,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 0,
+        "gols_total": 4,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "4-0",
+        "placar_ht": "1-0",
+        "corners_total": 13,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1536928,
+              "jogo": "Georgia x Romania",
+              "home": "Georgia",
+              "away": "Romania",
+              "liga": "Friendlies",
+              "hora": "14:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1536928,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": true,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1536929,
+              "jogo": "Wales x Ghana",
+              "home": "Wales",
+              "away": "Ghana",
+              "liga": "Friendlies",
+              "hora": "15:45",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1536929,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": true,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-0",
+                "corners_total": 9,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1544806,
+              "jogo": "Haiti x New Zealand",
+              "home": "Haiti",
+              "away": "New Zealand",
+              "liga": "Friendlies",
+              "hora": "21:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1544806,
+                "status": "FT",
+                "gols_home": 4,
+                "gols_away": 0,
+                "gols_total": 4,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "4-0",
+                "placar_ht": "1-0",
+                "corners_total": 13,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      }
+    ],
+    "bilheteDia": {
+      "sels": [
+        {
+          "fixture_id": 1536928,
+          "jogo": "Georgia x Romania",
+          "home": "Georgia",
+          "away": "Romania",
+          "liga": "Friendlies",
+          "hora": "14:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1536928,
+            "status": "FT",
+            "gols_home": 1,
+            "gols_away": 1,
+            "gols_total": 2,
+            "gols_ht": 0,
+            "btts": true,
+            "over05_ht_ok": false,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "1-1",
+            "placar_ht": "0-0",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1536929,
+          "jogo": "Wales x Ghana",
+          "home": "Wales",
+          "away": "Ghana",
+          "liga": "Friendlies",
+          "hora": "15:45",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1536929,
+            "status": "FT",
+            "gols_home": 1,
+            "gols_away": 1,
+            "gols_total": 2,
+            "gols_ht": 0,
+            "btts": true,
+            "over05_ht_ok": false,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "1-1",
+            "placar_ht": "0-0",
+            "corners_total": 9,
+            "cards_total": 2,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1544806,
+          "jogo": "Haiti x New Zealand",
+          "home": "Haiti",
+          "away": "New Zealand",
+          "liga": "Friendlies",
+          "hora": "21:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1544806,
+            "status": "FT",
+            "gols_home": 4,
+            "gols_away": 0,
+            "gols_total": 4,
+            "gols_ht": 1,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "4-0",
+            "placar_ht": "1-0",
+            "corners_total": 13,
+            "cards_total": 1,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        }
+      ],
+      "oddTotal": 1
     }
   }
 }

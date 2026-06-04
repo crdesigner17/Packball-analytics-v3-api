@@ -131,7 +131,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 8.5",
+      "palpite_grade": "A",
+      "palpite_score": 75.3
     },
     {
       "date": "27-05-2026",
@@ -257,7 +260,10 @@
         "cart25_ok": true,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "B",
+      "palpite_score": 68.1
     },
     {
       "date": "27-05-2026",
@@ -383,7 +389,10 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "B",
+      "palpite_score": 66.2
     },
     {
       "date": "27-05-2026",
@@ -515,7 +524,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "27-05-2026",
@@ -641,7 +653,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 72.3
     },
     {
       "date": "27-05-2026",
@@ -767,7 +782,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 0.5 HT",
+      "palpite_grade": "B",
+      "palpite_score": 66.3
     },
     {
       "date": "27-05-2026",
@@ -899,7 +917,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     }
   ],
   "top5": [
@@ -1059,5 +1080,437 @@
       "taxa": null
     }
   },
-  "ignorados": []
+  "ignorados": [],
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1535317,
+      "jogo": "Corinthians x Platense",
+      "home": "Corinthians",
+      "away": "Platense",
+      "liga": "Copa Libertadores",
+      "hora": "21:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1535317,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 2,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-2",
+        "placar_ht": "0-1",
+        "corners_total": 9,
+        "cards_total": 4,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1540350,
+      "jogo": "Jamaica x India",
+      "home": "Jamaica",
+      "away": "India",
+      "liga": "Friendlies",
+      "hora": "15:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1540350,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 0,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "2-0",
+        "placar_ht": "1-0",
+        "corners_total": 8,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1535322,
+      "jogo": "Independiente del Valle x Rosario Central",
+      "home": "Independiente del Valle",
+      "away": "Rosario Central",
+      "liga": "Copa Libertadores",
+      "hora": "19:00",
+      "mkt": "Esc 8.5",
+      "score": 75.3,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1535322,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "0-0",
+        "corners_total": 11,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 8.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1535317,
+              "jogo": "Corinthians x Platense",
+              "home": "Corinthians",
+              "away": "Platense",
+              "liga": "Copa Libertadores",
+              "hora": "21:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1535317,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 2,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-2",
+                "placar_ht": "0-1",
+                "corners_total": 9,
+                "cards_total": 4,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1540350,
+              "jogo": "Jamaica x India",
+              "home": "Jamaica",
+              "away": "India",
+              "liga": "Friendlies",
+              "hora": "15:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1540350,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 0,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "2-0",
+                "placar_ht": "1-0",
+                "corners_total": 8,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1535322,
+              "jogo": "Independiente del Valle x Rosario Central",
+              "home": "Independiente del Valle",
+              "away": "Rosario Central",
+              "liga": "Copa Libertadores",
+              "hora": "19:00",
+              "mkt": "Esc 8.5",
+              "score": 75.3,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1535322,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 0,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-0",
+                "placar_ht": "0-0",
+                "corners_total": 11,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Esc 8.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      },
+      {
+        "tipo": "b2",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1535317,
+              "jogo": "Corinthians x Platense",
+              "home": "Corinthians",
+              "away": "Platense",
+              "liga": "Copa Libertadores",
+              "hora": "21:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1535317,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 2,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-2",
+                "placar_ht": "0-1",
+                "corners_total": 9,
+                "cards_total": 4,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1540350,
+              "jogo": "Jamaica x India",
+              "home": "Jamaica",
+              "away": "India",
+              "liga": "Friendlies",
+              "hora": "15:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1540350,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 0,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "2-0",
+                "placar_ht": "1-0",
+                "corners_total": 8,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-conservador",
+        "label": "Confianca Alta - So A+"
+      }
+    ],
+    "bilheteDia": {
+      "sels": [
+        {
+          "fixture_id": 1535317,
+          "jogo": "Corinthians x Platense",
+          "home": "Corinthians",
+          "away": "Platense",
+          "liga": "Copa Libertadores",
+          "hora": "21:30",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1535317,
+            "status": "FT",
+            "gols_home": 0,
+            "gols_away": 2,
+            "gols_total": 2,
+            "gols_ht": 1,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "0-2",
+            "placar_ht": "0-1",
+            "corners_total": 9,
+            "cards_total": 4,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": true,
+            "cart35_ok": true
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1540350,
+          "jogo": "Jamaica x India",
+          "home": "Jamaica",
+          "away": "India",
+          "liga": "Friendlies",
+          "hora": "15:30",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1540350,
+            "status": "FT",
+            "gols_home": 2,
+            "gols_away": 0,
+            "gols_total": 2,
+            "gols_ht": 1,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "2-0",
+            "placar_ht": "1-0",
+            "corners_total": 8,
+            "cards_total": 3,
+            "esc75_ok": true,
+            "esc85_ok": false,
+            "cart25_ok": true,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        }
+      ],
+      "oddTotal": 1
+    }
+  }
 }

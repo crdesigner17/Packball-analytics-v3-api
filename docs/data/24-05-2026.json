@@ -131,7 +131,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "24-05-2026",
@@ -263,7 +266,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 90.0
     },
     {
       "date": "24-05-2026",
@@ -389,7 +395,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 72.3
     },
     {
       "date": "24-05-2026",
@@ -521,7 +530,10 @@
           "palpite": true,
           "acertou": false
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "24-05-2026",
@@ -653,7 +665,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "24-05-2026",
@@ -785,7 +800,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 82.1
     },
     {
       "date": "24-05-2026",
@@ -917,7 +935,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "24-05-2026",
@@ -1049,7 +1070,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "24-05-2026",
@@ -1181,7 +1205,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 90.0
     },
     {
       "date": "24-05-2026",
@@ -1313,7 +1340,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "24-05-2026",
@@ -1439,7 +1469,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 69.9
     },
     {
       "date": "24-05-2026",
@@ -1571,7 +1604,10 @@
           "palpite": true,
           "acertou": false
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "24-05-2026",
@@ -1697,7 +1733,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "B",
+      "palpite_score": 70.0
     },
     {
       "date": "24-05-2026",
@@ -1823,7 +1862,10 @@
         "cart25_ok": true,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 66.8
     },
     {
       "date": "24-05-2026",
@@ -1949,7 +1991,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 68.2
     },
     {
       "date": "24-05-2026",
@@ -2081,7 +2126,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "24-05-2026",
@@ -2207,7 +2255,10 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 71.1
     },
     {
       "date": "24-05-2026",
@@ -2339,7 +2390,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "24-05-2026",
@@ -2471,7 +2525,10 @@
           "palpite": true,
           "acertou": false
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 90.0
     },
     {
       "date": "24-05-2026",
@@ -2603,7 +2660,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.8
     },
     {
       "date": "24-05-2026",
@@ -2729,7 +2789,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 72.6
     },
     {
       "date": "24-05-2026",
@@ -2855,7 +2918,10 @@
         "cart25_ok": true,
         "cart35_ok": true
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "B",
+      "palpite_score": 65.5
     },
     {
       "date": "24-05-2026",
@@ -2987,7 +3053,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "24-05-2026",
@@ -3113,7 +3182,10 @@
         "cart25_ok": true,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "B",
+      "palpite_score": 66.2
     },
     {
       "date": "24-05-2026",
@@ -3245,7 +3317,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "24-05-2026",
@@ -3377,7 +3452,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Esc 7.5",
+      "palpite_grade": "A",
+      "palpite_score": 76.0
     },
     {
       "date": "24-05-2026",
@@ -3503,7 +3581,10 @@
         "cart25_ok": true,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "B",
+      "palpite_score": 74.6
     },
     {
       "date": "24-05-2026",
@@ -3635,7 +3716,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "A",
+      "palpite_score": 79.8
     },
     {
       "date": "24-05-2026",
@@ -3767,7 +3851,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 90.0
     },
     {
       "date": "24-05-2026",
@@ -3899,7 +3986,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 77.8
     },
     {
       "date": "24-05-2026",
@@ -4025,7 +4115,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "B",
+      "palpite_score": 69.9
     },
     {
       "date": "24-05-2026",
@@ -4151,7 +4244,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "C",
+      "palpite_score": 64.5
     },
     {
       "date": "24-05-2026",
@@ -4277,7 +4373,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "B",
+      "palpite_score": 66.7
     },
     {
       "date": "24-05-2026",
@@ -4409,7 +4508,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Under 3.5",
+      "palpite_grade": "A",
+      "palpite_score": 76.6
     },
     {
       "date": "24-05-2026",
@@ -4541,7 +4643,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "24-05-2026",
@@ -4673,7 +4778,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 88.9
     }
   ],
   "top5": [
@@ -4833,6 +4941,2638 @@
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
+    }
+  },
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1379348,
+      "jogo": "West Ham x Leeds",
+      "home": "West Ham",
+      "away": "Leeds",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379348,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 0,
+        "gols_total": 3,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "3-0",
+        "placar_ht": "0-0",
+        "corners_total": 10,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1378235,
+      "jogo": "Cremonese x Como",
+      "home": "Cremonese",
+      "away": "Como",
+      "liga": "Serie A",
+      "hora": "15:45",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1378235,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 4,
+        "gols_total": 5,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "1-4",
+        "placar_ht": "0-1",
+        "corners_total": 6,
+        "cards_total": 9,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1391198,
+      "jogo": "Villarreal x Atletico Madrid",
+      "home": "Villarreal",
+      "away": "Atletico Madrid",
+      "liga": "La Liga",
+      "hora": "16:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1391198,
+        "status": "FT",
+        "gols_home": 5,
+        "gols_away": 1,
+        "gols_total": 6,
+        "gols_ht": 5,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "5-1",
+        "placar_ht": "4-1",
+        "corners_total": 14,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1492276,
+      "jogo": "Remo x Atletico Paranaense",
+      "home": "Remo",
+      "away": "Atletico Paranaense",
+      "liga": "Serie A",
+      "hora": "16:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1492276,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "1-1",
+        "corners_total": 13,
+        "cards_total": 6,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1492278,
+      "jogo": "Vasco DA Gama x RB Bragantino",
+      "home": "Vasco DA Gama",
+      "away": "RB Bragantino",
+      "liga": "Serie A",
+      "hora": "20:30",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1492278,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 3,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "0-3",
+        "placar_ht": "0-1",
+        "corners_total": 12,
+        "cards_total": 4,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1526834,
+      "jogo": "Volta Redonda x Ypiranga-RS",
+      "home": "Volta Redonda",
+      "away": "Ypiranga-RS",
+      "liga": "Copa do Brasil",
+      "hora": "19:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1526834,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 1,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-1",
+        "placar_ht": "1-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1379343,
+      "jogo": "Liverpool x Brentford",
+      "home": "Liverpool",
+      "away": "Brentford",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 90.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379343,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 0,
+        "btts": true,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-0",
+        "corners_total": 16,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1379345,
+      "jogo": "Nottingham Forest x Bournemouth",
+      "home": "Nottingham Forest",
+      "away": "Bournemouth",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 90.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379345,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "1-0",
+        "corners_total": 9,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1546052,
+      "jogo": "Ajax x Utrecht",
+      "home": "Ajax",
+      "away": "Utrecht",
+      "liga": "Eredivisie",
+      "hora": "07:15",
+      "mkt": "Over 1.5",
+      "score": 90.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1546052,
+        "status": "PEN",
+        "gols_home": 0,
+        "gols_away": 0,
+        "gols_total": 0,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-0",
+        "placar_ht": "0-0",
+        "corners_total": 12,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": false
+        }
+      }
+    },
+    {
+      "fixture_id": 1520692,
+      "jogo": "Avai x Goias",
+      "home": "Avai",
+      "away": "Goias",
+      "liga": "Serie B",
+      "hora": "19:00",
+      "mkt": "Over 1.5",
+      "score": 90.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520692,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 2,
+        "gols_total": 2,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-2",
+        "placar_ht": "0-0",
+        "corners_total": 7,
+        "cards_total": 4,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1545443,
+      "jogo": "River Plate x Belgrano Cordoba",
+      "home": "River Plate",
+      "away": "Belgrano Cordoba",
+      "liga": "Liga Profesional de Fútbol",
+      "hora": "15:30",
+      "mkt": "Over 1.5",
+      "score": 88.9,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545443,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 3,
+        "gols_total": 5,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "2-3",
+        "placar_ht": "1-1",
+        "corners_total": 10,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1379344,
+      "jogo": "Manchester City x Aston Villa",
+      "home": "Manchester City",
+      "away": "Aston Villa",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Esc 7.5",
+      "score": 82.1,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379344,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "1-0",
+        "corners_total": 13,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1545545,
+      "jogo": "AFC Hermannstadt x FC Voluntari",
+      "home": "AFC Hermannstadt",
+      "away": "FC Voluntari",
+      "liga": "Superliga",
+      "hora": "11:30",
+      "mkt": "Esc 7.5",
+      "score": 80.8,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545545,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 2,
+        "gols_total": 5,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": false,
+        "placar": "3-2",
+        "placar_ht": "2-0",
+        "corners_total": 11,
+        "cards_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1379342,
+      "jogo": "Fulham x Newcastle",
+      "home": "Fulham",
+      "away": "Newcastle",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379342,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 0,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "2-0",
+        "placar_ht": "1-0",
+        "corners_total": 12,
+        "cards_total": 4,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1379347,
+      "jogo": "Tottenham x Everton",
+      "home": "Tottenham",
+      "away": "Everton",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379347,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "1-0",
+        "corners_total": 14,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": false
+        }
+      }
+    },
+    {
+      "fixture_id": 1379339,
+      "jogo": "Brighton x Manchester United",
+      "home": "Brighton",
+      "away": "Manchester United",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379339,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 3,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "0-3",
+        "placar_ht": "0-2",
+        "corners_total": 3,
+        "cards_total": 1,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1379341,
+      "jogo": "Crystal Palace x Arsenal",
+      "home": "Crystal Palace",
+      "away": "Arsenal",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379341,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "0-1",
+        "corners_total": 7,
+        "cards_total": 1,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1379346,
+      "jogo": "Sunderland x Chelsea",
+      "home": "Sunderland",
+      "away": "Chelsea",
+      "liga": "Premier League",
+      "hora": "12:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1379346,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 1,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-1",
+        "placar_ht": "1-0",
+        "corners_total": 8,
+        "cards_total": 11,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1378240,
+      "jogo": "Napoli x Udinese",
+      "home": "Napoli",
+      "away": "Udinese",
+      "liga": "Serie A",
+      "hora": "13:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1378240,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "1-0",
+        "corners_total": 6,
+        "cards_total": 4,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": false
+        }
+      }
+    },
+    {
+      "fixture_id": 1520690,
+      "jogo": "America Mineiro x Vila Nova",
+      "home": "America Mineiro",
+      "away": "Vila Nova",
+      "liga": "Serie B",
+      "hora": "18:30",
+      "mkt": "Cart 2.5",
+      "score": 79.8,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520690,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "1-0",
+        "corners_total": 8,
+        "cards_total": 6,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Cart 2.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1520699,
+      "jogo": "Operario-PR x Criciuma",
+      "home": "Operario-PR",
+      "away": "Criciuma",
+      "liga": "Serie B",
+      "hora": "20:30",
+      "mkt": "Over 1.5",
+      "score": 77.8,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520699,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 0,
+        "btts": true,
+        "over05_ht_ok": false,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-0",
+        "corners_total": 14,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1526828,
+      "jogo": "Confiança x Figueirense",
+      "home": "Confiança",
+      "away": "Figueirense",
+      "liga": "Copa do Brasil",
+      "hora": "18:00",
+      "mkt": "Under 3.5",
+      "score": 76.6,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1526828,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 0,
+        "gols_total": 0,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-0",
+        "placar_ht": "0-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Under 3.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1520691,
+      "jogo": "Atletico Goianiense x São Bernardo",
+      "home": "Atletico Goianiense",
+      "away": "São Bernardo",
+      "liga": "Serie B",
+      "hora": "16:00",
+      "mkt": "Esc 7.5",
+      "score": 76.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520691,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-0",
+        "corners_total": 12,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1379348,
+              "jogo": "West Ham x Leeds",
+              "home": "West Ham",
+              "away": "Leeds",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379348,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 0,
+                "gols_total": 3,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-0",
+                "placar_ht": "0-0",
+                "corners_total": 10,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1378235,
+              "jogo": "Cremonese x Como",
+              "home": "Cremonese",
+              "away": "Como",
+              "liga": "Serie A",
+              "hora": "15:45",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1378235,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 4,
+                "gols_total": 5,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "1-4",
+                "placar_ht": "0-1",
+                "corners_total": 6,
+                "cards_total": 9,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1391198,
+              "jogo": "Villarreal x Atletico Madrid",
+              "home": "Villarreal",
+              "away": "Atletico Madrid",
+              "liga": "La Liga",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1391198,
+                "status": "FT",
+                "gols_home": 5,
+                "gols_away": 1,
+                "gols_total": 6,
+                "gols_ht": 5,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "5-1",
+                "placar_ht": "4-1",
+                "corners_total": 14,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1492276,
+              "jogo": "Remo x Atletico Paranaense",
+              "home": "Remo",
+              "away": "Atletico Paranaense",
+              "liga": "Serie A",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1492276,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "1-1",
+                "corners_total": 13,
+                "cards_total": 6,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1492278,
+              "jogo": "Vasco DA Gama x RB Bragantino",
+              "home": "Vasco DA Gama",
+              "away": "RB Bragantino",
+              "liga": "Serie A",
+              "hora": "20:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1492278,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 3,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "0-3",
+                "placar_ht": "0-1",
+                "corners_total": 12,
+                "cards_total": 4,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526834,
+              "jogo": "Volta Redonda x Ypiranga-RS",
+              "home": "Volta Redonda",
+              "away": "Ypiranga-RS",
+              "liga": "Copa do Brasil",
+              "hora": "19:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526834,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "1-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379343,
+              "jogo": "Liverpool x Brentford",
+              "home": "Liverpool",
+              "away": "Brentford",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379343,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": true,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-0",
+                "corners_total": 16,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379345,
+              "jogo": "Nottingham Forest x Bournemouth",
+              "home": "Nottingham Forest",
+              "away": "Bournemouth",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379345,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "1-0",
+                "corners_total": 9,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1546052,
+              "jogo": "Ajax x Utrecht",
+              "home": "Ajax",
+              "away": "Utrecht",
+              "liga": "Eredivisie",
+              "hora": "07:15",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1546052,
+                "status": "PEN",
+                "gols_home": 0,
+                "gols_away": 0,
+                "gols_total": 0,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-0",
+                "placar_ht": "0-0",
+                "corners_total": 12,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": false
+                }
+              }
+            },
+            {
+              "fixture_id": 1520692,
+              "jogo": "Avai x Goias",
+              "home": "Avai",
+              "away": "Goias",
+              "liga": "Serie B",
+              "hora": "19:00",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520692,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 2,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-2",
+                "placar_ht": "0-0",
+                "corners_total": 7,
+                "cards_total": 4,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545443,
+              "jogo": "River Plate x Belgrano Cordoba",
+              "home": "River Plate",
+              "away": "Belgrano Cordoba",
+              "liga": "Liga Profesional de Fútbol",
+              "hora": "15:30",
+              "mkt": "Over 1.5",
+              "score": 88.9,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545443,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 3,
+                "gols_total": 5,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "2-3",
+                "placar_ht": "1-1",
+                "corners_total": 10,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379344,
+              "jogo": "Manchester City x Aston Villa",
+              "home": "Manchester City",
+              "away": "Aston Villa",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Esc 7.5",
+              "score": 82.1,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379344,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "1-0",
+                "corners_total": 13,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545545,
+              "jogo": "AFC Hermannstadt x FC Voluntari",
+              "home": "AFC Hermannstadt",
+              "away": "FC Voluntari",
+              "liga": "Superliga",
+              "hora": "11:30",
+              "mkt": "Esc 7.5",
+              "score": 80.8,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545545,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 2,
+                "gols_total": 5,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "3-2",
+                "placar_ht": "2-0",
+                "corners_total": 11,
+                "cards_total": 8,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379342,
+              "jogo": "Fulham x Newcastle",
+              "home": "Fulham",
+              "away": "Newcastle",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379342,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 0,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "2-0",
+                "placar_ht": "1-0",
+                "corners_total": 12,
+                "cards_total": 4,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379347,
+              "jogo": "Tottenham x Everton",
+              "home": "Tottenham",
+              "away": "Everton",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379347,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 0,
+                "gols_total": 1,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-0",
+                "placar_ht": "1-0",
+                "corners_total": 14,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": false
+                }
+              }
+            },
+            {
+              "fixture_id": 1379339,
+              "jogo": "Brighton x Manchester United",
+              "home": "Brighton",
+              "away": "Manchester United",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379339,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 3,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "0-3",
+                "placar_ht": "0-2",
+                "corners_total": 3,
+                "cards_total": 1,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379341,
+              "jogo": "Crystal Palace x Arsenal",
+              "home": "Crystal Palace",
+              "away": "Arsenal",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379341,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "0-1",
+                "corners_total": 7,
+                "cards_total": 1,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379346,
+              "jogo": "Sunderland x Chelsea",
+              "home": "Sunderland",
+              "away": "Chelsea",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379346,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "1-0",
+                "corners_total": 8,
+                "cards_total": 11,
+                "esc75_ok": true,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1378240,
+              "jogo": "Napoli x Udinese",
+              "home": "Napoli",
+              "away": "Udinese",
+              "liga": "Serie A",
+              "hora": "13:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1378240,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 0,
+                "gols_total": 1,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-0",
+                "placar_ht": "1-0",
+                "corners_total": 6,
+                "cards_total": 4,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": false
+                }
+              }
+            },
+            {
+              "fixture_id": 1520690,
+              "jogo": "America Mineiro x Vila Nova",
+              "home": "America Mineiro",
+              "away": "Vila Nova",
+              "liga": "Serie B",
+              "hora": "18:30",
+              "mkt": "Cart 2.5",
+              "score": 79.8,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520690,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "1-0",
+                "corners_total": 8,
+                "cards_total": 6,
+                "esc75_ok": true,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Cart 2.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1520699,
+              "jogo": "Operario-PR x Criciuma",
+              "home": "Operario-PR",
+              "away": "Criciuma",
+              "liga": "Serie B",
+              "hora": "20:30",
+              "mkt": "Over 1.5",
+              "score": 77.8,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520699,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": true,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-0",
+                "corners_total": 14,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526828,
+              "jogo": "Confiança x Figueirense",
+              "home": "Confiança",
+              "away": "Figueirense",
+              "liga": "Copa do Brasil",
+              "hora": "18:00",
+              "mkt": "Under 3.5",
+              "score": 76.6,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526828,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 0,
+                "gols_total": 0,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-0",
+                "placar_ht": "0-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Under 3.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1520691,
+              "jogo": "Atletico Goianiense x São Bernardo",
+              "home": "Atletico Goianiense",
+              "away": "São Bernardo",
+              "liga": "Serie B",
+              "hora": "16:00",
+              "mkt": "Esc 7.5",
+              "score": 76.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520691,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 1,
+                "gols_total": 1,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-1",
+                "placar_ht": "0-0",
+                "corners_total": 12,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Esc 7.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      },
+      {
+        "tipo": "b2",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1379348,
+              "jogo": "West Ham x Leeds",
+              "home": "West Ham",
+              "away": "Leeds",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379348,
+                "status": "FT",
+                "gols_home": 3,
+                "gols_away": 0,
+                "gols_total": 3,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "3-0",
+                "placar_ht": "0-0",
+                "corners_total": 10,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1378235,
+              "jogo": "Cremonese x Como",
+              "home": "Cremonese",
+              "away": "Como",
+              "liga": "Serie A",
+              "hora": "15:45",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1378235,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 4,
+                "gols_total": 5,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "1-4",
+                "placar_ht": "0-1",
+                "corners_total": 6,
+                "cards_total": 9,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1391198,
+              "jogo": "Villarreal x Atletico Madrid",
+              "home": "Villarreal",
+              "away": "Atletico Madrid",
+              "liga": "La Liga",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1391198,
+                "status": "FT",
+                "gols_home": 5,
+                "gols_away": 1,
+                "gols_total": 6,
+                "gols_ht": 5,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "5-1",
+                "placar_ht": "4-1",
+                "corners_total": 14,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1492276,
+              "jogo": "Remo x Atletico Paranaense",
+              "home": "Remo",
+              "away": "Atletico Paranaense",
+              "liga": "Serie A",
+              "hora": "16:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1492276,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "1-1",
+                "corners_total": 13,
+                "cards_total": 6,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1492278,
+              "jogo": "Vasco DA Gama x RB Bragantino",
+              "home": "Vasco DA Gama",
+              "away": "RB Bragantino",
+              "liga": "Serie A",
+              "hora": "20:30",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1492278,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 3,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "0-3",
+                "placar_ht": "0-1",
+                "corners_total": 12,
+                "cards_total": 4,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526834,
+              "jogo": "Volta Redonda x Ypiranga-RS",
+              "home": "Volta Redonda",
+              "away": "Ypiranga-RS",
+              "liga": "Copa do Brasil",
+              "hora": "19:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526834,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "1-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379343,
+              "jogo": "Liverpool x Brentford",
+              "home": "Liverpool",
+              "away": "Brentford",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379343,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": true,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "0-0",
+                "corners_total": 16,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1379345,
+              "jogo": "Nottingham Forest x Bournemouth",
+              "home": "Nottingham Forest",
+              "away": "Bournemouth",
+              "liga": "Premier League",
+              "hora": "12:00",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1379345,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "1-0",
+                "corners_total": 9,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1546052,
+              "jogo": "Ajax x Utrecht",
+              "home": "Ajax",
+              "away": "Utrecht",
+              "liga": "Eredivisie",
+              "hora": "07:15",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1546052,
+                "status": "PEN",
+                "gols_home": 0,
+                "gols_away": 0,
+                "gols_total": 0,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-0",
+                "placar_ht": "0-0",
+                "corners_total": 12,
+                "cards_total": 3,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": false
+                }
+              }
+            },
+            {
+              "fixture_id": 1520692,
+              "jogo": "Avai x Goias",
+              "home": "Avai",
+              "away": "Goias",
+              "liga": "Serie B",
+              "hora": "19:00",
+              "mkt": "Over 1.5",
+              "score": 90.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520692,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 2,
+                "gols_total": 2,
+                "gols_ht": 0,
+                "btts": false,
+                "over05_ht_ok": false,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "0-2",
+                "placar_ht": "0-0",
+                "corners_total": 7,
+                "cards_total": 4,
+                "esc75_ok": false,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545443,
+              "jogo": "River Plate x Belgrano Cordoba",
+              "home": "River Plate",
+              "away": "Belgrano Cordoba",
+              "liga": "Liga Profesional de Fútbol",
+              "hora": "15:30",
+              "mkt": "Over 1.5",
+              "score": 88.9,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545443,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 3,
+                "gols_total": 5,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": false,
+                "placar": "2-3",
+                "placar_ht": "1-1",
+                "corners_total": 10,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-conservador",
+        "label": "Confianca Alta - So A+"
+      }
+    ],
+    "bilheteDia": {
+      "sels": [
+        {
+          "fixture_id": 1379348,
+          "jogo": "West Ham x Leeds",
+          "home": "West Ham",
+          "away": "Leeds",
+          "liga": "Premier League",
+          "hora": "12:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1379348,
+            "status": "FT",
+            "gols_home": 3,
+            "gols_away": 0,
+            "gols_total": 3,
+            "gols_ht": 0,
+            "btts": false,
+            "over05_ht_ok": false,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "3-0",
+            "placar_ht": "0-0",
+            "corners_total": 10,
+            "cards_total": 3,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": true,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1378235,
+          "jogo": "Cremonese x Como",
+          "home": "Cremonese",
+          "away": "Como",
+          "liga": "Serie A",
+          "hora": "15:45",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1378235,
+            "status": "FT",
+            "gols_home": 1,
+            "gols_away": 4,
+            "gols_total": 5,
+            "gols_ht": 1,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": false,
+            "placar": "1-4",
+            "placar_ht": "0-1",
+            "corners_total": 6,
+            "cards_total": 9,
+            "esc75_ok": false,
+            "esc85_ok": false,
+            "cart25_ok": true,
+            "cart35_ok": true
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1391198,
+          "jogo": "Villarreal x Atletico Madrid",
+          "home": "Villarreal",
+          "away": "Atletico Madrid",
+          "liga": "La Liga",
+          "hora": "16:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1391198,
+            "status": "FT",
+            "gols_home": 5,
+            "gols_away": 1,
+            "gols_total": 6,
+            "gols_ht": 5,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": false,
+            "placar": "5-1",
+            "placar_ht": "4-1",
+            "corners_total": 14,
+            "cards_total": 1,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1492276,
+          "jogo": "Remo x Atletico Paranaense",
+          "home": "Remo",
+          "away": "Atletico Paranaense",
+          "liga": "Serie A",
+          "hora": "16:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1492276,
+            "status": "FT",
+            "gols_home": 1,
+            "gols_away": 2,
+            "gols_total": 3,
+            "gols_ht": 2,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "1-2",
+            "placar_ht": "1-1",
+            "corners_total": 13,
+            "cards_total": 6,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": true,
+            "cart35_ok": true
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1492278,
+          "jogo": "Vasco DA Gama x RB Bragantino",
+          "home": "Vasco DA Gama",
+          "away": "RB Bragantino",
+          "liga": "Serie A",
+          "hora": "20:30",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1492278,
+            "status": "FT",
+            "gols_home": 0,
+            "gols_away": 3,
+            "gols_total": 3,
+            "gols_ht": 1,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "0-3",
+            "placar_ht": "0-1",
+            "corners_total": 12,
+            "cards_total": 4,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": true,
+            "cart35_ok": true
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1526834,
+          "jogo": "Volta Redonda x Ypiranga-RS",
+          "home": "Volta Redonda",
+          "away": "Ypiranga-RS",
+          "liga": "Copa do Brasil",
+          "hora": "19:00",
+          "mkt": "Over 1.5",
+          "score": 100.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1526834,
+            "status": "FT",
+            "gols_home": 2,
+            "gols_away": 1,
+            "gols_total": 3,
+            "gols_ht": 1,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": true,
+            "under45_ok": true,
+            "placar": "2-1",
+            "placar_ht": "1-0",
+            "corners_total": null,
+            "cards_total": null,
+            "esc75_ok": null,
+            "esc85_ok": null,
+            "cart25_ok": null,
+            "cart35_ok": null
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1379343,
+          "jogo": "Liverpool x Brentford",
+          "home": "Liverpool",
+          "away": "Brentford",
+          "liga": "Premier League",
+          "hora": "12:00",
+          "mkt": "Over 1.5",
+          "score": 90.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1379343,
+            "status": "FT",
+            "gols_home": 1,
+            "gols_away": 1,
+            "gols_total": 2,
+            "gols_ht": 0,
+            "btts": true,
+            "over05_ht_ok": false,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "1-1",
+            "placar_ht": "0-0",
+            "corners_total": 16,
+            "cards_total": 5,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": true,
+            "cart35_ok": true
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        },
+        {
+          "fixture_id": 1379345,
+          "jogo": "Nottingham Forest x Bournemouth",
+          "home": "Nottingham Forest",
+          "away": "Bournemouth",
+          "liga": "Premier League",
+          "hora": "12:00",
+          "mkt": "Over 1.5",
+          "score": 90.0,
+          "grade": "A+",
+          "oddVal": null,
+          "resultado": {
+            "fixture_id": 1379345,
+            "status": "FT",
+            "gols_home": 1,
+            "gols_away": 1,
+            "gols_total": 2,
+            "gols_ht": 1,
+            "btts": true,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under45_ok": true,
+            "placar": "1-1",
+            "placar_ht": "1-0",
+            "corners_total": 9,
+            "cards_total": 2,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
+        }
+      ],
+      "oddTotal": 1
     }
   }
 }

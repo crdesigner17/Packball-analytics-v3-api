@@ -131,7 +131,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 85.7
     },
     {
       "date": "25-05-2026",
@@ -257,7 +260,10 @@
         "cart25_ok": false,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "B",
+      "palpite_score": 70.0
     },
     {
       "date": "25-05-2026",
@@ -383,7 +389,10 @@
         "cart25_ok": true,
         "cart35_ok": false
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Cart 2.5",
+      "palpite_grade": "B",
+      "palpite_score": 73.9
     },
     {
       "date": "25-05-2026",
@@ -515,7 +524,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A+",
+      "palpite_score": 100.0
     },
     {
       "date": "25-05-2026",
@@ -647,7 +659,10 @@
           "palpite": true,
           "acertou": true
         }
-      }
+      },
+      "palpite_mkt": "Over 1.5",
+      "palpite_grade": "A",
+      "palpite_score": 80.0
     },
     {
       "date": "25-05-2026",
@@ -773,7 +788,10 @@
         "cart25_ok": null,
         "cart35_ok": null
       },
-      "acertos": {}
+      "acertos": {},
+      "palpite_mkt": "Under 4.5",
+      "palpite_grade": "C",
+      "palpite_score": 63.7
     }
   ],
   "top5": [
@@ -934,5 +952,353 @@
       "sem_dados": 0,
       "taxa": 100.0
     }
+  },
+  "palpites_snapshot": [
+    {
+      "fixture_id": 1520693,
+      "jogo": "Botafogo SP x Athletic Club",
+      "home": "Botafogo SP",
+      "away": "Athletic Club",
+      "liga": "Serie B",
+      "hora": "19:00",
+      "mkt": "Over 1.5",
+      "score": 100.0,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1520693,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "0-1",
+        "corners_total": 8,
+        "cards_total": 6,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1545418,
+      "jogo": "SC Paderborn 07 x VfL Wolfsburg",
+      "home": "SC Paderborn 07",
+      "away": "VfL Wolfsburg",
+      "liga": "Bundesliga",
+      "hora": "15:30",
+      "mkt": "Over 1.5",
+      "score": 85.7,
+      "grade": "A+",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1545418,
+        "status": "AET",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "1-1",
+        "corners_total": 21,
+        "cards_total": 10,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    },
+    {
+      "fixture_id": 1526833,
+      "jogo": "Paysandu x Floresta",
+      "home": "Paysandu",
+      "away": "Floresta",
+      "liga": "Copa do Brasil",
+      "hora": "20:00",
+      "mkt": "Over 1.5",
+      "score": 80.0,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": {
+        "fixture_id": 1526833,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 1,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under45_ok": true,
+        "placar": "2-1",
+        "placar_ht": "2-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
+    }
+  ],
+  "bilhetes_snapshot": {
+    "created_at": "2026-06-04T21:06:18Z",
+    "bilhetes": [
+      {
+        "tipo": "b1",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1520693,
+              "jogo": "Botafogo SP x Athletic Club",
+              "home": "Botafogo SP",
+              "away": "Athletic Club",
+              "liga": "Serie B",
+              "hora": "19:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520693,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "0-1",
+                "corners_total": 8,
+                "cards_total": 6,
+                "esc75_ok": true,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545418,
+              "jogo": "SC Paderborn 07 x VfL Wolfsburg",
+              "home": "SC Paderborn 07",
+              "away": "VfL Wolfsburg",
+              "liga": "Bundesliga",
+              "hora": "15:30",
+              "mkt": "Over 1.5",
+              "score": 85.7,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545418,
+                "status": "AET",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "1-1",
+                "corners_total": 21,
+                "cards_total": 10,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1526833,
+              "jogo": "Paysandu x Floresta",
+              "home": "Paysandu",
+              "away": "Floresta",
+              "liga": "Copa do Brasil",
+              "hora": "20:00",
+              "mkt": "Over 1.5",
+              "score": 80.0,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1526833,
+                "status": "FT",
+                "gols_home": 2,
+                "gols_away": 1,
+                "gols_total": 3,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "2-1",
+                "placar_ht": "2-0",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-premium",
+        "label": "Premium - Todos A+/A por Score"
+      },
+      {
+        "tipo": "b2",
+        "b": {
+          "sels": [
+            {
+              "fixture_id": 1520693,
+              "jogo": "Botafogo SP x Athletic Club",
+              "home": "Botafogo SP",
+              "away": "Athletic Club",
+              "liga": "Serie B",
+              "hora": "19:00",
+              "mkt": "Over 1.5",
+              "score": 100.0,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1520693,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "0-1",
+                "corners_total": 8,
+                "cards_total": 6,
+                "esc75_ok": true,
+                "esc85_ok": false,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            },
+            {
+              "fixture_id": 1545418,
+              "jogo": "SC Paderborn 07 x VfL Wolfsburg",
+              "home": "SC Paderborn 07",
+              "away": "VfL Wolfsburg",
+              "liga": "Bundesliga",
+              "hora": "15:30",
+              "mkt": "Over 1.5",
+              "score": 85.7,
+              "grade": "A+",
+              "oddVal": null,
+              "resultado": {
+                "fixture_id": 1545418,
+                "status": "AET",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "1-1",
+                "corners_total": 21,
+                "cards_total": 10,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
+            }
+          ],
+          "oddTotal": 1
+        },
+        "cls": "bilhete-conservador",
+        "label": "Confianca Alta - So A+"
+      }
+    ],
+    "bilheteDia": null
   }
 }
