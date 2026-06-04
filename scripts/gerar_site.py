@@ -246,12 +246,10 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .hkpi-lbl{{font-size:9px;color:var(--muted);margin-top:2px;text-transform:uppercase;letter-spacing:.5px}}
 /* DESEMPENHO CARD */
 .desemp-card{{
-  display:flex;align-items:center;gap:16px;
-  background:var(--s2);border:1px solid var(--border);border-radius:11px;
-  padding:14px 20px;cursor:pointer;transition:all .2s;
-  flex-wrap:wrap;
+  display:flex;align-items:center;gap:20px;
+  background:transparent;border:none;border-radius:0;
+  padding:0;transition:all .2s;flex-wrap:wrap;
 }}
-.desemp-card:hover{{border-color:var(--green);background:rgba(34,197,94,.05);transform:translateY(-1px);box-shadow:0 4px 20px rgba(0,0,0,.3)}}
 .desemp-label{{font-size:9px;font-weight:700;color:var(--muted);letter-spacing:1.2px;text-transform:uppercase;margin-bottom:6px}}
 .desemp-kpis{{display:flex;align-items:center;gap:10px}}
 .desemp-kpi{{display:flex;flex-direction:column;align-items:center;min-width:44px}}
@@ -273,7 +271,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .badge.updated{{background:rgba(100,116,139,.1);color:var(--muted);border:1px solid var(--border);font-size:9px}}
 
 /* DATE TABS */
-.date-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:8px 16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;justify-content:center;position:sticky;top:117px;z-index:95}}
+.date-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;overflow-x:auto;gap:4px;padding:8px 16px;scrollbar-width:thin;scrollbar-color:var(--border) transparent;justify-content:center;position:sticky;top:126px;z-index:95}}
 .date-bar::-webkit-scrollbar{{height:3px}}
 .date-bar::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
 .date-tab{{padding:7px 16px;font-size:12px;font-weight:600;color:var(--muted);cursor:pointer;border:1px solid var(--border);border-radius:7px;white-space:nowrap;transition:all .15s;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;background:var(--s2);height:40px;min-width:80px}}
@@ -288,7 +286,7 @@ body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font
 .dt-kpi.prem{{background:rgba(255,215,0,.12);color:var(--aplus)}}
 
 /* MKT BAR */
-.mkt-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:165px;z-index:90}}
+.mkt-bar{{background:var(--s1);border-bottom:1px solid var(--border);display:flex;justify-content:center;position:sticky;top:174px;z-index:90}}
 .mkt-tabs{{display:flex;overflow-x:auto;gap:0;padding:0 6px;scrollbar-width:none}}
 .mkt-tabs::-webkit-scrollbar{{display:none}}
 .mkt-tab{{padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);cursor:pointer;border-bottom:2px solid transparent;white-space:nowrap;transition:all .15s;display:flex;align-items:center;gap:5px}}
@@ -579,23 +577,19 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
     <div class="navbar-link" onclick="alert('Em breve!')"><i data-lucide="info" style="width:14px;height:14px"></i> Sobre</div>
   </div>
   <div class="navbar-actions">
+    <div style="display:flex;flex-direction:column;align-items:flex-end;margin-right:8px">
+      <span id="navbar-clock" style="font-size:12px;font-weight:600;color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace"></span>
+      <span style="font-size:9px;color:rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">v3.1</span>
+    </div>
     <div class="navbar-theme" title="Alternar tema"><i data-lucide="sun" style="width:15px;height:15px"></i></div>
     <div class="navbar-btn-entrar"><i data-lucide="log-in" style="width:14px;height:14px"></i> Entrar <i data-lucide="chevron-down" style="width:12px;height:12px"></i></div>
     <div class="navbar-btn-criar"><i data-lucide="rocket" style="width:14px;height:14px"></i> Criar conta grátis <i data-lucide="arrow-right" style="width:14px;height:14px"></i></div>
   </div>
 </nav>
 
-<div class="header">
- <div class="logo">
-  <img src="assets/LOGO.png" style="height:150px;flex-shrink:0;object-fit:contain" alt="WinMetrics Analytics">
-</div>
-      
-  <div class="hkpi-row" id="global-kpis">
+<div style="background:linear-gradient(135deg,#0f1420,#141928);border-bottom:1px solid var(--border);padding:10px 28px">
+  <div id="global-kpis">
     <!-- preenchido pelo JS -->
-  </div>
-  <div class="header-right" style="display:flex;flex-direction:column;align-items:flex-end;gap:3px">
-    <span style="font-size:12px;font-weight:600;color:var(--text);font-family:'JetBrains Mono',monospace">🕐 {updated}</span>
-    <span class="badge version">v3.1</span>
   </div>
 </div>
 
@@ -1745,6 +1739,20 @@ function renderMkt(date,mkt){{
 renderGlobalKpis();
 // Inicializar ícones Lucide
 if(typeof lucide !== 'undefined') lucide.createIcons();
+
+// Relógio navbar
+function updateClock(){{
+  const now = new Date();
+  const d = String(now.getDate()).padStart(2,'0');
+  const m = String(now.getMonth()+1).padStart(2,'0');
+  const y = now.getFullYear();
+  const h = String(now.getHours()).padStart(2,'0');
+  const min = String(now.getMinutes()).padStart(2,'0');
+  const el = document.getElementById('navbar-clock');
+  if(el) el.textContent = `${{d}}/${{m}}/${{y}} ${{h}}:${{min}}`;
+}}
+updateClock();
+setInterval(updateClock, 30000);
 
 // Ordenar datas corretamente (DD-MM-YYYY)
 const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
