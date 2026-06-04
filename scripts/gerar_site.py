@@ -622,12 +622,12 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 /* MARKET TABS */
 .mkt-cat-bar{{
   background:var(--s2);border-bottom:1px solid var(--border);
-  display:flex;padding:0;
+  display:flex;align-items:stretch;padding:0;
   position:sticky;top:calc(56px + 53px);z-index:90;
   width:100%;
 }}
 .mkt-cat-tab{{
-  flex:1;padding:11px 16px;font-size:13px;font-weight:500;color:var(--muted);
+  flex:1;padding:10px 16px;font-size:13px;font-weight:500;color:var(--muted);
   cursor:pointer;border-bottom:2px solid transparent;
   transition:all .15s;white-space:nowrap;
   display:flex;align-items:center;justify-content:center;gap:7px;
@@ -687,10 +687,6 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   </div>
 </nav>
 
-<div id="global-kpis-wrap" style="background:linear-gradient(135deg,#0f1420,#141928);border-bottom:1px solid var(--border);padding:6px 24px">
-  <div id="global-kpis"><!-- preenchido pelo JS --></div>
-</div>
-
 <div class="app-layout">
   <!-- SIDEBAR -->
   <aside class="sidebar" id="sidebar">
@@ -723,6 +719,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
     <!-- MARKET CATEGORY BAR -->
     <div class="mkt-cat-bar" id="mkt-cat-bar">
+      <div id="global-kpis" style="display:flex;align-items:center;padding:0 16px;border-right:1px solid var(--border);flex-shrink:0"></div>
       <div class="mkt-cat-tab" data-cat="resultado" onclick="switchCat('resultado')">
         <i data-lucide="shield-check" style="width:14px;height:14px"></i> Resultado Final
         <span style="font-size:9px;background:rgba(100,116,139,.12);color:var(--muted);padding:1px 6px;border-radius:3px;margin-left:4px;letter-spacing:.3px;font-weight:500">Em breve</span>
@@ -999,7 +996,7 @@ function renderGlobalKpis(){{
   const g=GLOBAIS;
   if(!g||g.dias_confirmados===0){{
     document.getElementById('global-kpis').innerHTML=
-      '<span style="font-size:11px;color:var(--muted)">Sem resultados confirmados ainda</span>';
+      '<span style="font-size:11px;color:var(--muted);padding:0 8px">Sem dados</span>';
     return;
   }}
   const taxa=g.taxa_geral;
