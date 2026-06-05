@@ -491,7 +491,6 @@ def processar_dia(date_str, dfs):
             ('Under 4.5', s_u45, True),
             ('Under 3.5', s_u35, True),
             ('Esc 7.5', s_esc75, True),
-            ('Esc 8.5', s_esc85, True),
             ('Cart 2.5', s_cards25, True),
         ]
         best = max(candidatos, key=lambda x: x[1] if x[2] else 0)
@@ -598,7 +597,7 @@ def consolidar_historico(all_results):
     index = []
     for date_str, jogos in sorted(por_data.items()):
         aprovados15  = [j for j in jogos if j['score_15'] >= 85 and j['passou_filtro']]
-        aprovados_esc = [j for j in jogos if j['score_esc85'] >= 75]
+        aprovados_esc = [j for j in jogos if j['score_esc75'] >= 75]
         aprovados_cart = [j for j in jogos if j['score_cards25'] >= 75]
         premium = [j for j in jogos if j['best_grade'] in ('A+', 'A')]
         # Top 5 do dia por best_score
