@@ -480,6 +480,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .bilhete-dia{{background:linear-gradient(135deg,rgba(0,200,150,.08),rgba(37,99,235,.06));border:2px solid rgba(0,200,150,.4);border-radius:13px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden}}
 .bilhete-dia::before{{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--teal),var(--blue))}}
 .bilhete-dia-badge{{display:inline-flex;align-items:center;gap:6px;background:rgba(0,200,150,.15);border:1px solid rgba(0,200,150,.3);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--green);margin-bottom:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px}}
+.bilhete-dia-badge svg,.bilhete-title svg{{width:14px;height:14px;display:inline-block;vertical-align:-2px;margin-right:6px;stroke:currentColor}}
 .bilhete-card{{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden;transition:all .2s}}
 .bilhete-card:hover{{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.3)}}
 .bilhete-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px}}
@@ -502,7 +503,13 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .bilhete-mkt{{font-size:10px;color:var(--accent);font-weight:700;width:80px;flex-shrink:0;text-align:left;padding-right:8px}}
 .bilhete-odd-val{{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--yellow);width:48px;flex-shrink:0;text-align:center}}
 .bilhete-score-bar{{width:100px;flex-shrink:0;padding-right:8px}}
-.bilhete-res{{width:80px;flex-shrink:0;text-align:right}}
+.bilhete-res{{width:112px;flex-shrink:0;text-align:right;white-space:normal}}
+.bilhete-res .res-badge{{white-space:normal;justify-content:center;text-align:center;line-height:1.15;padding:5px 6px}}
+.bilhete-market-stack{{width:230px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;padding-right:8px}}
+.bilhete-market-line{{display:grid;grid-template-columns:minmax(72px,1fr) 92px 42px;align-items:center;gap:8px}}
+.bilhete-market-line .bilhete-mkt{{width:auto;padding-right:0}}
+.bilhete-market-line .bilhete-score-bar{{width:auto;padding-right:0}}
+.bilhete-market-line .bilhete-odd-val{{width:auto;text-align:right}}
 .bilhete-footer{{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;gap:6px}}
 .bilhete-sels{{font-size:11px;color:var(--muted)}}
 .bilhete-grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}}
@@ -1494,8 +1501,8 @@ function gerarBilhetes(jogos){{
     oddTotal:Math.round(diaPool.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100
   }} : null;
 
-  // Bilhete 1 — Premium: todos A+/A por score
-  const b1 = montar([...altaConf]);
+  // Bilhete 1 — Premium: até 4 seleções A+/A por score
+  const b1 = montar([...altaConf].slice(0,4));
 
   // Bilhete 2 — Só A+: filtro mais restrito
   const somenteAplus = altaConf.filter(x=>x.grade==='A+');
@@ -1504,8 +1511,8 @@ function gerarBilhetes(jogos){{
   const bilhetes = [];
   const seen = new Set();
   const defs = [
-    ['b1', b1, 'bilhete-premium',     '🥇 Premium — Todos A+/A por Score'],
-    ['b2', b2, 'bilhete-conservador', '⭐ Confiança Alta — Só A+'],
+    ['b1', b1, 'bilhete-premium',     'Premium — Até 4 Seleções'],
+    ['b2', b2, 'bilhete-conservador', 'ELITE'],
   ];
   for(const [tipo, b, cls, label] of defs){{
     if(!b) continue;
@@ -1532,16 +1539,25 @@ function gerarBingoBilhetes(jogos){{
     const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
     const oddTotal = Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
     return {{
-      tipo:'bingo',
-      b:{{sels, oddTotal}},
-      cls:'bilhete-bingo',
-      label:'🎯 Bingo — Gol + Escanteio no mesmo jogo',
+      jogo:j.jogo,
+      sels,
+      oddTotal,
       scoreMedio,
     }};
   }}).filter(Boolean)
-    .sort((a,b)=>(b.scoreMedio-a.scoreMedio)||((b.b.oddTotal||1)-(a.b.oddTotal||1)))
-    .slice(0,3);
-  return combos;
+    .sort((a,b)=>(b.scoreMedio-a.scoreMedio)||((b.oddTotal||1)-(a.oddTotal||1)))
+    .slice(0,8);
+  if(!combos.length) return [];
+  const sels = combos.flatMap(c=>c.sels);
+  const oddTotal = Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
+  const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
+  return [{{
+    tipo:'bingo',
+    b:{{sels, oddTotal}},
+    cls:'bilhete-bingo',
+    label:`<i data-lucide="crosshair"></i>BINGO DO DIA`,
+    scoreMedio,
+  }}];
 }}
 function avaliarBilhete(sels, confirmado){{
   if(!confirmado) return {{status:'pending', acertos:0, total:sels.length}};
@@ -1615,7 +1631,7 @@ function renderBilhetes(date, jogos){{
     else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${{av.sd}} sem dados</span>`;
 
     diaHtml=`<div class="bilhete-dia${{overlayClass}}">
-      <div class="bilhete-dia-badge">🏆 BILHETE DO DIA</div>
+      <div class="bilhete-dia-badge"><i data-lucide="trophy"></i>BILHETE DO DIA</div>
       <div class="bilhete-header">
         <div><div class="bilhete-title" style="font-size:15px">Os mais assertivos do dia</div>
         <div style="font-size:10px;color:var(--muted);margin-top:2px">${{bilheteDia.sels.length}} seleções · Score médio ${{scoreMedia}}%</div></div>
@@ -1635,7 +1651,13 @@ function renderBilhetes(date, jogos){{
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
     const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
 
-    const bilheteHeader = `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
+    const isBingo = tipo === 'bingo';
+    const bilheteHeader = isBingo ? `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
+      <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
+      <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
+      <div class="bilhete-market-stack" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Mercados</div>
+      <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
+    </div>` : `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
       <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
       <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
       <span class="bilhete-mkt" style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.7px">Mercado</span>
@@ -1643,7 +1665,8 @@ function renderBilhetes(date, jogos){{
       <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
       <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
     </div>`;
-    const rows = b.sels.map((s,i)=>{{
+
+    const renderSelectionStatus = (s) => {{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
       let resHtml = '<span class="res-badge pending">⏳</span>';
@@ -1653,6 +1676,39 @@ function renderBilhetes(date, jogos){{
         else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
         else resHtml='<span class="res-badge pending">⚠ Não confirmado</span>';
       }}
+      return resHtml;
+    }};
+
+    const rows = isBingo ? (()=>{{
+      const groups = [];
+      const byJogo = new Map();
+      for(const s of b.sels){{
+        const key = `${{s.jogo}}|${{s.hora}}`;
+        if(!byJogo.has(key)){{
+          byJogo.set(key, {{jogo:s.jogo, liga:s.liga, hora:s.hora, sels:[]}});
+          groups.push(byJogo.get(key));
+        }}
+        byJogo.get(key).sels.push(s);
+      }}
+      return groups.map((g,i)=>{{
+        const marketLines = g.sels.map(s=>`<div class="bilhete-market-line">
+          <span class="bilhete-mkt">${{s.mkt}}</span>
+          <div class="bilhete-score-bar">${{bar(s.score||0,60)}}</div>
+          <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
+        </div>`).join('');
+        const statuses = g.sels.map(renderSelectionStatus).join('<div style="height:4px"></div>');
+        return`<div class="bilhete-row">
+          <span class="bilhete-num">${{i+1}}</span>
+          <div style="flex:1;min-width:0">
+            <div class="bilhete-jogo">${{g.jogo}}</div>
+            <div class="bilhete-liga">${{g.liga}} · ${{g.hora}}</div>
+          </div>
+          <div class="bilhete-market-stack">${{marketLines}}</div>
+          <div class="bilhete-res">${{statuses}}</div>
+        </div>`;
+      }}).join('');
+    }})() : b.sels.map((s,i)=>{{
+      const resHtml = renderSelectionStatus(s);
       const scoreVal = s.score || 0;
       return`<div class="bilhete-row">
         <span class="bilhete-num">${{i+1}}</span>
