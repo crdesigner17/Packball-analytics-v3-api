@@ -289,6 +289,7 @@ tbody td{padding:9px 12px;vertical-align:middle}
 .jogo-sub{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:1px}
 .mono{font-family:'JetBrains Mono',monospace;font-size:12px}
 .muted{color:var(--muted)}
+.row-num{width:42px;text-align:center;color:var(--muted);font-weight:700}
 .td-conf{text-align:center}
 .td-palpite{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}
 .alt-mkts{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;align-items:center}
@@ -1442,9 +1443,10 @@ function runHistoricoSearch(date){
     out.innerHTML='<div class="history-search-empty">Nenhum resultado encontrado com esses filtros.</div>';
     return;
   }
-  const rows=filtered.map(r=>{
+  const rows=filtered.map((r,i)=>{
     const badge = r.status==='green' ? '<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>' : r.status==='red' ? '<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>' : '<span class="res-badge pending"><i data-lucide="clock"></i> S/D</span>';
     return `<tr class="${r.status==='green'?'row-hit':r.status==='red'?'row-miss':''}">
+      <td class="row-num">${i+1}</td>
       <td><div class="jogo-main">${r.j.jogo}</div><div class="jogo-sub">${r.j.liga} · ${r.j.hora}</div></td>
       <td class="mono muted">${r.date}</td>
       <td>${gradeHtml(r.grade)}</td>
@@ -1454,7 +1456,7 @@ function runHistoricoSearch(date){
     </tr>`;
   }).join('');
   out.innerHTML=`<div class="tbl-wrap"><table>
-    <thead><tr><th>Jogo</th><th>Data</th><th>Grade</th><th>Mercado</th><th>Score</th><th>Resultado</th></tr></thead>
+    <thead><tr><th>#</th><th>Jogo</th><th>Data</th><th>Grade</th><th>Mercado</th><th>Score</th><th>Resultado</th></tr></thead>
     <tbody>${rows}</tbody>
   </table></div>`;
 }
@@ -1524,10 +1526,11 @@ function renderVisao(date,jogos){
     </div>`;
   }).join('');
 
-  const rows=[...jogos].sort(sortByGrade).map(d=>{
+  const rows=[...jogos].sort(sortByGrade).map((d,i)=>{
     const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
     const rc=rowClass(d,mktKey);
     return`<tr class="${rc}">
+      <td class="row-num">${i+1}</td>
       ${jogoCell(d)}<td class="mono muted">${d.hora}</td>
       <td class="td-conf">${gradeHtml(getPalpiteGrade(d))}</td>
       <td class="td-palpite">${getPalpiteMkt(d)}</td>
@@ -1546,7 +1549,7 @@ function renderVisao(date,jogos){
     <div class="top-grid">${t5}</div>
     <div class="sec-title"><i data-lucide="list"></i> Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Melhor</th><th>Score</th><th>Alternativas</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Melhor</th><th>Score</th><th>Alternativas</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
 }
@@ -1572,10 +1575,11 @@ function renderRanking(date,jogos){
   function tableFor(group){
     const title = `<div class="sec-title"><i data-lucide="${group.icon}"></i> ${group.title}</div>`;
     if(!group.items.length)return`<div class="ranking-col">${title}<div class="empty">Nenhum jogo nesta categoria.</div></div>`;
-    const rows=group.items.map(d=>{
+    const rows=group.items.map((d,i)=>{
       const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       const rc=rowClass(d,mktKey);
       return`<tr class="${rc}">
+        <td class="row-num">${i+1}</td>
         ${jogoCell(d)}
         <td class="mono muted">${d.hora}</td>
         <td>${gradeHtml(getPalpiteGrade(d))}</td>
@@ -1589,7 +1593,7 @@ function renderRanking(date,jogos){
     return`<div class="ranking-col">
       ${title}
       <div class="tbl-wrap"><table>
-        <thead><tr><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Melhor</th><th>Score</th><th>Alternativas</th><th>Placar</th><th>Resultado</th></tr></thead>
+        <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Melhor</th><th>Score</th><th>Alternativas</th><th>Placar</th><th>Resultado</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>
     </div>`;
@@ -2089,9 +2093,10 @@ function renderHistoricoDia(date,jogos){
   const stats=(ALL_DATA[date]||{}).resultado_stats||{};
 
   if(!conf){
-    const rows=[...jogos].sort(sortByGrade).map(d=>{
+    const rows=[...jogos].sort(sortByGrade).map((d,i)=>{
       const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       return`<tr class="row-pending">
+        <td class="row-num">${i+1}</td>
         ${jogoCell(d)}<td class="mono muted">${d.hora}</td>
         <td>${gradeHtml(getPalpiteGrade(d))}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${getPalpiteMkt(d)}</td>
@@ -2102,7 +2107,7 @@ function renderHistoricoDia(date,jogos){
     el.innerHTML=`
       <div class="callout warn"><strong><i data-lucide="clock"></i> Resultados pendentes</strong> · Execute <code>confirmar.py --date ${date.split('-').reverse().join('-')}</code> após os jogos.</div>
       <div class="tbl-wrap"><table>
-        <thead><tr><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>Status</th></tr></thead>
+        <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>Status</th></tr></thead>
         <tbody>${rows}</tbody>
       </table></div>`;
     return;
@@ -2124,7 +2129,7 @@ function renderHistoricoDia(date,jogos){
   }).join('');
 
   // Tabela completa com resultados
-  const rows=[...jogos].sort(sortByGrade).map(d=>{
+  const rows=[...jogos].sort(sortByGrade).map((d,i)=>{
     const res=getResultado(d);
     const ac=d.acertos||{};
     const badges=Object.entries(ac).map(([mkt,info])=>{
@@ -2137,6 +2142,7 @@ function renderHistoricoDia(date,jogos){
     const cantRow=res&&res.corners_total!=null?`<span class="mini-stat neutral"><i data-lucide="flag"></i>${res.corners_total}</span>`:'—';
     const cartRow=res&&res.cards_total!=null?`<span class="mini-stat neutral"><i data-lucide="square"></i>${res.cards_total}</span>`:'—';
     return`<tr class="${rc}">
+      <td class="row-num">${i+1}</td>
       ${jogoCell(d)}<td class="mono muted">${d.hora}</td>
       ${res?`<td><div class="placar-cell">${res.placar}</div><div class="placar-ht">HT ${res.placar_ht}</div></td>`:'<td class="mono muted">—</td>'}
       <td class="mono">${cantRow}</td><td class="mono">${cartRow}</td>
@@ -2162,7 +2168,7 @@ function renderHistoricoDia(date,jogos){
     <div style="max-width:580px;margin-bottom:20px">${taxaBars||'<div class="empty">Sem dados.</div>'}</div>
     <div class="sec-title"><i data-lucide="list"></i> Todos os Jogos</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Jogo</th><th>Hora</th><th>Placar</th><th>Cant.</th><th>Cart.</th><th>Palpites e Acertos</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Placar</th><th>Cant.</th><th>Cart.</th><th>Palpites e Acertos</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
 }
