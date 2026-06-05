@@ -72,14 +72,14 @@ def build_bilhetes_snapshot(jogos):
     dia_pool = [x for x in alta if x.get('grade') == 'A+' and (x.get('score') or 0) >= 90][:8]
     b_dia = _montar(dia_pool)
 
-    b1 = _montar(list(alta))
+    b1 = _montar(list(alta)[:4])
     b2 = _montar([x for x in alta if x.get('grade') == 'A+'])
 
     bilhetes = []
     seen = set()
     defs = [
         ('b1', b1, 'bilhete-premium', 'Premium - Todos A+/A por Score'),
-        ('b2', b2, 'bilhete-conservador', 'Confianca Alta - So A+'),
+        ('b2', b2, 'bilhete-conservador', 'ELITE'),
     ]
     for tipo, bilhete, cls, label in defs:
         if not bilhete:
@@ -130,4 +130,3 @@ def attach_results_to_snapshots(data_json):
             for item in bilhete.get('b', {}).get('sels', []):
                 update_item(item)
     return data_json
-
