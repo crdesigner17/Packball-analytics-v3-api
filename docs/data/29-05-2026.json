@@ -1339,7 +1339,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-04T21:06:18Z",
+    "created_at": "2026-06-05T13:43:42Z",
     "bilhetes": [
       {
         "tipo": "b1",
@@ -1502,82 +1502,6 @@
                 "under35_ok": true
               },
               "acertos": {}
-            },
-            {
-              "fixture_id": 1520705,
-              "jogo": "Juventude x America Mineiro",
-              "home": "Juventude",
-              "away": "America Mineiro",
-              "liga": "Serie B",
-              "hora": "21:00",
-              "mkt": "Under 3.5",
-              "score": 76.6,
-              "grade": "A",
-              "oddVal": null,
-              "resultado": {
-                "fixture_id": 1520705,
-                "status": "FT",
-                "gols_home": 3,
-                "gols_away": 0,
-                "gols_total": 3,
-                "gols_ht": 1,
-                "btts": false,
-                "over05_ht_ok": true,
-                "over15_ok": true,
-                "over25_ok": true,
-                "under45_ok": true,
-                "placar": "3-0",
-                "placar_ht": "1-0",
-                "corners_total": 10,
-                "cards_total": 2,
-                "esc75_ok": true,
-                "esc85_ok": true,
-                "cart25_ok": false,
-                "cart35_ok": false,
-                "under35_ok": true
-              },
-              "acertos": {}
-            },
-            {
-              "fixture_id": 1545409,
-              "jogo": "Nice x Saint Etienne",
-              "home": "Nice",
-              "away": "Saint Etienne",
-              "liga": "Ligue 1",
-              "hora": "15:45",
-              "mkt": "Esc 7.5",
-              "score": 76.5,
-              "grade": "A",
-              "oddVal": null,
-              "resultado": {
-                "fixture_id": 1545409,
-                "status": "FT",
-                "gols_home": 4,
-                "gols_away": 1,
-                "gols_total": 5,
-                "gols_ht": 0,
-                "btts": true,
-                "over05_ht_ok": false,
-                "over15_ok": true,
-                "over25_ok": true,
-                "under45_ok": false,
-                "placar": "4-1",
-                "placar_ht": "0-0",
-                "corners_total": 10,
-                "cards_total": 2,
-                "esc75_ok": true,
-                "esc85_ok": true,
-                "cart25_ok": false,
-                "cart35_ok": false,
-                "under35_ok": false
-              },
-              "acertos": {
-                "Esc 7.5": {
-                  "score": 76.5,
-                  "palpite": true,
-                  "acertou": true
-                }
-              }
             }
           ],
           "oddTotal": 1
@@ -1675,7 +1599,7 @@
           "oddTotal": 1
         },
         "cls": "bilhete-conservador",
-        "label": "Confianca Alta - So A+"
+        "label": "ELITE"
       }
     ],
     "bilheteDia": null

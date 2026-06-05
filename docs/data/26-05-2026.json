@@ -1577,7 +1577,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-04T21:06:18Z",
+    "created_at": "2026-06-05T13:43:42Z",
     "bilhetes": [
       {
         "tipo": "b1",
@@ -1742,47 +1742,6 @@
               "acertos": {
                 "Esc 7.5": {
                   "score": 77.9,
-                  "palpite": true,
-                  "acertou": true
-                }
-              }
-            },
-            {
-              "fixture_id": 1545408,
-              "jogo": "Saint Etienne x Nice",
-              "home": "Saint Etienne",
-              "away": "Nice",
-              "liga": "Ligue 1",
-              "hora": "15:45",
-              "mkt": "Esc 7.5",
-              "score": 76.5,
-              "grade": "A",
-              "oddVal": null,
-              "resultado": {
-                "fixture_id": 1545408,
-                "status": "FT",
-                "gols_home": 0,
-                "gols_away": 0,
-                "gols_total": 0,
-                "gols_ht": 0,
-                "btts": false,
-                "over05_ht_ok": false,
-                "over15_ok": false,
-                "over25_ok": false,
-                "under45_ok": true,
-                "placar": "0-0",
-                "placar_ht": "0-0",
-                "corners_total": 12,
-                "cards_total": 1,
-                "esc75_ok": true,
-                "esc85_ok": true,
-                "cart25_ok": false,
-                "cart35_ok": false,
-                "under35_ok": true
-              },
-              "acertos": {
-                "Esc 7.5": {
-                  "score": 76.5,
                   "palpite": true,
                   "acertou": true
                 }

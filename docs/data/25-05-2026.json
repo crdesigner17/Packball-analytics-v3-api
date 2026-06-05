@@ -1091,7 +1091,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-04T21:06:18Z",
+    "created_at": "2026-06-05T13:43:42Z",
     "bilhetes": [
       {
         "tipo": "b1",
@@ -1316,7 +1316,7 @@
           "oddTotal": 1
         },
         "cls": "bilhete-conservador",
-        "label": "Confianca Alta - So A+"
+        "label": "ELITE"
       }
     ],
     "bilheteDia": null

@@ -1315,7 +1315,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-04T21:06:18Z",
+    "created_at": "2026-06-05T13:43:42Z",
     "bilhetes": [
       {
         "tipo": "b1",
@@ -1480,47 +1480,6 @@
               "acertos": {
                 "Esc 7.5": {
                   "score": 78.9,
-                  "palpite": true,
-                  "acertou": true
-                }
-              }
-            },
-            {
-              "fixture_id": 1528282,
-              "jogo": "Rep. Of Ireland x Qatar",
-              "home": "Rep. Of Ireland",
-              "away": "Qatar",
-              "liga": "Friendlies",
-              "hora": "15:45",
-              "mkt": "Esc 8.5",
-              "score": 78.4,
-              "grade": "A",
-              "oddVal": null,
-              "resultado": {
-                "fixture_id": 1528282,
-                "status": "FT",
-                "gols_home": 1,
-                "gols_away": 0,
-                "gols_total": 1,
-                "gols_ht": 1,
-                "btts": false,
-                "over05_ht_ok": true,
-                "over15_ok": false,
-                "over25_ok": false,
-                "under45_ok": true,
-                "placar": "1-0",
-                "placar_ht": "1-0",
-                "corners_total": 10,
-                "cards_total": 2,
-                "esc75_ok": true,
-                "esc85_ok": true,
-                "cart25_ok": false,
-                "cart35_ok": false,
-                "under35_ok": true
-              },
-              "acertos": {
-                "Esc 8.5": {
-                  "score": 78.4,
                   "palpite": true,
                   "acertou": true
                 }
