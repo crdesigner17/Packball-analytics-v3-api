@@ -414,6 +414,24 @@ def processar_dia(date_str, dfs):
                 (100 - (ppg_n or 50),      30),
                 (50,                       20),
             ])
+        under35_model_ok = (
+            prob_u35_poisson is not None and
+            exg_tot is not None and
+            prob_u35_poisson >= 78 and
+            exg_tot <= 2.5
+        )
+        under35_no_xg_ok = (
+            prob_u35_poisson is None and
+            exg_tot is None and
+            (u25cf or 0) >= 65 and
+            (ppg_avg is None or ppg_avg <= 1.6)
+        )
+        under35_blockers_ok = (
+            (o25g is None or o25g <= 55) and
+            (h2h_g is None or h2h_g <= 3.0) and
+            (btts_cf is None or btts_cf <= 75)
+        )
+        under35_passou = s_u35 >= 75 and under35_blockers_ok and (under35_model_ok or under35_no_xg_ok)
 
         # ── Escanteios Over 7.5 ──
         s_esc75 = ws([
@@ -489,7 +507,7 @@ def processar_dia(date_str, dfs):
             ('BTTS',     s_btts, True),
             ('Over 0.5 HT', s_05ht, True),
             ('Under 4.5', s_u45, True),
-            ('Under 3.5', s_u35, True),
+            ('Under 3.5', s_u35, under35_passou),
             ('Esc 7.5', s_esc75, True),
             ('Cart 2.5', s_cards25, True),
         ]
@@ -553,6 +571,7 @@ def processar_dia(date_str, dfs):
             # Filtro e via
             'passou_filtro': bool(passou),
             'via':           via_str,
+            'under35_filter': bool(under35_passou),
 
             # Grade profissional por mercado
             'grade_15':    grade(s15) if passou else 'D',
@@ -560,7 +579,7 @@ def processar_dia(date_str, dfs):
             'grade_btts':  grade(s_btts),
             'grade_05ht':  grade(s_05ht),
             'grade_u45':   grade(s_u45),
-            'grade_u35':   grade(s_u35),
+            'grade_u35':   grade(s_u35) if under35_passou else 'D',
             'grade_esc85': grade(s_esc85),
             'grade_esc75': grade(s_esc75),
             'grade_cart25':grade(s_cards25),
