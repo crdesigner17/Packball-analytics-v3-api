@@ -1568,7 +1568,22 @@ function renderOver15(date,jogos){{
 function renderOver25(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over25');
   const underRows=[...jogos]
-    .map(d=>({{jogo:d, under:underMarketPick(d)}}))
+    .map(d=>{{
+      const picked = underMarketPick(d);
+      if(picked) return {{jogo:d, under:picked}};
+      const mkt = getPalpiteMkt(d);
+      if(mkt==='Under 3.5' || mkt==='Under 4.5'){{
+        return {{jogo:d, under:{{
+          mkt,
+          key:MKT_RESULT[mkt],
+          score:getPalpiteScore(d),
+          grade:getPalpiteGrade(d),
+          poisson:mkt==='Under 3.5'?d.poisson_u35:d.poisson_u45,
+          exg:d.exg_tot,
+        }}}};
+      }}
+      return {{jogo:d, under:null}};
+    }})
     .filter(x=>x.under)
     .sort((a,b)=>sortByGrade(a.jogo,b.jogo,d=>underMarketPick(d)?.grade||'D',d=>underMarketPick(d)?.score||0));
   el.innerHTML=`
