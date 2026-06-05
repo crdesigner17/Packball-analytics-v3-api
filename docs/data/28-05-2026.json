@@ -87,7 +87,7 @@
       "grade_btts": "C",
       "grade_05ht": "D",
       "grade_u45": "C",
-      "grade_u35": "C",
+      "grade_u35": "D",
       "grade_esc85": "B",
       "grade_esc75": "A",
       "grade_cart25": "B",
@@ -123,18 +123,20 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 0,
+          "score": 78.9,
           "palpite": true,
           "acertou": true
         }
       },
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 78.9
+      "palpite_score": 78.9,
+      "under35_filter": false
     },
     {
       "date": "28-05-2026",
@@ -222,7 +224,7 @@
       "grade_btts": "B",
       "grade_05ht": "C",
       "grade_u45": "C",
-      "grade_u35": "C",
+      "grade_u35": "D",
       "grade_esc85": "B",
       "grade_esc75": "B",
       "grade_cart25": "B",
@@ -258,18 +260,20 @@
         "esc75_ok": false,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": false
       },
       "acertos": {
         "Over 1.5": {
-          "score": 0,
+          "score": 100.0,
           "palpite": true,
           "acertou": true
         }
       },
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "under35_filter": false
     },
     {
       "date": "28-05-2026",
@@ -357,7 +361,7 @@
       "grade_btts": "D",
       "grade_05ht": "D",
       "grade_u45": "B",
-      "grade_u35": "B",
+      "grade_u35": "D",
       "grade_esc85": "C",
       "grade_esc75": "C",
       "grade_cart25": "B",
@@ -393,12 +397,14 @@
         "esc75_ok": false,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": true
       },
       "acertos": {},
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "B",
-      "palpite_score": 72.3
+      "palpite_score": 72.3,
+      "under35_filter": false
     },
     {
       "date": "28-05-2026",
@@ -486,7 +492,7 @@
       "grade_btts": "D",
       "grade_05ht": "D",
       "grade_u45": "B",
-      "grade_u35": "B",
+      "grade_u35": "D",
       "grade_esc85": "D",
       "grade_esc75": "C",
       "grade_cart25": "A",
@@ -522,18 +528,20 @@
         "esc75_ok": true,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": false
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 0,
+          "score": 79.7,
           "palpite": true,
           "acertou": true
         }
       },
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "A",
-      "palpite_score": 79.7
+      "palpite_score": 79.7,
+      "under35_filter": false
     },
     {
       "date": "28-05-2026",
@@ -621,7 +629,7 @@
       "grade_btts": "C",
       "grade_05ht": "D",
       "grade_u45": "B",
-      "grade_u35": "C",
+      "grade_u35": "D",
       "grade_esc85": "C",
       "grade_esc75": "C",
       "grade_cart25": "A",
@@ -657,18 +665,20 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": true
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 0,
+          "score": 81.4,
           "palpite": true,
           "acertou": true
         }
       },
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "A",
-      "palpite_score": 81.4
+      "palpite_score": 81.4,
+      "under35_filter": false
     },
     {
       "date": "28-05-2026",
@@ -756,7 +766,7 @@
       "grade_btts": "D",
       "grade_05ht": "D",
       "grade_u45": "C",
-      "grade_u35": "C",
+      "grade_u35": "D",
       "grade_esc85": "B",
       "grade_esc75": "B",
       "grade_cart25": "C",
@@ -792,12 +802,14 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": true,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {},
       "palpite_mkt": "Esc 8.5",
       "palpite_grade": "B",
-      "palpite_score": 71.8
+      "palpite_score": 71.8,
+      "under35_filter": false
     },
     {
       "date": "28-05-2026",
@@ -885,7 +897,7 @@
       "grade_btts": "D",
       "grade_05ht": "D",
       "grade_u45": "C",
-      "grade_u35": "C",
+      "grade_u35": "D",
       "grade_esc85": "A",
       "grade_esc75": "A",
       "grade_cart25": "D",
@@ -921,18 +933,20 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": false,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 8.5": {
-          "score": 0,
+          "score": 78.4,
           "palpite": true,
           "acertou": true
         }
       },
       "palpite_mkt": "Esc 8.5",
       "palpite_grade": "A",
-      "palpite_score": 78.4
+      "palpite_score": 78.4,
+      "under35_filter": false
     }
   ],
   "top5": [
@@ -943,8 +957,8 @@
   "resultado_confirmado": true,
   "resultado_stats": {
     "Over 1.5": {
-      "palpites": 3,
-      "acertos": 3,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
@@ -1022,25 +1036,25 @@
   },
   "resultado_stats_full": {
     "Over 1.5": {
-      "palpites": 3,
-      "acertos": 3,
-      "erros": 0,
-      "sem_dados": 0,
-      "taxa": 100.0
-    },
-    "Over 2.5": {
-      "palpites": 2,
-      "acertos": 2,
-      "erros": 0,
-      "sem_dados": 0,
-      "taxa": 100.0
-    },
-    "BTTS": {
       "palpites": 1,
       "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
     },
     "Over 0.5 HT": {
       "palpites": 0,
@@ -1124,11 +1138,12 @@
         "esc75_ok": false,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": false
       },
       "acertos": {
         "Over 1.5": {
-          "score": 0,
+          "score": 100.0,
           "palpite": true,
           "acertou": true
         }
@@ -1164,11 +1179,12 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": true
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 0,
+          "score": 81.4,
           "palpite": true,
           "acertou": true
         }
@@ -1204,11 +1220,12 @@
         "esc75_ok": true,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": false
       },
       "acertos": {
         "Cart 2.5": {
-          "score": 0,
+          "score": 79.7,
           "palpite": true,
           "acertou": true
         }
@@ -1244,11 +1261,12 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 7.5": {
-          "score": 0,
+          "score": 78.9,
           "palpite": true,
           "acertou": true
         }
@@ -1284,11 +1302,12 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": false,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 8.5": {
-          "score": 0,
+          "score": 78.4,
           "palpite": true,
           "acertou": true
         }
@@ -1332,11 +1351,12 @@
                 "esc75_ok": false,
                 "esc85_ok": false,
                 "cart25_ok": true,
-                "cart35_ok": false
+                "cart35_ok": false,
+                "under35_ok": false
               },
               "acertos": {
                 "Over 1.5": {
-                  "score": 0,
+                  "score": 100.0,
                   "palpite": true,
                   "acertou": true
                 }
@@ -1372,11 +1392,12 @@
                 "esc75_ok": true,
                 "esc85_ok": true,
                 "cart25_ok": true,
-                "cart35_ok": true
+                "cart35_ok": true,
+                "under35_ok": true
               },
               "acertos": {
                 "Cart 2.5": {
-                  "score": 0,
+                  "score": 81.4,
                   "palpite": true,
                   "acertou": true
                 }
@@ -1412,11 +1433,12 @@
                 "esc75_ok": true,
                 "esc85_ok": false,
                 "cart25_ok": true,
-                "cart35_ok": true
+                "cart35_ok": true,
+                "under35_ok": false
               },
               "acertos": {
                 "Cart 2.5": {
-                  "score": 0,
+                  "score": 79.7,
                   "palpite": true,
                   "acertou": true
                 }
@@ -1452,11 +1474,12 @@
                 "esc75_ok": true,
                 "esc85_ok": true,
                 "cart25_ok": true,
-                "cart35_ok": true
+                "cart35_ok": true,
+                "under35_ok": true
               },
               "acertos": {
                 "Esc 7.5": {
-                  "score": 0,
+                  "score": 78.9,
                   "palpite": true,
                   "acertou": true
                 }
@@ -1492,11 +1515,12 @@
                 "esc75_ok": true,
                 "esc85_ok": true,
                 "cart25_ok": false,
-                "cart35_ok": false
+                "cart35_ok": false,
+                "under35_ok": true
               },
               "acertos": {
                 "Esc 8.5": {
-                  "score": 0,
+                  "score": 78.4,
                   "palpite": true,
                   "acertou": true
                 }
