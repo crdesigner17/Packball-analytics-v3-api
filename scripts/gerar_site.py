@@ -841,7 +841,7 @@ const MKT_RESULT = {{
   'BTTS':        'btts',
   'Over 0.5 HT': 'over05_ht_ok',
   'Under 4.5':   'under45_ok',
-  'Under 3.5':   'under45_ok',
+  'Under 3.5':   'under35_ok',
   'Esc 7.5':     'esc75_ok',
   'Esc 8.5':     'esc85_ok',
   'Cart 2.5':    'cart25_ok',
@@ -1027,7 +1027,7 @@ function sortByGrade(a,b,gradeFn,scoreFn){{
 function resBadge(jogo, mktKey){{
   const res=getResultado(jogo);
   if(!res)return'<span class="res-badge pending">⏳ Aguardando</span>';
-  const ok=res[mktKey];
+  const ok=resultOk(res,mktKey);
   if(ok===true) return'<span class="res-badge hit">✓ GREEN</span>';
   if(ok===false)return'<span class="res-badge miss">✗ RED</span>';
   return'<span class="res-badge pending">⚠ Não confirmado</span>';
@@ -1036,10 +1036,18 @@ function resBadge(jogo, mktKey){{
 function rowClass(jogo, mktKey){{
   const res=getResultado(jogo);
   if(!res)return'row-pending';
-  const ok=res[mktKey];
+  const ok=resultOk(res,mktKey);
   if(ok===true)return'row-hit';
   if(ok===false)return'row-miss';
   return'row-pending';
+}}
+
+function resultOk(res, mktKey){{
+  if(!res)return null;
+  if(mktKey==='under35_ok' && res.under35_ok == null && res.gols_total != null){{
+    return res.gols_total <= 3;
+  }}
+  return res[mktKey];
 }}
 
 function placarCell(jogo){{
@@ -1051,7 +1059,7 @@ function placarCell(jogo){{
 function placarCard(jogo, mktKey){{
   const res=getResultado(jogo);
   if(!res)return`<div class="top-placar pending"><span class="icon">⏳</span><span class="ft">Aguardando</span></div>`;
-  const ok=res[mktKey];
+  const ok=resultOk(res,mktKey);
   const cls=ok===true?'hit':ok===false?'miss':'pending';
   const icon=ok===true?'✓':ok===false?'✗':'?';
   const cant=res.corners_total!=null?` · ${{res.corners_total}}🚩`:'';
@@ -1245,13 +1253,13 @@ function renderOver25(date,jogos){{
       <tbody>${{ru35.map((d,i)=>{{
         const u35prob=d.poisson_u35||null;
         const probColor=u35prob>=85?'var(--green)':u35prob>=75?'var(--blue)':'var(--muted)';
-        const rc=rowClass(d,'under45_ok');
+        const rc=rowClass(d,'under35_ok');
         return`<tr class="${{rc}}">
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
           <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{u35prob?u35prob+'%':'—'}}</span></td>
           <td class="mono" style="color:var(--teal);font-size:14px;font-weight:600">${{d.exg_tot||'—'}}</td>
-          ${{placarCell(d)}}<td>${{resBadge(d,'under45_ok')}}</td>
+          ${{placarCell(d)}}<td>${{resBadge(d,'under35_ok')}}</td>
           <td>${{bar(d.score_u35||d.score_u45||0)}}</td>
           <td>${{gradeHtml(d.grade_u35||d.grade_u45||'D')}}</td>
         </tr>`;
@@ -1382,7 +1390,7 @@ function avaliarBilhete(sels, confirmado){{
     const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
     const res = s.resultado;
     if(!res){{ sd++; continue; }}
-    const ok = res[mktKey];
+    const ok = resultOk(res,mktKey);
     if(ok===true) acertos++;
     else if(ok===false) erros++;
     else sd++;
@@ -1424,7 +1432,7 @@ function renderBilhetes(date, jogos){{
       const res = s.resultado;
       let resHtml = '<span class="res-badge pending">⏳</span>';
       if(confirmado && res){{
-        const ok = res[mktKey];
+        const ok = resultOk(res,mktKey);
         if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
         else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
         else resHtml='<span class="res-badge pending">⚠ Não confirmado</span>';
@@ -1478,7 +1486,7 @@ function renderBilhetes(date, jogos){{
       const res = s.resultado;
       let resHtml = '<span class="res-badge pending">⏳</span>';
       if(confirmado && res){{
-        const ok = res[mktKey];
+        const ok = resultOk(res,mktKey);
         if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
         else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
         else resHtml='<span class="res-badge pending">⚠ Não confirmado</span>';
@@ -2108,4 +2116,3 @@ switchDate(targetDate);
 
 if __name__ == '__main__':
     gerar_site()
-
