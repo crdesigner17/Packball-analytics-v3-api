@@ -2278,6 +2278,8 @@ function showHistoricoGlobal(){{
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.date-strip-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('panel-historico').style.display='block';
+  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
+  document.getElementById('sb-historico')?.classList.add('active');
 
   historicoVisible=true;
   renderHistoricoGlobal();
@@ -2338,7 +2340,12 @@ function sidebarNav(mkt){{
     if(d) switchDate(d);
     else return;
   }}
-  switchMkt(activeDate, mkt);
+  if(historicoVisible || document.getElementById('panel-historico')?.style.display==='block'){{
+    activeMkt[activeDate]=mkt;
+    switchDate(activeDate);
+  }} else {{
+    switchMkt(activeDate, mkt);
+  }}
   updateSidebarActive(mkt);
 }}
 
