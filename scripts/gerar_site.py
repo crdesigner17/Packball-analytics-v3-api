@@ -514,7 +514,9 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .bilhete-sels{{font-size:11px;color:var(--muted)}}
 .bilhete-grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}}
 .bilhete-grid .bilhete-card{{margin-bottom:0;height:100%}}
-@media(max-width:920px){{.bilhete-grid{{grid-template-columns:1fr}}}}
+.bilhete-destaques{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start;margin-bottom:18px}}
+.bilhete-destaques .bilhete-dia,.bilhete-destaques .bilhete-card{{margin-bottom:0;height:100%}}
+@media(max-width:920px){{.bilhete-grid,.bilhete-destaques{{grid-template-columns:1fr}}}}
 .bilhete-status{{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}}
 
 /* PANELS */
@@ -1005,7 +1007,8 @@ function oddForMarket(d,mkt){{
   return detail ? detail.value : null;
 }}
 function oddEstimate(d,mkt){{
-  const score = marketScore(d,mkt);
+  const scoreField = MKT_SCORE[mkt];
+  const score = scoreField ? d[scoreField] : null;
   const n = Number(score);
   if(!Number.isFinite(n) || n<=0) return null;
   const p = Math.max(50, Math.min(88, n));
@@ -1631,21 +1634,39 @@ function renderBilhetes(date, jogos){{
   const snap=(ALL_DATA[date]||{{}}).bilhetes_snapshot;
   const resultado = snap || gerarBilhetes(jogos);
   const {{bilhetes, bilheteDia}} = resultado;
+  const jogosByKey = new Map(jogos.map(j=>[`${{j.fixture_id||''}}|${{j.jogo}}`, j]));
+  const findJogo = (s)=>jogosByKey.get(`${{s.fixture_id||''}}|${{s.jogo}}`) || jogos.find(j=>j.jogo===s.jogo);
+  const hydrateSel = (s)=>{{
+    if(s.oddVal) return s;
+    const jogo = findJogo(s);
+    if(!jogo) return s;
+    const odd = oddForMarketDetail(jogo, s.mkt);
+    return odd ? {{...s, oddVal:odd.value, oddSource:odd.source}} : s;
+  }};
+  const hydrateBilhete = (b)=>{{
+    if(!b || !b.sels) return b;
+    const sels = b.sels.map(hydrateSel);
+    const oddTotal = Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
+    return {{...b, sels, oddTotal}};
+  }};
+  const bilhetesHydrated = (bilhetes||[]).map(item=>({{...item, b:hydrateBilhete(item.b)}}));
+  const bilheteDiaHydrated = hydrateBilhete(bilheteDia);
   const bingoBilhetes = gerarBingoBilhetes(jogos);
-  const todosBilhetes = [...(bilhetes||[]), ...bingoBilhetes];
+  const bingoDestaque = bingoBilhetes[0] || null;
+  const todosBilhetes = [...bilhetesHydrated, ...bingoBilhetes.slice(1)];
 
-  if((!todosBilhetes || todosBilhetes.length===0) && !bilheteDia){{
+  if((!todosBilhetes || todosBilhetes.length===0) && !bilheteDiaHydrated && !bingoDestaque){{
     el.innerHTML=`<div class="empty">Nenhum jogo com dados suficientes para gerar bilhetes hoje.</div>`;
     return;
   }}
 
   // Bilhete do Dia
   let diaHtml = '';
-  if(bilheteDia){{
-    const av = avaliarBilhete(bilheteDia.sels, confirmado);
+  if(bilheteDiaHydrated){{
+    const av = avaliarBilhete(bilheteDiaHydrated.sels, confirmado);
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
-    const oddColor = !bilheteDia.oddTotal?'var(--muted)':bilheteDia.oddTotal>=5?'var(--green)':bilheteDia.oddTotal>=3?'var(--yellow)':'var(--orange)';
-    const scoreMedia = Math.round(bilheteDia.sels.reduce((a,s)=>a+s.score,0)/bilheteDia.sels.length);
+    const oddColor = !bilheteDiaHydrated.oddTotal?'var(--muted)':bilheteDiaHydrated.oddTotal>=5?'var(--green)':bilheteDiaHydrated.oddTotal>=3?'var(--yellow)':'var(--orange)';
+    const scoreMedia = Math.round(bilheteDiaHydrated.sels.reduce((a,s)=>a+s.score,0)/bilheteDiaHydrated.sels.length);
     const diaHeader = `<div class="bilhete-row" style="border-bottom:1px solid rgba(0,200,150,.2);margin-bottom:4px;padding-bottom:6px">
       <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
       <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
@@ -1654,7 +1675,7 @@ function renderBilhetes(date, jogos){{
       <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
       <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
     </div>`;
-    const rows = bilheteDia.sels.map((s,i)=>{{
+    const rows = bilheteDiaHydrated.sels.map((s,i)=>{{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
       let resHtml = '<span class="res-badge pending">⏳</span>';
@@ -1675,7 +1696,7 @@ function renderBilhetes(date, jogos){{
     }}).join('');
     let statusHtml = '';
     if(!confirmado) statusHtml='<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando</span>';
-    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)">✅ GREEN! Odd: ${{bilheteDia.oddTotal.toFixed(2)}}</span>`;
+    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)">✅ GREEN! Odd: ${{bilheteDiaHydrated.oddTotal.toFixed(2)}}</span>`;
     else if(av.status==='loss') statusHtml=`<span class="bilhete-status" style="color:var(--red)">✗ Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
     else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${{av.sd}} sem dados</span>`;
 
@@ -1683,25 +1704,24 @@ function renderBilhetes(date, jogos){{
       <div class="bilhete-dia-badge"><i data-lucide="trophy"></i>BILHETE DO DIA</div>
       <div class="bilhete-header">
         <div><div class="bilhete-title" style="font-size:15px">Os mais assertivos do dia</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:2px">${{bilheteDia.sels.length}} seleções · Score médio ${{scoreMedia}}%</div></div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${{bilheteDiaHydrated.sels.length}} seleções · Score médio ${{scoreMedia}}%</div></div>
         <div style="text-align:right">
-          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{bilheteDia.oddTotal?bilheteDia.oddTotal.toFixed(2):'—'}}</div>
+          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{bilheteDiaHydrated.oddTotal?bilheteDiaHydrated.oddTotal.toFixed(2):'—'}}</div>
           <div class="bilhete-odd-label">Odd combinada</div>
         </div>
       </div>
       <div style="border-top:1px solid rgba(0,200,150,.2);padding-top:10px">${{diaHeader}}${{rows}}</div>
-      <div class="bilhete-footer"><span class="bilhete-sels">${{bilheteDia.sels.filter(s=>s.grade==='A+').length}} A+ · ${{bilheteDia.sels.filter(s=>s.grade==='A').length}} A</span>${{statusHtml}}</div>
-    </div>
-    <div class="sec-title">📋 Todos os Bilhetes</div>`;
+      <div class="bilhete-footer"><span class="bilhete-sels">${{bilheteDiaHydrated.sels.filter(s=>s.grade==='A+').length}} A+ · ${{bilheteDiaHydrated.sels.filter(s=>s.grade==='A').length}} A</span>${{statusHtml}}</div>
+    </div>`;
   }}
 
-  const html = todosBilhetes.map((item)=>{{ const {{tipo, b, cls, label}} = item;
+  const renderBilheteCard = (item)=>{{ const {{tipo, b, cls, label}} = item;
     const av = avaliarBilhete(b.sels, confirmado);
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
     const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
 
     const isBingo = tipo === 'bingo';
-    const oddText = (s)=>s.oddVal ? `${{s.oddVal.toFixed(2)}}${{s.oddSource==='est'?' est.':''}}` : '—';
+    const oddText = (s)=>s.oddVal ? s.oddVal.toFixed(2) : '—';
     const tierLabel = isBingo && b.tier ? ` · ${{b.tier==='OURO'?'Bingo Ouro':b.tier==='PRATA'?'Bingo Prata':'Bingo Forte'}}` : '';
     const bilheteHeader = isBingo ? `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
       <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
@@ -1802,13 +1822,20 @@ function renderBilhetes(date, jogos){{
         ${{statusHtml}}
       </div>
     </div>`;
-  }}).join('');
+  }};
+
+  const bingoDestaqueHtml = bingoDestaque ? renderBilheteCard(bingoDestaque) : '';
+  const destaquesHtml = (diaHtml || bingoDestaqueHtml)
+    ? `<div class="bilhete-destaques">${{diaHtml}}${{bingoDestaqueHtml}}</div>`
+    : '';
+  const listaTitulo = todosBilhetes.length ? '<div class="sec-title">📋 Todos os Bilhetes</div>' : '';
+  const html = todosBilhetes.map(renderBilheteCard).join('');
 
   const callout = confirmado
     ? '<div class="callout ok"><strong>✅ Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
     : '<div class="callout info"><strong>🎯 Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
 
-  el.innerHTML = callout + diaHtml + `<div class="bilhete-grid">${{html}}</div>`;
+  el.innerHTML = callout + destaquesHtml + listaTitulo + `<div class="bilhete-grid">${{html}}</div>`;
 }}
 
 // ── Resultados do Dia ──────────────────────────────────────────────
