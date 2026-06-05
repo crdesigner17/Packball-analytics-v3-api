@@ -1542,8 +1542,15 @@ function gerarBilhetes(jogos){{
 function gerarBingoBilhetes(jogos){{
   const maxSels = 8;
   const maxJogos = 5;
+  const linhaMaiorMinDiff = 8;
   const calcOdd = (sels)=>Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
   const countJogos = (sels)=>new Set(sels.map(s=>s.jogo)).size;
+  const pickLinhaSegura = (aprovados, segura, maior)=>{{
+    const s = aprovados.find(x=>x.mkt===segura);
+    const m = aprovados.find(x=>x.mkt===maior);
+    if(s && m) return (m.score - s.score) >= linhaMaiorMinDiff ? m : s;
+    return s || m || null;
+  }};
   const makeSel = (j,x)=>{{
     const odd = oddForMarketDetail(j,x.mkt);
     return {{
@@ -1555,12 +1562,8 @@ function gerarBingoBilhetes(jogos){{
   }};
   const combos = jogos.map(j=>{{
     const aprovados = approvedMarkets(j);
-    const gols = aprovados
-      .filter(x=>x.mkt==='Over 1.5'||x.mkt==='Over 2.5')
-      .sort((a,b)=>(b.score-a.score)||(b.mkt==='Over 2.5'?1:-1))[0];
-    const canto = aprovados
-      .filter(x=>x.mkt==='Esc 7.5'||x.mkt==='Esc 8.5')
-      .sort((a,b)=>(b.score-a.score)||(b.mkt==='Esc 8.5'?1:-1))[0];
+    const gols = pickLinhaSegura(aprovados, 'Over 1.5', 'Over 2.5');
+    const canto = pickLinhaSegura(aprovados, 'Esc 7.5', 'Esc 8.5');
     if(!gols || !canto) return null;
     const sels = [makeSel(j,gols), makeSel(j,canto)];
     const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
