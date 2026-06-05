@@ -560,6 +560,24 @@ def calcular_scores(jogo: dict) -> dict:
     s_05ht    = ws([(o05ht,45),(o15ht or 50,15),(ppg_n,15),(af_n,15),(sot_n or 50,10)]) if o05ht else ws([(ppg_n,40),(af_n,30),(o15g or 50,20),(sot_n or 50,10)])
     s_u45     = ws([(prob_u45,35),(u25cf or 50,25),(100-(exg_n or 50),20),(50,20)]) if prob_u45 else ws([(u25cf or 50,40),(100-(ppg_n or 50),30),(50,30)])
     s_u35     = ws([(prob_u35,45),(u25cf or 50,20),(100-(exg_n or 50),25),(50,10)]) if prob_u35 else ws([(u25cf or 50,50),(100-(ppg_n or 50),30),(50,20)])
+    under35_model_ok = (
+        prob_u35 is not None and
+        exg_tot is not None and
+        prob_u35 >= 78 and
+        exg_tot <= 2.5
+    )
+    under35_no_xg_ok = (
+        prob_u35 is None and
+        exg_tot is None and
+        (u25cf or 0) >= 65 and
+        (ppg_avg is None or ppg_avg <= 1.6)
+    )
+    under35_blockers_ok = (
+        (o25g is None or o25g <= 55) and
+        (h2h_g is None or h2h_g <= 3.0) and
+        (btts_cf is None or btts_cf <= 75)
+    )
+    under35_passou = s_u35 >= 75 and under35_blockers_ok and (under35_model_ok or under35_no_xg_ok)
     s_esc75   = ws([(cant_n,40),(o75c,30),(shots_n,15),(o65c or 50,10),(ppg_n,5)])
     s_esc85   = ws([(cant_n,38),(o85c,32),(shots_n,15),(o75c,10),(ppg_n,5)])
     s_cards25 = ws([(o25cards,45),(cards_n,35),(ppg_n,10),(50,10)])
@@ -571,7 +589,7 @@ def calcular_scores(jogo: dict) -> dict:
         ('BTTS',     s_btts, True),
         ('Over 0.5 HT', s_05ht, True),
         ('Under 4.5', s_u45, True),
-            ('Under 3.5', s_u35, True),
+        ('Under 3.5', s_u35, under35_passou),
         ('Esc 7.5', s_esc75, True),
         ('Cart 2.5', s_cards25, True),
     ]
@@ -600,18 +618,20 @@ def calcular_scores(jogo: dict) -> dict:
         "score_btts":  round(s_btts,1),
         "score_05ht":  round(s_05ht,1),
         "score_u45":   round(s_u45,1),
+        "score_u35":   round(s_u35,1),
         "score_esc75": round(s_esc75,1),
         "score_esc85": round(s_esc85,1),
         "score_cards25":round(s_cards25,1),
         "score_cards35":round(s_cards35,1),
         "passou_filtro": bool(passou),
         "via":           via_str,
+        "under35_filter": bool(under35_passou),
         "grade_15":    grade(s15) if passou else 'D',
         "grade_25":    grade(s25),
         "grade_btts":  grade(s_btts),
         "grade_05ht":  grade(s_05ht),
         "grade_u45":   grade(s_u45),
-                "grade_u35":   grade(s_u35),
+        "grade_u35":   grade(s_u35) if under35_passou else 'D',
         "grade_esc85": grade(s_esc85),
         "grade_esc75": grade(s_esc75),
         "grade_cart25":grade(s_cards25),
