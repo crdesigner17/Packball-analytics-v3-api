@@ -176,7 +176,7 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
   --orange:#f97316;--red:#ef4444;--yellow:#eab308;--teal:#14b8a6;
   --purple:#a855f7;--pink:#ec4899;--text:#e2e8f0;--muted:#64748b;
   --dim:#1e2436;--aplus:#ffd700;
-  --nav-h:56px;--date-strip-h:53px;--market-bar-h:42px;
+  --nav-h:56px;--date-strip-h:53px;--market-bar-h:42px;--top-gap:8px;
 }}
 [data-theme="light"]{{
   --bg:#f0f4f8;--s1:#ffffff;--s2:#f5f7fa;--s3:#eef0f6;--border:#dde1ef;
@@ -550,14 +550,14 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
 
 /* SIDEBAR */
-.app-layout{{display:flex;min-height:calc(100vh - var(--nav-h))}}
+.app-layout{{display:flex;gap:var(--top-gap);min-height:calc(100vh - var(--nav-h));padding-top:var(--top-gap);background:var(--bg)}}
 .sidebar{{
   width:220px;flex-shrink:0;background:var(--s1);
   border-right:1px solid var(--border);
-  position:sticky;top:var(--nav-h);height:calc(100vh - var(--nav-h));
+  position:sticky;top:calc(var(--nav-h) + var(--top-gap));height:calc(100vh - var(--nav-h) - var(--top-gap));
   overflow-y:auto;z-index:80;
   display:flex;flex-direction:column;
-  padding:12px 0;
+  padding:12px 0;border-radius:0 10px 10px 0;
 }}
 .sidebar::-webkit-scrollbar{{width:3px}}
 .sidebar::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
@@ -594,15 +594,23 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   border-radius:4px;background:rgba(34,197,94,.12);color:var(--green);
 }}
 /* CONTENT AREA */
-.content-area{{flex:1;min-width:0;display:flex;flex-direction:column}}
+.content-area{{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;z-index:1;background:var(--bg)}}
+.content-area::before{{
+  content:'';display:block;position:sticky;top:var(--nav-h);
+  height:calc(var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));
+  margin-bottom:calc(-1 * (var(--top-gap) + var(--date-strip-h) + var(--market-bar-h)));
+  background:var(--bg);z-index:109;pointer-events:none;flex:0 0 auto;
+}}
 /* NEW DATE BAR */
 .date-strip{{
   background:var(--s1);border-bottom:1px solid var(--border);
   display:flex;align-items:center;overflow-x:auto;
   padding:0 16px;
   scrollbar-width:thin;scrollbar-color:var(--border) transparent;
-  position:sticky;top:var(--nav-h);z-index:120;
-  border-left:none;
+  position:sticky;top:calc(var(--nav-h) + var(--top-gap));z-index:120;
+  border-left:none;border-radius:10px 10px 0 0;
+  box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;
+  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;
 }}
 .date-strip::-webkit-scrollbar{{height:3px}}
 .date-strip::-webkit-scrollbar-thumb{{background:var(--border);border-radius:2px}}
@@ -625,8 +633,9 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .mkt-cat-bar{{
   background:var(--s2);border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0;
-  position:sticky;top:calc(var(--nav-h) + var(--date-strip-h));z-index:115;
-  width:100%;
+  position:sticky;top:calc(var(--nav-h) + var(--top-gap) + var(--date-strip-h));z-index:115;
+  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;border-radius:0 0 10px 10px;overflow:hidden;
+  box-shadow:0 8px 16px rgba(0,0,0,.16);
 }}
 .mkt-cat-tab{{
   flex:1;min-width:0;height:var(--market-bar-h);padding:0 16px;font-size:clamp(11px,1vw,13px);font-weight:500;color:var(--muted);
@@ -641,7 +650,9 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .sub-filter-bar{{
   background:var(--s1);border-bottom:1px solid var(--border);
   display:none;min-height:42px;padding:6px 16px;gap:8px;flex-wrap:wrap;
-  position:sticky;top:calc(var(--nav-h) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
+  position:sticky;top:calc(var(--nav-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
+  box-shadow:0 8px 16px rgba(0,0,0,.12);
+  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;
 }}
 .sub-filter-bar.visible{{display:flex;justify-content:center;align-items:center}}
 .sub-filter-btn{{
