@@ -255,7 +255,7 @@ button,input,select{{font-family:'Inter',sans-serif}}
   display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;
 }}
 .navbar-theme svg{{
-  width:15px;height:15px;display:block;stroke:currentColor;flex-shrink:0;
+  width:15px;height:15px;display:block;stroke:currentColor;fill:none;flex-shrink:0;opacity:1;visibility:visible;
 }}
 
 /* HEADER */
@@ -729,7 +729,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <span id="navbar-clock" style="font-size:8px;font-weight:600;color:rgba(255,255,255,.8);font-family:'JetBrains Mono',monospace"></span>
       <span style="font-size:9px;color:rgba(255,255,255,.35);font-family:'JetBrains Mono',monospace;letter-spacing:.5px">v3.1</span>
     </div>
-    <div class="navbar-theme" id="theme-btn" title="Alternar tema" onclick="toggleTheme()"><i data-lucide="sun" id="theme-icon" style="width:15px;height:15px"></i></div>
+    <div class="navbar-theme" id="theme-btn" title="Alternar tema" onclick="toggleTheme()"></div>
     <div class="navbar-btn-entrar"><i data-lucide="log-in" style="width:14px;height:14px"></i> Entrar <i data-lucide="chevron-down" style="width:12px;height:12px"></i></div>
     <div class="navbar-btn-criar"><i data-lucide="rocket" style="width:14px;height:14px"></i> Criar conta grátis <i data-lucide="arrow-right" style="width:14px;height:14px"></i></div>
   </div>
@@ -1995,8 +1995,14 @@ if(typeof lucide !== 'undefined') lucide.createIcons();
 function setThemeIcon(icon){{
   const btn = document.getElementById('theme-btn');
   if(!btn) return;
-  btn.innerHTML=`<i data-lucide="${{icon}}" id="theme-icon" style="width:15px;height:15px"></i>`;
-  if(typeof lucide !== 'undefined') lucide.createIcons();
+  const sun=`<svg id="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <circle cx="12" cy="12" r="4"></circle>
+    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
+  </svg>`;
+  const moon=`<svg id="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
+    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
+  </svg>`;
+  btn.innerHTML=icon==='moon'?moon:sun;
 }}
 function toggleTheme(){{
   const html = document.documentElement;
@@ -2017,6 +2023,8 @@ function toggleTheme(){{
   if(saved === 'light'){{
     document.documentElement.setAttribute('data-theme','light');
     setTimeout(()=>setThemeIcon('moon'),100);
+  }} else {{
+    setTimeout(()=>setThemeIcon('sun'),100);
   }}
 }})();
 
