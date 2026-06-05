@@ -78,7 +78,7 @@ def build_bilhetes_snapshot(jogos):
     bilhetes = []
     seen = set()
     defs = [
-        ('b1', b1, 'bilhete-premium', 'Premium - Todos A+/A por Score'),
+        ('b1', b1, 'bilhete-premium', 'PREMIUM 4X'),
         ('b2', b2, 'bilhete-conservador', 'ELITE'),
     ]
     for tipo, bilhete, cls, label in defs:

@@ -1001,6 +1001,17 @@ function oddMktLabel(mkt){{
 }}
 
 function oddForMarket(d,mkt){{
+  const detail = oddForMarketDetail(d,mkt);
+  return detail ? detail.value : null;
+}}
+function oddEstimate(d,mkt){{
+  const score = marketScore(d,mkt);
+  const n = Number(score);
+  if(!Number.isFinite(n) || n<=0) return null;
+  const p = Math.max(50, Math.min(88, n));
+  return Math.round(Math.max(1.12, Math.min(2, 100 / p))*100)/100;
+}}
+function oddForMarketDetail(d,mkt){{
   let val=null;
   if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15;
   else if(mkt==='Over 2.5') val=d.odds_o25;
@@ -1009,9 +1020,10 @@ function oddForMarket(d,mkt){{
   else if(mkt==='Esc 7.5')  val=d.odds_corners_75;
   else if(mkt==='Esc 8.5')  val=d.odds_corners_85;
   else if(mkt==='Under 3.5'||mkt==='Under 4.5') val=d.odds_u45;
-  if(!val) return null;
   const n=parseFloat(val);
-  return Number.isFinite(n)?n:null;
+  if(Number.isFinite(n) && n>1) return {{value:n, source:'real'}};
+  const est = oddEstimate(d,mkt);
+  return est ? {{value:est, source:'est'}} : null;
 }}
 function via(v){{
   if(v==='Via 1')return'<span class="via v1">VIA1</span>';
@@ -1511,7 +1523,7 @@ function gerarBilhetes(jogos){{
   const bilhetes = [];
   const seen = new Set();
   const defs = [
-    ['b1', b1, 'bilhete-premium',     'Premium — Até 4 Seleções'],
+    ['b1', b1, 'bilhete-premium',     'PREMIUM 4X'],
     ['b2', b2, 'bilhete-conservador', 'ELITE'],
   ];
   for(const [tipo, b, cls, label] of defs){{
@@ -1525,35 +1537,72 @@ function gerarBilhetes(jogos){{
 }}
 
 function gerarBingoBilhetes(jogos){{
-  const combos = jogos.map(j=>{{
-    const aprovados = approvedMarkets(j);
-    const gols = aprovados.find(x=>x.mkt==='Over 1.5') || aprovados.find(x=>x.mkt==='Over 2.5');
-    const canto = aprovados.find(x=>x.mkt==='Esc 7.5') || aprovados.find(x=>x.mkt==='Esc 8.5');
-    if(!gols || !canto) return null;
-    const sels = [gols,canto].map(x=>({{
+  const maxSels = 8;
+  const maxJogos = 5;
+  const calcOdd = (sels)=>Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
+  const countJogos = (sels)=>new Set(sels.map(s=>s.jogo)).size;
+  const makeSel = (j,x)=>{{
+    const odd = oddForMarketDetail(j,x.mkt);
+    return {{
       jogo:j.jogo, liga:j.liga, hora:j.hora,
       mkt:x.mkt, score:x.score, grade:x.grade,
-      oddVal:oddForMarket(j,x.mkt), resultado:j.resultado,
-      acertos:j.acertos||{{}},
-    }}));
+      oddVal:odd?odd.value:null, oddSource:odd?odd.source:null,
+      resultado:j.resultado, acertos:j.acertos||{{}},
+    }};
+  }};
+  const combos = jogos.map(j=>{{
+    const aprovados = approvedMarkets(j);
+    const gols = aprovados
+      .filter(x=>x.mkt==='Over 1.5'||x.mkt==='Over 2.5')
+      .sort((a,b)=>(b.score-a.score)||(b.mkt==='Over 2.5'?1:-1))[0];
+    const canto = aprovados
+      .filter(x=>x.mkt==='Esc 7.5'||x.mkt==='Esc 8.5')
+      .sort((a,b)=>(b.score-a.score)||(b.mkt==='Esc 8.5'?1:-1))[0];
+    if(!gols || !canto) return null;
+    const sels = [makeSel(j,gols), makeSel(j,canto)];
     const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
-    const oddTotal = Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
     return {{
       jogo:j.jogo,
       sels,
-      oddTotal,
+      oddTotal:calcOdd(sels),
       scoreMedio,
     }};
   }}).filter(Boolean)
-    .sort((a,b)=>(b.scoreMedio-a.scoreMedio)||((b.oddTotal||1)-(a.oddTotal||1)))
-    .slice(0,8);
-  if(!combos.length) return [];
-  const sels = combos.flatMap(c=>c.sels);
-  const oddTotal = Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
+    .sort((a,b)=>(b.scoreMedio-a.scoreMedio)||((b.oddTotal||1)-(a.oddTotal||1)));
+  const sels = [];
+  for(const combo of combos){{
+    if(sels.length+combo.sels.length>maxSels) break;
+    const next = [...sels, ...combo.sels];
+    if(countJogos(next)>maxJogos) break;
+    sels.push(...combo.sels);
+    if(calcOdd(sels)>=5) break;
+  }}
+  const seen = new Set(sels.map(s=>s.jogo+'|'+s.mkt));
+  const aplus = jogos.map(j=>{{
+    const mkt = getPalpiteMkt(j);
+    const grade = j.palpite_grade || j.best_grade;
+    const score = j.palpite_score ?? j.best_score;
+    if(grade!=='A+' || !mkt || !score) return null;
+    const item = makeSel(j,{{mkt, score, grade}});
+    const key = item.jogo+'|'+item.mkt;
+    if(seen.has(key)) return null;
+    return item;
+  }}).filter(Boolean)
+    .sort((a,b)=>(b.score-a.score)||((b.oddVal||1)-(a.oddVal||1)));
+  for(const item of aplus){{
+    if(calcOdd(sels)>=5 || sels.length>=maxSels) break;
+    const next = [...sels, item];
+    if(countJogos(next)>maxJogos) continue;
+    sels.push(item);
+    seen.add(item.jogo+'|'+item.mkt);
+  }}
+  if(!sels.length) return [];
+  const oddTotal = calcOdd(sels);
   const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
+  const tier = oddTotal>=5 ? 'OURO' : oddTotal>=3 ? 'PRATA' : 'FORTE';
   return [{{
     tipo:'bingo',
-    b:{{sels, oddTotal}},
+    b:{{sels, oddTotal, tier}},
     cls:'bilhete-bingo',
     label:`<i data-lucide="crosshair"></i>BINGO DO DIA`,
     scoreMedio,
@@ -1652,6 +1701,8 @@ function renderBilhetes(date, jogos){{
     const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
 
     const isBingo = tipo === 'bingo';
+    const oddText = (s)=>s.oddVal ? `${{s.oddVal.toFixed(2)}}${{s.oddSource==='est'?' est.':''}}` : '—';
+    const tierLabel = isBingo && b.tier ? ` · ${{b.tier==='OURO'?'Bingo Ouro':b.tier==='PRATA'?'Bingo Prata':'Bingo Forte'}}` : '';
     const bilheteHeader = isBingo ? `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
       <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
       <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
@@ -1694,7 +1745,7 @@ function renderBilhetes(date, jogos){{
         const marketLines = g.sels.map(s=>`<div class="bilhete-market-line">
           <span class="bilhete-mkt">${{s.mkt}}</span>
           <div class="bilhete-score-bar">${{bar(s.score||0,60)}}</div>
-          <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
+          <span class="bilhete-odd-val">${{oddText(s)}}</span>
         </div>`).join('');
         const statuses = g.sels.map(renderSelectionStatus).join('<div style="height:4px"></div>');
         return`<div class="bilhete-row">
@@ -1718,7 +1769,7 @@ function renderBilhetes(date, jogos){{
         </div>
         <span class="bilhete-mkt">${{s.mkt}}</span>
         <div class="bilhete-score-bar">${{bar(scoreVal,60)}}</div>
-        <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
+        <span class="bilhete-odd-val">${{oddText(s)}}</span>
         <div class="bilhete-res">${{resHtml}}</div>
       </div>`;
     }}).join('');
@@ -1738,7 +1789,7 @@ function renderBilhetes(date, jogos){{
       <div class="bilhete-header">
         <div>
           <div class="bilhete-title">${{label}}</div>
-          <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções${{tierLabel}}</div>
         </div>
         <div style="text-align:right">
           <div class="bilhete-odd-total" style="color:${{oddColor}}">${{b.oddTotal?b.oddTotal.toFixed(2):'—'}}</div>
