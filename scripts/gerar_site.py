@@ -1070,6 +1070,46 @@ function placarCard(jogo, mktKey){{
   </div>`;
 }}
 
+function under35Filter(d){{
+  if(d.under35_filter === true) return true;
+  if(d.under35_filter === false) return false;
+  const score = d.score_u35 || 0;
+  const prob = d.poisson_u35;
+  const exg = d.exg_tot;
+  const o25 = d.over25_g;
+  const h2h = d.h2h_goals;
+  const btts = d.btts_cf;
+  const ppg = d.ppg_avg;
+  const modelOk = prob != null && exg != null && prob >= 78 && exg <= 2.5;
+  const noXgOk = prob == null && exg == null && (ppg == null || ppg <= 1.6) && (o25 == null || o25 <= 45);
+  const blockersOk = (o25 == null || o25 <= 55) && (h2h == null || h2h <= 3.0) && (btts == null || btts <= 75);
+  return score >= MKT_MIN['Under 3.5'] && blockersOk && (modelOk || noXgOk);
+}}
+
+function underMarketPick(d){{
+  if(under35Filter(d)){{
+    return {{
+      mkt:'Under 3.5',
+      key:'under35_ok',
+      score:d.score_u35||0,
+      grade:d.grade_u35||'D',
+      poisson:d.poisson_u35,
+      exg:d.exg_tot,
+    }};
+  }}
+  if((d.score_u45||0) >= MKT_MIN['Under 4.5']){{
+    return {{
+      mkt:'Under 4.5',
+      key:'under45_ok',
+      score:d.score_u45||0,
+      grade:d.grade_u45||'D',
+      poisson:d.poisson_u45,
+      exg:d.exg_tot,
+    }};
+  }}
+  return null;
+}}
+
 function cardOverlayClass(jogo){{
   const res=getResultado(jogo);
   if(!res)return'';
@@ -1238,32 +1278,36 @@ function renderOver15(date,jogos){{
 // ── Under 4.5 ────────────────────────────────────────────────────
 function renderOver25(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over25');
-  // Under 3.5: sort by score_u35, fallback to score_u45
-  const ru35=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_u35||d.grade_u45||getPalpiteGrade(d),d=>d.score_u35||d.score_u45||0));
+  const underRows=[...jogos]
+    .map(d=>({{jogo:d, under:underMarketPick(d)}}))
+    .filter(x=>x.under)
+    .sort((a,b)=>sortByGrade(a.jogo,b.jogo,d=>underMarketPick(d)?.grade||'D',d=>underMarketPick(d)?.score||0));
   el.innerHTML=`
-    <div class="callout ok"><strong>Under 3.5 Gols</strong> · Foco em jogos de baixa produção ofensiva. Modelo Poisson via xG.</div>
+    <div class="callout ok"><strong>Mercado Under</strong> · Mostra Under 3.5 quando passa no filtro rígido; senão, Under 4.5 quando o score aprova.</div>
     <div class="tbl-wrap"><table>
       <thead><tr>
-        <th>#</th><th>Jogo</th><th>Hora</th>
-        <th style="color:var(--purple)">Poisson U3.5</th>
+        <th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th>
+        <th style="color:var(--purple)">Poisson</th>
         <th style="color:var(--teal)">xG Total</th>
         <th>Placar</th><th>Resultado</th>
-        <th>Score U3.5</th><th>Confiança</th>
+        <th>Score</th><th>Confiança</th>
       </tr></thead>
-      <tbody>${{ru35.map((d,i)=>{{
-        const u35prob=d.poisson_u35||null;
-        const probColor=u35prob>=85?'var(--green)':u35prob>=75?'var(--blue)':'var(--muted)';
-        const rc=rowClass(d,'under35_ok');
+      <tbody>${{underRows.length ? underRows.map((x,i)=>{{
+        const d=x.jogo;
+        const u=x.under;
+        const probColor=u.poisson>=85?'var(--green)':u.poisson>=75?'var(--blue)':'var(--muted)';
+        const rc=rowClass(d,u.key);
         return`<tr class="${{rc}}">
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
-          <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{u35prob?u35prob+'%':'—'}}</span></td>
-          <td class="mono" style="color:var(--teal);font-size:14px;font-weight:600">${{d.exg_tot||'—'}}</td>
-          ${{placarCell(d)}}<td>${{resBadge(d,'under35_ok')}}</td>
-          <td>${{bar(d.score_u35||d.score_u45||0)}}</td>
-          <td>${{gradeHtml(d.grade_u35||d.grade_u45||'D')}}</td>
+          <td><span class="badge version">${{u.mkt}}</span></td>
+          <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{u.poisson?u.poisson+'%':'—'}}</span></td>
+          <td class="mono" style="color:var(--teal);font-size:14px;font-weight:600">${{u.exg||'—'}}</td>
+          ${{placarCell(d)}}<td>${{resBadge(d,u.key)}}</td>
+          <td>${{bar(u.score)}}</td>
+          <td>${{gradeHtml(u.grade)}}</td>
         </tr>`;
-      }}).join('')}}</tbody>
+      }}).join('') : '<tr><td colspan="10" class="empty">Nenhum jogo passou nos filtros Under hoje.</td></tr>'}}</tbody>
     </table></div>`;
 }}
 
@@ -1914,7 +1958,7 @@ let activeCat = null;
 let activeSubFilter = null;
 
 const CAT_SUBFILTERS = {{
-  'gols':       [{{key:'over15',  label:'Over 1.5'}}, {{key:'over25', label:'Under 3.5'}}],
+  'gols':       [{{key:'over15',  label:'Over 1.5'}}, {{key:'over25', label:'Under'}}],
   'escanteios': [{{key:'esc75',   label:'Over 7.5'}}, {{key:'esc85',  label:'Over 8.5'}}],
   'cartoes':    [{{key:'cart25',  label:'Over 2.5'}}, {{key:'cart35', label:'Over 3.5'}}],
   'resultado':  [],
