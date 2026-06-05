@@ -115,7 +115,6 @@
         "over05_ht_ok": false,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "0-3",
         "placar_ht": "0-0",
@@ -124,7 +123,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": true
       },
       "acertos": {},
       "palpite_mkt": "Under 4.5",
@@ -246,7 +246,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": false,
         "under45_ok": true,
         "placar": "4-0",
         "placar_ht": "2-0",
@@ -255,7 +254,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": false
       },
       "acertos": {},
       "palpite_mkt": "Under 4.5",
@@ -377,7 +377,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-1",
@@ -386,7 +385,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": true
       },
       "acertos": {},
       "palpite_mkt": "Under 4.5",
@@ -508,7 +508,6 @@
         "over05_ht_ok": true,
         "over15_ok": false,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "1-0",
@@ -517,7 +516,8 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": true,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {},
       "palpite_mkt": "Under 3.5",
@@ -639,7 +639,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-1",
@@ -648,7 +647,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -776,7 +776,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "2-0",
         "placar_ht": "1-0",
@@ -785,7 +784,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 8.5": {
@@ -913,7 +913,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": false,
         "under45_ok": true,
         "placar": "2-2",
         "placar_ht": "0-1",
@@ -922,7 +921,8 @@
         "esc75_ok": false,
         "esc85_ok": false,
         "cart25_ok": false,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -1050,7 +1050,6 @@
         "over05_ht_ok": false,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "2-0",
         "placar_ht": "0-0",
@@ -1059,7 +1058,8 @@
         "esc75_ok": true,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 8.5": {
@@ -1187,7 +1187,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "1-1",
@@ -1196,7 +1195,8 @@
         "esc75_ok": true,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": true
+        "cart35_ok": true,
+        "under35_ok": true
       },
       "acertos": {},
       "palpite_mkt": "Under 4.5",
@@ -1318,7 +1318,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "1-2",
         "placar_ht": "1-0",
@@ -1327,7 +1326,8 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": false,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -1458,7 +1458,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": false,
         "under45_ok": true,
         "placar": "3-1",
         "placar_ht": "1-1",
@@ -1467,7 +1466,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": false
       },
       "acertos": {
         "Esc 7.5": {
@@ -1584,28 +1584,7 @@
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "B",
       "palpite_score": 67.2,
-      "resultado": {
-        "fixture_id": 1528284,
-        "status": "FT",
-        "gols_home": 5,
-        "gols_away": 1,
-        "gols_total": 6,
-        "gols_ht": 3,
-        "btts": true,
-        "over05_ht_ok": true,
-        "over15_ok": true,
-        "over25_ok": true,
-        "under35_ok": false,
-        "under45_ok": false,
-        "placar": "5-1",
-        "placar_ht": "2-1",
-        "corners_total": 7,
-        "cards_total": 4,
-        "esc75_ok": false,
-        "esc85_ok": false,
-        "cart25_ok": true,
-        "cart35_ok": true
-      },
+      "resultado": null,
       "acertos": {},
       "under35_filter": false
     }
@@ -1640,7 +1619,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": false,
         "under45_ok": true,
         "placar": "2-2",
         "placar_ht": "0-1",
@@ -1649,7 +1627,8 @@
         "esc75_ok": false,
         "esc85_ok": false,
         "cart25_ok": false,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -1681,7 +1660,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "1-2",
         "placar_ht": "1-0",
@@ -1690,7 +1668,8 @@
         "esc75_ok": true,
         "esc85_ok": true,
         "cart25_ok": false,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -1722,7 +1701,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": true,
-        "under35_ok": false,
         "under45_ok": true,
         "placar": "3-1",
         "placar_ht": "1-1",
@@ -1731,7 +1709,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": false
       },
       "acertos": {
         "Esc 7.5": {
@@ -1763,7 +1742,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "2-0",
         "placar_ht": "1-0",
@@ -1772,7 +1750,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 8.5": {
@@ -1804,7 +1783,6 @@
         "over05_ht_ok": false,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "2-0",
         "placar_ht": "0-0",
@@ -1813,7 +1791,8 @@
         "esc75_ok": true,
         "esc85_ok": false,
         "cart25_ok": true,
-        "cart35_ok": false
+        "cart35_ok": false,
+        "under35_ok": true
       },
       "acertos": {
         "Esc 8.5": {
@@ -1845,7 +1824,6 @@
         "over05_ht_ok": true,
         "over15_ok": true,
         "over25_ok": false,
-        "under35_ok": true,
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-1",
@@ -1854,7 +1832,8 @@
         "esc75_ok": null,
         "esc85_ok": null,
         "cart25_ok": null,
-        "cart35_ok": null
+        "cart35_ok": null,
+        "under35_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -1894,7 +1873,6 @@
                 "over05_ht_ok": true,
                 "over15_ok": true,
                 "over25_ok": true,
-                "under35_ok": false,
                 "under45_ok": true,
                 "placar": "2-2",
                 "placar_ht": "0-1",
@@ -1903,7 +1881,8 @@
                 "esc75_ok": false,
                 "esc85_ok": false,
                 "cart25_ok": false,
-                "cart35_ok": false
+                "cart35_ok": false,
+                "under35_ok": false
               },
               "acertos": {
                 "Over 1.5": {
@@ -1935,7 +1914,6 @@
                 "over05_ht_ok": true,
                 "over15_ok": true,
                 "over25_ok": true,
-                "under35_ok": true,
                 "under45_ok": true,
                 "placar": "1-2",
                 "placar_ht": "1-0",
@@ -1944,7 +1922,8 @@
                 "esc75_ok": true,
                 "esc85_ok": true,
                 "cart25_ok": false,
-                "cart35_ok": false
+                "cart35_ok": false,
+                "under35_ok": true
               },
               "acertos": {
                 "Over 1.5": {
@@ -1976,7 +1955,6 @@
                 "over05_ht_ok": true,
                 "over15_ok": true,
                 "over25_ok": true,
-                "under35_ok": false,
                 "under45_ok": true,
                 "placar": "3-1",
                 "placar_ht": "1-1",
@@ -1985,7 +1963,8 @@
                 "esc75_ok": null,
                 "esc85_ok": null,
                 "cart25_ok": null,
-                "cart35_ok": null
+                "cart35_ok": null,
+                "under35_ok": false
               },
               "acertos": {
                 "Esc 7.5": {
@@ -2017,7 +1996,6 @@
                 "over05_ht_ok": true,
                 "over15_ok": true,
                 "over25_ok": false,
-                "under35_ok": true,
                 "under45_ok": true,
                 "placar": "2-0",
                 "placar_ht": "1-0",
@@ -2026,7 +2004,8 @@
                 "esc75_ok": null,
                 "esc85_ok": null,
                 "cart25_ok": null,
-                "cart35_ok": null
+                "cart35_ok": null,
+                "under35_ok": true
               },
               "acertos": {
                 "Esc 8.5": {
@@ -2067,7 +2046,6 @@
             "over05_ht_ok": true,
             "over15_ok": true,
             "over25_ok": true,
-            "under35_ok": false,
             "under45_ok": true,
             "placar": "2-2",
             "placar_ht": "0-1",
@@ -2076,7 +2054,8 @@
             "esc75_ok": false,
             "esc85_ok": false,
             "cart25_ok": false,
-            "cart35_ok": false
+            "cart35_ok": false,
+            "under35_ok": false
           },
           "acertos": {
             "Over 1.5": {
@@ -2108,7 +2087,6 @@
             "over05_ht_ok": true,
             "over15_ok": true,
             "over25_ok": true,
-            "under35_ok": true,
             "under45_ok": true,
             "placar": "1-2",
             "placar_ht": "1-0",
@@ -2117,7 +2095,8 @@
             "esc75_ok": true,
             "esc85_ok": true,
             "cart25_ok": false,
-            "cart35_ok": false
+            "cart35_ok": false,
+            "under35_ok": true
           },
           "acertos": {
             "Over 1.5": {
@@ -2149,7 +2128,6 @@
             "over05_ht_ok": true,
             "over15_ok": true,
             "over25_ok": true,
-            "under35_ok": false,
             "under45_ok": true,
             "placar": "3-1",
             "placar_ht": "1-1",
@@ -2158,7 +2136,8 @@
             "esc75_ok": null,
             "esc85_ok": null,
             "cart25_ok": null,
-            "cart35_ok": null
+            "cart35_ok": null,
+            "under35_ok": false
           },
           "acertos": {
             "Esc 7.5": {
