@@ -656,6 +656,13 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   color:var(--bg);background:var(--green);
   border-color:var(--green);
 }}
+.ranking-cols{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}}
+.ranking-col{{min-width:0}}
+.ranking-col .tbl-wrap{{margin-bottom:0}}
+.ranking-col table{{min-width:760px;font-size:12px}}
+.ranking-col thead th{{padding:8px 9px}}
+.ranking-col tbody td{{padding:8px 9px}}
+.ranking-stack{{display:flex;flex-direction:column;gap:18px}}
 
 /* MOBILE */
 @media(max-width:640px){{
@@ -1106,7 +1113,6 @@ function renderVisao(date,jogos){{
         <div class="top-score" style="color:${{c}}">${{getPalpiteScore(d)}}%</div>
         <div class="top-grade-block">
           ${{gradeHtml(getPalpiteGrade(d))}}
-          <span style="font-size:10px;color:var(--muted);margin-top:1px">${{GRADE_NOME[getPalpiteGrade(d)]||''}}</span>
           ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
         </div>
       </div>
@@ -1147,44 +1153,37 @@ function renderRanking(date,jogos){{
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
   const base=snap.length?snap:jogos;
   const sorted=[...base].sort(sortByGrade);
-  const premium=sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A');
-  const boas=sorted.filter(d=>getPalpiteGrade(d)==='B');
-  const perigosas=sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D');
+  const groups=[
+    {{title:'Confian&ccedil;a Alta / M&eacute;dia', items:sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A')}},
+    {{title:'Moderado', items:sorted.filter(d=>getPalpiteGrade(d)==='B')}},
+    {{title:'Arriscado / Evitar', items:sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D')}}
+  ];
 
-  function section(items,calloutClass,calloutText){{
-    if(!items.length)return'<div class="empty">Nenhum jogo nesta categoria.</div>';
-    const rows=items.map((d,i)=>{{
+  function tableFor(group){{
+    if(!group.items.length)return`<div class="ranking-col"><div class="sec-title">${{group.title}}</div><div class="empty">Nenhum jogo nesta categoria.</div></div>`;
+    const rows=group.items.map(d=>{{
       const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       const rc=rowClass(d,mktKey);
       return`<tr class="${{rc}}">
-        <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
+        ${{jogoCell(d)}}
         <td class="mono muted">${{d.hora}}</td>
         <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
-        <td class="mono" style="font-size:11px;color:var(--muted)">${{getPalpiteMkt(d)}}</td>
-        <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${{oddMkt(d)}}</td>
-        <td>${{bar(getPalpiteScore(d))}}</td>
-        <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
-        <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_h)}}</td>
-        <td class="mono muted">${{odd(d.odds_d)}}</td>
-        <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_a)}}</td>
+        <td class="td-palpite">${{getPalpiteMkt(d)}}</td>
+        <td class="mono" style="color:${{col(getPalpiteScore(d))}};font-weight:700">${{pctText(getPalpiteScore(d))}}</td>
         ${{placarCell(d)}}
         <td>${{resBadge(d,mktKey)}}</td>
       </tr>`;
     }}).join('');
-    return`<div class="callout ${{calloutClass}}">${{calloutText}}</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th style="color:var(--yellow)">Odd</th><th>Score</th><th>xG</th><th style="color:var(--yellow)">Casa</th><th style="color:var(--muted)">Empate</th><th style="color:var(--yellow)">Fora</th><th>Placar</th><th>Resultado</th></tr></thead>
-      <tbody>${{rows}}</tbody>
-    </table></div>`;
+    return`<div class="ranking-col">
+      <div class="sec-title">${{group.title}}</div>
+      <div class="tbl-wrap"><table>
+        <thead><tr><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Palpite</th><th>Score</th><th>Placar</th><th>Resultado</th></tr></thead>
+        <tbody>${{rows}}</tbody>
+      </table></div>
+    </div>`;
   }}
 
-  el.innerHTML=`
-    <div class="sec-title">🥇 Confiança Alta / Média</div>
-    ${{section(premium,'gold','<strong>⭐ Confiança Alta / Média</strong> · Score ≥75% com alta consistência estatística.')}}
-    <div class="sec-title">📊 Moderado</div>
-    ${{section(boas,'ok','<strong>✓ Moderado</strong> · Score 65–74%. Risco moderado.')}}
-    <div class="sec-title">⚠ Arriscado / Evitar</div>
-    ${{section(perigosas,'warn','<strong>⚠ Arriscado / Evitar</strong> · Score abaixo de 65%. Alta variância.')}}`;
+  el.innerHTML=`<div class="ranking-stack">${{groups.map(tableFor).join('')}}</div>`;
 }}
 
 // ── Over 1.5 ───────────────────────────────────────────────────────
@@ -1939,6 +1938,7 @@ function switchSubFilter(key){{
   if(!activeDate) return;
   renderCatContent(activeDate, activeCat, key);
 }}
+
 
 function switchCat(cat){{
   activeCat = cat;
