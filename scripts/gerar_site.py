@@ -92,7 +92,6 @@ def day_panel_html(d, day_data):
     nprem  = sum(1 for j in jogos if (j.get('palpite_grade') or j.get('best_grade')) in ('A+', 'A'))
     fmt, wd = fmt_date(d)
     confirmado = day_data.get('resultado_confirmado', False)
-    res_badge = '✅' if confirmado else '⏳'
 
     return f'''
 <div id="day-{d}" class="day-panel">
@@ -177,7 +176,7 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
   --green2:#10B981;--orange:#F59E0B;--red:#EF4444;--yellow:#F59E0B;--teal:#00C896;
   --purple:#7C3AED;--purple2:#8B5CF6;--pink:#8B5CF6;--text:#F8FAFC;--text2:#E2E8F0;--muted:#94A3B8;
   --dim:#64748B;--aplus:#00C896;
-  --nav-h:56px;--date-strip-h:53px;--market-bar-h:42px;--top-gap:8px;
+  --nav-h:56px;--search-h:126px;--date-strip-h:53px;--market-bar-h:42px;--top-gap:8px;
 }}
 [data-theme="light"]{{
   --bg:#F8FAFC;--s1:#FFFFFF;--s2:#F1F5F9;--s3:#E2E8F0;--s4:#CBD5E1;--border:#CBD5E1;
@@ -196,6 +195,9 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
 body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:.01em}}
 h1,h2,h3,h4,h5,h6{{font-family:'Inter',sans-serif;font-weight:700}}
 button,input,select{{font-family:'Inter',sans-serif}}
+.mono,.kpi-val,.day-hist-date,.day-hist-info,.hist-taxa-val,.history-search-meta,.navbar-logo-sub,.navbar-clock,.placar-cell,.top-rank,.top-liga,.top-hora,.top-score,.res-badge,.conf,.badge,.bilhete-odd-total,.bilhete-odd-val,.bilhete-status,.bilhete-dia-badge,.bilhete-sels,.cnt,.date-strip-day{{font-family:'Inter',sans-serif!important}}
+.metric-value{{font-size:13px;font-weight:800;line-height:1;color:var(--text)}}
+.metric-value.em{{font-size:14px}}
 
 /* NAVBAR */
 .navbar{{
@@ -306,7 +308,7 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .cnt.g{{color:var(--green);background:rgba(0,200,150,.12)}}
 
 /* MAIN */
-.main{{padding:20px 24px;max-width:1500px;margin:0 auto}}
+.main{{padding:18px 0 22px;width:calc(100% - 48px);max-width:1500px;margin:0 auto}}
 
 /* KPI ROW */
 .kpi-row{{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 0;border-bottom:1px solid var(--border)}}
@@ -336,8 +338,35 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .kpi-val.p{{color:var(--aplus)}}.kpi-val.r{{color:var(--red)}}
 .kpi-lbl{{font-size:11px;color:var(--muted);margin-top:4px;font-weight:500}}
 
+/* HISTORY SEARCH */
+.history-search-global{{
+  padding:var(--top-gap) 0 var(--top-gap);background:var(--bg);
+  position:sticky;top:var(--nav-h);z-index:130;width:calc(100% - 48px);max-width:1500px;margin:0 auto;
+}}
+.history-search{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:0}}
+.history-search-head{{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}}
+.history-search-title{{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--text)}}
+.history-search-title svg{{width:16px;height:16px;color:var(--accent)}}
+.history-search-meta{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}}
+.history-search-controls{{display:grid;grid-template-columns:minmax(220px,1fr) 150px 110px 150px;gap:8px;align-items:center}}
+.history-search-input,.history-search-select{{
+  height:36px;border:1px solid var(--border);border-radius:8px;background:var(--s2);
+  color:var(--text);font-size:12px;padding:0 11px;outline:none;min-width:0;
+}}
+.history-search-input:focus,.history-search-select:focus{{border-color:var(--accent);box-shadow:0 0 0 2px rgba(37,99,235,.12)}}
+.history-search-results{{margin-top:12px}}
+.history-search-empty{{padding:16px;text-align:center;color:var(--muted);font-size:12px;background:rgba(255,255,255,.03);border:1px dashed var(--border);border-radius:9px}}
+.history-chip-row{{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}}
+.history-chip{{border:1px solid var(--border);background:var(--s2);color:var(--muted);height:28px;padding:0 10px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px}}
+.history-chip:hover,.history-chip.active{{color:var(--text);border-color:var(--accent);background:rgba(37,99,235,.1)}}
+@media(max-width:920px){{:root{{--search-h:172px}}.history-search-controls{{grid-template-columns:1fr 1fr}}}}
+@media(max-width:768px){{.history-search-global{{width:calc(100% - 16px)}}}}
+@media(max-width:560px){{:root{{--search-h:260px}}.history-search-controls{{grid-template-columns:1fr}}}}
+
 /* SECTION */
-.sec-title{{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:20px 0 12px;display:flex;align-items:center;gap:8px}}
+.sec-title{{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:18px 0 10px;display:flex;align-items:center;gap:8px}}
+.sec-title:first-child{{margin-top:0}}
+.sec-title svg{{width:15px;height:15px;color:var(--accent);stroke:currentColor;flex-shrink:0}}
 .sec-title::after{{content:'';flex:1;height:1px;background:var(--border)}}
 
 /* TOP CARDS */
@@ -356,13 +385,13 @@ button,input,select{{font-family:'Inter',sans-serif}}
 /* resultado overlay no card */
 .tc-hit::after{{content:'';position:absolute;inset:0;background:rgba(0,200,150,.06);border:1px solid rgba(0,200,150,.25);border-radius:11px;pointer-events:none}}
 .tc-miss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-radius:11px;pointer-events:none}}
-.top-rank{{position:absolute;top:10px;right:12px;font-size:18px;font-weight:700;color:rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace}}
+.top-rank{{position:absolute;top:10px;right:12px;font-size:13px;font-weight:800;color:rgba(255,255,255,.14)}}
 .top-liga{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:24px}}
 .top-jogo{{font-size:13px;font-weight:700;margin-bottom:2px;padding-right:22px;line-height:1.3;overflow-wrap:anywhere}}
 .top-hora{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:8px}}
 .top-mkt{{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}}
 .top-bottom{{display:flex;align-items:center;justify-content:space-between;margin-top:6px}}
-.top-score{{font-size:30px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
+.top-score{{font-size:22px;font-weight:800;line-height:1}}
 .top-grade-block{{display:flex;flex-direction:column;align-items:flex-end;gap:3px}}
 .top-note{{font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.55}}
 /* placar no card */
@@ -372,7 +401,12 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .top-placar.pending{{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.18)}}
 .top-placar .ft{{font-size:15px;font-weight:700}}
 .top-placar .ht{{font-size:10px;color:var(--muted)}}
-.top-placar .icon{{font-size:13px}}
+.top-placar svg,.top-hora svg,.res-badge svg,.bilhete-status svg,.callout strong svg,.hist-detail svg,.day-hist-info svg,.mini-stat svg{{width:13px;height:13px;stroke:currentColor;flex-shrink:0;vertical-align:-2px}}
+.mini-stat{{display:inline-flex;align-items:center;gap:3px}}
+.mini-stat.ok{{color:var(--green)}}.mini-stat.err{{color:var(--red)}}.mini-stat.neutral{{color:var(--muted)}}
+.top-hora{{display:flex;align-items:center;gap:5px}}
+.top-placar .ht svg{{width:11px;height:11px;margin:0 2px 0 5px}}
+.callout strong{{display:inline-flex;align-items:center;gap:6px}}
 
 /* GRADE PILLS */
 .grade{{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:'Inter',sans-serif;white-space:nowrap}}
@@ -386,7 +420,7 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .row-hit{{background:rgba(0,200,150,.05)!important;border-left:3px solid var(--green)}}
 .row-miss{{background:rgba(239,68,68,.05)!important;border-left:3px solid var(--red)}}
 .row-pending{{border-left:3px solid rgba(245,158,11,.4)}}
-.res-badge{{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
+.res-badge{{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
 .res-badge.hit{{background:rgba(0,200,150,.12);color:var(--green);border:1px solid rgba(0,200,150,.25)}}
 .res-badge.miss{{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}}
 .res-badge.pending{{background:rgba(59,130,246,.08);color:var(--blue);border:1px solid rgba(59,130,246,.2)}}
@@ -464,7 +498,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .hist-mkt-card{{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px 14px;transition:all .2s;cursor:default}}
 .hist-mkt-card:hover{{border-color:var(--blue);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}}
 .hist-mkt-name{{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600}}
-.hist-taxa-val{{font-size:22px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
+.hist-taxa-val{{font-size:20px;font-weight:800;line-height:1}}
 .hist-detail{{font-size:10px;color:var(--muted);margin-top:3px}}
 .hist-bar-track{{height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:8px;overflow:hidden}}
 .hist-bar-fill{{height:100%;border-radius:2px}}
@@ -624,8 +658,8 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .content-area{{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;z-index:1;background:var(--bg)}}
 .content-area::before{{
   content:'';display:block;position:sticky;top:var(--nav-h);
-  height:calc(var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));
-  margin-bottom:calc(-1 * (var(--top-gap) + var(--date-strip-h) + var(--market-bar-h)));
+  height:calc(var(--search-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));
+  margin-bottom:calc(-1 * (var(--search-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h)));
   background:var(--bg);z-index:109;pointer-events:none;flex:0 0 auto;
 }}
 /* NEW DATE BAR */
@@ -634,7 +668,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   display:flex;align-items:center;overflow-x:auto;
   padding:0 16px;
   scrollbar-width:thin;scrollbar-color:var(--border) transparent;
-  position:sticky;top:calc(var(--nav-h) + var(--top-gap));z-index:120;
+  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap));z-index:120;
   border-left:none;border-radius:10px 10px 0 0;
   box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;
   width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;
@@ -660,7 +694,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .mkt-cat-bar{{
   background:var(--s2);border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0;
-  position:sticky;top:calc(var(--nav-h) + var(--top-gap) + var(--date-strip-h));z-index:115;
+  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap) + var(--date-strip-h));z-index:115;
   width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;border-radius:0 0 10px 10px;overflow:hidden;
   box-shadow:0 8px 16px rgba(0,0,0,.16);
 }}
@@ -677,7 +711,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .sub-filter-bar{{
   background:var(--s1);border-bottom:1px solid var(--border);
   display:none;min-height:42px;padding:6px 16px;gap:8px;flex-wrap:wrap;
-  position:sticky;top:calc(var(--nav-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
+  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
   box-shadow:0 8px 16px rgba(0,0,0,.12);
   width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;
 }}
@@ -719,10 +753,11 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   .navbar-btn-criar{{height:32px;padding:0 10px;font-size:12px}}
   .navbar-theme{{width:32px;height:32px}}
   .header{{padding:10px 14px}}
-  .main{{padding:12px 12px}}
+  .main{{padding:14px 0 18px;width:calc(100% - 16px)}}
   .kpi{{min-width:85px;padding:10px 12px}}
   .kpi-val{{font-size:20px}}
   .mkt-tab{{padding:9px 11px;font-size:12px}}
+  .date-strip,.mkt-cat-bar,.sub-filter-bar{{width:calc(100% - 16px)}}
   .date-strip{{padding:0 8px}}
   .date-strip-item{{min-width:64px;padding:0 12px}}
   .mkt-cat-tab{{padding:0 8px;font-size:12px}}
@@ -793,15 +828,13 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <div class="sidebar-item" id="sb-historico" onclick="showHistoricoGlobal()">
         <i data-lucide="trending-up" style="width:16px;height:16px"></i> Histórico Global
       </div>
-      <div class="sidebar-divider"></div>
-      <div class="sidebar-item" id="sb-resultados" onclick="sidebarNav('historico_dia')">
-        <i data-lucide="circle-check" style="width:16px;height:16px"></i> Resultado do Dia
-      </div>
     </div>
   </aside>
 
   <!-- CONTENT -->
   <div class="content-area">
+    <div class="history-search-global" id="global-history-search"></div>
+
     <!-- DATE STRIP -->
     <div class="date-strip" id="date-strip">
       {date_tabs_html}
@@ -905,16 +938,16 @@ function kpiFilter(date, tipo, count){{
   let filtrados=[], titulo='', cor='var(--text)';
   if(tipo==='prem'){{
     filtrados=jogos.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A').sort(sortByGrade);
-    titulo='🟢 Alta Confiança'; cor='var(--green)';
+    titulo='Alta Confiança'; cor='var(--green)';
   }} else if(tipo==='15'){{
     filtrados=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).sort((a,b)=>sortByGrade(a,b,d=>d.grade_15||getPalpiteGrade(d),d=>d.score_15));
     titulo='🟡 Over 1.5 ≥85%'; cor='var(--yellow)';
   }} else if(tipo==='esc'){{
     filtrados=jogos.filter(d=>d.score_esc75>=75).sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
-    titulo='🔵 Over 7.5 Escanteios ≥75%'; cor='var(--teal)';
+    titulo='Over 7.5 Escanteios ≥75%'; cor='var(--teal)';
   }} else if(tipo==='cart'){{
     filtrados=jogos.filter(d=>d.score_cards25>=75).sort((a,b)=>sortByGrade(a,b,d=>d.grade_cart25||getPalpiteGrade(d),d=>d.score_cards25));
-    titulo='🟠 Over 2.5 Cartões ≥75%'; cor='var(--orange)';
+    titulo='Over 2.5 Cartões ≥75%'; cor='var(--orange)';
   }}
   if(!filtrados.length){{
     panel.innerHTML=`<div class="kpi-filter-panel"><div class="kpi-filter-title" style="color:${{cor}}">${{titulo}}</div><div class="empty">Nenhum jogo neste filtro.</div></div>`;
@@ -1079,11 +1112,11 @@ function sortByGrade(a,b,gradeFn,scoreFn){{
 
 function resBadge(jogo, mktKey){{
   const res=getResultado(jogo);
-  if(!res)return'<span class="res-badge pending">⏳ Aguardando</span>';
+  if(!res)return'<span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span>';
   const ok=resultOk(res,mktKey);
-  if(ok===true) return'<span class="res-badge hit">✓ GREEN</span>';
-  if(ok===false)return'<span class="res-badge miss">✗ RED</span>';
-  return'<span class="res-badge pending">⚠ Não confirmado</span>';
+  if(ok===true) return'<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
+  if(ok===false)return'<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
+  return'<span class="res-badge pending"><i data-lucide="triangle-alert"></i> Não confirmado</span>';
 }}
 
 function rowClass(jogo, mktKey){{
@@ -1111,14 +1144,14 @@ function placarCell(jogo){{
 
 function placarCard(jogo, mktKey){{
   const res=getResultado(jogo);
-  if(!res)return`<div class="top-placar pending"><span class="icon">⏳</span><span class="ft">Aguardando</span></div>`;
+  if(!res)return`<div class="top-placar pending"><i data-lucide="clock"></i><span class="ft">Aguardando</span></div>`;
   const ok=resultOk(res,mktKey);
   const cls=ok===true?'hit':ok===false?'miss':'pending';
-  const icon=ok===true?'✓':ok===false?'✗':'?';
-  const cant=res.corners_total!=null?` · ${{res.corners_total}}🚩`:'';
-  const cart=res.cards_total!=null?` · ${{res.cards_total}}🟨`:'';
+  const icon=ok===true?'circle-check':ok===false?'circle-x':'circle-help';
+  const cant=res.corners_total!=null?`<i data-lucide="flag"></i>${{res.corners_total}}`:'';
+  const cart=res.cards_total!=null?`<i data-lucide="square"></i>${{res.cards_total}}`:'';
   return`<div class="top-placar ${{cls}}">
-    <span class="icon">${{icon}}</span>
+    <i data-lucide="${{icon}}"></i>
     <div><span class="ft">${{res.placar}}</span> <span class="ht">HT ${{res.placar_ht}}${{cant}}${{cart}}</span></div>
   </div>`;
 }}
@@ -1220,9 +1253,154 @@ function cardOverlayClass(jogo){{
 // ── Render Global KPIs (header) ────────────────────────────────────
 
 // ── Visão Geral ────────────────────────────────────────────────────
+const historicoSearchState = {{}};
+
+function historicoSearchHtml(date){{
+  const st = historicoSearchState[date] || {{q:'', status:'todos', grade:'todos', mercado:'todos'}};
+  const totalDatas = Object.keys(ALL_DATA).filter(d=>d!=='index').length;
+  return `<div class="history-search" id="history-search-${{date}}">
+    <div class="history-search-head">
+      <div class="history-search-title"><i data-lucide="search"></i> Pesquisar</div>
+      <div class="history-search-meta">${{totalDatas}} datas carregadas · busca global</div>
+    </div>
+    <div class="history-search-controls">
+      <input class="history-search-input" id="hist-q-${{date}}" value="${{st.q||''}}" placeholder="Pesquisar jogo, liga, mercado ou data..." oninput="runHistoricoSearch('${{date}}')">
+      <select class="history-search-select" id="hist-status-${{date}}" onchange="runHistoricoSearch('${{date}}')">
+        <option value="todos" ${{st.status==='todos'?'selected':''}}>Todos resultados</option>
+        <option value="green" ${{st.status==='green'?'selected':''}}>Só Green</option>
+        <option value="red" ${{st.status==='red'?'selected':''}}>Só Red</option>
+        <option value="pendente" ${{st.status==='pendente'?'selected':''}}>Sem resultado</option>
+      </select>
+      <select class="history-search-select" id="hist-grade-${{date}}" onchange="runHistoricoSearch('${{date}}')">
+        <option value="todos" ${{st.grade==='todos'?'selected':''}}>Todas grades</option>
+        <option value="A+" ${{st.grade==='A+'?'selected':''}}>A+</option>
+        <option value="A" ${{st.grade==='A'?'selected':''}}>A</option>
+        <option value="B" ${{st.grade==='B'?'selected':''}}>B</option>
+      </select>
+      <select class="history-search-select" id="hist-mercado-${{date}}" onchange="runHistoricoSearch('${{date}}')">
+        <option value="todos" ${{st.mercado==='todos'?'selected':''}}>Todos mercados</option>
+        <option value="Over" ${{st.mercado==='Over'?'selected':''}}>Gols</option>
+        <option value="Esc" ${{st.mercado==='Esc'?'selected':''}}>Escanteios</option>
+        <option value="Cart" ${{st.mercado==='Cart'?'selected':''}}>Cartões</option>
+        <option value="BTTS" ${{st.mercado==='BTTS'?'selected':''}}>BTTS</option>
+        <option value="Under" ${{st.mercado==='Under'?'selected':''}}>Under</option>
+      </select>
+    </div>
+    <div class="history-chip-row">
+      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','green')"><i data-lucide="circle-check"></i> Greens</button>
+      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','red')"><i data-lucide="circle-x"></i> Reds</button>
+      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','A+')">A+</button>
+      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','Esc')">Escanteios</button>
+      <button class="history-chip" onclick="clearHistoricoSearch('${{date}}')">Limpar</button>
+    </div>
+    <div class="history-search-results" id="hist-results-${{date}}">
+    </div>
+  </div>`;
+}}
+
+function historicoAllRows(){{
+  const rows = [];
+  Object.keys(ALL_DATA).filter(d=>d!=='index').sort((a,b)=>{{
+    const [da,ma,ya]=a.split('-').map(Number), [db,mb,yb]=b.split('-').map(Number);
+    return new Date(yb,mb-1,db)-new Date(ya,ma-1,da);
+  }}).forEach(date=>{{
+    getJogos(date).forEach(j=>{{
+      const mkt = getPalpiteMkt(j);
+      const grade = getPalpiteGrade(j);
+      const score = getPalpiteScore(j);
+      const key = MKT_RESULT[mkt] || 'over15_ok';
+      const res = getResultado(j);
+      const ok = res ? resultOk(res,key) : null;
+      const status = ok===true ? 'green' : ok===false ? 'red' : 'pendente';
+      const alternatives = approvedMarkets(j).map(x=>x.mkt).join(' ');
+      rows.push({{date,j,mkt,grade,score,status,alternatives}});
+    }});
+  }});
+  return rows;
+}}
+
+function runHistoricoSearch(date){{
+  const qEl=document.getElementById('hist-q-'+date);
+  const statusEl=document.getElementById('hist-status-'+date);
+  const gradeEl=document.getElementById('hist-grade-'+date);
+  const mercadoEl=document.getElementById('hist-mercado-'+date);
+  const out=document.getElementById('hist-results-'+date);
+  if(!out) return;
+  const q=(qEl?.value||'').trim().toLowerCase();
+  const status=statusEl?.value||'todos';
+  const grade=gradeEl?.value||'todos';
+  const mercado=mercadoEl?.value||'todos';
+  historicoSearchState[date]={{q,status,grade,mercado}};
+  const hasFilter = q || status!=='todos' || grade!=='todos' || mercado!=='todos';
+  if(!hasFilter){{
+    out.innerHTML='';
+    return;
+  }}
+  const filtered = historicoAllRows().filter(r=>{{
+    if(status!=='todos' && r.status!==status) return false;
+    if(grade!=='todos' && r.grade!==grade) return false;
+    if(mercado!=='todos' && !(`${{r.mkt}} ${{r.alternatives}}`.includes(mercado))) return false;
+    if(q){{
+      const hay = `${{r.date}} ${{r.j.jogo}} ${{r.j.liga}} ${{r.mkt}} ${{r.grade}} ${{r.alternatives}}`.toLowerCase();
+      if(!hay.includes(q)) return false;
+    }}
+    return true;
+  }}).sort((a,b)=>(b.score-a.score)).slice(0,80);
+  if(!filtered.length){{
+    out.innerHTML='<div class="history-search-empty">Nenhum resultado encontrado com esses filtros.</div>';
+    return;
+  }}
+  const rows=filtered.map(r=>{{
+    const badge = r.status==='green' ? '<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>' : r.status==='red' ? '<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>' : '<span class="res-badge pending"><i data-lucide="clock"></i> S/D</span>';
+    return `<tr class="${{r.status==='green'?'row-hit':r.status==='red'?'row-miss':''}}">
+      <td><div class="jogo-main">${{r.j.jogo}}</div><div class="jogo-sub">${{r.j.liga}} · ${{r.j.hora}}</div></td>
+      <td class="mono muted">${{r.date}}</td>
+      <td>${{gradeHtml(r.grade)}}</td>
+      <td class="td-palpite">${{r.mkt}}</td>
+      <td class="mono" style="color:${{col(r.score)}};font-weight:700">${{pctText(r.score)}}</td>
+      <td>${{badge}}</td>
+    </tr>`;
+  }}).join('');
+  out.innerHTML=`<div class="tbl-wrap"><table>
+    <thead><tr><th>Jogo</th><th>Data</th><th>Grade</th><th>Mercado</th><th>Score</th><th>Resultado</th></tr></thead>
+    <tbody>${{rows}}</tbody>
+  </table></div>`;
+}}
+
+function setHistoricoQuick(date,type){{
+  const q=document.getElementById('hist-q-'+date);
+  const status=document.getElementById('hist-status-'+date);
+  const grade=document.getElementById('hist-grade-'+date);
+  const mercado=document.getElementById('hist-mercado-'+date);
+  if(type==='green' || type==='red') status.value=type;
+  else if(type==='A+') grade.value='A+';
+  else if(type==='Esc') mercado.value='Esc';
+  if(q && !q.value) q.value='';
+  runHistoricoSearch(date);
+}}
+
+function clearHistoricoSearch(date){{
+  const q=document.getElementById('hist-q-'+date);
+  const status=document.getElementById('hist-status-'+date);
+  const grade=document.getElementById('hist-grade-'+date);
+  const mercado=document.getElementById('hist-mercado-'+date);
+  if(q) q.value='';
+  if(status) status.value='todos';
+  if(grade) grade.value='todos';
+  if(mercado) mercado.value='todos';
+  runHistoricoSearch(date);
+}}
+
+function renderGlobalHistoricoSearch(){{
+  const box=document.getElementById('global-history-search');
+  if(!box || box.dataset.ready==='1') return;
+  box.innerHTML=historicoSearchHtml('global');
+  box.dataset.ready='1';
+  if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
+}}
+
 function renderVisao(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-visao');
-  const conf=isConfirmado(date);
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
   const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
   const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
@@ -1230,35 +1408,6 @@ function renderVisao(date,jogos){{
     const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
     return {{...full, ...item, palpite_mkt:item.mkt||full.palpite_mkt||full.best_mkt, palpite_grade:item.grade||full.palpite_grade||full.best_grade, palpite_score:item.score??full.palpite_score??full.best_score}};
   }};
-  const a15=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).length;
-  const aesc=jogos.filter(d=>d.score_esc75>=75).length;
-  const acart=jogos.filter(d=>d.score_cards25>=75).length;
-  const aprem=snap.length||jogos.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A').length;
-  const a05ht=jogos.filter(d=>d.score_05ht>=75).length;
-
-  // Taxa do dia (se confirmado)
-  let taxaDia='';
-  if(conf){{
-    const stats=(ALL_DATA[date]||{{}}).resultado_stats||{{}};
-    let ta=0,te=0;
-    Object.values(stats).forEach(s=>{{ta+=s.acertos||0;te+=s.erros||0;}});
-    const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
-    const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
-    const tLabel=t!=null?t+'%':(ta+te===0?'—':'—');
-    const tSub=ta+te>0?`${{ta}}✓ ${{te}}✗`:'sem dados';
-    taxaDia=`<div class="kpi"><div class="kpi-val" style="color:${{c}}">${{tLabel}}</div><div class="kpi-lbl">Acerto do Dia</div><div style="font-size:9px;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace">${{tSub}}</div></div>`;
-  }}
-
-  const kpi=`<div class="kpi-row" id="kpi-row-${{date}}">
-    <div class="kpi kpi-blue"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos Filtrados</div></div>
-    <div class="kpi kpi-green clickable" id="kpi-prem-${{date}}" onclick="kpiFilter('${{date}}','prem')"><div class="kpi-val g">${{aprem}}</div><div class="kpi-lbl">Alta Confiança</div></div>
-    <div class="kpi kpi-yellow clickable" id="kpi-15-${{date}}" onclick="kpiFilter('${{date}}','15')"><div class="kpi-val y">${{a15}}</div><div class="kpi-lbl">Over 1.5</div></div>
-    <div class="kpi kpi-teal clickable" id="kpi-esc-${{date}}" onclick="kpiFilter('${{date}}','esc')"><div class="kpi-val t">${{aesc}}</div><div class="kpi-lbl">Over 7.5 Escanteios</div></div>
-    <div class="kpi kpi-orange clickable" id="kpi-cart-${{date}}" onclick="kpiFilter('${{date}}','cart')"><div class="kpi-val o">${{acart}}</div><div class="kpi-lbl">Over 2.5 Cartões</div></div>
-    ${{taxaDia}}
-  </div>
-  <div id="kpi-panel-${{date}}" style="display:none"></div>`;
-
   const top=[...(snap.length?snap.map(enrichSnap):jogos)].sort(sortByGrade).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{{
@@ -1269,14 +1418,14 @@ function renderVisao(date,jogos){{
       <div class="top-rank">#${{i+1}}</div>
       <div class="top-liga">${{d.liga}}</div>
       <div class="top-jogo">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div>
-      <div class="top-hora">🕐 ${{d.hora}}</div>
+      <div class="top-hora"><i data-lucide="clock"></i> ${{d.hora}}</div>
       <div class="top-mkt">${{getPalpiteMkt(d)}}</div>
       ${{approvedMarketsHtml(d, {{max:3}})}}
       <div class="top-bottom">
         <div class="top-score" style="color:${{c}}">${{getPalpiteScore(d)}}%</div>
         <div class="top-grade-block">
           ${{gradeHtml(getPalpiteGrade(d))}}
-          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
+          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-weight:800;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
         </div>
       </div>
       ${{placarCard(d, mktKey)}}
@@ -1301,10 +1450,9 @@ function renderVisao(date,jogos){{
   }}).join('');
 
   el.innerHTML=`
-    ${{kpi}}
-    <div class="sec-title">🏆 Top 5 Palpites do Dia</div>
+    <div class="sec-title"><i data-lucide="trophy"></i> Top 5 Palpites do Dia</div>
     <div class="top-grid">${{t5}}</div>
-    <div class="sec-title">📋 Resumo Geral</div>
+    <div class="sec-title"><i data-lucide="list"></i> Resumo Geral</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Melhor</th><th>Score</th><th>Alternativas</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
@@ -1324,13 +1472,14 @@ function renderRanking(date,jogos){{
   const base=snap.length?snap.map(enrichSnap):jogos;
   const sorted=[...base].sort(sortByGrade);
   const groups=[
-    {{title:'Confian&ccedil;a Alta / M&eacute;dia', items:sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A')}},
-    {{title:'Moderado', items:sorted.filter(d=>getPalpiteGrade(d)==='B')}},
-    {{title:'Arriscado / Evitar', items:sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D')}}
+    {{title:'Confian&ccedil;a Alta / M&eacute;dia', icon:'star', items:sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A')}},
+    {{title:'Moderado', icon:'target', items:sorted.filter(d=>getPalpiteGrade(d)==='B')}},
+    {{title:'Arriscado / Evitar', icon:'shield-check', items:sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D')}}
   ];
 
   function tableFor(group){{
-    if(!group.items.length)return`<div class="ranking-col"><div class="sec-title">${{group.title}}</div><div class="empty">Nenhum jogo nesta categoria.</div></div>`;
+    const title = `<div class="sec-title"><i data-lucide="${{group.icon}}"></i> ${{group.title}}</div>`;
+    if(!group.items.length)return`<div class="ranking-col">${{title}}<div class="empty">Nenhum jogo nesta categoria.</div></div>`;
     const rows=group.items.map(d=>{{
       const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       const rc=rowClass(d,mktKey);
@@ -1346,7 +1495,7 @@ function renderRanking(date,jogos){{
       </tr>`;
     }}).join('');
     return`<div class="ranking-col">
-      <div class="sec-title">${{group.title}}</div>
+      ${{title}}
       <div class="tbl-wrap"><table>
         <thead><tr><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Melhor</th><th>Score</th><th>Alternativas</th><th>Placar</th><th>Resultado</th></tr></thead>
         <tbody>${{rows}}</tbody>
@@ -1368,8 +1517,8 @@ function renderOver15(date,jogos){{
     return`<tr class="${{rc}}">
       <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
       <td class="mono muted">${{d.hora}}</td>
-      <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{d.over15_g||'—'}}%</span></td>
-      <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${{odd(d.odd_over15)}}</td>
+      <td><span class="metric-value em" style="color:${{probColor}}">${{d.over15_g||'—'}}%</span></td>
+      <td class="mono" style="color:var(--yellow);font-weight:800;font-size:13px">${{odd(d.odd_over15)}}</td>
       ${{placarCell(d)}}
       <td>${{resBadge(d,'over15_ok')}}</td>
       <td>${{bar(d.score_15)}}</td>
@@ -1379,7 +1528,7 @@ function renderOver15(date,jogos){{
     </tr>`;
   }}).join('');
   el.innerHTML=`
-    <div class="callout info"><strong>Over 1.5 Gols — Validado 88.6%</strong> · ${{total}} jogos aprovados no Filtro 3 Vias.</div>
+    <div class="callout info"><strong><i data-lucide="crosshair"></i> Over 1.5 Gols — Validado 88.6%</strong> · ${{total}} jogos aprovados no Filtro 3 Vias.</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Probabilidade</th><th style="color:var(--yellow)">Odd O1.5</th><th>Placar</th><th>Resultado</th><th>Score</th><th>Confiança</th><th>xG</th><th>Via</th></tr></thead>
       <tbody>${{html||'<tr><td colspan="10" class="empty">Nenhum jogo passou o Filtro 3 Vias.</td></tr>'}}</tbody>
@@ -1394,7 +1543,7 @@ function renderOver25(date,jogos){{
     .filter(x=>x.under)
     .sort((a,b)=>sortByGrade(a.jogo,b.jogo,d=>underMarketPick(d)?.grade||'D',d=>underMarketPick(d)?.score||0));
   el.innerHTML=`
-    <div class="callout ok"><strong>Mercado Under</strong> · Mostra Under 3.5 quando passa no filtro rígido; senão, Under 4.5 quando o score aprova.</div>
+    <div class="callout ok"><strong><i data-lucide="shield-check"></i> Mercado Under</strong> · Mostra Under 3.5 quando passa no filtro rígido; senão, Under 4.5 quando o score aprova.</div>
     <div class="tbl-wrap"><table>
       <thead><tr>
         <th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th>
@@ -1412,8 +1561,8 @@ function renderOver25(date,jogos){{
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
           <td><span class="badge version">${{u.mkt}}</span></td>
-          <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{u.poisson?u.poisson+'%':'—'}}</span></td>
-          <td class="mono" style="color:var(--teal);font-size:14px;font-weight:600">${{u.exg||'—'}}</td>
+          <td><span class="metric-value em" style="color:${{probColor}}">${{u.poisson?u.poisson+'%':'—'}}</span></td>
+          <td class="mono" style="color:var(--teal);font-size:13px;font-weight:800">${{u.exg||'—'}}</td>
           ${{placarCell(d)}}<td>${{resBadge(d,u.key)}}</td>
           <td>${{bar(u.score)}}</td>
           <td>${{gradeHtml(u.grade)}}</td>
@@ -1443,12 +1592,12 @@ function renderEsc(date,jogos){{
     }}).join('');
   }}
   el.innerHTML=`
-    <div class="callout ok"><strong>Escanteios Over 7.5 / 8.5</strong> · Threshold provisório ≥75%.</div>
-    <div class="sec-title">🚩 Over 7.5</div>
+    <div class="callout ok"><strong><i data-lucide="corner-up-right"></i> Escanteios Over 7.5 / 8.5</strong> · Threshold provisório ≥75%.</div>
+    <div class="sec-title"><i data-lucide="corner-up-right"></i> Over 7.5</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Média</th><th>Pirâmide</th><th>Real</th><th>Resultado</th></tr></thead>
       <tbody>${{escRows(r75,'esc75_ok')}}</tbody></table></div>
-    <div class="sec-title">🚩 Over 8.5</div>
+    <div class="sec-title"><i data-lucide="corner-up-right"></i> Over 8.5</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Média</th><th>Pirâmide</th><th>Real</th><th>Resultado</th></tr></thead>
       <tbody>${{escRows(r85,'esc85_ok')}}</tbody></table></div>`;
@@ -1459,7 +1608,7 @@ function renderCart(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-cartoes');
   const rows=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_cart25||getPalpiteGrade(d),d=>d.score_cards25));
   el.innerHTML=`
-    <div class="callout ok"><strong>Cartões Over 2.5 / Over 3.5</strong> · Alta consistência observada.</div>
+    <div class="callout ok"><strong><i data-lucide="layers"></i> Cartões Over 2.5 / Over 3.5</strong> · Alta consistência observada.</div>
     <div class="tbl-wrap"><table>
       <thead><tr>
         <th>#</th><th>Jogo</th><th>Hora</th>
@@ -1477,8 +1626,8 @@ function renderCart(date,jogos){{
         return`<tr class="${{rc}}">
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
-          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p25color}}">${{d.over25_cards||'—'}}%</span></td>
-          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p35color}}">${{d.over35_cards||'—'}}%</span></td>
+          <td><span class="metric-value" style="color:${{p25color}}">${{d.over25_cards||'—'}}%</span></td>
+          <td><span class="metric-value" style="color:${{p35color}}">${{d.over35_cards||'—'}}%</span></td>
           ${{cartReal}}<td>${{resBadge(d,'cart25_ok')}}</td>
           <td>${{bar(d.score_cards25)}}</td><td>${{gradeHtml(d.grade_cart25)}}</td>
           <td>${{bar(d.score_cards35,70)}}</td>
@@ -1681,12 +1830,12 @@ function renderBilhetes(date, jogos){{
     const rows = bilheteDiaHydrated.sels.map((s,i)=>{{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
-      let resHtml = '<span class="res-badge pending">⏳</span>';
+      let resHtml = '<span class="res-badge pending"><i data-lucide="clock"></i></span>';
       if(confirmado && res){{
         const ok = resultOk(res,mktKey);
-        if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
-        else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
-        else resHtml='<span class="res-badge pending">⚠ Não confirmado</span>';
+        if(ok===true) resHtml='<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
+        else if(ok===false) resHtml='<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
+        else resHtml='<span class="res-badge pending"><i data-lucide="triangle-alert"></i> Não confirmado</span>';
       }}
       return`<div class="bilhete-row">
         <span class="bilhete-num">${{i+1}}</span>
@@ -1698,10 +1847,10 @@ function renderBilhetes(date, jogos){{
       </div>`;
     }}).join('');
     let statusHtml = '';
-    if(!confirmado) statusHtml='<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando</span>';
-    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)">✅ GREEN! Odd: ${{bilheteDiaHydrated.oddTotal.toFixed(2)}}</span>`;
-    else if(av.status==='loss') statusHtml=`<span class="bilhete-status" style="color:var(--red)">✗ Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
-    else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${{av.sd}} sem dados</span>`;
+    if(!confirmado) statusHtml='<span class="bilhete-status" style="color:var(--muted)"><i data-lucide="clock"></i> Aguardando</span>';
+    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)"><i data-lucide="circle-check"></i> GREEN! Odd: ${{bilheteDiaHydrated.oddTotal.toFixed(2)}}</span>`;
+    else if(av.status==='loss') statusHtml=`<span class="bilhete-status" style="color:var(--red)"><i data-lucide="circle-x"></i> Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
+    else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)"><i data-lucide="triangle-alert"></i> Parcial — ${{av.sd}} sem dados</span>`;
 
     diaHtml=`<div class="bilhete-dia${{overlayClass}}">
       <div class="bilhete-dia-badge"><i data-lucide="trophy"></i>BILHETE DO DIA</div>
@@ -1743,12 +1892,12 @@ function renderBilhetes(date, jogos){{
     const renderSelectionStatus = (s) => {{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
-      let resHtml = '<span class="res-badge pending">⏳</span>';
+      let resHtml = '<span class="res-badge pending"><i data-lucide="clock"></i></span>';
       if(confirmado && res){{
         const ok = resultOk(res,mktKey);
-        if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
-        else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
-        else resHtml='<span class="res-badge pending">⚠ Não confirmado</span>';
+        if(ok===true) resHtml='<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
+        else if(ok===false) resHtml='<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
+        else resHtml='<span class="res-badge pending"><i data-lucide="triangle-alert"></i> Não confirmado</span>';
       }}
       return resHtml;
     }};
@@ -1799,13 +1948,13 @@ function renderBilhetes(date, jogos){{
 
     let statusHtml = '';
     if(!confirmado){{
-      statusHtml = '<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando resultados</span>';
+      statusHtml = '<span class="bilhete-status" style="color:var(--muted)"><i data-lucide="clock"></i> Aguardando resultados</span>';
     }} else if(av.status==='win'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--green)">✅ BILHETE GREEN! Odd: ${{b.oddTotal.toFixed(2)}}</span>`;
+      statusHtml = `<span class="bilhete-status" style="color:var(--green)"><i data-lucide="circle-check"></i> BILHETE GREEN! Odd: ${{b.oddTotal.toFixed(2)}}</span>`;
     }} else if(av.status==='loss'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--red)">✗ Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
+      statusHtml = `<span class="bilhete-status" style="color:var(--red)"><i data-lucide="circle-x"></i> Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
     }} else if(av.status==='partial'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--yellow)">⚠ Parcial — ${{av.sd}} sem dados</span>`;
+      statusHtml = `<span class="bilhete-status" style="color:var(--yellow)"><i data-lucide="triangle-alert"></i> Parcial — ${{av.sd}} sem dados</span>`;
     }}
 
     return`<div class="bilhete-card ${{cls}}${{overlayClass}}">
@@ -1831,12 +1980,12 @@ function renderBilhetes(date, jogos){{
   const destaquesHtml = (diaHtml || bingoDestaqueHtml)
     ? `<div class="bilhete-destaques">${{diaHtml}}${{bingoDestaqueHtml}}</div>`
     : '';
-  const listaTitulo = todosBilhetes.length ? '<div class="sec-title">📋 Todos os Bilhetes</div>' : '';
+  const listaTitulo = todosBilhetes.length ? '<div class="sec-title"><i data-lucide="ticket"></i> Todos os Bilhetes</div>' : '';
   const html = todosBilhetes.map(renderBilheteCard).join('');
 
   const callout = confirmado
-    ? '<div class="callout ok"><strong>✅ Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
-    : '<div class="callout info"><strong>🎯 Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
+    ? '<div class="callout ok"><strong><i data-lucide="circle-check"></i> Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
+    : '<div class="callout info"><strong><i data-lucide="target"></i> Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
 
   el.innerHTML = callout + destaquesHtml + listaTitulo + `<div class="bilhete-grid">${{html}}</div>`;
 }}
@@ -1855,11 +2004,11 @@ function renderHistoricoDia(date,jogos){{
         <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${{getPalpiteMkt(d)}}</td>
         <td>${{bar(getPalpiteScore(d))}}</td>
-        <td><span class="res-badge pending">⏳ Aguardando</span></td>
+        <td><span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span></td>
       </tr>`;
     }}).join('');
     el.innerHTML=`
-      <div class="callout warn"><strong>⏳ Resultados pendentes</strong> · Execute <code>confirmar.py --date ${{date.split('-').reverse().join('-')}}</code> após os jogos.</div>
+      <div class="callout warn"><strong><i data-lucide="clock"></i> Resultados pendentes</strong> · Execute <code>confirmar.py --date ${{date.split('-').reverse().join('-')}}</code> após os jogos.</div>
       <div class="tbl-wrap"><table>
         <thead><tr><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>Status</th></tr></thead>
         <tbody>${{rows}}</tbody>
@@ -1878,7 +2027,7 @@ function renderHistoricoDia(date,jogos){{
         <div style="height:100%;width:${{t||0}}%;background:${{c}};border-radius:3px"></div>
       </div>
       <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:${{c}};min-width:42px;text-align:right">${{t!=null?t+'%':'—'}}</span>
-      <span style="font-size:10px;color:var(--muted);min-width:75px">${{s.acertos}}✓ ${{s.erros}}✗ / ${{s.palpites}}</span>
+      <span style="font-size:10px;color:var(--muted);min-width:88px;display:inline-flex;align-items:center;gap:5px"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{s.acertos}}</span><span class="mini-stat err"><i data-lucide="circle-x"></i>${{s.erros}}</span><span class="mini-stat neutral">/ ${{s.palpites}}</span></span>
     </div>`;
   }}).join('');
 
@@ -1888,13 +2037,13 @@ function renderHistoricoDia(date,jogos){{
     const ac=d.acertos||{{}};
     const badges=Object.entries(ac).map(([mkt,info])=>{{
       const cls=info.acertou===true?'hit':info.acertou===false?'miss':'pending';
-      const icon=info.acertou===true?'✓':info.acertou===false?'✗':'?';
-      return`<span class="res-badge ${{cls}}" style="margin:1px;font-size:9px">${{icon}} ${{mkt}}</span>`;
+      const icon=info.acertou===true?'circle-check':info.acertou===false?'circle-x':'circle-help';
+      return`<span class="res-badge ${{cls}}" style="margin:1px;font-size:9px"><i data-lucide="${{icon}}"></i> ${{mkt}}</span>`;
     }}).join('');
     const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
     const rc=rowClass(d,mktKey);
-    const cantRow=res&&res.corners_total!=null?res.corners_total+'🚩':'—';
-    const cartRow=res&&res.cards_total!=null?res.cards_total+'🟨':'—';
+    const cantRow=res&&res.corners_total!=null?`<span class="mini-stat neutral"><i data-lucide="flag"></i>${{res.corners_total}}</span>`:'—';
+    const cartRow=res&&res.cards_total!=null?`<span class="mini-stat neutral"><i data-lucide="square"></i>${{res.cards_total}}</span>`:'—';
     return`<tr class="${{rc}}">
       ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
       ${{res?`<td><div class="placar-cell">${{res.placar}}</div><div class="placar-ht">HT ${{res.placar_ht}}</div></td>`:'<td class="mono muted">—</td>'}}
@@ -1910,16 +2059,16 @@ function renderHistoricoDia(date,jogos){{
   const cG=tGeral==null?'var(--muted)':tGeral>=70?'var(--green)':tGeral>=50?'var(--orange)':'var(--red)';
 
   el.innerHTML=`
-    <div class="callout ok"><strong>✅ Resultados confirmados</strong> · Dados reais da API-Football.</div>
+    <div class="callout ok"><strong><i data-lucide="circle-check"></i> Resultados confirmados</strong> · Dados reais da API-Football.</div>
     <div class="kpi-row" style="margin-bottom:16px">
       <div class="kpi"><div class="kpi-val" style="color:${{cG}}">${{tGeral!=null?tGeral+'%':'—'}}</div><div class="kpi-lbl">Taxa do Dia</div></div>
       <div class="kpi"><div class="kpi-val g">${{ta}}</div><div class="kpi-lbl">Acertos</div></div>
       <div class="kpi"><div class="kpi-val r">${{te}}</div><div class="kpi-lbl">Erros</div></div>
       <div class="kpi"><div class="kpi-val b">${{tp}}</div><div class="kpi-lbl">Palpites</div></div>
     </div>
-    <div class="sec-title">📊 Taxa por Mercado</div>
+    <div class="sec-title"><i data-lucide="bar-chart-2"></i> Taxa por Mercado</div>
     <div style="max-width:580px;margin-bottom:20px">${{taxaBars||'<div class="empty">Sem dados.</div>'}}</div>
-    <div class="sec-title">📋 Todos os Jogos</div>
+    <div class="sec-title"><i data-lucide="list"></i> Todos os Jogos</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>Jogo</th><th>Hora</th><th>Placar</th><th>Cant.</th><th>Cart.</th><th>Palpites e Acertos</th></tr></thead>
       <tbody>${{rows}}</tbody>
@@ -1934,7 +2083,7 @@ function renderHistoricoGlobal(){{
   const dias=Object.keys(ALL_DATA).sort();
 
   if(g.dias_confirmados===0){{
-    el.innerHTML=`<div class="callout warn" style="margin-top:20px"><strong>⏳ Sem histórico confirmado ainda</strong> · Execute confirmar.py após os jogos de cada dia.</div>`;
+    el.innerHTML=`<div class="callout warn" style="margin-top:20px"><strong><i data-lucide="clock"></i> Sem histórico confirmado ainda</strong> · Execute confirmar.py após os jogos de cada dia.</div>`;
     return;
   }}
 
@@ -1946,7 +2095,7 @@ function renderHistoricoGlobal(){{
     return`<div class="hist-mkt-card">
       <div class="hist-mkt-name">${{m}}</div>
       <div class="hist-taxa-val" style="color:${{c}}">${{t!=null?t+'%':'—'}}</div>
-      <div class="hist-detail">${{s.acertos||0}}✓ ${{s.erros||0}}✗ / ${{s.palpites||0}} palpites</div>
+      <div class="hist-detail"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{s.acertos||0}}</span> <span class="mini-stat err"><i data-lucide="circle-x"></i>${{s.erros||0}}</span> <span class="mini-stat neutral">/ ${{s.palpites||0}} palpites</span></div>
       <div class="hist-bar-track"><div class="hist-bar-fill" style="width:${{t||0}}%;background:${{c}}"></div></div>
     </div>`;
   }}).join('');
@@ -1966,7 +2115,7 @@ function renderHistoricoGlobal(){{
       <div class="day-hist-bar">
         <div class="day-hist-fill" style="width:${{t||0}}%;background:${{c}}">${{t!=null&&t>15?t+'%':''}}</div>
       </div>
-      <span class="day-hist-info" style="color:${{c}}">${{t!=null?t+'%':'—'}} <span style="color:var(--muted)">${{ta}}✓ ${{te}}✗</span></span>
+      <span class="day-hist-info" style="color:${{c}}">${{t!=null?t+'%':'—'}} <span style="color:var(--muted);display:inline-flex;align-items:center;gap:4px"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{ta}}</span><span class="mini-stat err"><i data-lucide="circle-x"></i>${{te}}</span></span></span>
     </div>`;
   }}).join('');
 
@@ -1981,9 +2130,9 @@ function renderHistoricoGlobal(){{
       <div class="kpi"><div class="kpi-val b">${{g.total_palpites}}</div><div class="kpi-lbl">Total Palpites</div></div>
 
     </div>
-    <div class="sec-title">📊 Taxa por Mercado (acumulado)</div>
+    <div class="sec-title"><i data-lucide="bar-chart-2"></i> Taxa por Mercado (acumulado)</div>
     <div class="hist-grid">${{mktCards}}</div>
-    <div class="sec-title">📅 Evolução por Dia</div>
+    <div class="sec-title"><i data-lucide="calendar-days"></i> Evolução por Dia</div>
     <div style="max-width:700px">${{timeline||'<div class="empty">Sem dias confirmados.</div>'}}</div>`;
 }}
 
@@ -2063,7 +2212,7 @@ async function calSelect(dateKey, apiDate){{
 
   // If data already exists, just navigate to it
   if(ALL_DATA[dateKey]){{
-    status.textContent = `✓ Dados já carregados para ${{dateKey}}`;
+    status.textContent = `Dados já carregados para ${{dateKey}}`;
     status.className = 'cal-status success';
     closeCal();
     setTimeout(()=>switchDate(dateKey), 300);
@@ -2075,24 +2224,24 @@ async function calSelect(dateKey, apiDate){{
   if(!token){{ status.textContent = 'Token não fornecido.'; status.className='cal-status error'; return; }}
   localStorage.setItem(GH_TOKEN_KEY, token);
 
-  status.textContent = `⏳ Acionando coleta para ${{apiDate}}...`;
+  status.textContent = `Acionando coleta para ${{apiDate}}...`;
   status.className = 'cal-status loading';
 
   // Trigger coletar workflow
   const ok = await triggerWorkflow('build.yml', {{ date: apiDate }}, token);
-  if(!ok){{ status.textContent = '✗ Erro ao acionar workflow. Verifique o token.'; status.className='cal-status error'; return; }}
+  if(!ok){{ status.textContent = 'Erro ao acionar workflow. Verifique o token.'; status.className='cal-status error'; return; }}
 
-  status.textContent = `✓ Coleta iniciada para ${{apiDate}}! O dashboard atualiza em ~2 min.`;
+  status.textContent = `Coleta iniciada para ${{apiDate}}! O dashboard atualiza em ~2 min.`;
   status.className = 'cal-status success';
 
   // If past date, also trigger confirmar
   if(isPast){{
     setTimeout(async()=>{{
-      status.textContent = `⏳ Acionando confirmação de resultados...`;
+      status.textContent = `Acionando confirmação de resultados...`;
       status.className = 'cal-status loading';
       const ok2 = await triggerWorkflow('confirmar.yml', {{ date: apiDate }}, token);
       if(ok2){{
-        status.textContent = `✓ Coleta + confirmação iniciadas! Aguarde ~3 min e recarregue.`;
+        status.textContent = `Coleta + confirmação iniciadas! Aguarde ~3 min e recarregue.`;
         status.className = 'cal-status success';
       }}
     }}, 5000);
@@ -2132,6 +2281,7 @@ function showHistoricoGlobal(){{
 
   historicoVisible=true;
   renderHistoricoGlobal();
+  if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
 }}
 
 function switchDate(date){{
@@ -2177,6 +2327,7 @@ function renderMkt(date,mkt){{
   else if(mkt==='cartoes')   renderCart(date,jogos);
   else if(mkt==='bilhetes')     renderBilhetes(date,jogos);
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
+  if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
 }}
 
 // ── Sidebar navigation ──────────────────────────────────────────────
@@ -2194,8 +2345,7 @@ function sidebarNav(mkt){{
 function updateSidebarActive(mkt){{
   document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
   const map = {{
-    'visao':'sb-visao','ranking':'sb-ranking','bilhetes':'sb-bilhetes',
-    'historico_dia':'sb-resultados'
+    'visao':'sb-visao','ranking':'sb-ranking','bilhetes':'sb-bilhetes'
   }};
   const id = map[mkt];
   if(id) document.getElementById(id)?.classList.add('active');
@@ -2307,8 +2457,55 @@ function renderCatContent(date, cat, subKey){{
     }}
   }}
 }}
-// Inicializar ícones Lucide
-if(typeof lucide !== 'undefined') lucide.createIcons();
+// Inicializar ícones Lucide com fallback local para uso offline/file://
+function ensureLucideIcons(){{
+  if(typeof lucide !== 'undefined' && lucide.createIcons){{
+    lucide.createIcons();
+  }}
+  const paths = {{
+    'layout-dashboard':'<rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect>',
+    'bar-chart-2':'<line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line>',
+    'target':'<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
+    'brain-circuit':'<path d="M12 5a3 3 0 0 0-5.83-1"></path><path d="M12 5a3 3 0 0 1 5.83-1"></path><path d="M7 4a3 3 0 0 0-2 5"></path><path d="M17 4a3 3 0 0 1 2 5"></path><path d="M5 9a3 3 0 0 0 1 5.8"></path><path d="M19 9a3 3 0 0 1-1 5.8"></path><path d="M8 18a3 3 0 0 0 4-2"></path><path d="M16 18a3 3 0 0 1-4-2"></path><path d="M9 9h1"></path><path d="M14 9h1"></path><path d="M12 12v4"></path>',
+    'credit-card':'<rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line>',
+    'info':'<circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path>',
+    'search':'<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>',
+    'list':'<line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line>',
+    'calendar-days':'<path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path>',
+    'clock':'<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>',
+    'circle-x':'<circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path>',
+    'triangle-alert':'<path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path>',
+    'circle-help':'<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path>',
+    'flag':'<path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 8 2a6 6 0 0 0 4-1.2V14a6 6 0 0 1-4 1.2c-3 0-5-2-8-2a6 6 0 0 0-4 1.2"></path>',
+    'square':'<rect width="16" height="16" x="4" y="4" rx="2"></rect>',
+    'log-in':'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line>',
+    'chevron-down':'<path d="m6 9 6 6 6-6"></path>',
+    'rocket':'<path d="M4.5 16.5c-1.5 1.3-2 3-2 5 2 0 3.7-.5 5-2"></path><path d="M9 15 15 9"></path><path d="M15 9h4l2-6-6 2v4Z"></path><path d="M9 15H5l-2 6 6-2v-4Z"></path>',
+    'arrow-right':'<path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>',
+    'grid-2x2':'<rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect>',
+    'star':'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>',
+    'ticket':'<path d="M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 0 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2"></path><path d="M13 17v2"></path><path d="M13 11v2"></path>',
+    'trending-up':'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline>',
+    'circle-check':'<circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path>',
+    'shield-check':'<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"></path><path d="m9 12 2 2 4-4"></path>',
+    'crosshair':'<circle cx="12" cy="12" r="10"></circle><line x1="22" x2="18" y1="12" y2="12"></line><line x1="6" x2="2" y1="12" y2="12"></line><line x1="12" x2="12" y1="6" y2="2"></line><line x1="12" x2="12" y1="22" y2="18"></line>',
+    'corner-up-right':'<polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>',
+    'layers':'<path d="m12.83 2.18 8.05 4.02a1.25 1.25 0 0 1 0 2.24l-8.05 4.02a1.85 1.85 0 0 1-1.66 0L3.12 8.44a1.25 1.25 0 0 1 0-2.24l8.05-4.02a1.85 1.85 0 0 1 1.66 0Z"></path><path d="m22 12.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 12.5"></path><path d="m22 17.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 17.5"></path>',
+    'trophy':'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>'
+  }};
+  document.querySelectorAll('i[data-lucide]').forEach(el=>{{
+    const name = el.getAttribute('data-lucide');
+    const path = paths[name];
+    if(!path) return;
+    const style = el.getAttribute('style') || '';
+    const w = (style.match(/width:\\s*(\\d+)px/)||[])[1] || 14;
+    const h = (style.match(/height:\\s*(\\d+)px/)||[])[1] || w;
+    const wrap = document.createElement('span');
+    wrap.innerHTML = `<svg data-fallback-lucide="${{name}}" width="${{w}}" height="${{h}}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${{path}}</svg>`;
+    el.replaceWith(wrap.firstElementChild);
+  }});
+}}
+ensureLucideIcons();
 
 // ── Tema claro/escuro ──────────────────────────────────────────────
 function setThemeIcon(icon){{
@@ -2370,6 +2567,7 @@ const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
 
 // Aguardar DOM completo antes de renderizar
 window.addEventListener('DOMContentLoaded',function(){{
+  renderGlobalHistoricoSearch();
   if(dates.length){{
     const today = new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
 const todayKey = today;
@@ -2384,6 +2582,7 @@ switchDate(targetDate);
 // Fallback se DOMContentLoaded já disparou
 if(document.readyState==='complete'||document.readyState==='interactive'){{
   setTimeout(function(){{
+    renderGlobalHistoricoSearch();
     if(dates.length&&!activeDate){{
       const today = new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
 const todayKey = today;
