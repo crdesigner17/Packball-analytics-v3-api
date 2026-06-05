@@ -1098,9 +1098,34 @@ function getJogos(date){{return(ALL_DATA[date]||{{}}).jogos||[];}}
 // ── Resultado helpers ──────────────────────────────────────────────
 function getResultado(jogo){{return jogo.resultado||null;}}
 function isConfirmado(date){{return !!(ALL_DATA[date]||{{}}).resultado_confirmado;}}
-function getPalpiteMkt(jogo){{return jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';}}
-function getPalpiteGrade(jogo){{return jogo.palpite_grade||jogo.best_grade||jogo.grade||'D';}}
-function getPalpiteScore(jogo){{return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score!=null?jogo.best_score:(jogo.score||0));}}
+const LINHA_SEGURA_DIFF = 8;
+function gradeForMkt(jogo,mkt){{
+  const map = {{
+    'Over 1.5':'grade_15','Over 2.5':'grade_25','Esc 7.5':'grade_esc75','Esc 8.5':'grade_esc85',
+    'Cart 2.5':'grade_cart25','Cart 3.5':'grade_cart35','BTTS':'grade_btts','Over 0.5 HT':'grade_05ht',
+    'Under 3.5':'grade_u35','Under 4.5':'grade_u45'
+  }};
+  const field = map[mkt];
+  return (field && jogo[field]) || gradeFromScore(scoreForMkt(jogo,mkt));
+}}
+function scoreForMkt(jogo,mkt){{
+  const field = MKT_SCORE[mkt];
+  if(field && jogo[field] != null) return jogo[field];
+  return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score!=null?jogo.best_score:(jogo.score||0));
+}}
+function normalizedPalpite(jogo){{
+  let mkt = jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';
+  if(mkt==='Over 2.5' && (jogo.score_15||0)>=MKT_MIN['Over 1.5'] && jogo.passou_filtro && ((jogo.score_25||0)-(jogo.score_15||0))<LINHA_SEGURA_DIFF){{
+    mkt='Over 1.5';
+  }}
+  if(mkt==='Esc 8.5' && jogo.score_esc75 != null && ((jogo.score_esc85||0)-(jogo.score_esc75||0))<LINHA_SEGURA_DIFF){{
+    mkt='Esc 7.5';
+  }}
+  return {{mkt, score:scoreForMkt(jogo,mkt), grade:gradeForMkt(jogo,mkt)}};
+}}
+function getPalpiteMkt(jogo){{return normalizedPalpite(jogo).mkt;}}
+function getPalpiteGrade(jogo){{return normalizedPalpite(jogo).grade||'D';}}
+function getPalpiteScore(jogo){{return normalizedPalpite(jogo).score||0;}}
 const GRADE_ORDER={{'A+':0,'A':1,'B':2,'C':3,'D':4}};
 function gradeRank(g){{return GRADE_ORDER[g]??99;}}
 function sortByGrade(a,b,gradeFn,scoreFn){{
@@ -1408,7 +1433,7 @@ function renderVisao(date,jogos){{
   const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
   const enrichSnap = item => {{
     const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
-    return {{...full, ...item, palpite_mkt:item.mkt||full.palpite_mkt||full.best_mkt, palpite_grade:item.grade||full.palpite_grade||full.best_grade, palpite_score:item.score??full.palpite_score??full.best_score}};
+    return {{...item, ...full}};
   }};
   const top=[...(snap.length?snap.map(enrichSnap):jogos)].sort(sortByGrade).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
@@ -1470,7 +1495,7 @@ function renderRanking(date,jogos){{
   const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
   const enrichSnap = item => {{
     const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
-    return {{...full, ...item, palpite_mkt:item.mkt||full.palpite_mkt||full.best_mkt, palpite_grade:item.grade||full.palpite_grade||full.best_grade, palpite_score:item.score??full.palpite_score??full.best_score}};
+    return {{...item, ...full}};
   }};
   const base=snap.length?snap.map(enrichSnap):jogos;
   const sorted=[...base].sort(sortByGrade);
