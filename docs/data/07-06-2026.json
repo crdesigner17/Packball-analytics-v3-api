@@ -76,14 +76,12 @@
       "score_btts": 63.3,
       "score_05ht": 56.1,
       "score_u45": 59.0,
-      "score_u35": 54.1,
       "score_esc75": 68.3,
       "score_esc85": 63.9,
       "score_cards25": 68.4,
       "score_cards35": 66.7,
       "passou_filtro": true,
       "via": "Via 2",
-      "under35_filter": false,
       "grade_15": "D",
       "grade_25": "C",
       "grade_btts": "C",
@@ -108,7 +106,8 @@
       "justif_cards": "Média 5.05 cart · O2.5: 80.0% · O3.5: 75.0%",
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "B",
-      "palpite_score": 68.4
+      "palpite_score": 68.4,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -185,14 +184,12 @@
       "score_btts": 51.6,
       "score_05ht": 41.7,
       "score_u45": 68.4,
-      "score_u35": 69.9,
       "score_esc75": 46.3,
       "score_esc85": 38.8,
       "score_cards25": 44.4,
       "score_cards35": 44.4,
       "passou_filtro": false,
       "via": "Reprovado",
-      "under35_filter": false,
       "grade_15": "D",
       "grade_25": "D",
       "grade_btts": "C",
@@ -210,14 +207,15 @@
       "odd_justa_cart25": null,
       "best_mkt": "Under 4.5",
       "best_score": 68.4,
-      "best_grade": "B",
+      "best_grade": "C",
       "best_risk": "Moderado",
       "justif_15": "O1.5 70% · xG 1.9 · PPG 1.2 · H2H 2.6 gols",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
-      "palpite_mkt": "Under 4.5",
+      "palpite_mkt": "Under 3.5",
       "palpite_grade": "B",
-      "palpite_score": 68.4
+      "palpite_score": 69.9,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -294,14 +292,12 @@
       "score_btts": 23.8,
       "score_05ht": 49.2,
       "score_u45": 67.7,
-      "score_u35": 68.6,
       "score_esc75": 55.6,
       "score_esc85": 66.7,
       "score_cards25": 58.3,
       "score_cards35": 58.3,
       "passou_filtro": true,
       "via": "Via 2",
-      "under35_filter": false,
       "grade_15": "C",
       "grade_25": "D",
       "grade_btts": "D",
@@ -319,14 +315,15 @@
       "odd_justa_cart25": null,
       "best_mkt": "Under 4.5",
       "best_score": 67.7,
-      "best_grade": "B",
+      "best_grade": "C",
       "best_risk": "Moderado",
       "justif_15": "O1.5 50% · xG 2.0 · PPG 2.0 · H2H 1.0 gols · Via 2 ✓",
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
-      "palpite_mkt": "Under 4.5",
+      "palpite_mkt": "Under 3.5",
       "palpite_grade": "B",
-      "palpite_score": 67.7
+      "palpite_score": 68.6,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -403,14 +400,12 @@
       "score_btts": 64.3,
       "score_05ht": 34.5,
       "score_u45": 58.4,
-      "score_u35": 58.4,
       "score_esc75": 56.7,
       "score_esc85": 41.2,
       "score_cards25": 55.2,
       "score_cards35": 31.9,
       "passou_filtro": false,
       "via": "Reprovado",
-      "under35_filter": false,
       "grade_15": "D",
       "grade_25": "D",
       "grade_btts": "C",
@@ -435,7 +430,8 @@
       "justif_cards": "Média 3.25 cart · O2.5: 75.0% · O3.5: 25.0%",
       "palpite_mkt": "BTTS",
       "palpite_grade": "C",
-      "palpite_score": 64.3
+      "palpite_score": 64.3,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -512,14 +508,12 @@
       "score_btts": 66.8,
       "score_05ht": 45.8,
       "score_u45": 67.7,
-      "score_u35": 68.6,
       "score_esc75": 44.4,
       "score_esc85": 33.3,
       "score_cards25": 41.7,
       "score_cards35": 41.7,
       "passou_filtro": true,
       "via": "Via 2",
-      "under35_filter": false,
       "grade_15": "A+",
       "grade_25": "D",
       "grade_btts": "B",
@@ -544,7 +538,8 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -621,14 +616,12 @@
       "score_btts": 12.5,
       "score_05ht": 25.0,
       "score_u45": 50.0,
-      "score_u35": 50.0,
       "score_esc75": 50.0,
       "score_esc85": 0,
       "score_cards25": 50.0,
       "score_cards35": 50.0,
       "passou_filtro": false,
       "via": "Reprovado",
-      "under35_filter": false,
       "grade_15": "D",
       "grade_25": "D",
       "grade_btts": "D",
@@ -653,7 +646,8 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -730,14 +724,12 @@
       "score_btts": 20.4,
       "score_05ht": 47.3,
       "score_u45": 45.0,
-      "score_u35": 45.0,
       "score_esc75": 55.6,
       "score_esc85": 66.7,
       "score_cards25": 58.3,
       "score_cards35": 58.3,
       "passou_filtro": false,
       "via": "Reprovado",
-      "under35_filter": false,
       "grade_15": "D",
       "grade_25": "D",
       "grade_btts": "D",
@@ -762,7 +754,8 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "C",
-      "palpite_score": 58.3
+      "palpite_score": 58.3,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -839,14 +832,12 @@
       "score_btts": 55.3,
       "score_05ht": 31.1,
       "score_u45": 60.0,
-      "score_u35": 60.0,
       "score_esc75": 71.8,
       "score_esc85": 61.7,
       "score_cards25": 51.3,
       "score_cards35": 35.8,
       "passou_filtro": true,
       "via": "Via 4",
-      "under35_filter": false,
       "grade_15": "A+",
       "grade_25": "D",
       "grade_btts": "C",
@@ -871,7 +862,8 @@
       "justif_cards": "Média 3.33 cart · O2.5: 66.7% · O3.5: 33.3%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -948,14 +940,12 @@
       "score_btts": 65.1,
       "score_05ht": 39.3,
       "score_u45": 65.4,
-      "score_u35": 64.5,
       "score_esc75": 49.7,
       "score_esc85": 47.2,
       "score_cards25": 55.8,
       "score_cards35": 57.6,
       "passou_filtro": true,
       "via": "Via 2",
-      "under35_filter": false,
       "grade_15": "B",
       "grade_25": "D",
       "grade_btts": "B",
@@ -980,7 +970,8 @@
       "justif_cards": "Média 3.0 cart · O2.5: 75.0% · O3.5: 75.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 66.7
+      "palpite_score": 66.7,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -1057,14 +1048,12 @@
       "score_btts": 60.4,
       "score_05ht": 51.6,
       "score_u45": 45.3,
-      "score_u35": 35.5,
       "score_esc75": 45.1,
       "score_esc85": 43.1,
       "score_cards25": 38.8,
       "score_cards35": 38.7,
       "passou_filtro": true,
       "via": "Via 2",
-      "under35_filter": false,
       "grade_15": "B",
       "grade_25": "B",
       "grade_btts": "C",
@@ -1089,7 +1078,8 @@
       "justif_cards": "Média 2.835 cart · O2.5: 33.35% · O3.5: 33.35%",
       "palpite_mkt": "Over 2.5",
       "palpite_grade": "B",
-      "palpite_score": 72.8
+      "palpite_score": 72.8,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -1166,14 +1156,12 @@
       "score_btts": 44.9,
       "score_05ht": 34.0,
       "score_u45": 69.7,
-      "score_u35": 72.3,
       "score_esc75": 67.6,
       "score_esc85": 67.8,
       "score_cards25": 32.2,
       "score_cards35": 19.6,
       "passou_filtro": true,
       "via": "Via 4",
-      "under35_filter": false,
       "grade_15": "A+",
       "grade_25": "D",
       "grade_btts": "D",
@@ -1198,7 +1186,8 @@
       "justif_cards": "Média 2.25 cart · O2.5: 25.0% · O3.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -1275,14 +1264,12 @@
       "score_btts": 65.7,
       "score_05ht": 28.6,
       "score_u45": 56.6,
-      "score_u35": 56.6,
       "score_esc75": 66.8,
       "score_esc85": 66.6,
       "score_cards25": 50.9,
       "score_cards35": 44.0,
       "passou_filtro": true,
       "via": "Via 4",
-      "under35_filter": false,
       "grade_15": "A+",
       "grade_25": "D",
       "grade_btts": "B",
@@ -1307,7 +1294,8 @@
       "justif_cards": "Média 3.0 cart · O2.5: 66.65% · O3.5: 50.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "under35_filter": false
     },
     {
       "date": "07-06-2026",
@@ -1384,14 +1372,12 @@
       "score_btts": 71.9,
       "score_05ht": 75.6,
       "score_u45": 54.9,
-      "score_u35": 48.1,
       "score_esc75": 60.0,
       "score_esc85": 60.2,
       "score_cards25": 19.7,
       "score_cards35": 19.9,
       "passou_filtro": false,
       "via": "Reprovado",
-      "under35_filter": false,
       "grade_15": "D",
       "grade_25": "C",
       "grade_btts": "B",
@@ -1416,7 +1402,8 @@
       "justif_cards": "Média 1.0 cart · O2.5: 16.65% · O3.5: 16.65%",
       "palpite_mkt": "Over 0.5 HT",
       "palpite_grade": "A",
-      "palpite_score": 75.6
+      "palpite_score": 75.6,
+      "under35_filter": false
     }
   ],
   "top5": [
@@ -1499,7 +1486,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-05T14:00:08Z",
+    "created_at": "2026-06-05T13:43:42Z",
     "bilhetes": [
       {
         "tipo": "b1",
@@ -1565,7 +1552,7 @@
           "oddTotal": 1
         },
         "cls": "bilhete-premium",
-        "label": "Premium - Todos A+/A por Score"
+        "label": "PREMIUM 4X"
       }
     ],
     "bilheteDia": {
