@@ -1,4 +1,4 @@
-"""
+﻿"""
 WinMetrics — Gerador de Site v3.1
 - Resultados integrados: linhas verde/vermelho/amarelo em cada tabela
 - Placar nos cards Top 5
@@ -963,6 +963,12 @@ function via(v){{
   return'<span class="via vx">—</span>';
 }}
 function pct(v){{return v!=null?v+'%':'—';}}
+function pctText(v){{
+  if(v==null||v==='')return'—';
+  const n=Number(v);
+  if(!Number.isFinite(n))return'—';
+  return (Math.round(n*10)/10).toString().replace('.0','')+'%';
+}}
 function pyramid(d){{
   const rows=[['6.5',d.over65_c],['7.5',d.over75_c],['8.5',d.over85_c],['9.5',d.over95_c],['10.5',d.over105_c]];
   return'<div style="display:flex;flex-direction:column;gap:3px;min-width:120px">'+rows.map(([l,v])=>{{
@@ -1115,7 +1121,10 @@ function renderVisao(date,jogos){{
       ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
       <td class="td-conf">${{gradeHtml(getPalpiteGrade(d))}}</td>
       <td class="td-palpite">${{getPalpiteMkt(d)}}</td>
-      <td>${{bar(d.score_15)}}</td><td>${{bar(d.score_esc85)}}</td><td>${{bar(d.score_cards25)}}</td>
+      <td class="mono" style="color:${{col(getPalpiteScore(d))}};font-weight:700">${{pctText(getPalpiteScore(d))}}</td>
+      <td class="mono" style="color:${{col(d.score_15)}};font-weight:700">${{pctText(d.score_15)}}</td>
+      <td class="mono" style="color:${{col(d.score_esc75)}};font-weight:700">${{pctText(d.score_esc75)}}</td>
+      <td class="mono" style="color:${{col(d.score_cards25)}};font-weight:700">${{pctText(d.score_cards25)}}</td>
       ${{placarCell(d)}}
       <td>${{resBadge(d,mktKey)}}</td>
     </tr>`;
@@ -1127,7 +1136,7 @@ function renderVisao(date,jogos){{
     <div class="top-grid">${{t5}}</div>
     <div class="sec-title">📋 Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Palpite</th><th>Over 1.5</th><th>Esc 8.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Palpite</th><th>Score Palpite</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
 }}
@@ -2079,3 +2088,4 @@ switchDate(targetDate);
 
 if __name__ == '__main__':
     gerar_site()
+
