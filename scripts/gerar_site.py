@@ -1,4 +1,4 @@
-﻿"""
+"""
 WinMetrics — Gerador de Site v3.1
 - Resultados integrados: linhas verde/vermelho/amarelo em cada tabela
 - Placar nos cards Top 5
@@ -859,16 +859,16 @@ function kpiFilter(date, tipo, count){{
   // Filtrar jogos
   let filtrados=[], titulo='', cor='var(--text)';
   if(tipo==='prem'){{
-    filtrados=jogos.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A').sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a));
+    filtrados=jogos.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A').sort(sortByGrade);
     titulo='🟢 Alta Confiança'; cor='var(--green)';
   }} else if(tipo==='15'){{
-    filtrados=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).sort((a,b)=>b.score_15-a.score_15);
+    filtrados=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).sort((a,b)=>sortByGrade(a,b,d=>d.grade_15||getPalpiteGrade(d),d=>d.score_15));
     titulo='🟡 Over 1.5 ≥85%'; cor='var(--yellow)';
   }} else if(tipo==='esc'){{
-    filtrados=jogos.filter(d=>d.score_esc75>=75).sort((a,b)=>b.score_esc75-a.score_esc75);
+    filtrados=jogos.filter(d=>d.score_esc75>=75).sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
     titulo='🔵 Over 7.5 Escanteios ≥75%'; cor='var(--teal)';
   }} else if(tipo==='cart'){{
-    filtrados=jogos.filter(d=>d.score_cards25>=75).sort((a,b)=>b.score_cards25-a.score_cards25);
+    filtrados=jogos.filter(d=>d.score_cards25>=75).sort((a,b)=>sortByGrade(a,b,d=>d.grade_cart25||getPalpiteGrade(d),d=>d.score_cards25));
     titulo='🟠 Over 2.5 Cartões ≥75%'; cor='var(--orange)';
   }}
   if(!filtrados.length){{
@@ -884,7 +884,7 @@ function kpiFilter(date, tipo, count){{
       <td class="mono muted">${{i+1}}</td>
       ${{jogoCell(d)}}
       <td class="mono muted">${{d.hora}}</td>
-      <td class="td-conf">${{gradeHtml(getPalpiteGrade(d))}}</td>
+      <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
       <td class="mono" style="font-size:11px;color:var(--muted)">${{mktShow}}</td>
       <td>${{bar(scoreField)}}</td>
       <td class="mono" style="color:var(--yellow);font-weight:700">${{oddMkt(d)}}</td>
@@ -989,6 +989,15 @@ function isConfirmado(date){{return !!(ALL_DATA[date]||{{}}).resultado_confirmad
 function getPalpiteMkt(jogo){{return jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';}}
 function getPalpiteGrade(jogo){{return jogo.palpite_grade||jogo.best_grade||jogo.grade||'D';}}
 function getPalpiteScore(jogo){{return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score!=null?jogo.best_score:(jogo.score||0));}}
+const GRADE_ORDER={{'A+':0,'A':1,'B':2,'C':3,'D':4}};
+function gradeRank(g){{return GRADE_ORDER[g]??99;}}
+function sortByGrade(a,b,gradeFn,scoreFn){{
+  gradeFn=gradeFn||getPalpiteGrade;
+  scoreFn=scoreFn||getPalpiteScore;
+  const gr=gradeRank(gradeFn(a))-gradeRank(gradeFn(b));
+  if(gr!==0)return gr;
+  return (scoreFn(b)||0)-(scoreFn(a)||0);
+}}
 
 function resBadge(jogo, mktKey){{
   const res=getResultado(jogo);
@@ -1075,7 +1084,7 @@ function renderVisao(date,jogos){{
   </div>
   <div id="kpi-panel-${{date}}" style="display:none"></div>`;
 
-  const top=[...(snap.length?snap:jogos)].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a)).slice(0,5);
+  const top=[...(snap.length?snap:jogos)].sort(sortByGrade).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{{
     const c=col(getPalpiteScore(d));
@@ -1099,7 +1108,7 @@ function renderVisao(date,jogos){{
     </div>`;
   }}).join('');
 
-  const rows=[...jogos].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a)).map(d=>{{
+  const rows=[...jogos].sort(sortByGrade).map(d=>{{
     const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
     const rc=rowClass(d,mktKey);
     return`<tr class="${{rc}}">
@@ -1128,7 +1137,7 @@ function renderRanking(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-ranking');
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
   const base=snap.length?snap:jogos;
-  const sorted=[...base].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a));
+  const sorted=[...base].sort(sortByGrade);
   const premium=sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A');
   const boas=sorted.filter(d=>getPalpiteGrade(d)==='B');
   const perigosas=sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D');
@@ -1141,10 +1150,11 @@ function renderRanking(date,jogos){{
       return`<tr class="${{rc}}">
         <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
         <td class="mono muted">${{d.hora}}</td>
-        <td class="td-conf">${{gradeHtml(getPalpiteGrade(d))}}</td>
+        <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${{getPalpiteMkt(d)}}</td>
         <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${{oddMkt(d)}}</td>
         <td>${{bar(getPalpiteScore(d))}}</td>
+        <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
         <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_h)}}</td>
         <td class="mono muted">${{odd(d.odds_d)}}</td>
         <td class="mono" style="color:var(--yellow);font-weight:600">${{odd(d.odds_a)}}</td>
@@ -1171,7 +1181,7 @@ function renderRanking(date,jogos){{
 // ── Over 1.5 ───────────────────────────────────────────────────────
 function renderOver15(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over15');
-  let rows=[...jogos].filter(d=>d.passou_filtro).sort((a,b)=>b.score_15-a.score_15);
+  let rows=[...jogos].filter(d=>d.passou_filtro).sort((a,b)=>sortByGrade(a,b,d=>d.grade_15||getPalpiteGrade(d),d=>d.score_15));
   const total=rows.length;
   const html=rows.map((d,i)=>{{
     const rc=rowClass(d,'over15_ok');
@@ -1185,6 +1195,7 @@ function renderOver15(date,jogos){{
       <td>${{resBadge(d,'over15_ok')}}</td>
       <td>${{bar(d.score_15)}}</td>
       <td>${{gradeHtml(d.grade_15)}}</td>
+      <td class="mono" style="color:var(--blue)">${{d.exg_tot||'—'}}</td>
       <td>${{via(d.via)}}</td>
     </tr>`;
   }}).join('');
@@ -1200,7 +1211,7 @@ function renderOver15(date,jogos){{
 function renderOver25(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over25');
   // Under 3.5: sort by score_u35, fallback to score_u45
-  const ru35=[...jogos].sort((a,b)=>(b.score_u35||b.score_u45||0)-(a.score_u35||a.score_u45||0));
+  const ru35=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_u35||d.grade_u45||getPalpiteGrade(d),d=>d.score_u35||d.score_u45||0));
   el.innerHTML=`
     <div class="callout ok"><strong>Under 3.5 Gols</strong> · Foco em jogos de baixa produção ofensiva. Modelo Poisson via xG.</div>
     <div class="tbl-wrap"><table>
@@ -1231,8 +1242,8 @@ function renderOver25(date,jogos){{
 // ── Escanteios ─────────────────────────────────────────────────────
 function renderEsc(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-escanteios');
-  const r75=[...jogos].sort((a,b)=>b.score_esc75-a.score_esc75);
-  const r85=[...jogos].sort((a,b)=>b.score_esc85-a.score_esc85);
+  const r75=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
+  const r85=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc85||getPalpiteGrade(d),d=>d.score_esc85));
   function escRows(rows,mktKey){{
     return rows.slice(0,15).map((d,i)=>{{
       const rc=rowClass(d,mktKey);
@@ -1263,18 +1274,150 @@ function renderEsc(date,jogos){{
 // ── Cartões ────────────────────────────────────────────────────────
 function renderCart(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-cartoes');
-  const rows=[...jogos].sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a)).map(d=>{{
-    const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
-    const rc=rowClass(d,mktKey);
-    return`<tr class="${{rc}}">
-      ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
-      <td class="td-conf">${{gradeHtml(getPalpiteGrade(d))}}</td>
-      <td class="td-palpite">${{getPalpiteMkt(d)}}</td>
-      <td>${{bar(d.score_15)}}</td><td>${{bar(d.score_esc85)}}</td><td>${{bar(d.score_cards25)}}</td>
-      ${{placarCell(d)}}
-      <td>${{resBadge(d,mktKey)}}</td>
-    </tr>`;
-  }}).join('');
+  const rows=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_cart25||getPalpiteGrade(d),d=>d.score_cards25));
+  el.innerHTML=`
+    <div class="callout ok"><strong>Cartões Over 2.5 / Over 3.5</strong> · Alta consistência observada.</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr>
+        <th>#</th><th>Jogo</th><th>Hora</th>
+        <th style="color:var(--yellow)">O2.5%</th>
+        <th style="color:var(--orange)">O3.5%</th>
+        <th>Real</th><th>Resultado</th>
+        <th>Score 2.5</th><th>Confiança</th><th>Score 3.5</th><th>Média</th>
+      </tr></thead>
+      <tbody>${{rows.map((d,i)=>{{
+        const rc=rowClass(d,'cart25_ok');
+        const res=getResultado(d);
+        const cartReal=res&&res.cards_total!=null?`<td class="mono" style="color:var(--yellow);font-weight:700;font-size:15px">${{res.cards_total}}</td>`:'<td class="mono muted">—</td>';
+        const p25color=d.over25_cards>=85?'var(--green)':d.over25_cards>=75?'var(--blue)':'var(--orange)';
+        const p35color=d.over35_cards>=75?'var(--green)':d.over35_cards>=60?'var(--blue)':'var(--muted)';
+        return`<tr class="${{rc}}">
+          <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
+          <td class="mono muted">${{d.hora}}</td>
+          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p25color}}">${{d.over25_cards||'—'}}%</span></td>
+          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p35color}}">${{d.over35_cards||'—'}}%</span></td>
+          ${{cartReal}}<td>${{resBadge(d,'cart25_ok')}}</td>
+          <td>${{bar(d.score_cards25)}}</td><td>${{gradeHtml(d.grade_cart25)}}</td>
+          <td>${{bar(d.score_cards35,70)}}</td>
+          <td class="mono" style="color:var(--yellow)">${{d.avg_cards||'—'}}</td>
+        </tr>`;
+      }}).join('')}}</tbody>
+    </table></div>`;
+}}
+
+// ── Bilhetes ───────────────────────────────────────────────────────
+function gerarBilhetes(jogos){{
+  // Candidatos: apenas A+/A — qualidade como único critério
+  const altaConf = jogos
+    .filter(j=>getPalpiteGrade(j)==='A+'||getPalpiteGrade(j)==='A')
+    .sort(sortByGrade)
+    .map(j=>{{
+      const oddVal = parseFloat(oddMkt(j))||null;
+      return {{
+        jogo:j.jogo, liga:j.liga, hora:j.hora,
+        mkt:getPalpiteMkt(j), score:getPalpiteScore(j), grade:getPalpiteGrade(j),
+        oddVal, resultado:j.resultado, acertos:j.acertos||{{}},
+      }};
+    }});
+
+  function montar(pool, min=2){{
+    if(pool.length < min) return null;
+    const oddTotal = pool.reduce((acc,s)=>acc*(s.oddVal||1),1);
+    return {{sels:pool, oddTotal:Math.round(oddTotal*100)/100}};
+  }}
+
+  // Bilhete do Dia — só A+ score>=90%, máx 8
+  const diaPool = altaConf.filter(x=>x.grade==='A+'&&x.score>=90).slice(0,8);
+  const bDia = diaPool.length>=2 ? {{
+    sels:diaPool,
+    oddTotal:Math.round(diaPool.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100
+  }} : null;
+
+  // Bilhete 1 — Premium: todos A+/A por score
+  const b1 = montar([...altaConf]);
+
+  // Bilhete 2 — Só A+: filtro mais restrito
+  const somenteAplus = altaConf.filter(x=>x.grade==='A+');
+  const b2 = somenteAplus.length>=2 ? montar(somenteAplus) : null;
+
+  const bilhetes = [];
+  const seen = new Set();
+  const defs = [
+    ['b1', b1, 'bilhete-premium',     '🥇 Premium — Todos A+/A por Score'],
+    ['b2', b2, 'bilhete-conservador', '⭐ Confiança Alta — Só A+'],
+  ];
+  for(const [tipo, b, cls, label] of defs){{
+    if(!b) continue;
+    const key = b.sels.map(s=>s.jogo+s.mkt).sort().join('|');
+    if(seen.has(key)) continue;
+    seen.add(key);
+    bilhetes.push({{tipo, b, cls, label}});
+  }}
+  return {{bilhetes, bilheteDia: bDia}};
+}}
+function avaliarBilhete(sels, confirmado){{
+  if(!confirmado) return {{status:'pending', acertos:0, total:sels.length}};
+  let acertos=0, erros=0, sd=0;
+  for(const s of sels){{
+    const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
+    const res = s.resultado;
+    if(!res){{ sd++; continue; }}
+    const ok = res[mktKey];
+    if(ok===true) acertos++;
+    else if(ok===false) erros++;
+    else sd++;
+  }}
+  if(erros>0) return {{status:'loss', acertos, erros, sd, total:sels.length}};
+  if(sd>0) return {{status:'partial', acertos, erros, sd, total:sels.length}};
+  return {{status:'win', acertos, erros:0, sd:0, total:sels.length}};
+}}
+
+function renderBilhetes(date, jogos){{
+  const el = document.getElementById('mkt-'+date+'-bilhetes');
+  const confirmado = isConfirmado(date);
+  const snap=(ALL_DATA[date]||{{}}).bilhetes_snapshot;
+  const resultado = snap || gerarBilhetes(jogos);
+  const {{bilhetes, bilheteDia}} = resultado;
+
+  if((!bilhetes || bilhetes.length===0) && !bilheteDia){{
+    el.innerHTML=`<div class="empty">Nenhum jogo com dados suficientes para gerar bilhetes hoje.</div>`;
+    return;
+  }}
+
+  // Bilhete do Dia
+  let diaHtml = '';
+  if(bilheteDia){{
+    const av = avaliarBilhete(bilheteDia.sels, confirmado);
+    const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
+    const oddColor = !bilheteDia.oddTotal?'var(--muted)':bilheteDia.oddTotal>=5?'var(--green)':bilheteDia.oddTotal>=3?'var(--yellow)':'var(--orange)';
+    const scoreMedia = Math.round(bilheteDia.sels.reduce((a,s)=>a+s.score,0)/bilheteDia.sels.length);
+    const diaHeader = `<div class="bilhete-row" style="border-bottom:1px solid rgba(34,197,94,.2);margin-bottom:4px;padding-bottom:6px">
+      <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
+      <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
+      <span class="bilhete-mkt" style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.7px">Mercado</span>
+      <div class="bilhete-score-bar" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Confiança</div>
+      <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
+      <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
+    </div>`;
+    const rows = bilheteDia.sels.map((s,i)=>{{
+      const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
+      const res = s.resultado;
+      let resHtml = '<span class="res-badge pending">⏳</span>';
+      if(confirmado && res){{
+        const ok = res[mktKey];
+        if(ok===true) resHtml='<span class="res-badge hit">✓ GREEN</span>';
+        else if(ok===false) resHtml='<span class="res-badge miss">✗ RED</span>';
+        else resHtml='<span class="res-badge pending">⚠ Não confirmado</span>';
+      }}
+      return`<div class="bilhete-row">
+        <span class="bilhete-num">${{i+1}}</span>
+        <div style="flex:1;min-width:0"><div class="bilhete-jogo">${{s.jogo}}</div><div class="bilhete-liga">${{s.liga}} · ${{s.hora}}</div></div>
+        <span class="bilhete-mkt">${{s.mkt}}</span>
+        <div class="bilhete-score-bar">${{bar(s.score,60)}}</div>
+        <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
+        <div class="bilhete-res">${{resHtml}}</div>
+      </div>`;
+    }}).join('');
     let statusHtml = '';
     if(!confirmado) statusHtml='<span class="bilhete-status" style="color:var(--muted)">⏳ Aguardando</span>';
     else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)">✅ GREEN! Odd: ${{bilheteDia.oddTotal.toFixed(2)}}</span>`;
@@ -1378,11 +1521,11 @@ function renderHistoricoDia(date,jogos){{
   const stats=(ALL_DATA[date]||{{}}).resultado_stats||{{}};
 
   if(!conf){{
-    const rows=jogos.sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a)).map(d=>{{
+    const rows=[...jogos].sort(sortByGrade).map(d=>{{
       const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       return`<tr class="row-pending">
         ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
-        <td class="td-conf">${{gradeHtml(getPalpiteGrade(d))}}</td>
+        <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${{getPalpiteMkt(d)}}</td>
         <td>${{bar(getPalpiteScore(d))}}</td>
         <td><span class="res-badge pending">⏳ Aguardando</span></td>
@@ -1413,7 +1556,7 @@ function renderHistoricoDia(date,jogos){{
   }}).join('');
 
   // Tabela completa com resultados
-  const rows=jogos.sort((a,b)=>getPalpiteScore(b)-getPalpiteScore(a)).map(d=>{{
+  const rows=[...jogos].sort(sortByGrade).map(d=>{{
     const res=getResultado(d);
     const ac=d.acertos||{{}};
     const badges=Object.entries(ac).map(([mkt,info])=>{{
@@ -1936,5 +2079,3 @@ switchDate(targetDate);
 
 if __name__ == '__main__':
     gerar_site()
-
-
