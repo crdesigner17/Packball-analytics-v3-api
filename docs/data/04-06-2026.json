@@ -1426,7 +1426,9 @@
       "justif_cards": "Média 4.0 cart · O2.5: 100.0% · O3.5: 100.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A+",
-      "palpite_score": 90.0
+      "palpite_score": 90.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "04-06-2026",
@@ -1533,7 +1535,9 @@
       "justif_cards": "Média 2.145 cart · O2.5: 21.45% · O3.5: 14.3%",
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "B",
-      "palpite_score": 67.2
+      "palpite_score": 67.2,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -2369,10 +2373,10 @@
       "taxa": null
     },
     "Cart 3.5": {
-      "palpites": 1,
+      "palpites": 0,
       "acertos": 0,
       "erros": 0,
-      "sem_dados": 1,
+      "sem_dados": 0,
       "taxa": null
     }
   },
