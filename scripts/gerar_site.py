@@ -418,6 +418,18 @@ tbody td{{padding:9px 12px;vertical-align:middle}}
 .muted{{color:var(--muted)}}
 .td-conf{{text-align:center}}
 .td-palpite{{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}}
+.alt-mkts{{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;align-items:center}}
+.alt-label{{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;width:100%}}
+.alt-badge{{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--border);background:rgba(255,255,255,.045);color:var(--text2);border-radius:5px;padding:3px 6px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1;white-space:nowrap}}
+.alt-badge strong{{color:var(--green);font-weight:800}}
+.alt-badge.primary{{border-color:rgba(37,99,235,.45);background:rgba(37,99,235,.12);color:#BFDBFE}}
+.alt-badge.protect{{border-color:rgba(0,200,150,.35);background:rgba(0,200,150,.08);color:var(--green)}}
+.alt-badge.hit{{border-color:rgba(0,200,150,.42);background:rgba(0,200,150,.12);color:var(--green)}}
+.alt-badge.miss{{border-color:rgba(239,68,68,.42);background:rgba(239,68,68,.12);color:var(--red)}}
+.alt-badge.pending{{color:var(--muted)}}
+.alt-res{{font-size:9px;font-weight:800;margin-left:2px}}
+.alt-cell{{min-width:170px;max-width:260px}}
+.top-card .alt-mkts{{margin-top:10px}}
 
 /* BAR */
 .bar-wrap{{display:flex;align-items:center;gap:6px;min-width:105px}}
@@ -474,6 +486,8 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .bilhete-premium::before{{background:linear-gradient(90deg,var(--green),var(--teal))}}
 .bilhete-equilibrado::before{{background:linear-gradient(90deg,var(--yellow),var(--orange))}}
 .bilhete-conservador::before{{background:linear-gradient(90deg,var(--blue),var(--purple))}}
+.bilhete-bingo::before{{background:linear-gradient(90deg,var(--yellow),var(--green),var(--blue))}}
+.bilhete-bingo{{border-color:rgba(245,158,11,.32);background:linear-gradient(180deg,rgba(245,158,11,.07),rgba(6,11,20,.02)),var(--s1)}}
 .bilhete-win::after{{content:'';position:absolute;inset:0;background:rgba(0,200,150,.04);border:1px solid rgba(0,200,150,.2);border-radius:11px;pointer-events:none}}
 .bilhete-loss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.2);border-radius:11px;pointer-events:none}}
 .bilhete-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}}
@@ -491,6 +505,9 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .bilhete-res{{width:80px;flex-shrink:0;text-align:right}}
 .bilhete-footer{{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;gap:6px}}
 .bilhete-sels{{font-size:11px;color:var(--muted)}}
+.bilhete-grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}}
+.bilhete-grid .bilhete-card{{margin-bottom:0;height:100%}}
+@media(max-width:920px){{.bilhete-grid{{grid-template-columns:1fr}}}}
 .bilhete-status{{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}}
 
 /* PANELS */
@@ -975,6 +992,20 @@ function oddMktLabel(mkt){{
   if(mkt==='Under 4.5')     return'Odd U4.5';
   return'Odd';
 }}
+
+function oddForMarket(d,mkt){{
+  let val=null;
+  if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15;
+  else if(mkt==='Over 2.5') val=d.odds_o25;
+  else if(mkt==='Cart 2.5') val=d.odds_cards_25;
+  else if(mkt==='Cart 3.5') val=d.odds_cards_35;
+  else if(mkt==='Esc 7.5')  val=d.odds_corners_75;
+  else if(mkt==='Esc 8.5')  val=d.odds_corners_85;
+  else if(mkt==='Under 3.5'||mkt==='Under 4.5') val=d.odds_u45;
+  if(!val) return null;
+  const n=parseFloat(val);
+  return Number.isFinite(n)?n:null;
+}}
 function via(v){{
   if(v==='Via 1')return'<span class="via v1">VIA1</span>';
   if(v==='Via 2')return'<span class="via v2">VIA2</span>';
@@ -1110,6 +1141,49 @@ function underMarketPick(d){{
   return null;
 }}
 
+function approvedMarkets(d){{
+  const mkts = [];
+  function push(mkt,key,score,grade,cls){{
+    if(score == null) return;
+    mkts.push({{mkt,key,score,grade:grade||gradeFromScore(score),cls:cls||''}});
+  }}
+  if((d.score_15||0) >= MKT_MIN['Over 1.5'] && d.passou_filtro) push('Over 1.5','over15_ok',d.score_15,d.grade_15,'primary');
+  if((d.score_25||0) >= MKT_MIN['Over 2.5']) push('Over 2.5','over25_ok',d.score_25,d.grade_25);
+  if((d.score_btts||0) >= MKT_MIN['BTTS']) push('BTTS','btts',d.score_btts,d.grade_btts);
+  if((d.score_05ht||0) >= MKT_MIN['Over 0.5 HT']) push('Over 0.5 HT','over05_ht_ok',d.score_05ht,d.grade_05ht);
+  const under = underMarketPick(d);
+  if(under) push(under.mkt,under.key,under.score,under.grade,'protect');
+  if((d.score_esc75||0) >= MKT_MIN['Esc 7.5']) push('Esc 7.5','esc75_ok',d.score_esc75,d.grade_esc75);
+  if((d.score_esc85||0) >= MKT_MIN['Esc 8.5']) push('Esc 8.5','esc85_ok',d.score_esc85,d.grade_esc85);
+  if((d.score_cards25||0) >= MKT_MIN['Cart 2.5']) push('Cart 2.5','cart25_ok',d.score_cards25,d.grade_cart25);
+  if((d.score_cards35||0) >= MKT_MIN['Cart 3.5']) push('Cart 3.5','cart35_ok',d.score_cards35,d.grade_cart35);
+  return mkts.sort((a,b)=>(b.score||0)-(a.score||0));
+}}
+
+function gradeFromScore(score){{
+  if(score>=88)return'A+';
+  if(score>=80)return'A';
+  if(score>=70)return'B';
+  if(score>=60)return'C';
+  return'D';
+}}
+
+function approvedMarketsHtml(d, opts){{
+  opts = opts || {{}};
+  const primary = opts.primary || getPalpiteMkt(d);
+  const max = opts.max || 4;
+  const mkts = approvedMarkets(d).filter(x=>x.mkt!==primary).slice(0,max);
+  if(!mkts.length) return opts.empty ? '<span class="muted" style="font-size:11px">Sem alternativas</span>' : '';
+  const label = opts.label === false ? '' : '<span class="alt-label">Também aprovado</span>';
+  const res = getResultado(d);
+  return `<div class="alt-mkts">${{label}}${{mkts.map(x=>{{
+    const ok = res ? resultOk(res,x.key) : null;
+    const stCls = ok===true ? 'hit' : ok===false ? 'miss' : res ? 'pending' : '';
+    const stTxt = ok===true ? 'GREEN' : ok===false ? 'RED' : res ? 'S/D' : '';
+    return `<span class="alt-badge ${{x.cls}} ${{stCls}}">${{x.mkt}} <strong>${{pctText(x.score)}}</strong>${{stTxt?`<span class="alt-res">${{stTxt}}</span>`:''}}</span>`;
+  }}).join('')}}</div>`;
+}}
+
 function cardOverlayClass(jogo){{
   const res=getResultado(jogo);
   if(!res)return'';
@@ -1128,6 +1202,12 @@ function renderVisao(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-visao');
   const conf=isConfirmado(date);
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
+  const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
+  const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
+  const enrichSnap = item => {{
+    const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
+    return {{...full, ...item, palpite_mkt:item.mkt||full.palpite_mkt||full.best_mkt, palpite_grade:item.grade||full.palpite_grade||full.best_grade, palpite_score:item.score??full.palpite_score??full.best_score}};
+  }};
   const a15=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).length;
   const aesc=jogos.filter(d=>d.score_esc75>=75).length;
   const acart=jogos.filter(d=>d.score_cards25>=75).length;
@@ -1157,7 +1237,7 @@ function renderVisao(date,jogos){{
   </div>
   <div id="kpi-panel-${{date}}" style="display:none"></div>`;
 
-  const top=[...(snap.length?snap:jogos)].sort(sortByGrade).slice(0,5);
+  const top=[...(snap.length?snap.map(enrichSnap):jogos)].sort(sortByGrade).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{{
     const c=col(getPalpiteScore(d));
@@ -1169,6 +1249,7 @@ function renderVisao(date,jogos){{
       <div class="top-jogo">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div>
       <div class="top-hora">🕐 ${{d.hora}}</div>
       <div class="top-mkt">${{getPalpiteMkt(d)}}</div>
+      ${{approvedMarketsHtml(d, {{max:3}})}}
       <div class="top-bottom">
         <div class="top-score" style="color:${{c}}">${{getPalpiteScore(d)}}%</div>
         <div class="top-grade-block">
@@ -1188,6 +1269,7 @@ function renderVisao(date,jogos){{
       <td class="td-conf">${{gradeHtml(getPalpiteGrade(d))}}</td>
       <td class="td-palpite">${{getPalpiteMkt(d)}}</td>
       <td class="mono" style="color:${{col(getPalpiteScore(d))}};font-weight:700">${{pctText(getPalpiteScore(d))}}</td>
+      <td class="alt-cell">${{approvedMarketsHtml(d, {{label:false, max:3, empty:true}})}}</td>
       <td class="mono" style="color:${{col(d.score_15)}};font-weight:700">${{pctText(d.score_15)}}</td>
       <td class="mono" style="color:${{col(d.score_esc75)}};font-weight:700">${{pctText(d.score_esc75)}}</td>
       <td class="mono" style="color:${{col(d.score_cards25)}};font-weight:700">${{pctText(d.score_cards25)}}</td>
@@ -1202,7 +1284,7 @@ function renderVisao(date,jogos){{
     <div class="top-grid">${{t5}}</div>
     <div class="sec-title">📋 Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Palpite</th><th>Score Palpite</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Melhor</th><th>Score</th><th>Alternativas</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
 }}
@@ -1211,7 +1293,13 @@ function renderVisao(date,jogos){{
 function renderRanking(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-ranking');
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
-  const base=snap.length?snap:jogos;
+  const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
+  const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
+  const enrichSnap = item => {{
+    const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
+    return {{...full, ...item, palpite_mkt:item.mkt||full.palpite_mkt||full.best_mkt, palpite_grade:item.grade||full.palpite_grade||full.best_grade, palpite_score:item.score??full.palpite_score??full.best_score}};
+  }};
+  const base=snap.length?snap.map(enrichSnap):jogos;
   const sorted=[...base].sort(sortByGrade);
   const groups=[
     {{title:'Confian&ccedil;a Alta / M&eacute;dia', items:sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A')}},
@@ -1230,6 +1318,7 @@ function renderRanking(date,jogos){{
         <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
         <td class="td-palpite">${{getPalpiteMkt(d)}}</td>
         <td class="mono" style="color:${{col(getPalpiteScore(d))}};font-weight:700">${{pctText(getPalpiteScore(d))}}</td>
+        <td class="alt-cell">${{approvedMarketsHtml(d, {{label:false, max:3, empty:true}})}}</td>
         ${{placarCell(d)}}
         <td>${{resBadge(d,mktKey)}}</td>
       </tr>`;
@@ -1237,7 +1326,7 @@ function renderRanking(date,jogos){{
     return`<div class="ranking-col">
       <div class="sec-title">${{group.title}}</div>
       <div class="tbl-wrap"><table>
-        <thead><tr><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Palpite</th><th>Score</th><th>Placar</th><th>Resultado</th></tr></thead>
+        <thead><tr><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Melhor</th><th>Score</th><th>Alternativas</th><th>Placar</th><th>Resultado</th></tr></thead>
         <tbody>${{rows}}</tbody>
       </table></div>
     </div>`;
@@ -1427,6 +1516,33 @@ function gerarBilhetes(jogos){{
   }}
   return {{bilhetes, bilheteDia: bDia}};
 }}
+
+function gerarBingoBilhetes(jogos){{
+  const combos = jogos.map(j=>{{
+    const aprovados = approvedMarkets(j);
+    const gols = aprovados.find(x=>x.mkt==='Over 1.5') || aprovados.find(x=>x.mkt==='Over 2.5');
+    const canto = aprovados.find(x=>x.mkt==='Esc 7.5') || aprovados.find(x=>x.mkt==='Esc 8.5');
+    if(!gols || !canto) return null;
+    const sels = [gols,canto].map(x=>({{
+      jogo:j.jogo, liga:j.liga, hora:j.hora,
+      mkt:x.mkt, score:x.score, grade:x.grade,
+      oddVal:oddForMarket(j,x.mkt), resultado:j.resultado,
+      acertos:j.acertos||{{}},
+    }}));
+    const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
+    const oddTotal = Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
+    return {{
+      tipo:'bingo',
+      b:{{sels, oddTotal}},
+      cls:'bilhete-bingo',
+      label:'🎯 Bingo — Gol + Escanteio no mesmo jogo',
+      scoreMedio,
+    }};
+  }}).filter(Boolean)
+    .sort((a,b)=>(b.scoreMedio-a.scoreMedio)||((b.b.oddTotal||1)-(a.b.oddTotal||1)))
+    .slice(0,3);
+  return combos;
+}}
 function avaliarBilhete(sels, confirmado){{
   if(!confirmado) return {{status:'pending', acertos:0, total:sels.length}};
   let acertos=0, erros=0, sd=0;
@@ -1450,8 +1566,10 @@ function renderBilhetes(date, jogos){{
   const snap=(ALL_DATA[date]||{{}}).bilhetes_snapshot;
   const resultado = snap || gerarBilhetes(jogos);
   const {{bilhetes, bilheteDia}} = resultado;
+  const bingoBilhetes = gerarBingoBilhetes(jogos);
+  const todosBilhetes = [...(bilhetes||[]), ...bingoBilhetes];
 
-  if((!bilhetes || bilhetes.length===0) && !bilheteDia){{
+  if((!todosBilhetes || todosBilhetes.length===0) && !bilheteDia){{
     el.innerHTML=`<div class="empty">Nenhum jogo com dados suficientes para gerar bilhetes hoje.</div>`;
     return;
   }}
@@ -1512,7 +1630,7 @@ function renderBilhetes(date, jogos){{
     <div class="sec-title">📋 Todos os Bilhetes</div>`;
   }}
 
-  const html = bilhetes.map((item)=>{{ const {{tipo, b, cls, label}} = item;
+  const html = todosBilhetes.map((item)=>{{ const {{tipo, b, cls, label}} = item;
     const av = avaliarBilhete(b.sels, confirmado);
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
     const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
@@ -1583,7 +1701,7 @@ function renderBilhetes(date, jogos){{
     ? '<div class="callout ok"><strong>✅ Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
     : '<div class="callout info"><strong>🎯 Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
 
-  el.innerHTML = callout + diaHtml + html;
+  el.innerHTML = callout + diaHtml + `<div class="bilhete-grid">${{html}}</div>`;
 }}
 
 // ── Resultados do Dia ──────────────────────────────────────────────
