@@ -248,7 +248,8 @@ def processar_confirmacao(date_str_api, resultados_api, data_json):
 
         acertos    = {}
 
-        if palpite_grade in GRADES_OFICIAIS and palpite_mkt in MKT_RESULTADO:
+        palpite_filtro_ok = palpite_mkt != 'Under 3.5' or jogo.get("under35_filter", False)
+        if palpite_grade in GRADES_OFICIAIS and palpite_mkt in MKT_RESULTADO and palpite_filtro_ok:
             campo_res = MKT_RESULTADO[palpite_mkt]
             acertou   = resultado.get(campo_res)
             score_field = MKT_SCORE.get(palpite_mkt)
@@ -273,6 +274,8 @@ def processar_confirmacao(date_str_api, resultados_api, data_json):
         for mkt, cfg in MERCADOS_TODOS.items():
             score    = jogo.get(cfg["score"], 0) or 0
             filtro_ok = (not cfg["filtro"]) or jogo.get("passou_filtro", False)
+            if mkt == 'Under 3.5':
+                filtro_ok = filtro_ok and jogo.get("under35_filter", False)
             if score >= cfg["min"] and filtro_ok:
                 campo_res = MKT_RESULTADO.get(mkt)
                 acertou   = resultado.get(campo_res) if campo_res else None
