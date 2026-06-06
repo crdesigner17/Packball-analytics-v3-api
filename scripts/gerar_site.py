@@ -376,12 +376,6 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .top-card{{width:100%;min-width:0;background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}}
 .top-card:hover{{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}}
 .top-card:active{{transform:translateY(0);box-shadow:none}}
-.top-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px}}
-.tc-aplus::before{{background:linear-gradient(90deg,var(--green),var(--blue))}}
-.tc-a::before{{background:linear-gradient(90deg,var(--green),var(--teal))}}
-.tc-b::before{{background:linear-gradient(90deg,var(--blue),var(--purple))}}
-.tc-c::before{{background:linear-gradient(90deg,var(--orange),var(--yellow))}}
-.tc-d::before{{background:linear-gradient(90deg,var(--red),#dc2626)}}
 /* resultado overlay no card */
 .tc-hit::after{{content:'';position:absolute;inset:0;background:rgba(0,200,150,.06);border:1px solid rgba(0,200,150,.25);border-radius:11px;pointer-events:none}}
 .tc-miss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-radius:11px;pointer-events:none}}
@@ -495,21 +489,154 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .cpyr-val{{min-width:26px}}
 
 /* HISTÓRICO */
-.hist-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:20px}}
-.hist-mkt-card{{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px 14px;transition:all .2s;cursor:default}}
-.hist-mkt-card:hover{{border-color:var(--blue);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}}
-.hist-mkt-name{{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600}}
-.hist-taxa-val{{font-size:20px;font-weight:800;line-height:1}}
-.hist-detail{{font-size:10px;color:var(--muted);margin-top:3px}}
-.hist-bar-track{{height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:8px;overflow:hidden}}
-.hist-bar-fill{{height:100%;border-radius:2px}}
-/* timeline por dia */
-.day-hist-row{{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}}
+.hist-page{{display:flex;flex-direction:column;gap:12px}}
+.hist-hero{{background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(124,58,237,.10) 48%,rgba(0,200,150,.08));border:1px solid var(--border);border-radius:12px;padding:14px 16px;display:grid;grid-template-columns:minmax(360px,1fr) minmax(260px,320px) minmax(300px,380px);gap:14px;align-items:center;box-shadow:0 10px 28px rgba(0,0,0,.22);overflow:hidden;position:relative}}
+.hist-hero::before{{content:'';position:absolute;inset:0;border-top:3px solid rgba(0,200,150,.48);pointer-events:none}}
+.hist-kicker{{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--green);margin-bottom:4px}}
+.hist-title{{font-size:20px;font-weight:800;line-height:1.15;color:var(--text)}}
+.hist-subtitle{{font-size:11px;color:var(--muted);margin-top:5px;max-width:760px;white-space:normal;line-height:1.55}}
+.hist-hero-insights{{display:grid;grid-template-columns:1fr;gap:7px}}
+.hist-insight{{background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);border-radius:9px;padding:9px 10px;min-width:0}}
+.hist-insight-label{{font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}}
+.hist-insight-value{{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-insight-rate{{font-family:'Inter',sans-serif;font-size:15px;font-weight:900;flex-shrink:0}}
+.hist-score-card{{height:100%;background:transparent;border:1px solid rgba(148,163,184,.18);border-radius:10px;padding:12px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden;box-shadow:none}}
+.hist-score-card::before{{content:'';position:absolute;left:0;top:10px;bottom:10px;width:3px;border-radius:99px;background:linear-gradient(180deg,var(--blue),var(--purple2));pointer-events:none}}
+.hist-score-card::after{{content:none}}
+.hist-score-label{{font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}}
+.hist-score-val{{font-family:'Inter',sans-serif;font-size:26px;font-weight:900;line-height:1}}
+.hist-score-note{{font-size:10px;color:var(--text2);font-family:'Inter',sans-serif;font-weight:700;margin-top:5px;white-space:nowrap}}
+.hist-eyebrow{{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--green);margin-bottom:4px}}
+.hist-hero h2{{font-size:20px;font-weight:800;line-height:1.15;color:var(--text);margin:0}}
+.hist-insight span{{display:block;font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}}
+.hist-insight strong{{display:block;font-size:12px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-insight em{{display:block;font-style:normal;font-family:'Inter',sans-serif;font-size:10px;color:var(--text2);font-weight:700;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-score-card span{{position:relative;z-index:1;font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;padding-left:4px}}
+.hist-score-card .hist-score-row{{position:relative;z-index:1;display:flex;align-items:flex-end;justify-content:space-between;gap:12px;width:100%}}
+.hist-score-card strong{{font-family:'Inter',sans-serif;font-size:32px;font-weight:900;line-height:1;letter-spacing:0;color:var(--green)}}
+.hist-score-card em{{font-style:normal;font-size:9px;color:var(--text2);font-family:'Inter',sans-serif;font-weight:800;line-height:1.25;text-align:right;white-space:normal}}
+.hist-score-card .hist-score-bar{{position:relative;z-index:1;height:6px;border-radius:999px;background:rgba(148,163,184,.14);overflow:hidden;margin-top:10px;width:100%}}
+.hist-score-card .hist-score-bar i{{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--purple2));width:var(--score-width,0%)}}
+.hist-visual{{background:linear-gradient(135deg,rgba(31,32,56,.94),rgba(19,28,49,.96));border:1px solid rgba(139,92,246,.18);border-radius:16px;padding:14px;display:grid;grid-template-columns:220px minmax(0,1fr) 240px;gap:14px;align-items:stretch;box-shadow:0 14px 36px rgba(0,0,0,.28);overflow:hidden}}
+.hist-visual-card{{background:rgba(255,255,255,.025);border:1px solid rgba(148,163,184,.10);border-radius:12px;padding:12px;min-width:0}}
+.hist-visual-title{{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:10px}}
+.hist-radial-wrap{{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;align-items:center}}
+.hist-radial{{width:118px;height:118px;border-radius:50%;position:relative;background:radial-gradient(circle at center,rgba(31,32,56,1) 0 40%,transparent 41%)}}
+.hist-radial-ring{{position:absolute;inset:var(--inset);border-radius:50%;background:conic-gradient(var(--ring-color) 0 var(--ring-deg),rgba(255,255,255,.07) var(--ring-deg) 360deg)}}
+.hist-radial-ring::after{{content:'';position:absolute;inset:8px;border-radius:50%;background:rgb(31,32,56)}}
+.hist-radial-core{{position:absolute;inset:39px;border-radius:50%;background:rgba(17,24,39,.92);border:1px solid rgba(148,163,184,.14);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;font-weight:900;color:var(--text)}}
+.hist-vlegend{{display:flex;flex-direction:column;gap:7px;min-width:0}}
+.hist-vlegend-row{{display:grid;grid-template-columns:8px minmax(0,1fr) 42px;gap:7px;align-items:center;font-size:10px;color:var(--muted)}}
+.hist-vdot{{width:8px;height:8px;border-radius:50%;background:var(--dot)}}
+.hist-vlegend-name{{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text2);font-weight:700}}
+.hist-vlegend-rate{{font-family:'Inter',sans-serif;font-weight:900;text-align:right;color:var(--rate-color)}}
+.hist-radial-bg{{fill:none;stroke:rgba(255,255,255,.055);stroke-width:7}}
+.hist-radial-ring{{fill:none;stroke-width:7;stroke-linecap:round;filter:drop-shadow(0 0 7px rgba(139,92,246,.35))}}
+.hist-radial-ring.green{{stroke:var(--green)}}
+.hist-radial-ring.yellow{{stroke:var(--yellow)}}
+.hist-radial-ring.blue{{stroke:var(--blue)}}
+.hist-vlegend-item{{display:grid;grid-template-columns:8px minmax(0,1fr) 42px;gap:7px;align-items:center;font-size:10px;color:var(--muted)}}
+.hist-vlegend-item span:nth-child(2){{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text2);font-weight:700}}
+.hist-vlegend-item strong{{font-family:'Inter',sans-serif;font-weight:900;text-align:right;color:var(--text)}}
+.hist-dot{{width:8px;height:8px;border-radius:50%;display:block}}
+.hist-dot.green{{background:var(--green)}}
+.hist-dot.yellow{{background:var(--yellow)}}
+.hist-dot.blue{{background:var(--blue)}}
+.hist-viz-svg{{width:100%;height:118px;display:block;overflow:visible}}
+.hist-viz-axis{{stroke:rgba(148,163,184,.12);stroke-width:1}}
+.hist-viz-line{{fill:none;stroke:url(#histLineGrad);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(139,92,246,.45))}}
+.hist-viz-area{{fill:url(#histAreaGrad);opacity:.8}}
+.hist-line{{width:100%;height:126px;display:block;overflow:visible}}
+.hist-line-path{{fill:none;stroke:var(--purple2);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(139,92,246,.55))}}
+.hist-line-area{{fill:rgba(124,58,237,.16)}}
+.hist-market-mini{{display:flex;flex-direction:column;gap:8px}}
+.hist-market-mini-row{{display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:8px;align-items:center}}
+.hist-market-mini-row{{grid-template-columns:minmax(0,1fr) minmax(54px,.8fr) 46px}}
+.hist-market-mini-row span{{font-size:10px;font-weight:700;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-market-mini-row div{{height:5px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden}}
+.hist-market-mini-row i{{display:block;height:100%;border-radius:99px}}
+.hist-market-mini-row strong{{font-family:'Inter',sans-serif;font-size:11px;font-weight:900;text-align:right}}
+.hist-market-mini-name{{font-size:10px;font-weight:700;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-market-mini-rate{{font-family:'Inter',sans-serif;font-size:11px;font-weight:900;text-align:right}}
+.hist-market-mini-track{{grid-column:1/3;height:5px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin-top:-4px}}
+.hist-market-mini-fill{{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--purple2))}}
+.hist-legend-note{{margin-top:10px;padding-top:9px;border-top:1px solid rgba(148,163,184,.12);font-size:9px;line-height:1.45;color:var(--muted)}}
+.hist-legend-note strong{{color:var(--text2);font-weight:800}}
+.hist-summary-grid{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}}
+.hist-summary-card{{background:var(--s1);border:1px solid var(--border);border-radius:9px;padding:10px 11px;min-width:0}}
+.hist-summary-label{{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-summary-value{{font-family:'Inter',sans-serif;font-size:21px;font-weight:800;line-height:1;color:var(--text)}}
+.hist-summary-note{{font-size:9px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-summary-card span{{display:block;font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-summary-card strong{{display:block;font-family:'Inter',sans-serif;font-size:21px;font-weight:800;line-height:1;color:var(--text)}}
+.hist-summary-card em{{display:block;font-style:normal;font-size:9px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-summary-card.ok strong{{color:var(--green)}}
+.hist-summary-card.err strong{{color:var(--red)}}
+.hist-audit-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}}
+.hist-audit-panel{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px;min-width:0;position:relative;overflow:hidden}}
+.hist-audit-panel.pro::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg,#2563eb,#7c3aed)}}
+.hist-audit-main{{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
+.hist-audit-score{{height:68px;border-radius:9px;background:linear-gradient(135deg,rgba(37,99,235,.14),rgba(0,200,150,.08));border:1px solid rgba(148,163,184,.14);display:flex;flex-direction:column;align-items:center;justify-content:center}}
+.hist-audit-panel.pro .hist-audit-score{{background:linear-gradient(135deg,rgba(37,99,235,.24),rgba(124,58,237,.18));border-color:rgba(139,92,246,.32)}}
+.hist-audit-val{{font-family:'Inter',sans-serif;font-size:20px;font-weight:800;line-height:1}}
+.hist-audit-lbl{{font-size:8px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-top:3px}}
+.hist-audit-main span{{display:block;font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}}
+.hist-audit-main strong{{display:block;font-size:12px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-audit-main em{{display:block;font-style:normal;font-size:9px;color:var(--muted);line-height:1.35;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-audit-title{{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text)}}
+.hist-audit-copy{{font-size:9px;color:var(--muted);line-height:1.35;margin-top:3px}}
+.hist-breakdown{{display:flex;flex-direction:column;gap:5px}}
+.hist-break-list{{display:flex;flex-direction:column;gap:5px}}
+.hist-break-row{{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:8px;align-items:center;padding:7px 8px;border-bottom:1px solid rgba(148,163,184,.1);border-radius:7px;border-left:3px solid transparent}}
+.hist-break-row{{grid-template-columns:minmax(0,1fr) 56px minmax(94px,auto)}}
+.hist-break-row:last-child{{border-bottom:none}}
+.hist-break-row.tone-alta{{background:linear-gradient(90deg,rgba(0,200,150,.10),transparent);border-left-color:var(--green)}}
+.hist-break-row.tone-media{{background:linear-gradient(90deg,rgba(59,130,246,.10),transparent);border-left-color:var(--blue)}}
+.hist-break-row.tone-moderado{{background:linear-gradient(90deg,rgba(245,158,11,.10),transparent);border-left-color:var(--orange)}}
+.hist-break-row.tone-pro{{background:linear-gradient(90deg,rgba(37,99,235,.12),rgba(124,58,237,.08),transparent);border-left-color:var(--purple2)}}
+.hist-break-row.green{{background:linear-gradient(90deg,rgba(0,200,150,.10),transparent);border-left-color:var(--green)}}
+.hist-break-row.yellow{{background:linear-gradient(90deg,rgba(245,158,11,.10),transparent);border-left-color:var(--yellow)}}
+.hist-break-row.blue{{background:linear-gradient(90deg,rgba(59,130,246,.10),transparent);border-left-color:var(--blue)}}
+.hist-break-row span{{font-size:11px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-break-row strong{{font-family:'Inter',sans-serif;font-size:14px;font-weight:900;text-align:right}}
+.hist-break-row em{{font-style:normal;font-size:10px;color:var(--text2);font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700;text-align:right}}
+.hist-break-row .ok{{color:var(--green)}}
+.hist-break-row .err{{color:var(--red)}}
+.hist-break-name{{font-size:11px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-break-detail{{font-size:10px;color:var(--text2);font-family:'Inter',sans-serif;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}}
+.hist-break-rate{{font-family:'Inter',sans-serif;font-size:14px;font-weight:900;text-align:right}}
+.hist-break-empty{{font-size:10px;color:var(--muted);text-align:right}}
+.hist-layout{{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:14px;align-items:start}}
+.hist-panel{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;min-width:0}}
+.hist-panel-head{{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:10px}}
+.hist-panel-title{{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text)}}
+.hist-panel-note{{font-size:10px;color:var(--muted);font-family:'Inter',sans-serif;white-space:nowrap}}
+.hist-market-list{{display:flex;flex-direction:column;gap:8px}}
+.hist-market-row{{display:grid;grid-template-columns:30px minmax(0,1fr) 86px;gap:10px;align-items:center;padding:10px;border:1px solid rgba(148,163,184,.12);border-radius:9px;background:rgba(255,255,255,.018)}}
+.hist-market-row:hover{{border-color:rgba(59,130,246,.38);background:rgba(59,130,246,.035)}}
+.hist-rank{{font-family:'Inter',sans-serif;font-size:11px;color:var(--muted);font-weight:800;text-align:center}}
+.hist-market-row strong{{display:block;font-size:13px;color:var(--text);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-market-row small{{display:block;font-size:10px;color:var(--muted);margin-top:3px;font-family:'Inter',sans-serif;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-market-row .ok{{color:var(--green)}}
+.hist-market-row .err{{color:var(--red)}}
+.hist-market-taxa{{font-family:'Inter',sans-serif;font-size:18px;font-weight:900;text-align:right}}
+.hist-mkt-name{{font-size:13px;color:var(--text);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-detail{{font-size:10px;color:var(--muted);margin-top:3px;font-family:'Inter',sans-serif}}
+.hist-rate{{text-align:right}}
+.hist-taxa-val{{font-size:21px;font-weight:800;font-family:'Inter',sans-serif;line-height:1}}
+.hist-rate-label{{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-top:2px}}
+.hist-bar-track{{height:5px;background:rgba(255,255,255,.06);border-radius:99px;margin-top:8px;overflow:hidden;grid-column:2/4}}
+.hist-bar-fill{{height:100%;border-radius:99px}}
+.hist-days{{display:flex;flex-direction:column;gap:8px}}
+.day-hist-row{{display:grid;grid-template-columns:58px minmax(0,1fr) 92px;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(148,163,184,.12)}}
 .day-hist-row:last-child{{border-bottom:none}}
-.day-hist-date{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);min-width:60px}}
-.day-hist-bar{{flex:1;height:20px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden;position:relative}}
-.day-hist-fill{{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff;min-width:2px}}
-.day-hist-info{{font-family:'JetBrains Mono',monospace;font-size:11px;min-width:90px;text-align:right}}
+.day-hist-date{{font-family:'Inter',sans-serif;font-size:11px;color:var(--text);font-weight:800}}
+.day-hist-bar{{height:22px;background:rgba(255,255,255,.045);border-radius:7px;overflow:hidden;position:relative}}
+.day-hist-fill{{height:100%;border-radius:7px;display:flex;align-items:center;padding:0 7px;font-size:10px;font-weight:800;font-family:'Inter',sans-serif;color:#fff;min-width:2px}}
+.day-hist-info{{font-family:'Inter',sans-serif;font-size:11px;text-align:right;font-weight:800}}
+.day-hist-detail{{display:block;color:var(--muted);font-size:9px;font-weight:600;margin-top:2px}}
+.hist-spark{{display:flex;align-items:flex-end;gap:4px;height:42px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}}
+.hist-spark-bar{{flex:1;min-width:5px;border-radius:3px 3px 0 0;opacity:.95}}
 
 /* BILHETES */
 .bilhete-dia{{background:linear-gradient(135deg,rgba(0,200,150,.08),rgba(37,99,235,.06));border:2px solid rgba(0,200,150,.4);border-radius:13px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden}}
@@ -552,6 +679,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .bilhete-destaques{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start;margin-bottom:18px}}
 .bilhete-destaques .bilhete-dia,.bilhete-destaques .bilhete-card{{margin-bottom:0;height:100%}}
 @media(max-width:920px){{.bilhete-grid,.bilhete-destaques{{grid-template-columns:1fr}}}}
+@media(max-width:1120px){{.hist-hero{{grid-template-columns:1fr 1fr}}.hist-hero>div:first-child{{grid-column:1/-1}}.hist-hero-insights{{grid-template-columns:1fr 1fr}}}}
 .bilhete-status{{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}}
 
 /* PANELS */
@@ -663,6 +791,11 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   margin-bottom:calc(-1 * (var(--search-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h)));
   background:var(--bg);z-index:109;pointer-events:none;flex:0 0 auto;
 }}
+.content-area.hist-mode::before{{display:none}}
+.content-area.hist-mode .history-search-global,
+.content-area.hist-mode .date-strip,
+.content-area.hist-mode .mkt-cat-bar,
+.content-area.hist-mode .sub-filter-bar{{display:none!important}}
 /* NEW DATE BAR */
 .date-strip{{
   background:var(--s1);border-bottom:1px solid var(--border);
@@ -765,6 +898,20 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   .sub-filter-bar{{padding:6px 8px}}
   .sub-filter-btn{{height:30px;padding:0 12px;font-size:12px}}
   .top-grid{{grid-template-columns:1fr}}
+  .hist-hero{{grid-template-columns:1fr;padding:13px;gap:10px}}
+  .hist-hero-insights{{grid-template-columns:1fr}}
+  .hist-score-card{{min-width:0;width:100%;height:auto;padding:12px}}
+  .hist-visual{{grid-template-columns:1fr;padding:12px;gap:10px;border-radius:12px}}
+  .hist-radial-wrap{{grid-template-columns:112px minmax(0,1fr);gap:8px}}
+  .hist-radial{{width:112px;height:112px}}
+  .hist-summary-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .hist-audit-grid{{grid-template-columns:1fr}}
+  .hist-audit-main{{grid-template-columns:88px minmax(0,1fr)}}
+  .hist-audit-score{{font-size:22px}}
+  .hist-layout{{grid-template-columns:1fr}}
+  .hist-market-row{{grid-template-columns:26px minmax(0,1fr) 72px;padding:9px}}
+  .hist-taxa-val{{font-size:18px}}
+  .day-hist-row{{grid-template-columns:52px minmax(0,1fr) 76px}}
   table{{min-width:640px}}
 }}
 </style>
@@ -1497,7 +1644,7 @@ function renderRanking(date,jogos){{
     const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
     return {{...item, ...full}};
   }};
-  const base=snap.length?snap.map(enrichSnap):jogos;
+  const base=jogos.length?jogos:(snap.length?snap.map(enrichSnap):[]);
   const sorted=[...base].sort(sortByGrade);
   const groups=[
     {{title:'Confian&ccedil;a Alta / M&eacute;dia', icon:'star', items:sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A')}},
@@ -2133,53 +2280,261 @@ function renderHistoricoGlobal(){{
     return;
   }}
 
-  // Cards por mercado
-  const mktCards=MERCADOS.filter(m=>pm[m]&&(pm[m].palpites||pm[m].p||0)>0).map(m=>{{
-    const s=pm[m];
-    const t=s.taxa;
-    const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
-    return`<div class="hist-mkt-card">
-      <div class="hist-mkt-name">${{m}}</div>
-      <div class="hist-taxa-val" style="color:${{c}}">${{t!=null?t+'%':'—'}}</div>
-      <div class="hist-detail"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{s.acertos||0}}</span> <span class="mini-stat err"><i data-lucide="circle-x"></i>${{s.erros||0}}</span> <span class="mini-stat neutral">/ ${{s.palpites||0}} palpites</span></div>
-      <div class="hist-bar-track"><div class="hist-bar-fill" style="width:${{t||0}}%;background:${{c}}"></div></div>
+  const confirmedDays=dias.filter(d=>!!(ALL_DATA[d]||{{}}).resultado_confirmado);
+  const gerados=dias.reduce((acc,d)=>acc+(((ALL_DATA[d]||{{}}).jogos||[]).length),0);
+  const auditados=(g.total_acertos||0)+(g.total_erros||0);
+  const taxa=g.taxa_geral;
+  const taxaColor=t=>t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
+  const fmtTaxa=t=>t!=null?`${{t}}%`:'—';
+  const stat=()=>({{gerados:0,auditados:0,acertos:0,erros:0}});
+  const taxaStat=s=>s.auditados>0?Math.round((s.acertos/s.auditados)*1000)/10:null;
+  const addPick=(s,j)=>{{
+    s.gerados++;
+    const key=MKT_RESULT[getPalpiteMkt(j)]||'over15_ok';
+    const ok=resultOk(getResultado(j),key);
+    if(ok===true){{s.auditados++;s.acertos++;}}
+    else if(ok===false){{s.auditados++;s.erros++;}}
+  }};
+  const mergePick=(a,b)=>{{a.gerados+=b.gerados;a.auditados+=b.auditados;a.acertos+=b.acertos;a.erros+=b.erros;return a;}};
+  const labelGrade=g=>g==='A+'?'Confiança Alta':g==='A'?'Confiança Média':g==='B'?'Moderado':g;
+  const categoryStats={{'A+':stat(),'A':stat(),'B':stat()}};
+  const top5Stats=stat();
+
+  for(const d of dias){{
+    const dayData=ALL_DATA[d]||{{}};
+    const jogos=dayData.jogos||[];
+    const snap=dayData.palpites_snapshot||[];
+    const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
+    const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
+    const enrich=item=>{{
+      const full=(item.fixture_id&&fullById.get(String(item.fixture_id)))||fullByName.get(`${{item.home}} x ${{item.away}}`)||jogos.find(j=>j.jogo===item.jogo)||{{}};
+      return {{...item,...full}};
+    }};
+    const base=jogos.length?jogos:(snap.length?snap.map(enrich):[]);
+    base.forEach(j=>{{
+      const gr=getPalpiteGrade(j);
+      if(categoryStats[gr]) addPick(categoryStats[gr],j);
+    }});
+
+    let topItems=[];
+    if((dayData.top5||[]).length){{
+      topItems=dayData.top5.map(name=>base.find(j=>j.jogo===name||`${{j.home}} x ${{j.away}}`===name)).filter(Boolean);
+    }}
+    if(!topItems.length) topItems=[...base].sort(sortByGrade).slice(0,5);
+    topItems.forEach(j=>addPick(top5Stats,j));
+  }}
+
+  const marketStats=MERCADOS.map(m=>{{
+    const s=pm[m]||{{}};
+    const acertos=s.acertos||0;
+    const erros=s.erros||0;
+    const audit=acertos+erros;
+    const t=audit>0?Math.round((acertos/audit)*1000)/10:null;
+    return {{m,acertos,erros,auditados:audit,gerados:s.palpites||s.p||audit,taxa:t}};
+  }}).filter(x=>x.gerados>0||x.auditados>0);
+
+  const bestCategory=Object.entries(categoryStats)
+    .map(([grade,s])=>({{grade,label:labelGrade(grade),...s,taxa:taxaStat(s)}}))
+    .filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados))[0]||null;
+  const bestMarket=[...marketStats].filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados))[0]||null;
+
+  const ticketStats={{geral:stat(),dia:stat(),bingo:stat(),premium:stat(),elite:stat()}};
+  const addTicket=(s,b,confirmed)=>{{
+    if(!b||!b.sels||!b.sels.length)return;
+    s.gerados++;
+    const r=avaliarBilhete(b.sels,confirmed);
+    if(r.status==='win'){{s.auditados++;s.acertos++;}}
+    else if(r.status==='loss'){{s.auditados++;s.erros++;}}
+  }};
+  const hydrateTicket=(b,jogos)=>{{
+    if(!b||!b.sels)return b;
+    const byId=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
+    const byName=new Map(jogos.map(j=>[j.jogo,j]));
+    return {{...b,sels:b.sels.map(s=>{{
+      const full=(s.fixture_id&&byId.get(String(s.fixture_id)))||byName.get(s.jogo)||null;
+      return full?{{...s,resultado:full.resultado,acertos:full.acertos||s.acertos||{{}}}}:s;
+    }})}};
+  }};
+  for(const d of dias){{
+    const dayData=ALL_DATA[d]||{{}};
+    const confirmed=!!dayData.resultado_confirmado;
+    const jogos=dayData.jogos||[];
+    const snap=dayData.bilhetes_snapshot;
+    const generated=snap||gerarBilhetes(jogos);
+    addTicket(ticketStats.dia,hydrateTicket(generated.bilheteDia,jogos),confirmed);
+    (generated.bilhetes||[]).forEach(item=>{{
+      const label=String(item.label||'').toLowerCase();
+      const tipo=String(item.tipo||'').toLowerCase();
+      const b=hydrateTicket(item.b,jogos);
+      if(label.includes('elite')||tipo==='b2') addTicket(ticketStats.elite,b,confirmed);
+      else if(label.includes('premium')||tipo==='b1') addTicket(ticketStats.premium,b,confirmed);
+    }});
+    gerarBingoBilhetes(jogos).forEach(item=>addTicket(ticketStats.bingo,hydrateTicket(item.b,jogos),confirmed));
+  }}
+  mergePick(ticketStats.geral,ticketStats.dia);
+  mergePick(ticketStats.geral,ticketStats.bingo);
+  mergePick(ticketStats.geral,ticketStats.premium);
+  mergePick(ticketStats.geral,ticketStats.elite);
+
+  const categoryItems=[
+    {{key:'A+',label:'Confiança Alta',tone:'green'}},
+    {{key:'A',label:'Confiança Média',tone:'yellow'}},
+    {{key:'B',label:'Moderado',tone:'blue'}},
+  ];
+  const categoryRows=categoryItems.map(c=>{{
+    const s=categoryStats[c.key];
+    const t=taxaStat(s);
+    return`<div class="hist-break-row ${{c.tone}}">
+      <span>${{c.label}}</span>
+      <strong style="color:${{taxaColor(t)}}">${{fmtTaxa(t)}}</strong>
+      <em><span class="ok">${{s.acertos}}✓</span> <span class="err">${{s.erros}}✗</span> · ${{s.auditados}} confirmados</em>
     </div>`;
   }}).join('');
 
-  // Timeline por dia
-  const timeline=dias.map(d=>{{
-    const dayData=ALL_DATA[d]||{{}};
-    if(!dayData.resultado_confirmado)return'';
-    const s=dayData.resultado_stats||{{}};
-    let ta=0,te=0;
-    Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
-    const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
-    const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
-    const [dd,mm]=d.split('-');
+  const top5Taxa=taxaStat(top5Stats);
+  const ticketRow=(label,s)=>{{
+    const t=taxaStat(s);
+    return`<div class="hist-break-row">
+      <span>${{label}}</span>
+      <strong style="color:${{taxaColor(t)}}">${{fmtTaxa(t)}}</strong>
+      <em><span class="ok">${{s.acertos}}✓</span> <span class="err">${{s.erros}}✗</span> · ${{s.auditados}} confirmados</em>
+    </div>`;
+  }};
+
+  const radialRows=categoryItems.map((c,i)=>{{
+    const s=categoryStats[c.key];
+    const t=taxaStat(s)||0;
+    const r=48+i*9;
+    const dash=Math.round((2*Math.PI*r)*(t/100));
+    const gap=Math.round(2*Math.PI*r)-dash;
+    return`<circle class="hist-radial-ring ${{c.tone}}" cx="74" cy="74" r="${{r}}" stroke-dasharray="${{dash}} ${{gap}}" transform="rotate(-90 74 74)"></circle>`;
+  }}).join('');
+  const radialLegend=categoryItems.map(c=>{{
+    const t=taxaStat(categoryStats[c.key]);
+    return`<div class="hist-vlegend-item"><span class="hist-dot ${{c.tone}}"></span><span>${{c.label}}</span><strong>${{fmtTaxa(t)}}</strong></div>`;
+  }}).join('');
+
+  const dayStats=confirmedDays.map(d=>{{
+    const s=ALL_DATA[d].resultado_stats||{{}};
+    let a=0,e=0;
+    Object.values(s).forEach(x=>{{a+=x.acertos||0;e+=x.erros||0;}});
+    const t=a+e>0?Math.round((a/(a+e))*1000)/10:null;
+    return {{d,a,e,t}};
+  }});
+  const linePoints=dayStats.map((x,i)=>{{
+    const denom=Math.max(1,dayStats.length-1);
+    const px=12+(i/denom)*276;
+    const py=104-((x.t||0)/100)*82;
+    return `${{px}},${{py}}`;
+  }}).join(' ');
+  const areaPoints=linePoints?`12,112 ${{linePoints}} 288,112`:'';
+  const dayBars=dayStats.slice(-10).map(x=>{{
+    const [dd,mm]=x.d.split('-');
+    const c=taxaColor(x.t);
     return`<div class="day-hist-row">
       <span class="day-hist-date">${{dd}}/${{mm}}</span>
-      <div class="day-hist-bar">
-        <div class="day-hist-fill" style="width:${{t||0}}%;background:${{c}}">${{t!=null&&t>15?t+'%':''}}</div>
-      </div>
-      <span class="day-hist-info" style="color:${{c}}">${{t!=null?t+'%':'—'}} <span style="color:var(--muted);display:inline-flex;align-items:center;gap:4px"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{ta}}</span><span class="mini-stat err"><i data-lucide="circle-x"></i>${{te}}</span></span></span>
+      <div class="day-hist-bar"><div class="day-hist-fill" style="width:${{x.t||0}}%;background:${{c}}"></div></div>
+      <span class="day-hist-info" style="color:${{c}}">${{fmtTaxa(x.t)}} · <span class="ok">${{x.a}}✓</span> <span class="err">${{x.e}}✗</span></span>
     </div>`;
   }}).join('');
 
-  const taxa=g.taxa_geral;
-  const cG=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
+  const marketRows=[...marketStats].filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados))
+    .map((s,i)=>`<div class="hist-market-row">
+      <span class="hist-rank">${{i+1}}</span>
+      <div><strong>${{s.m}}</strong><small><span class="ok">${{s.acertos}}✓</span> <span class="err">${{s.erros}}✗</span> · ${{s.auditados}} confirmados</small></div>
+      <span class="hist-market-taxa" style="color:${{taxaColor(s.taxa)}}">${{fmtTaxa(s.taxa)}}</span>
+    </div>`).join('');
+  const marketMini=[...marketStats].filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados)).slice(0,4)
+    .map(s=>`<div class="hist-market-mini-row"><span>${{s.m}}</span><div><i style="width:${{s.taxa||0}}%;background:${{taxaColor(s.taxa)}}"></i></div><strong>${{fmtTaxa(s.taxa)}}</strong></div>`).join('');
 
+  const cG=taxaColor(taxa);
   el.innerHTML=`
-    <div class="kpi-row" style="margin-bottom:20px">
-      <div class="kpi"><div class="kpi-val" style="color:${{cG}}">${{taxa!=null?taxa+'%':'—'}}</div><div class="kpi-lbl">Taxa Geral</div></div>
-      <div class="kpi"><div class="kpi-val g">${{g.total_acertos}}</div><div class="kpi-lbl">Total Acertos</div></div>
-      <div class="kpi"><div class="kpi-val r">${{g.total_erros}}</div><div class="kpi-lbl">Total Erros</div></div>
-      <div class="kpi"><div class="kpi-val b">${{g.total_palpites}}</div><div class="kpi-lbl">Total Palpites</div></div>
+    <div class="hist-page">
+      <div class="hist-hero">
+        <div>
+          <div class="hist-eyebrow">Histórico Global</div>
+          <h2>Performance validada por resultados reais.</h2>
+          <div class="hist-subtitle">Gerados: todos os palpites disponibilizados na plataforma. Confirmados: apenas previsões com resultado final definido (GREEN ou RED).</div>
+        </div>
+        <div class="hist-score-card" style="--score-width:${{taxa||0}}%">
+          <span>Taxa geral</span>
+          <div class="hist-score-row">
+            <strong>${{fmtTaxa(taxa)}}</strong>
+            <em>Base estatística:<br>${{auditados}} previsões</em>
+          </div>
+          <div class="hist-score-bar"><i></i></div>
+        </div>
+        <div class="hist-hero-insights">
+          <div class="hist-insight"><span>Melhor categoria</span><strong>${{bestCategory?bestCategory.label:'—'}}</strong><em>${{bestCategory?fmtTaxa(bestCategory.taxa)+' · '+bestCategory.auditados+' confirmados':'sem amostra'}}</em></div>
+          <div class="hist-insight"><span>Melhor mercado</span><strong>${{bestMarket?bestMarket.m:'—'}}</strong><em>${{bestMarket?fmtTaxa(bestMarket.taxa)+' · '+bestMarket.auditados+' confirmados':'sem amostra'}}</em></div>
+        </div>
+      </div>
 
-    </div>
-    <div class="sec-title"><i data-lucide="bar-chart-2"></i> Taxa por Mercado (acumulado)</div>
-    <div class="hist-grid">${{mktCards}}</div>
-    <div class="sec-title"><i data-lucide="calendar-days"></i> Evolução por Dia</div>
-    <div style="max-width:700px">${{timeline||'<div class="empty">Sem dias confirmados.</div>'}}</div>`;
+      <div class="hist-visual">
+        <div class="hist-visual-card">
+          <div class="hist-visual-title">Categorias</div>
+          <div class="hist-radial-wrap">
+            <svg class="hist-radial" viewBox="0 0 148 148" aria-hidden="true">
+              <circle class="hist-radial-bg" cx="74" cy="74" r="66"></circle>
+              <circle class="hist-radial-bg" cx="74" cy="74" r="57"></circle>
+              <circle class="hist-radial-bg" cx="74" cy="74" r="48"></circle>
+              ${{radialRows}}
+            </svg>
+            <div class="hist-vlegend">${{radialLegend}}</div>
+          </div>
+        </div>
+        <div class="hist-visual-card">
+          <div class="hist-visual-title">Evolução dos confirmados</div>
+          <svg class="hist-line" viewBox="0 0 300 126" preserveAspectRatio="none" aria-hidden="true">
+            <polygon points="${{areaPoints}}" class="hist-line-area"></polygon>
+            <polyline points="${{linePoints}}" class="hist-line-path"></polyline>
+          </svg>
+        </div>
+        <div class="hist-visual-card">
+          <div class="hist-visual-title">Mercados em destaque</div>
+          <div class="hist-market-mini">${{marketMini||'<div class="empty">Sem mercados confirmados.</div>'}}</div>
+        </div>
+        <div class="hist-legend-note"><strong>Legenda discreta:</strong> Confiança Alta = A+, Confiança Média = A, Moderado = B. Taxas usam somente itens confirmados com GREEN ou RED.</div>
+      </div>
+
+      <div class="hist-summary-grid">
+        <div class="hist-summary-card"><span>Gerados</span><strong>${{gerados}}</strong><em>todos os palpites disponíveis</em></div>
+        <div class="hist-summary-card"><span>Confirmados</span><strong>${{auditados}}</strong><em>com GREEN ou RED</em></div>
+        <div class="hist-summary-card ok"><span>Acertos</span><strong>${{g.total_acertos||0}}</strong><em>palpites confirmados</em></div>
+        <div class="hist-summary-card err"><span>Erros</span><strong>${{g.total_erros||0}}</strong><em>palpites confirmados</em></div>
+        <div class="hist-summary-card"><span>Dias</span><strong>${{confirmedDays.length}}</strong><em>dias confirmados</em></div>
+      </div>
+
+      <div class="hist-audit-grid">
+        <div class="hist-audit-panel pro">
+          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{cG}}">${{fmtTaxa(taxa)}}</div><div><span>Melhores Previsões</span><strong>Taxas por confiança</strong><em>base completa dos jogos confirmados</em></div></div>
+          <div class="hist-break-list">${{categoryRows}}</div>
+        </div>
+        <div class="hist-audit-panel">
+          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(top5Taxa)}}">${{fmtTaxa(top5Taxa)}}</div><div><span>Top 5 do Dia</span><strong>Taxa geral</strong><em>${{top5Stats.auditados}} confirmados de ${{top5Stats.gerados}} gerados</em></div></div>
+          <div class="hist-break-list">${{ticketRow('Top 5 Palpites do Dia',top5Stats)}}</div>
+        </div>
+        <div class="hist-audit-panel">
+          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(taxaStat(ticketStats.geral))}}">${{fmtTaxa(taxaStat(ticketStats.geral))}}</div><div><span>Bilhetes</span><strong>Geral e por tipo</strong><em>${{ticketStats.geral.auditados}} bilhetes confirmados</em></div></div>
+          <div class="hist-break-list">
+            ${{ticketRow('Bilhetes geral',ticketStats.geral)}}
+            ${{ticketRow('Bilhete do dia',ticketStats.dia)}}
+            ${{ticketRow('Bingo do dia',ticketStats.bingo)}}
+            ${{ticketRow('Premium 4x',ticketStats.premium)}}
+            ${{ticketRow('Elite',ticketStats.elite)}}
+          </div>
+        </div>
+      </div>
+
+      <div class="hist-layout">
+        <div class="hist-panel"><div class="sec-title"><i data-lucide="bar-chart-2"></i> Ranking por Mercado</div><div class="hist-market-list">${{marketRows||'<div class="empty">Sem mercados confirmados.</div>'}}</div></div>
+        <div class="hist-panel"><div class="sec-title"><i data-lucide="calendar-days"></i> Últimos Dias Confirmados</div>${{dayBars||'<div class="empty">Sem dias confirmados.</div>'}}</div>
+      </div>
+    </div>`;
 }}
 
 // ── Calendário ────────────────────────────────────────────────────
@@ -2321,6 +2676,7 @@ let activeMkt={{}};
 let historicoVisible=false;
 
 function showHistoricoGlobal(){{
+  document.querySelector('.content-area')?.classList.add('hist-mode');
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.date-strip-item').forEach(t=>t.classList.remove('active'));
   document.getElementById('panel-historico').style.display='block';
@@ -2333,6 +2689,7 @@ function showHistoricoGlobal(){{
 }}
 
 function switchDate(date){{
+  document.querySelector('.content-area')?.classList.remove('hist-mode');
   const histPanel=document.getElementById('panel-historico');
   if(histPanel)histPanel.style.display='none';
 
