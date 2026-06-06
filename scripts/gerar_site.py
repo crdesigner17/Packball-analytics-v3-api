@@ -796,6 +796,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .content-area.hist-mode .date-strip,
 .content-area.hist-mode .mkt-cat-bar,
 .content-area.hist-mode .sub-filter-bar{{display:none!important}}
+.content-area.hist-mode #panel-historico .main{{padding-top:0}}
 /* NEW DATE BAR */
 .date-strip{{
   background:var(--s1);border-bottom:1px solid var(--border);
@@ -2286,6 +2287,8 @@ function renderHistoricoGlobal(){{
   const taxa=g.taxa_geral;
   const taxaColor=t=>t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
   const fmtTaxa=t=>t!=null?`${{t}}%`:'—';
+  const categoryColor=grade=>grade==='A+'?'var(--green)':grade==='A'?'var(--yellow)':grade==='B'?'var(--blue)':'var(--text)';
+  const marketColor=m=>m&&m.startsWith('Esc')?'var(--teal)':m&&m.startsWith('Cart')?'var(--orange)':m==='BTTS'?'var(--yellow)':m&&m.startsWith('Under')?'var(--purple2)':'var(--blue)';
   const stat=()=>({{gerados:0,auditados:0,acertos:0,erros:0}});
   const taxaStat=s=>s.auditados>0?Math.round((s.acertos/s.auditados)*1000)/10:null;
   const addPick=(s,j)=>{{
@@ -2452,6 +2455,8 @@ function renderHistoricoGlobal(){{
     .map(s=>`<div class="hist-market-mini-row"><span>${{s.m}}</span><div><i style="width:${{s.taxa||0}}%;background:${{taxaColor(s.taxa)}}"></i></div><strong>${{fmtTaxa(s.taxa)}}</strong></div>`).join('');
 
   const cG=taxaColor(taxa);
+  const bestCategoryColor=bestCategory?categoryColor(bestCategory.grade):'var(--text)';
+  const bestMarketColor=bestMarket?marketColor(bestMarket.m):'var(--text)';
   el.innerHTML=`
     <div class="hist-page">
       <div class="hist-hero">
@@ -2469,8 +2474,8 @@ function renderHistoricoGlobal(){{
           <div class="hist-score-bar"><i></i></div>
         </div>
         <div class="hist-hero-insights">
-          <div class="hist-insight"><span>Melhor categoria</span><strong>${{bestCategory?bestCategory.label:'—'}}</strong><em>${{bestCategory?fmtTaxa(bestCategory.taxa)+' · '+bestCategory.auditados+' confirmados':'sem amostra'}}</em></div>
-          <div class="hist-insight"><span>Melhor mercado</span><strong>${{bestMarket?bestMarket.m:'—'}}</strong><em>${{bestMarket?fmtTaxa(bestMarket.taxa)+' · '+bestMarket.auditados+' confirmados':'sem amostra'}}</em></div>
+          <div class="hist-insight"><span>Melhor categoria</span><strong style="color:${{bestCategoryColor}}">${{bestCategory?bestCategory.label:'—'}}</strong><em>${{bestCategory?`<b style="color:${{bestCategoryColor}}">${{fmtTaxa(bestCategory.taxa)}}</b> · ${{bestCategory.auditados}} confirmados`:'sem amostra'}}</em></div>
+          <div class="hist-insight"><span>Melhor mercado</span><strong style="color:${{bestMarketColor}}">${{bestMarket?bestMarket.m:'—'}}</strong><em>${{bestMarket?`<b style="color:${{bestMarketColor}}">${{fmtTaxa(bestMarket.taxa)}}</b> · ${{bestMarket.auditados}} confirmados`:'sem amostra'}}</em></div>
         </div>
       </div>
 
