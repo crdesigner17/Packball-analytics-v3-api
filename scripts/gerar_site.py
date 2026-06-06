@@ -84,6 +84,23 @@ def calcular_acertos_globais(all_data):
         'dias_confirmados': dias_confirmados,
     }
 
+def sanitize_for_site(value):
+    """Remove símbolos visuais antigos do JSON embutido no HTML."""
+    if isinstance(value, dict):
+        return {k: sanitize_for_site(v) for k, v in value.items()}
+    if isinstance(value, list):
+        return [sanitize_for_site(v) for v in value]
+    if isinstance(value, str):
+        replacements = {
+            '✅': '', '⏳': '', '🏆': '', '📋': '', '📊': '', '📅': '', '🎯': '',
+            '🟢': '', '🟡': '', '🔵': '', '🟠': '', '🔒': '', '🕐': '', '⭐': '',
+            '🥇': '', '✗': '', '✓': '', '⚠': '', '🚩': '', '🟨': '',
+        }
+        for old, new in replacements.items():
+            value = value.replace(old, new)
+        return ' '.join(value.split())
+    return value
+
 def day_panel_html(d, day_data):
     jogos  = day_data.get('jogos', [])
     n15    = sum(1 for j in jogos if j['score_15'] >= 85 and j['passou_filtro'])
@@ -150,13 +167,13 @@ def gerar_site():
         updated=updated,
         date_tabs_html='\n'.join(date_tabs_html),
         day_panels_html='\n'.join(day_panels_html),
-        all_data_json=json.dumps(all_data, ensure_ascii=False),
+        all_data_json=json.dumps(sanitize_for_site(all_data), ensure_ascii=False),
         globais_json=json.dumps(globais, ensure_ascii=False),
         n_dates=len(index),
     )
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         f.write(html)
-    print(f"✓ docs/index.html gerado — {len(index)} datas — {updated}")
+    print(f"docs/index.html gerado - {len(index)} datas - {updated}")
 
 def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_json, n_dates):
     return f'''<!DOCTYPE html>
@@ -176,7 +193,7 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
   --green2:#10B981;--orange:#F59E0B;--red:#EF4444;--yellow:#F59E0B;--teal:#00C896;
   --purple:#7C3AED;--purple2:#8B5CF6;--pink:#8B5CF6;--text:#F8FAFC;--text2:#E2E8F0;--muted:#94A3B8;
   --dim:#64748B;--aplus:#00C896;
-  --nav-h:56px;--search-h:126px;--date-strip-h:53px;--market-bar-h:42px;--top-gap:8px;
+  --nav-h:56px;--date-strip-h:53px;--market-bar-h:42px;--top-gap:8px;
 }}
 [data-theme="light"]{{
   --bg:#F8FAFC;--s1:#FFFFFF;--s2:#F1F5F9;--s3:#E2E8F0;--s4:#CBD5E1;--border:#CBD5E1;
@@ -195,9 +212,6 @@ def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_
 body{{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:14px;min-height:100vh;line-height:1.5;-webkit-font-smoothing:antialiased;letter-spacing:.01em}}
 h1,h2,h3,h4,h5,h6{{font-family:'Inter',sans-serif;font-weight:700}}
 button,input,select{{font-family:'Inter',sans-serif}}
-.mono,.kpi-val,.day-hist-date,.day-hist-info,.hist-taxa-val,.history-search-meta,.navbar-logo-sub,.navbar-clock,.placar-cell,.top-rank,.top-liga,.top-hora,.top-score,.res-badge,.conf,.badge,.bilhete-odd-total,.bilhete-odd-val,.bilhete-status,.bilhete-dia-badge,.bilhete-sels,.cnt,.date-strip-day{{font-family:'Inter',sans-serif!important}}
-.metric-value{{font-size:13px;font-weight:800;line-height:1;color:var(--text)}}
-.metric-value.em{{font-size:14px}}
 
 /* NAVBAR */
 .navbar{{
@@ -308,7 +322,7 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .cnt.g{{color:var(--green);background:rgba(0,200,150,.12)}}
 
 /* MAIN */
-.main{{padding:18px 0 22px;width:calc(100% - 48px);max-width:1500px;margin:0 auto}}
+.main{{padding:20px 24px;max-width:1500px;margin:0 auto}}
 
 /* KPI ROW */
 .kpi-row{{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:16px;padding:10px 0;border-bottom:1px solid var(--border)}}
@@ -338,36 +352,12 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .kpi-val.p{{color:var(--aplus)}}.kpi-val.r{{color:var(--red)}}
 .kpi-lbl{{font-size:11px;color:var(--muted);margin-top:4px;font-weight:500}}
 
-/* HISTORY SEARCH */
-.history-search-global{{
-  padding:var(--top-gap) 0 var(--top-gap);background:var(--bg);
-  position:sticky;top:var(--nav-h);z-index:130;width:calc(100% - 48px);max-width:1500px;margin:0 auto;
-}}
-.history-search{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;margin-bottom:0}}
-.history-search-head{{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:12px;flex-wrap:wrap}}
-.history-search-title{{display:flex;align-items:center;gap:8px;font-size:13px;font-weight:800;color:var(--text)}}
-.history-search-title svg{{width:16px;height:16px;color:var(--accent)}}
-.history-search-meta{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace}}
-.history-search-controls{{display:grid;grid-template-columns:minmax(220px,1fr) 150px 110px 150px;gap:8px;align-items:center}}
-.history-search-input,.history-search-select{{
-  height:36px;border:1px solid var(--border);border-radius:8px;background:var(--s2);
-  color:var(--text);font-size:12px;padding:0 11px;outline:none;min-width:0;
-}}
-.history-search-input:focus,.history-search-select:focus{{border-color:var(--accent);box-shadow:0 0 0 2px rgba(37,99,235,.12)}}
-.history-search-results{{margin-top:12px}}
-.history-search-empty{{padding:16px;text-align:center;color:var(--muted);font-size:12px;background:rgba(255,255,255,.03);border:1px dashed var(--border);border-radius:9px}}
-.history-chip-row{{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}}
-.history-chip{{border:1px solid var(--border);background:var(--s2);color:var(--muted);height:28px;padding:0 10px;border-radius:999px;font-size:11px;font-weight:700;cursor:pointer;display:inline-flex;align-items:center;gap:5px}}
-.history-chip:hover,.history-chip.active{{color:var(--text);border-color:var(--accent);background:rgba(37,99,235,.1)}}
-@media(max-width:920px){{:root{{--search-h:172px}}.history-search-controls{{grid-template-columns:1fr 1fr}}}}
-@media(max-width:768px){{.history-search-global{{width:calc(100% - 16px)}}}}
-@media(max-width:560px){{:root{{--search-h:260px}}.history-search-controls{{grid-template-columns:1fr}}}}
-
 /* SECTION */
-.sec-title{{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:18px 0 10px;display:flex;align-items:center;gap:8px}}
-.sec-title:first-child{{margin-top:0}}
-.sec-title svg{{width:15px;height:15px;color:var(--accent);stroke:currentColor;flex-shrink:0}}
+.sec-title{{font-size:11px;font-weight:700;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin:20px 0 12px;display:flex;align-items:center;gap:8px}}
 .sec-title::after{{content:'';flex:1;height:1px;background:var(--border)}}
+.sec-title svg,.sec-title i{{width:14px;height:14px;flex-shrink:0}}
+.inline-icon{{width:13px;height:13px;display:inline-flex;align-items:center;justify-content:center;vertical-align:-2px;flex-shrink:0}}
+.inline-icon svg{{width:13px;height:13px;display:block}}
 
 /* TOP CARDS */
 .top-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:20px;align-items:stretch;max-width:100%;min-width:0}}
@@ -376,22 +366,16 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .top-card{{width:100%;min-width:0;background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}}
 .top-card:hover{{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}}
 .top-card:active{{transform:translateY(0);box-shadow:none}}
-.top-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px}}
-.tc-aplus::before{{background:linear-gradient(90deg,var(--green),var(--blue))}}
-.tc-a::before{{background:linear-gradient(90deg,var(--green),var(--teal))}}
-.tc-b::before{{background:linear-gradient(90deg,var(--blue),var(--purple))}}
-.tc-c::before{{background:linear-gradient(90deg,var(--orange),var(--yellow))}}
-.tc-d::before{{background:linear-gradient(90deg,var(--red),#dc2626)}}
 /* resultado overlay no card */
 .tc-hit::after{{content:'';position:absolute;inset:0;background:rgba(0,200,150,.06);border:1px solid rgba(0,200,150,.25);border-radius:11px;pointer-events:none}}
 .tc-miss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-radius:11px;pointer-events:none}}
-.top-rank{{position:absolute;top:10px;right:12px;font-size:13px;font-weight:800;color:rgba(255,255,255,.14)}}
+.top-rank{{position:absolute;top:10px;right:12px;font-size:18px;font-weight:700;color:rgba(255,255,255,.04);font-family:'JetBrains Mono',monospace}}
 .top-liga{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:24px}}
 .top-jogo{{font-size:13px;font-weight:700;margin-bottom:2px;padding-right:22px;line-height:1.3;overflow-wrap:anywhere}}
 .top-hora{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:8px}}
 .top-mkt{{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}}
 .top-bottom{{display:flex;align-items:center;justify-content:space-between;margin-top:6px}}
-.top-score{{font-size:22px;font-weight:800;line-height:1}}
+.top-score{{font-size:30px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1}}
 .top-grade-block{{display:flex;flex-direction:column;align-items:flex-end;gap:3px}}
 .top-note{{font-size:10px;color:var(--muted);margin-top:8px;padding-top:8px;border-top:1px solid var(--border);line-height:1.55}}
 /* placar no card */
@@ -401,12 +385,7 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .top-placar.pending{{background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.18)}}
 .top-placar .ft{{font-size:15px;font-weight:700}}
 .top-placar .ht{{font-size:10px;color:var(--muted)}}
-.top-placar svg,.top-hora svg,.res-badge svg,.bilhete-status svg,.callout strong svg,.hist-detail svg,.day-hist-info svg,.mini-stat svg{{width:13px;height:13px;stroke:currentColor;flex-shrink:0;vertical-align:-2px}}
-.mini-stat{{display:inline-flex;align-items:center;gap:3px}}
-.mini-stat.ok{{color:var(--green)}}.mini-stat.err{{color:var(--red)}}.mini-stat.neutral{{color:var(--muted)}}
-.top-hora{{display:flex;align-items:center;gap:5px}}
-.top-placar .ht svg{{width:11px;height:11px;margin:0 2px 0 5px}}
-.callout strong{{display:inline-flex;align-items:center;gap:6px}}
+.top-placar .icon{{font-size:13px}}
 
 /* GRADE PILLS */
 .grade{{display:inline-block;padding:3px 8px;border-radius:4px;font-size:10px;font-weight:600;font-family:'Inter',sans-serif;white-space:nowrap}}
@@ -420,7 +399,8 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .row-hit{{background:rgba(0,200,150,.05)!important;border-left:3px solid var(--green)}}
 .row-miss{{background:rgba(239,68,68,.05)!important;border-left:3px solid var(--red)}}
 .row-pending{{border-left:3px solid rgba(245,158,11,.4)}}
-.res-badge{{display:inline-flex;align-items:center;gap:4px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
+.res-badge{{display:inline-flex;align-items:center;gap:3px;padding:2px 7px;border-radius:4px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;white-space:nowrap}}
+.res-badge svg{{width:11px;height:11px;flex-shrink:0}}
 .res-badge.hit{{background:rgba(0,200,150,.12);color:var(--green);border:1px solid rgba(0,200,150,.25)}}
 .res-badge.miss{{background:rgba(239,68,68,.12);color:var(--red);border:1px solid rgba(239,68,68,.25)}}
 .res-badge.pending{{background:rgba(59,130,246,.08);color:var(--blue);border:1px solid rgba(59,130,246,.2)}}
@@ -450,21 +430,8 @@ tbody td{{padding:9px 12px;vertical-align:middle}}
 .jogo-sub{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-top:1px}}
 .mono{{font-family:'JetBrains Mono',monospace;font-size:12px}}
 .muted{{color:var(--muted)}}
-.row-num{{width:42px;text-align:center;color:var(--muted);font-weight:700}}
 .td-conf{{text-align:center}}
 .td-palpite{{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.3px;white-space:nowrap}}
-.alt-mkts{{display:flex;flex-wrap:wrap;gap:4px;margin-top:7px;align-items:center}}
-.alt-label{{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.6px;width:100%}}
-.alt-badge{{display:inline-flex;align-items:center;gap:4px;border:1px solid var(--border);background:rgba(255,255,255,.045);color:var(--text2);border-radius:5px;padding:3px 6px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;line-height:1;white-space:nowrap}}
-.alt-badge strong{{color:var(--green);font-weight:800}}
-.alt-badge.primary{{border-color:rgba(37,99,235,.45);background:rgba(37,99,235,.12);color:#BFDBFE}}
-.alt-badge.protect{{border-color:rgba(0,200,150,.35);background:rgba(0,200,150,.08);color:var(--green)}}
-.alt-badge.hit{{border-color:rgba(0,200,150,.42);background:rgba(0,200,150,.12);color:var(--green)}}
-.alt-badge.miss{{border-color:rgba(239,68,68,.42);background:rgba(239,68,68,.12);color:var(--red)}}
-.alt-badge.pending{{color:var(--muted)}}
-.alt-res{{font-size:9px;font-weight:800;margin-left:2px}}
-.alt-cell{{min-width:170px;max-width:260px}}
-.top-card .alt-mkts{{margin-top:10px}}
 
 /* BAR */
 .bar-wrap{{display:flex;align-items:center;gap:6px;min-width:105px}}
@@ -495,35 +462,120 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .cpyr-val{{min-width:26px}}
 
 /* HISTÓRICO */
-.hist-grid{{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:8px;margin-bottom:20px}}
-.hist-mkt-card{{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px 14px;transition:all .2s;cursor:default}}
-.hist-mkt-card:hover{{border-color:var(--blue);transform:translateY(-1px);box-shadow:0 4px 16px rgba(0,0,0,.3)}}
-.hist-mkt-name{{font-size:11px;color:var(--muted);margin-bottom:6px;font-weight:600}}
-.hist-taxa-val{{font-size:20px;font-weight:800;line-height:1}}
-.hist-detail{{font-size:10px;color:var(--muted);margin-top:3px}}
-.hist-bar-track{{height:4px;background:rgba(255,255,255,.06);border-radius:2px;margin-top:8px;overflow:hidden}}
-.hist-bar-fill{{height:100%;border-radius:2px}}
-/* timeline por dia */
-.day-hist-row{{display:flex;align-items:center;gap:10px;padding:8px 0;border-bottom:1px solid var(--border)}}
+.hist-page{{display:flex;flex-direction:column;gap:12px}}
+.hist-hero{{
+  background:linear-gradient(135deg,rgba(37,99,235,.16),rgba(124,58,237,.10) 48%,rgba(0,200,150,.08));
+  border:1px solid var(--border);border-radius:12px;padding:14px 16px;
+  display:grid;grid-template-columns:minmax(0,1fr) minmax(260px,360px) auto;gap:14px;align-items:center;
+  box-shadow:0 10px 28px rgba(0,0,0,.22);overflow:hidden;position:relative;
+}}
+.hist-hero::before{{content:'';position:absolute;inset:0;border-top:3px solid rgba(0,200,150,.48);pointer-events:none}}
+.hist-kicker{{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--green);margin-bottom:4px}}
+.hist-title{{font-size:20px;font-weight:800;line-height:1.15;letter-spacing:0;color:var(--text)}}
+.hist-subtitle{{font-size:11px;color:var(--muted);margin-top:5px;max-width:620px}}
+.hist-hero-insights{{display:grid;grid-template-columns:1fr;gap:7px}}
+.hist-insight{{background:rgba(255,255,255,.035);border:1px solid rgba(148,163,184,.14);border-radius:9px;padding:9px 10px;min-width:0}}
+.hist-insight-label{{font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}}
+.hist-insight-value{{display:flex;align-items:center;justify-content:space-between;gap:10px;font-size:12px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-insight-rate{{font-family:'JetBrains Mono',monospace;font-size:15px;font-weight:900;flex-shrink:0}}
+.hist-score-card{{height:100%;min-width:126px;background:linear-gradient(135deg,rgba(0,200,150,.13),rgba(37,99,235,.10));border:1px solid rgba(0,200,150,.22);border-radius:10px;padding:10px 12px;display:flex;flex-direction:column;justify-content:center;position:relative;overflow:hidden}}
+.hist-score-card::before{{content:'';position:absolute;left:0;top:0;bottom:0;width:3px;background:var(--green)}}
+.hist-score-label{{font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px}}
+.hist-score-val{{font-family:'JetBrains Mono',monospace;font-size:28px;font-weight:900;line-height:1}}
+.hist-score-note{{font-size:10px;color:var(--text2);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:5px;white-space:nowrap}}
+.hist-visual{{
+  background:linear-gradient(135deg,rgba(31,32,56,.94),rgba(19,28,49,.96));
+  border:1px solid rgba(139,92,246,.18);border-radius:16px;padding:14px;
+  display:grid;grid-template-columns:220px minmax(0,1fr) 240px;gap:14px;align-items:stretch;
+  box-shadow:0 14px 36px rgba(0,0,0,.28);overflow:hidden;
+}}
+.hist-visual-card{{background:rgba(255,255,255,.025);border:1px solid rgba(148,163,184,.10);border-radius:12px;padding:12px;min-width:0}}
+.hist-visual-title{{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:10px}}
+.hist-radial-wrap{{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;align-items:center}}
+.hist-radial{{width:118px;height:118px;border-radius:50%;position:relative;background:radial-gradient(circle at center,rgba(31,32,56,1) 0 40%,transparent 41%)}}
+.hist-radial-ring{{position:absolute;inset:var(--inset);border-radius:50%;background:conic-gradient(var(--ring-color) 0 var(--ring-deg),rgba(255,255,255,.07) var(--ring-deg) 360deg)}}
+.hist-radial-ring::after{{content:'';position:absolute;inset:8px;border-radius:50%;background:rgb(31,32,56)}}
+.hist-radial-core{{position:absolute;inset:39px;border-radius:50%;background:rgba(17,24,39,.92);border:1px solid rgba(148,163,184,.14);display:flex;align-items:center;justify-content:center;font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:900;color:var(--text)}}
+.hist-vlegend{{display:flex;flex-direction:column;gap:7px;min-width:0}}
+.hist-vlegend-row{{display:grid;grid-template-columns:8px minmax(0,1fr) 42px;gap:7px;align-items:center;font-size:10px;color:var(--muted)}}
+.hist-vdot{{width:8px;height:8px;border-radius:50%;background:var(--dot)}}
+.hist-vlegend-name{{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text2);font-weight:700}}
+.hist-vlegend-rate{{font-family:'JetBrains Mono',monospace;font-weight:900;text-align:right;color:var(--rate-color)}}
+.hist-viz-svg{{width:100%;height:118px;display:block;overflow:visible}}
+.hist-viz-axis{{stroke:rgba(148,163,184,.12);stroke-width:1}}
+.hist-viz-line{{fill:none;stroke:url(#histLineGrad);stroke-width:2.4;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 8px rgba(139,92,246,.45))}}
+.hist-viz-area{{fill:url(#histAreaGrad);opacity:.8}}
+.hist-market-mini{{display:flex;flex-direction:column;gap:8px}}
+.hist-market-mini-row{{display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:8px;align-items:center}}
+.hist-market-mini-name{{font-size:10px;font-weight:700;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-market-mini-rate{{font-family:'JetBrains Mono',monospace;font-size:11px;font-weight:900;text-align:right}}
+.hist-market-mini-track{{grid-column:1/3;height:5px;background:rgba(255,255,255,.06);border-radius:99px;overflow:hidden;margin-top:-4px}}
+.hist-market-mini-fill{{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--purple2))}}
+.hist-legend-note{{margin-top:10px;padding-top:9px;border-top:1px solid rgba(148,163,184,.12);font-size:9px;line-height:1.45;color:var(--muted)}}
+.hist-legend-note strong{{color:var(--text2);font-weight:800}}
+.hist-summary-grid{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}}
+.hist-summary-card{{background:var(--s1);border:1px solid var(--border);border-radius:9px;padding:10px 11px;min-width:0}}
+.hist-summary-label{{font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-summary-value{{font-family:'JetBrains Mono',monospace;font-size:21px;font-weight:800;line-height:1;color:var(--text)}}
+.hist-summary-note{{font-size:9px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-audit-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}}
+.hist-audit-panel{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px;min-width:0;position:relative;overflow:hidden}}
+.hist-audit-panel.pro::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg,#2563eb,#7c3aed)}}
+.hist-audit-main{{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
+.hist-audit-score{{height:68px;border-radius:9px;background:linear-gradient(135deg,rgba(37,99,235,.14),rgba(0,200,150,.08));border:1px solid rgba(148,163,184,.14);display:flex;flex-direction:column;align-items:center;justify-content:center}}
+.hist-audit-panel.pro .hist-audit-score{{background:linear-gradient(135deg,rgba(37,99,235,.24),rgba(124,58,237,.18));border-color:rgba(139,92,246,.32)}}
+.hist-audit-val{{font-family:'JetBrains Mono',monospace;font-size:20px;font-weight:800;line-height:1}}
+.hist-audit-lbl{{font-size:8px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-top:3px}}
+.hist-audit-title{{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text)}}
+.hist-audit-copy{{font-size:9px;color:var(--muted);line-height:1.35;margin-top:3px}}
+.hist-breakdown{{display:flex;flex-direction:column;gap:5px}}
+.hist-break-row{{display:grid;grid-template-columns:minmax(0,1fr) 64px;gap:8px;align-items:center;padding:7px 8px;border-bottom:1px solid rgba(148,163,184,.1);border-radius:7px;border-left:3px solid transparent}}
+.hist-break-row:last-child{{border-bottom:none}}
+.hist-break-row.tone-alta{{background:linear-gradient(90deg,rgba(0,200,150,.10),transparent);border-left-color:var(--green)}}
+.hist-break-row.tone-media{{background:linear-gradient(90deg,rgba(59,130,246,.10),transparent);border-left-color:var(--blue)}}
+.hist-break-row.tone-moderado{{background:linear-gradient(90deg,rgba(245,158,11,.10),transparent);border-left-color:var(--orange)}}
+.hist-break-row.tone-pro{{background:linear-gradient(90deg,rgba(37,99,235,.12),rgba(124,58,237,.08),transparent);border-left-color:var(--purple2)}}
+.hist-break-name{{font-size:11px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-break-detail{{font-size:10px;color:var(--text2);font-family:'JetBrains Mono',monospace;margin-top:2px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;font-weight:700}}
+.hist-break-rate{{font-family:'JetBrains Mono',monospace;font-size:14px;font-weight:900;text-align:right}}
+.hist-break-empty{{font-size:10px;color:var(--muted);text-align:right}}
+.hist-layout{{display:grid;grid-template-columns:minmax(0,1.15fr) minmax(320px,.85fr);gap:14px;align-items:start}}
+.hist-panel{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:14px;min-width:0}}
+.hist-panel-head{{display:flex;align-items:flex-end;justify-content:space-between;gap:12px;margin-bottom:12px;border-bottom:1px solid var(--border);padding-bottom:10px}}
+.hist-panel-title{{font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text)}}
+.hist-panel-note{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;white-space:nowrap}}
+.hist-market-list{{display:flex;flex-direction:column;gap:8px}}
+.hist-market-row{{display:grid;grid-template-columns:30px minmax(0,1fr) 86px;gap:10px;align-items:center;padding:10px;border:1px solid rgba(148,163,184,.12);border-radius:9px;background:rgba(255,255,255,.018)}}
+.hist-market-row:hover{{border-color:rgba(59,130,246,.38);background:rgba(59,130,246,.035)}}
+.hist-rank{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);font-weight:800;text-align:center}}
+.hist-mkt-name{{font-size:13px;color:var(--text);font-weight:700;line-height:1.2;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-detail{{font-size:10px;color:var(--muted);margin-top:3px;font-family:'JetBrains Mono',monospace}}
+.hist-rate{{text-align:right}}
+.hist-taxa-val{{font-size:21px;font-weight:800;font-family:'JetBrains Mono',monospace;line-height:1}}
+.hist-rate-label{{font-size:9px;color:var(--muted);font-weight:700;text-transform:uppercase;letter-spacing:.8px;margin-top:2px}}
+.hist-bar-track{{height:5px;background:rgba(255,255,255,.06);border-radius:99px;margin-top:8px;overflow:hidden;grid-column:2/4}}
+.hist-bar-fill{{height:100%;border-radius:99px}}
+.hist-days{{display:flex;flex-direction:column;gap:8px}}
+.day-hist-row{{display:grid;grid-template-columns:58px minmax(0,1fr) 92px;align-items:center;gap:10px;padding:9px 0;border-bottom:1px solid rgba(148,163,184,.12)}}
 .day-hist-row:last-child{{border-bottom:none}}
-.day-hist-date{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--muted);min-width:60px}}
-.day-hist-bar{{flex:1;height:20px;background:rgba(255,255,255,.04);border-radius:4px;overflow:hidden;position:relative}}
-.day-hist-fill{{height:100%;border-radius:4px;display:flex;align-items:center;padding:0 6px;font-size:10px;font-weight:700;font-family:'JetBrains Mono',monospace;color:#fff;min-width:2px}}
-.day-hist-info{{font-family:'JetBrains Mono',monospace;font-size:11px;min-width:90px;text-align:right}}
+.day-hist-date{{font-family:'JetBrains Mono',monospace;font-size:11px;color:var(--text);font-weight:800}}
+.day-hist-bar{{height:22px;background:rgba(255,255,255,.045);border-radius:7px;overflow:hidden;position:relative}}
+.day-hist-fill{{height:100%;border-radius:7px;display:flex;align-items:center;padding:0 7px;font-size:10px;font-weight:800;font-family:'JetBrains Mono',monospace;color:#fff;min-width:2px}}
+.day-hist-info{{font-family:'JetBrains Mono',monospace;font-size:11px;text-align:right;font-weight:800}}
+.day-hist-detail{{display:block;color:var(--muted);font-size:9px;font-weight:600;margin-top:2px}}
+.hist-spark{{display:flex;align-items:flex-end;gap:4px;height:42px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}}
+.hist-spark-bar{{flex:1;min-width:5px;border-radius:3px 3px 0 0;opacity:.95}}
 
 /* BILHETES */
 .bilhete-dia{{background:linear-gradient(135deg,rgba(0,200,150,.08),rgba(37,99,235,.06));border:2px solid rgba(0,200,150,.4);border-radius:13px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden}}
 .bilhete-dia::before{{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--teal),var(--blue))}}
 .bilhete-dia-badge{{display:inline-flex;align-items:center;gap:6px;background:rgba(0,200,150,.15);border:1px solid rgba(0,200,150,.3);border-radius:6px;padding:4px 10px;font-size:11px;font-weight:700;color:var(--green);margin-bottom:10px;font-family:'JetBrains Mono',monospace;letter-spacing:.5px}}
-.bilhete-dia-badge svg,.bilhete-title svg{{width:14px;height:14px;display:inline-block;vertical-align:-2px;margin-right:6px;stroke:currentColor}}
 .bilhete-card{{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:16px;margin-bottom:14px;position:relative;overflow:hidden;transition:all .2s}}
 .bilhete-card:hover{{transform:translateY(-1px);box-shadow:0 6px 20px rgba(0,0,0,.3)}}
 .bilhete-card::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px}}
 .bilhete-premium::before{{background:linear-gradient(90deg,var(--green),var(--teal))}}
 .bilhete-equilibrado::before{{background:linear-gradient(90deg,var(--yellow),var(--orange))}}
 .bilhete-conservador::before{{background:linear-gradient(90deg,var(--blue),var(--purple))}}
-.bilhete-bingo::before{{background:linear-gradient(90deg,var(--yellow),var(--green),var(--blue))}}
-.bilhete-bingo{{border-color:rgba(245,158,11,.32);background:linear-gradient(180deg,rgba(245,158,11,.07),rgba(6,11,20,.02)),var(--s1)}}
 .bilhete-win::after{{content:'';position:absolute;inset:0;background:rgba(0,200,150,.04);border:1px solid rgba(0,200,150,.2);border-radius:11px;pointer-events:none}}
 .bilhete-loss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.04);border:1px solid rgba(239,68,68,.2);border-radius:11px;pointer-events:none}}
 .bilhete-header{{display:flex;align-items:center;justify-content:space-between;margin-bottom:12px;flex-wrap:wrap;gap:8px}}
@@ -538,20 +590,9 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .bilhete-mkt{{font-size:10px;color:var(--accent);font-weight:700;width:80px;flex-shrink:0;text-align:left;padding-right:8px}}
 .bilhete-odd-val{{font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:700;color:var(--yellow);width:48px;flex-shrink:0;text-align:center}}
 .bilhete-score-bar{{width:100px;flex-shrink:0;padding-right:8px}}
-.bilhete-res{{width:112px;flex-shrink:0;text-align:right;white-space:normal}}
-.bilhete-res .res-badge{{white-space:normal;justify-content:center;text-align:center;line-height:1.15;padding:5px 6px}}
-.bilhete-market-stack{{width:230px;flex-shrink:0;display:flex;flex-direction:column;gap:6px;padding-right:8px}}
-.bilhete-market-line{{display:grid;grid-template-columns:minmax(72px,1fr) 92px 42px;align-items:center;gap:8px}}
-.bilhete-market-line .bilhete-mkt{{width:auto;padding-right:0}}
-.bilhete-market-line .bilhete-score-bar{{width:auto;padding-right:0}}
-.bilhete-market-line .bilhete-odd-val{{width:auto;text-align:right}}
+.bilhete-res{{width:80px;flex-shrink:0;text-align:right}}
 .bilhete-footer{{display:flex;align-items:center;justify-content:space-between;margin-top:10px;padding-top:10px;border-top:1px solid var(--border);flex-wrap:wrap;gap:6px}}
 .bilhete-sels{{font-size:11px;color:var(--muted)}}
-.bilhete-grid{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start}}
-.bilhete-grid .bilhete-card{{margin-bottom:0;height:100%}}
-.bilhete-destaques{{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px;align-items:start;margin-bottom:18px}}
-.bilhete-destaques .bilhete-dia,.bilhete-destaques .bilhete-card{{margin-bottom:0;height:100%}}
-@media(max-width:920px){{.bilhete-grid,.bilhete-destaques{{grid-template-columns:1fr}}}}
 .bilhete-status{{font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700}}
 
 /* PANELS */
@@ -659,8 +700,8 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .content-area{{flex:1;min-width:0;display:flex;flex-direction:column;position:relative;z-index:1;background:var(--bg)}}
 .content-area::before{{
   content:'';display:block;position:sticky;top:var(--nav-h);
-  height:calc(var(--search-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));
-  margin-bottom:calc(-1 * (var(--search-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h)));
+  height:calc(var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));
+  margin-bottom:calc(-1 * (var(--top-gap) + var(--date-strip-h) + var(--market-bar-h)));
   background:var(--bg);z-index:109;pointer-events:none;flex:0 0 auto;
 }}
 /* NEW DATE BAR */
@@ -669,7 +710,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   display:flex;align-items:center;overflow-x:auto;
   padding:0 16px;
   scrollbar-width:thin;scrollbar-color:var(--border) transparent;
-  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap));z-index:120;
+  position:sticky;top:calc(var(--nav-h) + var(--top-gap));z-index:120;
   border-left:none;border-radius:10px 10px 0 0;
   box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;
   width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;
@@ -695,7 +736,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .mkt-cat-bar{{
   background:var(--s2);border-bottom:1px solid var(--border);
   display:flex;align-items:center;padding:0;
-  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap) + var(--date-strip-h));z-index:115;
+  position:sticky;top:calc(var(--nav-h) + var(--top-gap) + var(--date-strip-h));z-index:115;
   width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;border-radius:0 0 10px 10px;overflow:hidden;
   box-shadow:0 8px 16px rgba(0,0,0,.16);
 }}
@@ -712,7 +753,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .sub-filter-bar{{
   background:var(--s1);border-bottom:1px solid var(--border);
   display:none;min-height:42px;padding:6px 16px;gap:8px;flex-wrap:wrap;
-  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
+  position:sticky;top:calc(var(--nav-h) + var(--top-gap) + var(--date-strip-h) + var(--market-bar-h));z-index:110;
   box-shadow:0 8px 16px rgba(0,0,0,.12);
   width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;
 }}
@@ -754,17 +795,30 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   .navbar-btn-criar{{height:32px;padding:0 10px;font-size:12px}}
   .navbar-theme{{width:32px;height:32px}}
   .header{{padding:10px 14px}}
-  .main{{padding:14px 0 18px;width:calc(100% - 16px)}}
+  .main{{padding:12px 12px}}
   .kpi{{min-width:85px;padding:10px 12px}}
   .kpi-val{{font-size:20px}}
   .mkt-tab{{padding:9px 11px;font-size:12px}}
-  .date-strip,.mkt-cat-bar,.sub-filter-bar{{width:calc(100% - 16px)}}
   .date-strip{{padding:0 8px}}
   .date-strip-item{{min-width:64px;padding:0 12px}}
   .mkt-cat-tab{{padding:0 8px;font-size:12px}}
   .sub-filter-bar{{padding:6px 8px}}
   .sub-filter-btn{{height:30px;padding:0 12px;font-size:12px}}
   .top-grid{{grid-template-columns:1fr}}
+  .hist-hero{{grid-template-columns:1fr;padding:13px}}
+  .hist-hero-insights{{grid-template-columns:1fr}}
+  .hist-score-card{{min-width:0;width:100%;height:auto}}
+  .hist-visual{{grid-template-columns:1fr;padding:12px}}
+  .hist-radial-wrap{{grid-template-columns:112px minmax(0,1fr)}}
+  .hist-radial{{width:112px;height:112px}}
+  .hist-title{{font-size:21px}}
+  .hist-summary-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}
+  .hist-audit-grid{{grid-template-columns:1fr}}
+  .hist-audit-main{{grid-template-columns:98px minmax(0,1fr)}}
+  .hist-layout{{grid-template-columns:1fr}}
+  .hist-market-row{{grid-template-columns:26px minmax(0,1fr) 72px;padding:9px}}
+  .hist-taxa-val{{font-size:18px}}
+  .day-hist-row{{grid-template-columns:52px minmax(0,1fr) 76px}}
   table{{min-width:640px}}
 }}
 </style>
@@ -834,8 +888,6 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
   <!-- CONTENT -->
   <div class="content-area">
-    <div class="history-search-global" id="global-history-search"></div>
-
     <!-- DATE STRIP -->
     <div class="date-strip" id="date-strip">
       {date_tabs_html}
@@ -901,7 +953,7 @@ const MKT_RESULT = {{
   'BTTS':        'btts',
   'Over 0.5 HT': 'over05_ht_ok',
   'Under 4.5':   'under45_ok',
-  'Under 3.5':   'under35_ok',
+  'Under 3.5':   'under45_ok',
   'Esc 7.5':     'esc75_ok',
   'Esc 8.5':     'esc85_ok',
   'Cart 2.5':    'cart25_ok',
@@ -942,7 +994,7 @@ function kpiFilter(date, tipo, count){{
     titulo='Alta Confiança'; cor='var(--green)';
   }} else if(tipo==='15'){{
     filtrados=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).sort((a,b)=>sortByGrade(a,b,d=>d.grade_15||getPalpiteGrade(d),d=>d.score_15));
-    titulo='🟡 Over 1.5 ≥85%'; cor='var(--yellow)';
+    titulo='Over 1.5 ≥85%'; cor='var(--yellow)';
   }} else if(tipo==='esc'){{
     filtrados=jogos.filter(d=>d.score_esc75>=75).sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
     titulo='Over 7.5 Escanteios ≥75%'; cor='var(--teal)';
@@ -1035,33 +1087,6 @@ function oddMktLabel(mkt){{
   if(mkt==='Under 4.5')     return'Odd U4.5';
   return'Odd';
 }}
-
-function oddForMarket(d,mkt){{
-  const detail = oddForMarketDetail(d,mkt);
-  return detail ? detail.value : null;
-}}
-function oddEstimate(d,mkt){{
-  const scoreField = MKT_SCORE[mkt];
-  const score = scoreField ? d[scoreField] : null;
-  const n = Number(score);
-  if(!Number.isFinite(n) || n<=0) return null;
-  const p = Math.max(50, Math.min(88, n));
-  return Math.round(Math.max(1.12, Math.min(2, 100 / p))*100)/100;
-}}
-function oddForMarketDetail(d,mkt){{
-  let val=null;
-  if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15;
-  else if(mkt==='Over 2.5') val=d.odds_o25;
-  else if(mkt==='Cart 2.5') val=d.odds_cards_25;
-  else if(mkt==='Cart 3.5') val=d.odds_cards_35;
-  else if(mkt==='Esc 7.5')  val=d.odds_corners_75;
-  else if(mkt==='Esc 8.5')  val=d.odds_corners_85;
-  else if(mkt==='Under 3.5'||mkt==='Under 4.5') val=d.odds_u45;
-  const n=parseFloat(val);
-  if(Number.isFinite(n) && n>1) return {{value:n, source:'real'}};
-  const est = oddEstimate(d,mkt);
-  return est ? {{value:est, source:'est'}} : null;
-}}
 function via(v){{
   if(v==='Via 1')return'<span class="via v1">VIA1</span>';
   if(v==='Via 2')return'<span class="via v2">VIA2</span>';
@@ -1074,6 +1099,10 @@ function pctText(v){{
   const n=Number(v);
   if(!Number.isFinite(n))return'—';
   return (Math.round(n*10)/10).toString().replace('.0','')+'%';
+}}
+function ico(name,size){{
+  size=size||13;
+  return`<i data-lucide="${{name}}" class="inline-icon" style="width:${{size}}px;height:${{size}}px"></i>`;
 }}
 function pyramid(d){{
   const rows=[['6.5',d.over65_c],['7.5',d.over75_c],['8.5',d.over85_c],['9.5',d.over95_c],['10.5',d.over105_c]];
@@ -1098,34 +1127,9 @@ function getJogos(date){{return(ALL_DATA[date]||{{}}).jogos||[];}}
 // ── Resultado helpers ──────────────────────────────────────────────
 function getResultado(jogo){{return jogo.resultado||null;}}
 function isConfirmado(date){{return !!(ALL_DATA[date]||{{}}).resultado_confirmado;}}
-const LINHA_SEGURA_DIFF = 8;
-function gradeForMkt(jogo,mkt){{
-  const map = {{
-    'Over 1.5':'grade_15','Over 2.5':'grade_25','Esc 7.5':'grade_esc75','Esc 8.5':'grade_esc85',
-    'Cart 2.5':'grade_cart25','Cart 3.5':'grade_cart35','BTTS':'grade_btts','Over 0.5 HT':'grade_05ht',
-    'Under 3.5':'grade_u35','Under 4.5':'grade_u45'
-  }};
-  const field = map[mkt];
-  return (field && jogo[field]) || gradeFromScore(scoreForMkt(jogo,mkt));
-}}
-function scoreForMkt(jogo,mkt){{
-  const field = MKT_SCORE[mkt];
-  if(field && jogo[field] != null) return jogo[field];
-  return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score!=null?jogo.best_score:(jogo.score||0));
-}}
-function normalizedPalpite(jogo){{
-  let mkt = jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';
-  if(mkt==='Over 2.5' && (jogo.score_15||0)>=MKT_MIN['Over 1.5'] && jogo.passou_filtro && ((jogo.score_25||0)-(jogo.score_15||0))<LINHA_SEGURA_DIFF){{
-    mkt='Over 1.5';
-  }}
-  if(mkt==='Esc 8.5' && jogo.score_esc75 != null && ((jogo.score_esc85||0)-(jogo.score_esc75||0))<LINHA_SEGURA_DIFF){{
-    mkt='Esc 7.5';
-  }}
-  return {{mkt, score:scoreForMkt(jogo,mkt), grade:gradeForMkt(jogo,mkt)}};
-}}
-function getPalpiteMkt(jogo){{return normalizedPalpite(jogo).mkt;}}
-function getPalpiteGrade(jogo){{return normalizedPalpite(jogo).grade||'D';}}
-function getPalpiteScore(jogo){{return normalizedPalpite(jogo).score||0;}}
+function getPalpiteMkt(jogo){{return jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';}}
+function getPalpiteGrade(jogo){{return jogo.palpite_grade||jogo.best_grade||jogo.grade||'D';}}
+function getPalpiteScore(jogo){{return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score!=null?jogo.best_score:(jogo.score||0));}}
 const GRADE_ORDER={{'A+':0,'A':1,'B':2,'C':3,'D':4}};
 function gradeRank(g){{return GRADE_ORDER[g]??99;}}
 function sortByGrade(a,b,gradeFn,scoreFn){{
@@ -1138,28 +1142,20 @@ function sortByGrade(a,b,gradeFn,scoreFn){{
 
 function resBadge(jogo, mktKey){{
   const res=getResultado(jogo);
-  if(!res)return'<span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span>';
-  const ok=resultOk(res,mktKey);
-  if(ok===true) return'<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
-  if(ok===false)return'<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
-  return'<span class="res-badge pending"><i data-lucide="triangle-alert"></i> Não confirmado</span>';
+  if(!res)return`<span class="res-badge pending">${{ico('clock',11)}} Aguardando</span>`;
+  const ok=res[mktKey];
+  if(ok===true) return`<span class="res-badge hit">${{ico('check',11)}} GREEN</span>`;
+  if(ok===false)return`<span class="res-badge miss">${{ico('x',11)}} RED</span>`;
+  return`<span class="res-badge pending">${{ico('circle-alert',11)}} Não confirmado</span>`;
 }}
 
 function rowClass(jogo, mktKey){{
   const res=getResultado(jogo);
   if(!res)return'row-pending';
-  const ok=resultOk(res,mktKey);
+  const ok=res[mktKey];
   if(ok===true)return'row-hit';
   if(ok===false)return'row-miss';
   return'row-pending';
-}}
-
-function resultOk(res, mktKey){{
-  if(!res)return null;
-  if(mktKey==='under35_ok' && res.under35_ok == null && res.gols_total != null){{
-    return res.gols_total <= 3;
-  }}
-  return res[mktKey];
 }}
 
 function placarCell(jogo){{
@@ -1170,99 +1166,16 @@ function placarCell(jogo){{
 
 function placarCard(jogo, mktKey){{
   const res=getResultado(jogo);
-  if(!res)return`<div class="top-placar pending"><i data-lucide="clock"></i><span class="ft">Aguardando</span></div>`;
-  const ok=resultOk(res,mktKey);
+  if(!res)return`<div class="top-placar pending"><span class="icon">${{ico('clock',13)}}</span><span class="ft">Aguardando</span></div>`;
+  const ok=res[mktKey];
   const cls=ok===true?'hit':ok===false?'miss':'pending';
-  const icon=ok===true?'circle-check':ok===false?'circle-x':'circle-help';
-  const cant=res.corners_total!=null?`<i data-lucide="flag"></i>${{res.corners_total}}`:'';
-  const cart=res.cards_total!=null?`<i data-lucide="square"></i>${{res.cards_total}}`:'';
+  const icon=ok===true?ico('check',13):ok===false?ico('x',13):ico('circle-help',13);
+  const cant=res.corners_total!=null?` · ${{res.corners_total}} cant.`:'';
+  const cart=res.cards_total!=null?` · ${{res.cards_total}} cart.`:'';
   return`<div class="top-placar ${{cls}}">
-    <i data-lucide="${{icon}}"></i>
+    <span class="icon">${{icon}}</span>
     <div><span class="ft">${{res.placar}}</span> <span class="ht">HT ${{res.placar_ht}}${{cant}}${{cart}}</span></div>
   </div>`;
-}}
-
-function under35Filter(d){{
-  if(d.under35_filter === true) return true;
-  if(d.under35_filter === false) return false;
-  const score = d.score_u35 || 0;
-  const prob = d.poisson_u35;
-  const exg = d.exg_tot;
-  const o25 = d.over25_g;
-  const h2h = d.h2h_goals;
-  const btts = d.btts_cf;
-  const ppg = d.ppg_avg;
-  const modelOk = prob != null && exg != null && prob >= 78 && exg <= 2.5;
-  const noXgOk = prob == null && exg == null && (ppg == null || ppg <= 1.6) && (o25 == null || o25 <= 45);
-  const blockersOk = (o25 == null || o25 <= 55) && (h2h == null || h2h <= 3.0) && (btts == null || btts <= 75);
-  return score >= MKT_MIN['Under 3.5'] && blockersOk && (modelOk || noXgOk);
-}}
-
-function underMarketPick(d){{
-  if(under35Filter(d)){{
-    return {{
-      mkt:'Under 3.5',
-      key:'under35_ok',
-      score:d.score_u35||0,
-      grade:d.grade_u35||'D',
-      poisson:d.poisson_u35,
-      exg:d.exg_tot,
-    }};
-  }}
-  if((d.score_u45||0) >= MKT_MIN['Under 4.5']){{
-    return {{
-      mkt:'Under 4.5',
-      key:'under45_ok',
-      score:d.score_u45||0,
-      grade:d.grade_u45||'D',
-      poisson:d.poisson_u45,
-      exg:d.exg_tot,
-    }};
-  }}
-  return null;
-}}
-
-function approvedMarkets(d){{
-  const mkts = [];
-  function push(mkt,key,score,grade,cls){{
-    if(score == null) return;
-    mkts.push({{mkt,key,score,grade:grade||gradeFromScore(score),cls:cls||''}});
-  }}
-  if((d.score_15||0) >= MKT_MIN['Over 1.5'] && d.passou_filtro) push('Over 1.5','over15_ok',d.score_15,d.grade_15,'primary');
-  if((d.score_25||0) >= MKT_MIN['Over 2.5']) push('Over 2.5','over25_ok',d.score_25,d.grade_25);
-  if((d.score_btts||0) >= MKT_MIN['BTTS']) push('BTTS','btts',d.score_btts,d.grade_btts);
-  if((d.score_05ht||0) >= MKT_MIN['Over 0.5 HT']) push('Over 0.5 HT','over05_ht_ok',d.score_05ht,d.grade_05ht);
-  const under = underMarketPick(d);
-  if(under) push(under.mkt,under.key,under.score,under.grade,'protect');
-  if((d.score_esc75||0) >= MKT_MIN['Esc 7.5']) push('Esc 7.5','esc75_ok',d.score_esc75,d.grade_esc75);
-  if((d.score_esc85||0) >= MKT_MIN['Esc 8.5']) push('Esc 8.5','esc85_ok',d.score_esc85,d.grade_esc85);
-  if((d.score_cards25||0) >= MKT_MIN['Cart 2.5']) push('Cart 2.5','cart25_ok',d.score_cards25,d.grade_cart25);
-  if((d.score_cards35||0) >= MKT_MIN['Cart 3.5']) push('Cart 3.5','cart35_ok',d.score_cards35,d.grade_cart35);
-  return mkts.sort((a,b)=>(b.score||0)-(a.score||0));
-}}
-
-function gradeFromScore(score){{
-  if(score>=88)return'A+';
-  if(score>=80)return'A';
-  if(score>=70)return'B';
-  if(score>=60)return'C';
-  return'D';
-}}
-
-function approvedMarketsHtml(d, opts){{
-  opts = opts || {{}};
-  const primary = opts.primary || getPalpiteMkt(d);
-  const max = opts.max || 4;
-  const mkts = approvedMarkets(d).filter(x=>x.mkt!==primary).slice(0,max);
-  if(!mkts.length) return opts.empty ? '<span class="muted" style="font-size:11px">Sem alternativas</span>' : '';
-  const label = opts.label === false ? '' : '<span class="alt-label">Também aprovado</span>';
-  const res = getResultado(d);
-  return `<div class="alt-mkts">${{label}}${{mkts.map(x=>{{
-    const ok = res ? resultOk(res,x.key) : null;
-    const stCls = ok===true ? 'hit' : ok===false ? 'miss' : res ? 'pending' : '';
-    const stTxt = ok===true ? 'GREEN' : ok===false ? 'RED' : res ? 'S/D' : '';
-    return `<span class="alt-badge ${{x.cls}} ${{stCls}}">${{x.mkt}} <strong>${{pctText(x.score)}}</strong>${{stTxt?`<span class="alt-res">${{stTxt}}</span>`:''}}</span>`;
-  }}).join('')}}</div>`;
 }}
 
 function cardOverlayClass(jogo){{
@@ -1279,163 +1192,40 @@ function cardOverlayClass(jogo){{
 // ── Render Global KPIs (header) ────────────────────────────────────
 
 // ── Visão Geral ────────────────────────────────────────────────────
-const historicoSearchState = {{}};
-
-function historicoSearchHtml(date){{
-  const st = historicoSearchState[date] || {{q:'', status:'todos', grade:'todos', mercado:'todos'}};
-  const totalDatas = Object.keys(ALL_DATA).filter(d=>d!=='index').length;
-  return `<div class="history-search" id="history-search-${{date}}">
-    <div class="history-search-head">
-      <div class="history-search-title"><i data-lucide="search"></i> Pesquisar</div>
-      <div class="history-search-meta">${{totalDatas}} datas carregadas · busca global</div>
-    </div>
-    <div class="history-search-controls">
-      <input class="history-search-input" id="hist-q-${{date}}" value="${{st.q||''}}" placeholder="Pesquisar jogo, liga, mercado ou data..." oninput="runHistoricoSearch('${{date}}')">
-      <select class="history-search-select" id="hist-status-${{date}}" onchange="runHistoricoSearch('${{date}}')">
-        <option value="todos" ${{st.status==='todos'?'selected':''}}>Todos resultados</option>
-        <option value="green" ${{st.status==='green'?'selected':''}}>Só Green</option>
-        <option value="red" ${{st.status==='red'?'selected':''}}>Só Red</option>
-        <option value="pendente" ${{st.status==='pendente'?'selected':''}}>Sem resultado</option>
-      </select>
-      <select class="history-search-select" id="hist-grade-${{date}}" onchange="runHistoricoSearch('${{date}}')">
-        <option value="todos" ${{st.grade==='todos'?'selected':''}}>Todas grades</option>
-        <option value="A+" ${{st.grade==='A+'?'selected':''}}>A+</option>
-        <option value="A" ${{st.grade==='A'?'selected':''}}>A</option>
-        <option value="B" ${{st.grade==='B'?'selected':''}}>B</option>
-      </select>
-      <select class="history-search-select" id="hist-mercado-${{date}}" onchange="runHistoricoSearch('${{date}}')">
-        <option value="todos" ${{st.mercado==='todos'?'selected':''}}>Todos mercados</option>
-        <option value="Over" ${{st.mercado==='Over'?'selected':''}}>Gols</option>
-        <option value="Esc" ${{st.mercado==='Esc'?'selected':''}}>Escanteios</option>
-        <option value="Cart" ${{st.mercado==='Cart'?'selected':''}}>Cartões</option>
-        <option value="BTTS" ${{st.mercado==='BTTS'?'selected':''}}>BTTS</option>
-        <option value="Under" ${{st.mercado==='Under'?'selected':''}}>Under</option>
-      </select>
-    </div>
-    <div class="history-chip-row">
-      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','green')"><i data-lucide="circle-check"></i> Greens</button>
-      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','red')"><i data-lucide="circle-x"></i> Reds</button>
-      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','A+')">A+</button>
-      <button class="history-chip" onclick="setHistoricoQuick('${{date}}','Esc')">Escanteios</button>
-      <button class="history-chip" onclick="clearHistoricoSearch('${{date}}')">Limpar</button>
-    </div>
-    <div class="history-search-results" id="hist-results-${{date}}">
-    </div>
-  </div>`;
-}}
-
-function historicoAllRows(){{
-  const rows = [];
-  Object.keys(ALL_DATA).filter(d=>d!=='index').sort((a,b)=>{{
-    const [da,ma,ya]=a.split('-').map(Number), [db,mb,yb]=b.split('-').map(Number);
-    return new Date(yb,mb-1,db)-new Date(ya,ma-1,da);
-  }}).forEach(date=>{{
-    getJogos(date).forEach(j=>{{
-      const mkt = getPalpiteMkt(j);
-      const grade = getPalpiteGrade(j);
-      const score = getPalpiteScore(j);
-      const key = MKT_RESULT[mkt] || 'over15_ok';
-      const res = getResultado(j);
-      const ok = res ? resultOk(res,key) : null;
-      const status = ok===true ? 'green' : ok===false ? 'red' : 'pendente';
-      const alternatives = approvedMarkets(j).map(x=>x.mkt).join(' ');
-      rows.push({{date,j,mkt,grade,score,status,alternatives}});
-    }});
-  }});
-  return rows;
-}}
-
-function runHistoricoSearch(date){{
-  const qEl=document.getElementById('hist-q-'+date);
-  const statusEl=document.getElementById('hist-status-'+date);
-  const gradeEl=document.getElementById('hist-grade-'+date);
-  const mercadoEl=document.getElementById('hist-mercado-'+date);
-  const out=document.getElementById('hist-results-'+date);
-  if(!out) return;
-  const q=(qEl?.value||'').trim().toLowerCase();
-  const status=statusEl?.value||'todos';
-  const grade=gradeEl?.value||'todos';
-  const mercado=mercadoEl?.value||'todos';
-  historicoSearchState[date]={{q,status,grade,mercado}};
-  const hasFilter = q || status!=='todos' || grade!=='todos' || mercado!=='todos';
-  if(!hasFilter){{
-    out.innerHTML='';
-    return;
-  }}
-  const filtered = historicoAllRows().filter(r=>{{
-    if(status!=='todos' && r.status!==status) return false;
-    if(grade!=='todos' && r.grade!==grade) return false;
-    if(mercado!=='todos' && !(`${{r.mkt}} ${{r.alternatives}}`.includes(mercado))) return false;
-    if(q){{
-      const hay = `${{r.date}} ${{r.j.jogo}} ${{r.j.liga}} ${{r.mkt}} ${{r.grade}} ${{r.alternatives}}`.toLowerCase();
-      if(!hay.includes(q)) return false;
-    }}
-    return true;
-  }}).sort((a,b)=>(b.score-a.score)).slice(0,80);
-  if(!filtered.length){{
-    out.innerHTML='<div class="history-search-empty">Nenhum resultado encontrado com esses filtros.</div>';
-    return;
-  }}
-  const rows=filtered.map((r,i)=>{{
-    const badge = r.status==='green' ? '<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>' : r.status==='red' ? '<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>' : '<span class="res-badge pending"><i data-lucide="clock"></i> S/D</span>';
-    return `<tr class="${{r.status==='green'?'row-hit':r.status==='red'?'row-miss':''}}">
-      <td class="row-num">${{i+1}}</td>
-      <td><div class="jogo-main">${{r.j.jogo}}</div><div class="jogo-sub">${{r.j.liga}} · ${{r.j.hora}}</div></td>
-      <td class="mono muted">${{r.date}}</td>
-      <td>${{gradeHtml(r.grade)}}</td>
-      <td class="td-palpite">${{r.mkt}}</td>
-      <td class="mono" style="color:${{col(r.score)}};font-weight:700">${{pctText(r.score)}}</td>
-      <td>${{badge}}</td>
-    </tr>`;
-  }}).join('');
-  out.innerHTML=`<div class="tbl-wrap"><table>
-    <thead><tr><th>#</th><th>Jogo</th><th>Data</th><th>Grade</th><th>Mercado</th><th>Score</th><th>Resultado</th></tr></thead>
-    <tbody>${{rows}}</tbody>
-  </table></div>`;
-}}
-
-function setHistoricoQuick(date,type){{
-  const q=document.getElementById('hist-q-'+date);
-  const status=document.getElementById('hist-status-'+date);
-  const grade=document.getElementById('hist-grade-'+date);
-  const mercado=document.getElementById('hist-mercado-'+date);
-  if(type==='green' || type==='red') status.value=type;
-  else if(type==='A+') grade.value='A+';
-  else if(type==='Esc') mercado.value='Esc';
-  if(q && !q.value) q.value='';
-  runHistoricoSearch(date);
-}}
-
-function clearHistoricoSearch(date){{
-  const q=document.getElementById('hist-q-'+date);
-  const status=document.getElementById('hist-status-'+date);
-  const grade=document.getElementById('hist-grade-'+date);
-  const mercado=document.getElementById('hist-mercado-'+date);
-  if(q) q.value='';
-  if(status) status.value='todos';
-  if(grade) grade.value='todos';
-  if(mercado) mercado.value='todos';
-  runHistoricoSearch(date);
-}}
-
-function renderGlobalHistoricoSearch(){{
-  const box=document.getElementById('global-history-search');
-  if(!box || box.dataset.ready==='1') return;
-  box.innerHTML=historicoSearchHtml('global');
-  box.dataset.ready='1';
-  if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
-}}
-
 function renderVisao(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-visao');
+  const conf=isConfirmado(date);
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
-  const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
-  const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
-  const enrichSnap = item => {{
-    const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
-    return {{...item, ...full}};
-  }};
-  const top=[...(snap.length?snap.map(enrichSnap):jogos)].sort(sortByGrade).slice(0,5);
+  const a15=jogos.filter(d=>d.score_15>=85&&d.passou_filtro).length;
+  const aesc=jogos.filter(d=>d.score_esc75>=75).length;
+  const acart=jogos.filter(d=>d.score_cards25>=75).length;
+  const aprem=snap.length||jogos.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A').length;
+  const a05ht=jogos.filter(d=>d.score_05ht>=75).length;
+
+  // Taxa do dia (se confirmado)
+  let taxaDia='';
+  if(conf){{
+    const stats=(ALL_DATA[date]||{{}}).resultado_stats||{{}};
+    let ta=0,te=0;
+    Object.values(stats).forEach(s=>{{ta+=s.acertos||0;te+=s.erros||0;}});
+    const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
+    const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
+    const tLabel=t!=null?t+'%':(ta+te===0?'—':'—');
+    const tSub=ta+te>0?`${{ta}} acertos · ${{te}} erros`:'sem dados';
+    taxaDia=`<div class="kpi"><div class="kpi-val" style="color:${{c}}">${{tLabel}}</div><div class="kpi-lbl">Acerto do Dia</div><div style="font-size:9px;color:var(--muted);margin-top:2px;font-family:'JetBrains Mono',monospace">${{tSub}}</div></div>`;
+  }}
+
+  const kpi=`<div class="kpi-row" id="kpi-row-${{date}}">
+    <div class="kpi kpi-blue"><div class="kpi-val b">${{jogos.length}}</div><div class="kpi-lbl">Jogos Filtrados</div></div>
+    <div class="kpi kpi-green clickable" id="kpi-prem-${{date}}" onclick="kpiFilter('${{date}}','prem')"><div class="kpi-val g">${{aprem}}</div><div class="kpi-lbl">Alta Confiança</div></div>
+    <div class="kpi kpi-yellow clickable" id="kpi-15-${{date}}" onclick="kpiFilter('${{date}}','15')"><div class="kpi-val y">${{a15}}</div><div class="kpi-lbl">Over 1.5</div></div>
+    <div class="kpi kpi-teal clickable" id="kpi-esc-${{date}}" onclick="kpiFilter('${{date}}','esc')"><div class="kpi-val t">${{aesc}}</div><div class="kpi-lbl">Over 7.5 Escanteios</div></div>
+    <div class="kpi kpi-orange clickable" id="kpi-cart-${{date}}" onclick="kpiFilter('${{date}}','cart')"><div class="kpi-val o">${{acart}}</div><div class="kpi-lbl">Over 2.5 Cartões</div></div>
+    ${{taxaDia}}
+  </div>
+  <div id="kpi-panel-${{date}}" style="display:none"></div>`;
+
+  const top=[...(snap.length?snap:jogos)].sort(sortByGrade).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{{
     const c=col(getPalpiteScore(d));
@@ -1445,30 +1235,27 @@ function renderVisao(date,jogos){{
       <div class="top-rank">#${{i+1}}</div>
       <div class="top-liga">${{d.liga}}</div>
       <div class="top-jogo">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div>
-      <div class="top-hora"><i data-lucide="clock"></i> ${{d.hora}}</div>
+      <div class="top-hora">${{ico('clock',11)}} ${{d.hora}}</div>
       <div class="top-mkt">${{getPalpiteMkt(d)}}</div>
-      ${{approvedMarketsHtml(d, {{max:3}})}}
       <div class="top-bottom">
         <div class="top-score" style="color:${{c}}">${{getPalpiteScore(d)}}%</div>
         <div class="top-grade-block">
           ${{gradeHtml(getPalpiteGrade(d))}}
-          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-weight:800;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
+          ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-family:'JetBrains Mono',monospace;font-weight:700;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
         </div>
       </div>
       ${{placarCard(d, mktKey)}}
     </div>`;
   }}).join('');
 
-  const rows=[...jogos].sort(sortByGrade).map((d,i)=>{{
+  const rows=[...jogos].sort(sortByGrade).map(d=>{{
     const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
     const rc=rowClass(d,mktKey);
     return`<tr class="${{rc}}">
-      <td class="row-num">${{i+1}}</td>
       ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
       <td class="td-conf">${{gradeHtml(getPalpiteGrade(d))}}</td>
       <td class="td-palpite">${{getPalpiteMkt(d)}}</td>
       <td class="mono" style="color:${{col(getPalpiteScore(d))}};font-weight:700">${{pctText(getPalpiteScore(d))}}</td>
-      <td class="alt-cell">${{approvedMarketsHtml(d, {{label:false, max:3, empty:true}})}}</td>
       <td class="mono" style="color:${{col(d.score_15)}};font-weight:700">${{pctText(d.score_15)}}</td>
       <td class="mono" style="color:${{col(d.score_esc75)}};font-weight:700">${{pctText(d.score_esc75)}}</td>
       <td class="mono" style="color:${{col(d.score_cards25)}};font-weight:700">${{pctText(d.score_cards25)}}</td>
@@ -1478,11 +1265,12 @@ function renderVisao(date,jogos){{
   }}).join('');
 
   el.innerHTML=`
-    <div class="sec-title"><i data-lucide="trophy"></i> Top 5 Palpites do Dia</div>
+    ${{kpi}}
+    <div class="sec-title">${{ico('trophy',14)}} Top 5 Palpites do Dia</div>
     <div class="top-grid">${{t5}}</div>
-    <div class="sec-title"><i data-lucide="list"></i> Resumo Geral</div>
+    <div class="sec-title">${{ico('list-checks',14)}} Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Melhor</th><th>Score</th><th>Alternativas</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Palpite</th><th>Score Palpite</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
 }}
@@ -1491,42 +1279,33 @@ function renderVisao(date,jogos){{
 function renderRanking(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-ranking');
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
-  const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
-  const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
-  const enrichSnap = item => {{
-    const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${{item.home}} x ${{item.away}}`) || {{}};
-    return {{...item, ...full}};
-  }};
-  const base=snap.length?snap.map(enrichSnap):jogos;
+  const base=jogos.length?jogos:snap;
   const sorted=[...base].sort(sortByGrade);
   const groups=[
-    {{title:'Confian&ccedil;a Alta / M&eacute;dia', icon:'star', items:sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A')}},
-    {{title:'Moderado', icon:'target', items:sorted.filter(d=>getPalpiteGrade(d)==='B')}},
-    {{title:'Arriscado / Evitar', icon:'shield-check', items:sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D')}}
+    {{title:'Confian&ccedil;a Alta / M&eacute;dia', items:sorted.filter(d=>getPalpiteGrade(d)==='A+'||getPalpiteGrade(d)==='A')}},
+    {{title:'Moderado', items:sorted.filter(d=>getPalpiteGrade(d)==='B')}},
+    {{title:'Arriscado / Evitar', items:sorted.filter(d=>getPalpiteGrade(d)==='C'||getPalpiteGrade(d)==='D')}}
   ];
 
   function tableFor(group){{
-    const title = `<div class="sec-title"><i data-lucide="${{group.icon}}"></i> ${{group.title}}</div>`;
-    if(!group.items.length)return`<div class="ranking-col">${{title}}<div class="empty">Nenhum jogo nesta categoria.</div></div>`;
-    const rows=group.items.map((d,i)=>{{
+    if(!group.items.length)return`<div class="ranking-col"><div class="sec-title">${{group.title}}</div><div class="empty">Nenhum jogo nesta categoria.</div></div>`;
+    const rows=group.items.map(d=>{{
       const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       const rc=rowClass(d,mktKey);
       return`<tr class="${{rc}}">
-        <td class="row-num">${{i+1}}</td>
         ${{jogoCell(d)}}
         <td class="mono muted">${{d.hora}}</td>
         <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
         <td class="td-palpite">${{getPalpiteMkt(d)}}</td>
         <td class="mono" style="color:${{col(getPalpiteScore(d))}};font-weight:700">${{pctText(getPalpiteScore(d))}}</td>
-        <td class="alt-cell">${{approvedMarketsHtml(d, {{label:false, max:3, empty:true}})}}</td>
         ${{placarCell(d)}}
         <td>${{resBadge(d,mktKey)}}</td>
       </tr>`;
     }}).join('');
     return`<div class="ranking-col">
-      ${{title}}
+      <div class="sec-title">${{group.title}}</div>
       <div class="tbl-wrap"><table>
-        <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Melhor</th><th>Score</th><th>Alternativas</th><th>Placar</th><th>Resultado</th></tr></thead>
+        <thead><tr><th>Jogo</th><th>Hora</th><th>Confian&ccedil;a</th><th>Palpite</th><th>Score</th><th>Placar</th><th>Resultado</th></tr></thead>
         <tbody>${{rows}}</tbody>
       </table></div>
     </div>`;
@@ -1546,8 +1325,8 @@ function renderOver15(date,jogos){{
     return`<tr class="${{rc}}">
       <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
       <td class="mono muted">${{d.hora}}</td>
-      <td><span class="metric-value em" style="color:${{probColor}}">${{d.over15_g||'—'}}%</span></td>
-      <td class="mono" style="color:var(--yellow);font-weight:800;font-size:13px">${{odd(d.odd_over15)}}</td>
+      <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{d.over15_g||'—'}}%</span></td>
+      <td class="mono" style="color:var(--yellow);font-weight:700;font-size:14px">${{odd(d.odd_over15)}}</td>
       ${{placarCell(d)}}
       <td>${{resBadge(d,'over15_ok')}}</td>
       <td>${{bar(d.score_15)}}</td>
@@ -1557,7 +1336,7 @@ function renderOver15(date,jogos){{
     </tr>`;
   }}).join('');
   el.innerHTML=`
-    <div class="callout info"><strong><i data-lucide="crosshair"></i> Over 1.5 Gols — Validado 88.6%</strong> · ${{total}} jogos aprovados no Filtro 3 Vias.</div>
+    <div class="callout info"><strong>Over 1.5 Gols — Validado 88.6%</strong> · ${{total}} jogos aprovados no Filtro 3 Vias.</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Probabilidade</th><th style="color:var(--yellow)">Odd O1.5</th><th>Placar</th><th>Resultado</th><th>Score</th><th>Confiança</th><th>xG</th><th>Via</th></tr></thead>
       <tbody>${{html||'<tr><td colspan="10" class="empty">Nenhum jogo passou o Filtro 3 Vias.</td></tr>'}}</tbody>
@@ -1567,51 +1346,32 @@ function renderOver15(date,jogos){{
 // ── Under 4.5 ────────────────────────────────────────────────────
 function renderOver25(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-over25');
-  const underRows=[...jogos]
-    .map(d=>{{
-      const picked = underMarketPick(d);
-      if(picked) return {{jogo:d, under:picked}};
-      const mkt = getPalpiteMkt(d);
-      if(mkt==='Under 3.5' || mkt==='Under 4.5'){{
-        return {{jogo:d, under:{{
-          mkt,
-          key:MKT_RESULT[mkt],
-          score:getPalpiteScore(d),
-          grade:getPalpiteGrade(d),
-          poisson:mkt==='Under 3.5'?d.poisson_u35:d.poisson_u45,
-          exg:d.exg_tot,
-        }}}};
-      }}
-      return {{jogo:d, under:null}};
-    }})
-    .filter(x=>x.under)
-    .sort((a,b)=>sortByGrade(a.jogo,b.jogo,d=>underMarketPick(d)?.grade||'D',d=>underMarketPick(d)?.score||0));
+  // Under 3.5: sort by score_u35, fallback to score_u45
+  const ru35=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_u35||d.grade_u45||getPalpiteGrade(d),d=>d.score_u35||d.score_u45||0));
   el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="shield-check"></i> Mercado Under</strong> · Mostra Under 3.5 quando passa no filtro rígido; senão, Under 4.5 quando o score aprova.</div>
+    <div class="callout ok"><strong>Under 3.5 Gols</strong> · Foco em jogos de baixa produção ofensiva. Modelo Poisson via xG.</div>
     <div class="tbl-wrap"><table>
       <thead><tr>
-        <th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th>
-        <th style="color:var(--purple)">Poisson</th>
+        <th>#</th><th>Jogo</th><th>Hora</th>
+        <th style="color:var(--purple)">Poisson U3.5</th>
         <th style="color:var(--teal)">xG Total</th>
         <th>Placar</th><th>Resultado</th>
-        <th>Score</th><th>Confiança</th>
+        <th>Score U3.5</th><th>Confiança</th>
       </tr></thead>
-      <tbody>${{underRows.length ? underRows.map((x,i)=>{{
-        const d=x.jogo;
-        const u=x.under;
-        const probColor=u.poisson>=85?'var(--green)':u.poisson>=75?'var(--blue)':'var(--muted)';
-        const rc=rowClass(d,u.key);
+      <tbody>${{ru35.map((d,i)=>{{
+        const u35prob=d.poisson_u35||null;
+        const probColor=u35prob>=85?'var(--green)':u35prob>=75?'var(--blue)':'var(--muted)';
+        const rc=rowClass(d,'under45_ok');
         return`<tr class="${{rc}}">
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
-          <td><span class="badge version">${{u.mkt}}</span></td>
-          <td><span class="metric-value em" style="color:${{probColor}}">${{u.poisson?u.poisson+'%':'—'}}</span></td>
-          <td class="mono" style="color:var(--teal);font-size:13px;font-weight:800">${{u.exg||'—'}}</td>
-          ${{placarCell(d)}}<td>${{resBadge(d,u.key)}}</td>
-          <td>${{bar(u.score)}}</td>
-          <td>${{gradeHtml(u.grade)}}</td>
+          <td><span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{probColor}}">${{u35prob?u35prob+'%':'—'}}</span></td>
+          <td class="mono" style="color:var(--teal);font-size:14px;font-weight:600">${{d.exg_tot||'—'}}</td>
+          ${{placarCell(d)}}<td>${{resBadge(d,'under45_ok')}}</td>
+          <td>${{bar(d.score_u35||d.score_u45||0)}}</td>
+          <td>${{gradeHtml(d.grade_u35||d.grade_u45||'D')}}</td>
         </tr>`;
-      }}).join('') : '<tr><td colspan="10" class="empty">Nenhum jogo passou nos filtros Under hoje.</td></tr>'}}</tbody>
+      }}).join('')}}</tbody>
     </table></div>`;
 }}
 
@@ -1636,12 +1396,12 @@ function renderEsc(date,jogos){{
     }}).join('');
   }}
   el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="corner-up-right"></i> Escanteios Over 7.5 / 8.5</strong> · Threshold provisório ≥75%.</div>
-    <div class="sec-title"><i data-lucide="corner-up-right"></i> Over 7.5</div>
+    <div class="callout ok"><strong>Escanteios Over 7.5 / 8.5</strong> · Threshold provisório ≥75%.</div>
+    <div class="sec-title">${{ico('corner-up-right',14)}} Over 7.5</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Média</th><th>Pirâmide</th><th>Real</th><th>Resultado</th></tr></thead>
       <tbody>${{escRows(r75,'esc75_ok')}}</tbody></table></div>
-    <div class="sec-title"><i data-lucide="corner-up-right"></i> Over 8.5</div>
+    <div class="sec-title">${{ico('corner-up-right',14)}} Over 8.5</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Média</th><th>Pirâmide</th><th>Real</th><th>Resultado</th></tr></thead>
       <tbody>${{escRows(r85,'esc85_ok')}}</tbody></table></div>`;
@@ -1652,7 +1412,7 @@ function renderCart(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-cartoes');
   const rows=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_cart25||getPalpiteGrade(d),d=>d.score_cards25));
   el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="layers"></i> Cartões Over 2.5 / Over 3.5</strong> · Alta consistência observada.</div>
+    <div class="callout ok"><strong>Cartões Over 2.5 / Over 3.5</strong> · Alta consistência observada.</div>
     <div class="tbl-wrap"><table>
       <thead><tr>
         <th>#</th><th>Jogo</th><th>Hora</th>
@@ -1670,8 +1430,8 @@ function renderCart(date,jogos){{
         return`<tr class="${{rc}}">
           <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
           <td class="mono muted">${{d.hora}}</td>
-          <td><span class="metric-value" style="color:${{p25color}}">${{d.over25_cards||'—'}}%</span></td>
-          <td><span class="metric-value" style="color:${{p35color}}">${{d.over35_cards||'—'}}%</span></td>
+          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p25color}}">${{d.over25_cards||'—'}}%</span></td>
+          <td><span style="font-size:16px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{p35color}}">${{d.over35_cards||'—'}}%</span></td>
           ${{cartReal}}<td>${{resBadge(d,'cart25_ok')}}</td>
           <td>${{bar(d.score_cards25)}}</td><td>${{gradeHtml(d.grade_cart25)}}</td>
           <td>${{bar(d.score_cards35,70)}}</td>
@@ -1709,8 +1469,8 @@ function gerarBilhetes(jogos){{
     oddTotal:Math.round(diaPool.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100
   }} : null;
 
-  // Bilhete 1 — Premium: até 4 seleções A+/A por score
-  const b1 = montar([...altaConf].slice(0,4));
+  // Bilhete 1 — Premium: todos A+/A por score
+  const b1 = montar([...altaConf]);
 
   // Bilhete 2 — Só A+: filtro mais restrito
   const somenteAplus = altaConf.filter(x=>x.grade==='A+');
@@ -1719,8 +1479,8 @@ function gerarBilhetes(jogos){{
   const bilhetes = [];
   const seen = new Set();
   const defs = [
-    ['b1', b1, 'bilhete-premium',     'PREMIUM 4X'],
-    ['b2', b2, 'bilhete-conservador', 'ELITE'],
+    ['b1', b1, 'bilhete-premium',     'Premium - Todos A+/A por Score'],
+    ['b2', b2, 'bilhete-conservador', 'Confiança Alta - Só A+'],
   ];
   for(const [tipo, b, cls, label] of defs){{
     if(!b) continue;
@@ -1731,82 +1491,6 @@ function gerarBilhetes(jogos){{
   }}
   return {{bilhetes, bilheteDia: bDia}};
 }}
-
-function gerarBingoBilhetes(jogos){{
-  const maxSels = 8;
-  const maxJogos = 5;
-  const linhaMaiorMinDiff = 8;
-  const calcOdd = (sels)=>Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
-  const countJogos = (sels)=>new Set(sels.map(s=>s.jogo)).size;
-  const pickLinhaSegura = (aprovados, segura, maior)=>{{
-    const s = aprovados.find(x=>x.mkt===segura);
-    const m = aprovados.find(x=>x.mkt===maior);
-    if(s && m) return (m.score - s.score) >= linhaMaiorMinDiff ? m : s;
-    return s || m || null;
-  }};
-  const makeSel = (j,x)=>{{
-    const odd = oddForMarketDetail(j,x.mkt);
-    return {{
-      jogo:j.jogo, liga:j.liga, hora:j.hora,
-      mkt:x.mkt, score:x.score, grade:x.grade,
-      oddVal:odd?odd.value:null, oddSource:odd?odd.source:null,
-      resultado:j.resultado, acertos:j.acertos||{{}},
-    }};
-  }};
-  const combos = jogos.map(j=>{{
-    const aprovados = approvedMarkets(j);
-    const gols = pickLinhaSegura(aprovados, 'Over 1.5', 'Over 2.5');
-    const canto = pickLinhaSegura(aprovados, 'Esc 7.5', 'Esc 8.5');
-    if(!gols || !canto) return null;
-    const sels = [makeSel(j,gols), makeSel(j,canto)];
-    const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
-    return {{
-      jogo:j.jogo,
-      sels,
-      oddTotal:calcOdd(sels),
-      scoreMedio,
-    }};
-  }}).filter(Boolean)
-    .sort((a,b)=>(b.scoreMedio-a.scoreMedio)||((b.oddTotal||1)-(a.oddTotal||1)));
-  const sels = [];
-  for(const combo of combos){{
-    if(sels.length+combo.sels.length>maxSels) break;
-    const next = [...sels, ...combo.sels];
-    if(countJogos(next)>maxJogos) break;
-    sels.push(...combo.sels);
-    if(calcOdd(sels)>=5) break;
-  }}
-  const seen = new Set(sels.map(s=>s.jogo+'|'+s.mkt));
-  const aplus = jogos.map(j=>{{
-    const mkt = getPalpiteMkt(j);
-    const grade = j.palpite_grade || j.best_grade;
-    const score = j.palpite_score ?? j.best_score;
-    if(grade!=='A+' || !mkt || !score) return null;
-    const item = makeSel(j,{{mkt, score, grade}});
-    const key = item.jogo+'|'+item.mkt;
-    if(seen.has(key)) return null;
-    return item;
-  }}).filter(Boolean)
-    .sort((a,b)=>(b.score-a.score)||((b.oddVal||1)-(a.oddVal||1)));
-  for(const item of aplus){{
-    if(calcOdd(sels)>=5 || sels.length>=maxSels) break;
-    const next = [...sels, item];
-    if(countJogos(next)>maxJogos) continue;
-    sels.push(item);
-    seen.add(item.jogo+'|'+item.mkt);
-  }}
-  if(!sels.length) return [];
-  const oddTotal = calcOdd(sels);
-  const scoreMedio = Math.round(sels.reduce((a,s)=>a+(s.score||0),0)/sels.length);
-  const tier = oddTotal>=5 ? 'OURO' : oddTotal>=3 ? 'PRATA' : 'FORTE';
-  return [{{
-    tipo:'bingo',
-    b:{{sels, oddTotal, tier}},
-    cls:'bilhete-bingo',
-    label:`<i data-lucide="crosshair"></i>BINGO DO DIA`,
-    scoreMedio,
-  }}];
-}}
 function avaliarBilhete(sels, confirmado){{
   if(!confirmado) return {{status:'pending', acertos:0, total:sels.length}};
   let acertos=0, erros=0, sd=0;
@@ -1814,7 +1498,7 @@ function avaliarBilhete(sels, confirmado){{
     const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
     const res = s.resultado;
     if(!res){{ sd++; continue; }}
-    const ok = resultOk(res,mktKey);
+    const ok = res[mktKey];
     if(ok===true) acertos++;
     else if(ok===false) erros++;
     else sd++;
@@ -1830,39 +1514,19 @@ function renderBilhetes(date, jogos){{
   const snap=(ALL_DATA[date]||{{}}).bilhetes_snapshot;
   const resultado = snap || gerarBilhetes(jogos);
   const {{bilhetes, bilheteDia}} = resultado;
-  const jogosByKey = new Map(jogos.map(j=>[`${{j.fixture_id||''}}|${{j.jogo}}`, j]));
-  const findJogo = (s)=>jogosByKey.get(`${{s.fixture_id||''}}|${{s.jogo}}`) || jogos.find(j=>j.jogo===s.jogo);
-  const hydrateSel = (s)=>{{
-    if(s.oddVal) return s;
-    const jogo = findJogo(s);
-    if(!jogo) return s;
-    const odd = oddForMarketDetail(jogo, s.mkt);
-    return odd ? {{...s, oddVal:odd.value, oddSource:odd.source}} : s;
-  }};
-  const hydrateBilhete = (b)=>{{
-    if(!b || !b.sels) return b;
-    const sels = b.sels.map(hydrateSel);
-    const oddTotal = Math.round(sels.reduce((acc,s)=>acc*(s.oddVal||1),1)*100)/100;
-    return {{...b, sels, oddTotal}};
-  }};
-  const bilhetesHydrated = (bilhetes||[]).map(item=>({{...item, b:hydrateBilhete(item.b)}}));
-  const bilheteDiaHydrated = hydrateBilhete(bilheteDia);
-  const bingoBilhetes = gerarBingoBilhetes(jogos);
-  const bingoDestaque = bingoBilhetes[0] || null;
-  const todosBilhetes = [...bilhetesHydrated, ...bingoBilhetes.slice(1)];
 
-  if((!todosBilhetes || todosBilhetes.length===0) && !bilheteDiaHydrated && !bingoDestaque){{
+  if((!bilhetes || bilhetes.length===0) && !bilheteDia){{
     el.innerHTML=`<div class="empty">Nenhum jogo com dados suficientes para gerar bilhetes hoje.</div>`;
     return;
   }}
 
   // Bilhete do Dia
   let diaHtml = '';
-  if(bilheteDiaHydrated){{
-    const av = avaliarBilhete(bilheteDiaHydrated.sels, confirmado);
+  if(bilheteDia){{
+    const av = avaliarBilhete(bilheteDia.sels, confirmado);
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
-    const oddColor = !bilheteDiaHydrated.oddTotal?'var(--muted)':bilheteDiaHydrated.oddTotal>=5?'var(--green)':bilheteDiaHydrated.oddTotal>=3?'var(--yellow)':'var(--orange)';
-    const scoreMedia = Math.round(bilheteDiaHydrated.sels.reduce((a,s)=>a+s.score,0)/bilheteDiaHydrated.sels.length);
+    const oddColor = !bilheteDia.oddTotal?'var(--muted)':bilheteDia.oddTotal>=5?'var(--green)':bilheteDia.oddTotal>=3?'var(--yellow)':'var(--orange)';
+    const scoreMedia = Math.round(bilheteDia.sels.reduce((a,s)=>a+s.score,0)/bilheteDia.sels.length);
     const diaHeader = `<div class="bilhete-row" style="border-bottom:1px solid rgba(0,200,150,.2);margin-bottom:4px;padding-bottom:6px">
       <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
       <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
@@ -1871,15 +1535,15 @@ function renderBilhetes(date, jogos){{
       <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
       <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
     </div>`;
-    const rows = bilheteDiaHydrated.sels.map((s,i)=>{{
+    const rows = bilheteDia.sels.map((s,i)=>{{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
-      let resHtml = '<span class="res-badge pending"><i data-lucide="clock"></i></span>';
+      let resHtml = `<span class="res-badge pending">${{ico('clock',11)}}</span>`;
       if(confirmado && res){{
-        const ok = resultOk(res,mktKey);
-        if(ok===true) resHtml='<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
-        else if(ok===false) resHtml='<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
-        else resHtml='<span class="res-badge pending"><i data-lucide="triangle-alert"></i> Não confirmado</span>';
+        const ok = res[mktKey];
+        if(ok===true) resHtml=`<span class="res-badge hit">${{ico('check',11)}} GREEN</span>`;
+        else if(ok===false) resHtml=`<span class="res-badge miss">${{ico('x',11)}} RED</span>`;
+        else resHtml=`<span class="res-badge pending">${{ico('circle-alert',11)}} Não confirmado</span>`;
       }}
       return`<div class="bilhete-row">
         <span class="bilhete-num">${{i+1}}</span>
@@ -1891,40 +1555,33 @@ function renderBilhetes(date, jogos){{
       </div>`;
     }}).join('');
     let statusHtml = '';
-    if(!confirmado) statusHtml='<span class="bilhete-status" style="color:var(--muted)"><i data-lucide="clock"></i> Aguardando</span>';
-    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)"><i data-lucide="circle-check"></i> GREEN! Odd: ${{bilheteDiaHydrated.oddTotal.toFixed(2)}}</span>`;
-    else if(av.status==='loss') statusHtml=`<span class="bilhete-status" style="color:var(--red)"><i data-lucide="circle-x"></i> Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
-    else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)"><i data-lucide="triangle-alert"></i> Parcial — ${{av.sd}} sem dados</span>`;
+    if(!confirmado) statusHtml=`<span class="bilhete-status" style="color:var(--muted)">${{ico('clock',12)}} Aguardando</span>`;
+    else if(av.status==='win') statusHtml=`<span class="bilhete-status" style="color:var(--green)">${{ico('check-circle',12)}} GREEN! Odd: ${{bilheteDia.oddTotal.toFixed(2)}}</span>`;
+    else if(av.status==='loss') statusHtml=`<span class="bilhete-status" style="color:var(--red)">${{ico('x-circle',12)}} Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
+    else statusHtml=`<span class="bilhete-status" style="color:var(--yellow)">${{ico('circle-alert',12)}} Parcial - ${{av.sd}} sem dados</span>`;
 
     diaHtml=`<div class="bilhete-dia${{overlayClass}}">
-      <div class="bilhete-dia-badge"><i data-lucide="trophy"></i>BILHETE DO DIA</div>
+      <div class="bilhete-dia-badge">${{ico('trophy',12)}} BILHETE DO DIA</div>
       <div class="bilhete-header">
         <div><div class="bilhete-title" style="font-size:15px">Os mais assertivos do dia</div>
-        <div style="font-size:10px;color:var(--muted);margin-top:2px">${{bilheteDiaHydrated.sels.length}} seleções · Score médio ${{scoreMedia}}%</div></div>
+        <div style="font-size:10px;color:var(--muted);margin-top:2px">${{bilheteDia.sels.length}} seleções · Score médio ${{scoreMedia}}%</div></div>
         <div style="text-align:right">
-          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{bilheteDiaHydrated.oddTotal?bilheteDiaHydrated.oddTotal.toFixed(2):'—'}}</div>
+          <div class="bilhete-odd-total" style="color:${{oddColor}}">${{bilheteDia.oddTotal?bilheteDia.oddTotal.toFixed(2):'—'}}</div>
           <div class="bilhete-odd-label">Odd combinada</div>
         </div>
       </div>
       <div style="border-top:1px solid rgba(0,200,150,.2);padding-top:10px">${{diaHeader}}${{rows}}</div>
-      <div class="bilhete-footer"><span class="bilhete-sels">${{bilheteDiaHydrated.sels.filter(s=>s.grade==='A+').length}} A+ · ${{bilheteDiaHydrated.sels.filter(s=>s.grade==='A').length}} A</span>${{statusHtml}}</div>
-    </div>`;
+      <div class="bilhete-footer"><span class="bilhete-sels">${{bilheteDia.sels.filter(s=>s.grade==='A+').length}} A+ · ${{bilheteDia.sels.filter(s=>s.grade==='A').length}} A</span>${{statusHtml}}</div>
+    </div>
+    <div class="sec-title">${{ico('list-checks',14)}} Todos os Bilhetes</div>`;
   }}
 
-  const renderBilheteCard = (item)=>{{ const {{tipo, b, cls, label}} = item;
+  const html = bilhetes.map((item)=>{{ const {{tipo, b, cls, label}} = item;
     const av = avaliarBilhete(b.sels, confirmado);
     const overlayClass = av.status==='win'?' bilhete-win':av.status==='loss'?' bilhete-loss':'';
     const oddColor = b.oddTotal >= 5 ? 'var(--green)' : b.oddTotal >= 3 ? 'var(--yellow)' : 'var(--orange)';
 
-    const isBingo = tipo === 'bingo';
-    const oddText = (s)=>s.oddVal ? s.oddVal.toFixed(2) : '—';
-    const tierLabel = isBingo && b.tier ? ` · ${{b.tier==='OURO'?'Bingo Ouro':b.tier==='PRATA'?'Bingo Prata':'Bingo Forte'}}` : '';
-    const bilheteHeader = isBingo ? `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
-      <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
-      <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
-      <div class="bilhete-market-stack" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Mercados</div>
-      <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
-    </div>` : `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
+    const bilheteHeader = `<div class="bilhete-row" style="border-bottom:1px solid var(--border);margin-bottom:4px;padding-bottom:6px">
       <span class="bilhete-num" style="color:var(--muted);font-size:9px">#</span>
       <div style="flex:1;min-width:0"><span style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Jogo</span></div>
       <span class="bilhete-mkt" style="font-size:9px;font-weight:700;color:var(--accent);text-transform:uppercase;letter-spacing:.7px">Mercado</span>
@@ -1932,50 +1589,16 @@ function renderBilhetes(date, jogos){{
       <span class="bilhete-odd-val" style="font-size:9px;font-weight:700;color:var(--yellow);text-transform:uppercase;letter-spacing:.7px">Odd</span>
       <div class="bilhete-res" style="font-size:9px;font-weight:700;color:var(--muted);text-transform:uppercase;letter-spacing:.7px">Resultado</div>
     </div>`;
-
-    const renderSelectionStatus = (s) => {{
+    const rows = b.sels.map((s,i)=>{{
       const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
       const res = s.resultado;
-      let resHtml = '<span class="res-badge pending"><i data-lucide="clock"></i></span>';
+      let resHtml = `<span class="res-badge pending">${{ico('clock',11)}}</span>`;
       if(confirmado && res){{
-        const ok = resultOk(res,mktKey);
-        if(ok===true) resHtml='<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
-        else if(ok===false) resHtml='<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
-        else resHtml='<span class="res-badge pending"><i data-lucide="triangle-alert"></i> Não confirmado</span>';
+        const ok = res[mktKey];
+        if(ok===true) resHtml=`<span class="res-badge hit">${{ico('check',11)}} GREEN</span>`;
+        else if(ok===false) resHtml=`<span class="res-badge miss">${{ico('x',11)}} RED</span>`;
+        else resHtml=`<span class="res-badge pending">${{ico('circle-alert',11)}} Não confirmado</span>`;
       }}
-      return resHtml;
-    }};
-
-    const rows = isBingo ? (()=>{{
-      const groups = [];
-      const byJogo = new Map();
-      for(const s of b.sels){{
-        const key = `${{s.jogo}}|${{s.hora}}`;
-        if(!byJogo.has(key)){{
-          byJogo.set(key, {{jogo:s.jogo, liga:s.liga, hora:s.hora, sels:[]}});
-          groups.push(byJogo.get(key));
-        }}
-        byJogo.get(key).sels.push(s);
-      }}
-      return groups.map((g,i)=>{{
-        const marketLines = g.sels.map(s=>`<div class="bilhete-market-line">
-          <span class="bilhete-mkt">${{s.mkt}}</span>
-          <div class="bilhete-score-bar">${{bar(s.score||0,60)}}</div>
-          <span class="bilhete-odd-val">${{oddText(s)}}</span>
-        </div>`).join('');
-        const statuses = g.sels.map(renderSelectionStatus).join('<div style="height:4px"></div>');
-        return`<div class="bilhete-row">
-          <span class="bilhete-num">${{i+1}}</span>
-          <div style="flex:1;min-width:0">
-            <div class="bilhete-jogo">${{g.jogo}}</div>
-            <div class="bilhete-liga">${{g.liga}} · ${{g.hora}}</div>
-          </div>
-          <div class="bilhete-market-stack">${{marketLines}}</div>
-          <div class="bilhete-res">${{statuses}}</div>
-        </div>`;
-      }}).join('');
-    }})() : b.sels.map((s,i)=>{{
-      const resHtml = renderSelectionStatus(s);
       const scoreVal = s.score || 0;
       return`<div class="bilhete-row">
         <span class="bilhete-num">${{i+1}}</span>
@@ -1985,27 +1608,27 @@ function renderBilhetes(date, jogos){{
         </div>
         <span class="bilhete-mkt">${{s.mkt}}</span>
         <div class="bilhete-score-bar">${{bar(scoreVal,60)}}</div>
-        <span class="bilhete-odd-val">${{oddText(s)}}</span>
+        <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
         <div class="bilhete-res">${{resHtml}}</div>
       </div>`;
     }}).join('');
 
     let statusHtml = '';
     if(!confirmado){{
-      statusHtml = '<span class="bilhete-status" style="color:var(--muted)"><i data-lucide="clock"></i> Aguardando resultados</span>';
+      statusHtml = `<span class="bilhete-status" style="color:var(--muted)">${{ico('clock',12)}} Aguardando resultados</span>`;
     }} else if(av.status==='win'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--green)"><i data-lucide="circle-check"></i> BILHETE GREEN! Odd: ${{b.oddTotal.toFixed(2)}}</span>`;
+      statusHtml = `<span class="bilhete-status" style="color:var(--green)">${{ico('check-circle',12)}} BILHETE GREEN! Odd: ${{b.oddTotal.toFixed(2)}}</span>`;
     }} else if(av.status==='loss'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--red)"><i data-lucide="circle-x"></i> Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
+      statusHtml = `<span class="bilhete-status" style="color:var(--red)">${{ico('x-circle',12)}} Perdeu (${{av.erros}} erro${{av.erros>1?'s':''}})</span>`;
     }} else if(av.status==='partial'){{
-      statusHtml = `<span class="bilhete-status" style="color:var(--yellow)"><i data-lucide="triangle-alert"></i> Parcial — ${{av.sd}} sem dados</span>`;
+      statusHtml = `<span class="bilhete-status" style="color:var(--yellow)">${{ico('circle-alert',12)}} Parcial - ${{av.sd}} sem dados</span>`;
     }}
 
     return`<div class="bilhete-card ${{cls}}${{overlayClass}}">
       <div class="bilhete-header">
         <div>
           <div class="bilhete-title">${{label}}</div>
-          <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções${{tierLabel}}</div>
+          <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções</div>
         </div>
         <div style="text-align:right">
           <div class="bilhete-odd-total" style="color:${{oddColor}}">${{b.oddTotal?b.oddTotal.toFixed(2):'—'}}</div>
@@ -2018,20 +1641,13 @@ function renderBilhetes(date, jogos){{
         ${{statusHtml}}
       </div>
     </div>`;
-  }};
-
-  const bingoDestaqueHtml = bingoDestaque ? renderBilheteCard(bingoDestaque) : '';
-  const destaquesHtml = (diaHtml || bingoDestaqueHtml)
-    ? `<div class="bilhete-destaques">${{diaHtml}}${{bingoDestaqueHtml}}</div>`
-    : '';
-  const listaTitulo = todosBilhetes.length ? '<div class="sec-title"><i data-lucide="ticket"></i> Todos os Bilhetes</div>' : '';
-  const html = todosBilhetes.map(renderBilheteCard).join('');
+  }}).join('');
 
   const callout = confirmado
-    ? '<div class="callout ok"><strong><i data-lucide="circle-check"></i> Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>'
-    : '<div class="callout info"><strong><i data-lucide="target"></i> Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>';
+    ? `<div class="callout ok"><strong>${{ico('check-circle',13)}} Resultados disponíveis</strong> · Bilhetes avaliados com resultados reais.</div>`
+    : `<div class="callout info"><strong>${{ico('target',13)}} Bilhetes do Dia</strong> · Combinações geradas automaticamente pelo modelo. Aguardando resultados.</div>`;
 
-  el.innerHTML = callout + destaquesHtml + listaTitulo + `<div class="bilhete-grid">${{html}}</div>`;
+  el.innerHTML = callout + diaHtml + html;
 }}
 
 // ── Resultados do Dia ──────────────────────────────────────────────
@@ -2041,21 +1657,20 @@ function renderHistoricoDia(date,jogos){{
   const stats=(ALL_DATA[date]||{{}}).resultado_stats||{{}};
 
   if(!conf){{
-    const rows=[...jogos].sort(sortByGrade).map((d,i)=>{{
+    const rows=[...jogos].sort(sortByGrade).map(d=>{{
       const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       return`<tr class="row-pending">
-        <td class="row-num">${{i+1}}</td>
         ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
         <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
         <td class="mono" style="font-size:11px;color:var(--muted)">${{getPalpiteMkt(d)}}</td>
         <td>${{bar(getPalpiteScore(d))}}</td>
-        <td><span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span></td>
+        <td><span class="res-badge pending">${{ico('clock',11)}} Aguardando</span></td>
       </tr>`;
     }}).join('');
     el.innerHTML=`
-      <div class="callout warn"><strong><i data-lucide="clock"></i> Resultados pendentes</strong> · Execute <code>confirmar.py --date ${{date.split('-').reverse().join('-')}}</code> após os jogos.</div>
+      <div class="callout warn"><strong>${{ico('clock',13)}} Resultados pendentes</strong> · Execute <code>confirmar.py --date ${{date.split('-').reverse().join('-')}}</code> após os jogos.</div>
       <div class="tbl-wrap"><table>
-        <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>Status</th></tr></thead>
+        <thead><tr><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Mercado</th><th>Score</th><th>Status</th></tr></thead>
         <tbody>${{rows}}</tbody>
       </table></div>`;
     return;
@@ -2072,25 +1687,24 @@ function renderHistoricoDia(date,jogos){{
         <div style="height:100%;width:${{t||0}}%;background:${{c}};border-radius:3px"></div>
       </div>
       <span style="font-family:'JetBrains Mono',monospace;font-size:12px;font-weight:700;color:${{c}};min-width:42px;text-align:right">${{t!=null?t+'%':'—'}}</span>
-      <span style="font-size:10px;color:var(--muted);min-width:88px;display:inline-flex;align-items:center;gap:5px"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{s.acertos}}</span><span class="mini-stat err"><i data-lucide="circle-x"></i>${{s.erros}}</span><span class="mini-stat neutral">/ ${{s.palpites}}</span></span>
+      <span style="font-size:10px;color:var(--muted);min-width:95px">${{s.acertos}} acertos · ${{s.erros}} erros / ${{s.palpites}}</span>
     </div>`;
   }}).join('');
 
   // Tabela completa com resultados
-  const rows=[...jogos].sort(sortByGrade).map((d,i)=>{{
+  const rows=[...jogos].sort(sortByGrade).map(d=>{{
     const res=getResultado(d);
     const ac=d.acertos||{{}};
     const badges=Object.entries(ac).map(([mkt,info])=>{{
       const cls=info.acertou===true?'hit':info.acertou===false?'miss':'pending';
-      const icon=info.acertou===true?'circle-check':info.acertou===false?'circle-x':'circle-help';
-      return`<span class="res-badge ${{cls}}" style="margin:1px;font-size:9px"><i data-lucide="${{icon}}"></i> ${{mkt}}</span>`;
+      const icon=info.acertou===true?ico('check',10):info.acertou===false?ico('x',10):ico('circle-help',10);
+      return`<span class="res-badge ${{cls}}" style="margin:1px;font-size:9px">${{icon}} ${{mkt}}</span>`;
     }}).join('');
     const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
     const rc=rowClass(d,mktKey);
-    const cantRow=res&&res.corners_total!=null?`<span class="mini-stat neutral"><i data-lucide="flag"></i>${{res.corners_total}}</span>`:'—';
-    const cartRow=res&&res.cards_total!=null?`<span class="mini-stat neutral"><i data-lucide="square"></i>${{res.cards_total}}</span>`:'—';
+    const cantRow=res&&res.corners_total!=null?res.corners_total:'—';
+    const cartRow=res&&res.cards_total!=null?res.cards_total:'—';
     return`<tr class="${{rc}}">
-      <td class="row-num">${{i+1}}</td>
       ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
       ${{res?`<td><div class="placar-cell">${{res.placar}}</div><div class="placar-ht">HT ${{res.placar_ht}}</div></td>`:'<td class="mono muted">—</td>'}}
       <td class="mono">${{cantRow}}</td><td class="mono">${{cartRow}}</td>
@@ -2105,18 +1719,18 @@ function renderHistoricoDia(date,jogos){{
   const cG=tGeral==null?'var(--muted)':tGeral>=70?'var(--green)':tGeral>=50?'var(--orange)':'var(--red)';
 
   el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="circle-check"></i> Resultados confirmados</strong> · Dados reais da API-Football.</div>
+    <div class="callout ok"><strong>${{ico('check-circle',13)}} Resultados confirmados</strong> · Dados reais da API-Football.</div>
     <div class="kpi-row" style="margin-bottom:16px">
       <div class="kpi"><div class="kpi-val" style="color:${{cG}}">${{tGeral!=null?tGeral+'%':'—'}}</div><div class="kpi-lbl">Taxa do Dia</div></div>
       <div class="kpi"><div class="kpi-val g">${{ta}}</div><div class="kpi-lbl">Acertos</div></div>
       <div class="kpi"><div class="kpi-val r">${{te}}</div><div class="kpi-lbl">Erros</div></div>
       <div class="kpi"><div class="kpi-val b">${{tp}}</div><div class="kpi-lbl">Palpites</div></div>
     </div>
-    <div class="sec-title"><i data-lucide="bar-chart-2"></i> Taxa por Mercado</div>
+    <div class="sec-title">${{ico('bar-chart-2',14)}} Taxa por Mercado</div>
     <div style="max-width:580px;margin-bottom:20px">${{taxaBars||'<div class="empty">Sem dados.</div>'}}</div>
-    <div class="sec-title"><i data-lucide="list"></i> Todos os Jogos</div>
+    <div class="sec-title">${{ico('list-checks',14)}} Todos os Jogos</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Placar</th><th>Cant.</th><th>Cart.</th><th>Palpites e Acertos</th></tr></thead>
+      <thead><tr><th>Jogo</th><th>Hora</th><th>Placar</th><th>Cant.</th><th>Cart.</th><th>Palpites e Acertos</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
 }}
@@ -2129,57 +1743,372 @@ function renderHistoricoGlobal(){{
   const dias=Object.keys(ALL_DATA).sort();
 
   if(g.dias_confirmados===0){{
-    el.innerHTML=`<div class="callout warn" style="margin-top:20px"><strong><i data-lucide="clock"></i> Sem histórico confirmado ainda</strong> · Execute confirmar.py após os jogos de cada dia.</div>`;
+    el.innerHTML=`<div class="callout warn" style="margin-top:20px"><strong>${{ico('clock',13)}} Sem histórico confirmado ainda</strong> · Execute confirmar.py após os jogos de cada dia.</div>`;
     return;
   }}
 
-  // Cards por mercado
-  const mktCards=MERCADOS.filter(m=>pm[m]&&(pm[m].palpites||pm[m].p||0)>0).map(m=>{{
-    const s=pm[m];
-    const t=s.taxa;
-    const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
-    return`<div class="hist-mkt-card">
-      <div class="hist-mkt-name">${{m}}</div>
-      <div class="hist-taxa-val" style="color:${{c}}">${{t!=null?t+'%':'—'}}</div>
-      <div class="hist-detail"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{s.acertos||0}}</span> <span class="mini-stat err"><i data-lucide="circle-x"></i>${{s.erros||0}}</span> <span class="mini-stat neutral">/ ${{s.palpites||0}} palpites</span></div>
-      <div class="hist-bar-track"><div class="hist-bar-fill" style="width:${{t||0}}%;background:${{c}}"></div></div>
+  const colorForTaxa=t=>t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
+  const avaliados=(g.total_acertos||0)+(g.total_erros||0);
+  const gerados=dias.reduce((acc,d)=>acc+(((ALL_DATA[d]||{{}}).jogos||[]).length),0);
+  const geradosConfirmados=dias.reduce((acc,d)=>{{
+    const day=ALL_DATA[d]||{{}};
+    return acc+(day.resultado_confirmado?((day.jogos||[]).length):0);
+  }},0);
+  const pendentes=Math.max(0,(g.total_palpites||0)-avaliados);
+  const taxa=g.taxa_geral;
+  const cG=colorForTaxa(taxa);
+
+  function blankPickStat(){{return {{acertos:0,erros:0,palpites:0}};}}
+  function addPick(stat,item){{
+    if(!item)return;
+    const mktKey=MKT_RESULT[item.mkt||getPalpiteMkt(item)]||'over15_ok';
+    const res=item.resultado;
+    if(!res)return;
+    const ok=res[mktKey];
+    if(ok===true){{stat.acertos++;stat.palpites++;}}
+    else if(ok===false){{stat.erros++;stat.palpites++;}}
+  }}
+  function taxaStat(stat){{
+    const total=(stat.acertos||0)+(stat.erros||0);
+    return total>0?Math.round((stat.acertos||0)/total*1000)/10:null;
+  }}
+  function mergePickStat(target,src){{
+    target.acertos+=(src.acertos||0);target.erros+=(src.erros||0);target.palpites+=(src.palpites||0);
+  }}
+  function breakRow(label,stat,tone){{
+    const t=taxaStat(stat), c=colorForTaxa(t);
+    const cls=tone?` tone-${{tone}}`:'';
+    if(t==null)return`<div class="hist-break-row${{cls}}"><div><div class="hist-break-name">${{label}}</div><div class="hist-break-detail">sem histórico confirmado</div></div><div class="hist-break-empty">—</div></div>`;
+    return`<div class="hist-break-row${{cls}}">
+      <div><div class="hist-break-name">${{label}}</div><div class="hist-break-detail">${{stat.acertos}} acertos · ${{stat.erros}} erros · ${{stat.palpites}} avaliados</div></div>
+      <div class="hist-break-rate" style="color:${{c}}">${{t}}%</div>
+    </div>`;
+  }}
+  function auditPanel(title,subtitle,totalStat,rows,variant){{
+    const t=taxaStat(totalStat), c=colorForTaxa(t);
+    const cls=variant?` ${{variant}}`:'';
+    return`<div class="hist-audit-panel${{cls}}">
+      <div class="hist-audit-main">
+        <div class="hist-audit-score">
+          <div class="hist-audit-val" style="color:${{c}}">${{t!=null?t+'%':'—'}}</div>
+          <div class="hist-audit-lbl">taxa geral</div>
+        </div>
+        <div>
+          <div class="hist-audit-title">${{title}}</div>
+          <div class="hist-audit-copy">${{subtitle}}</div>
+        </div>
+      </div>
+      <div class="hist-breakdown">${{rows}}</div>
+    </div>`;
+  }}
+  function statLabel(stat){{
+    const t=taxaStat(stat), c=colorForTaxa(t);
+    return {{taxa:t,color:c,text:t!=null?t+'%':'—'}};
+  }}
+
+  const bestStats={{
+    geral:blankPickStat(), alta:blankPickStat(), media:blankPickStat(), moderado:blankPickStat()
+  }};
+  const topStats={{geral:blankPickStat()}};
+  const ticketStats={{
+    geral:{{wins:0,losses:0,tickets:0,legs:blankPickStat()}},
+    dia:{{wins:0,losses:0,tickets:0,legs:blankPickStat()}},
+    bingo:{{wins:0,losses:0,tickets:0,legs:blankPickStat()}},
+    premium:{{wins:0,losses:0,tickets:0,legs:blankPickStat()}},
+    elite:{{wins:0,losses:0,tickets:0,legs:blankPickStat()}}
+  }};
+  function addTicketStat(bucket,sels){{
+    if(!sels||!sels.length)return;
+    const av=avaliarBilhete(sels,true);
+    if(av.status!=='win'&&av.status!=='loss')return;
+    bucket.tickets++;
+    if(av.status==='win')bucket.wins++;
+    else bucket.losses++;
+    sels.forEach(s=>addPick(bucket.legs,s));
+  }}
+  function mergeTicketStat(target,src){{
+    target.wins+=src.wins;target.losses+=src.losses;target.tickets+=src.tickets;mergePickStat(target.legs,src.legs);
+  }}
+  function ticketPickStat(stat){{return {{acertos:stat.wins,erros:stat.losses,palpites:stat.tickets}};}}
+  function ticketRow(label,stat){{
+    const t=ticketsTaxa(stat), c=colorForTaxa(t);
+    if(t==null)return`<div class="hist-break-row tone-pro"><div><div class="hist-break-name">${{label}}</div><div class="hist-break-detail">sem bilhetes fechados</div></div><div class="hist-break-empty">—</div></div>`;
+    return`<div class="hist-break-row tone-pro">
+      <div><div class="hist-break-name">${{label}}</div><div class="hist-break-detail">${{stat.wins}} green · ${{stat.losses}} red · ${{stat.legs.acertos}}/${{stat.legs.erros}} seleções</div></div>
+      <div class="hist-break-rate" style="color:${{c}}">${{t}}%</div>
+    </div>`;
+  }}
+  function ticketsTaxa(stat){{
+    const total=(stat.wins||0)+(stat.losses||0);
+    return total>0?Math.round((stat.wins||0)/total*1000)/10:null;
+  }}
+
+  dias.forEach(d=>{{
+    const dayData=ALL_DATA[d]||{{}};
+    if(!dayData.resultado_confirmado)return;
+    const jogos=dayData.jogos||[];
+    const snap=dayData.palpites_snapshot||[];
+    const bestBase=jogos.length?jogos:snap;
+    bestBase.forEach(item=>{{
+      addPick(bestStats.geral,item);
+      const grade=item.grade||getPalpiteGrade(item);
+      if(grade==='A+')addPick(bestStats.alta,item);
+      else if(grade==='A')addPick(bestStats.media,item);
+      else if(grade==='B')addPick(bestStats.moderado,item);
+    }});
+
+    const topNames=dayData.top5||[];
+    const topBase=snap.length?snap:jogos;
+    if(topNames.length){{
+      topNames.forEach(name=>addPick(topStats.geral,topBase.find(x=>x.jogo===name)));
+    }} else {{
+      [...topBase].sort(sortByGrade).slice(0,5).forEach(item=>addPick(topStats.geral,item));
+    }}
+
+    const bs=dayData.bilhetes_snapshot||{{}};
+    if(bs.bilheteDia)addTicketStat(ticketStats.dia,bs.bilheteDia.sels);
+    (bs.bilhetes||[]).forEach(item=>{{
+      const label=(item.label||'').toLowerCase();
+      const tipo=(item.tipo||'').toLowerCase();
+      const sels=(item.b||{{}}).sels||[];
+      let bucket=null;
+      if(label.includes('bingo')||tipo.includes('bingo'))bucket=ticketStats.bingo;
+      else if(label.includes('premium')||tipo==='b1')bucket=ticketStats.premium;
+      else if(label.includes('elite')||label.includes('confian')||tipo==='b2')bucket=ticketStats.elite;
+      if(bucket){{addTicketStat(bucket,sels);}}
+    }});
+  }});
+  mergeTicketStat(ticketStats.geral,ticketStats.dia);
+  mergeTicketStat(ticketStats.geral,ticketStats.bingo);
+  mergeTicketStat(ticketStats.geral,ticketStats.premium);
+  mergeTicketStat(ticketStats.geral,ticketStats.elite);
+
+  const categoryStats=[
+    {{label:'Confiança Alta',stat:bestStats.alta}},
+    {{label:'Confiança Média',stat:bestStats.media}},
+    {{label:'Moderado',stat:bestStats.moderado}}
+  ].filter(x=>taxaStat(x.stat)!=null).sort((a,b)=>{{
+    const tr=taxaStat(b.stat)-taxaStat(a.stat);
+    if(tr)return tr;
+    return (b.stat.palpites||0)-(a.stat.palpites||0);
+  }});
+  const melhorCategoria=categoryStats[0]||null;
+  const melhorCategoriaRate=melhorCategoria?statLabel(melhorCategoria.stat):null;
+
+  const marketStats=MERCADOS.map(m=>{{
+    const s=pm[m]||{{}};
+    const acertos=s.acertos||0;
+    const erros=s.erros||0;
+    const palpites=s.palpites||s.p||0;
+    const avaliadosM=acertos+erros;
+    return {{m,s,taxa:s.taxa,acertos,erros,palpites,avaliados:avaliadosM}};
+  }}).filter(x=>x.palpites>0||x.avaliados>0).sort((a,b)=>{{
+    const tr=(b.taxa??-1)-(a.taxa??-1);
+    if(tr)return tr;
+    return (b.avaliados-a.avaliados)||(b.palpites-a.palpites);
+  }});
+  const melhor=marketStats[0]||null;
+  const melhorMercadoRate=melhor?{{taxa:melhor.taxa,color:colorForTaxa(melhor.taxa),text:melhor.taxa!=null?melhor.taxa+'%':'—'}}:null;
+
+  const mktCards=marketStats.map((x,i)=>{{
+    const c=colorForTaxa(x.taxa);
+    return`<div class="hist-market-row">
+      <div class="hist-rank">${{String(i+1).padStart(2,'0')}}</div>
+      <div>
+        <div class="hist-mkt-name">${{x.m}}</div>
+        <div class="hist-detail">${{x.acertos}} acertos · ${{x.erros}} erros · ${{x.palpites}} palpites</div>
+      </div>
+      <div class="hist-rate">
+        <div class="hist-taxa-val" style="color:${{c}}">${{x.taxa!=null?x.taxa+'%':'—'}}</div>
+        <div class="hist-rate-label">taxa</div>
+      </div>
+      <div class="hist-bar-track"><div class="hist-bar-fill" style="width:${{x.taxa||0}}%;background:${{c}}"></div></div>
     </div>`;
   }}).join('');
 
-  // Timeline por dia
-  const timeline=dias.map(d=>{{
+  const confirmedDias=dias.filter(d=>(ALL_DATA[d]||{{}}).resultado_confirmado);
+  const categoryVisual=[
+    {{label:'Alta',full:'Confian&ccedil;a Alta',stat:bestStats.alta,color:'var(--green)',tone:'#00C896'}},
+    {{label:'M&eacute;dia',full:'Confian&ccedil;a M&eacute;dia',stat:bestStats.media,color:'var(--blue)',tone:'#3B82F6'}},
+    {{label:'Moderado',full:'Moderado',stat:bestStats.moderado,color:'var(--orange)',tone:'#F59E0B'}}
+  ].map(x=>{{const t=taxaStat(x.stat);return {{...x,taxa:t||0,text:t!=null?t+'%':'—'}};}});
+  const radialHtml=categoryVisual.map((x,i)=>{{
+    const inset=2+i*14;
+    const deg=Math.max(0,Math.min(100,x.taxa))*3.6;
+    return`<div class="hist-radial-ring" style="--inset:${{inset}}px;--ring-color:${{x.tone}};--ring-deg:${{deg}}deg"></div>`;
+  }}).join('');
+  const categoryLegend=categoryVisual.map(x=>`
+    <div class="hist-vlegend-row">
+      <span class="hist-vdot" style="--dot:${{x.tone}}"></span>
+      <span class="hist-vlegend-name">${{x.full}}</span>
+      <span class="hist-vlegend-rate" style="--rate-color:${{x.color}}">${{x.text}}</span>
+    </div>`).join('');
+  const dayPoints=confirmedDias.map(d=>{{
+    const s=(ALL_DATA[d]||{{}}).resultado_stats||{{}};
+    let ta=0,te=0;
+    Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
+    return ta+te>0?Math.round(ta/(ta+te)*100):0;
+  }});
+  const visualPoints=dayPoints.slice(-10);
+  const svgW=320, svgH=118, pad=12;
+  const linePts=visualPoints.map((v,i)=>{{
+    const x=visualPoints.length<=1?pad:i*((svgW-pad*2)/(visualPoints.length-1))+pad;
+    const y=svgH-pad-(Math.max(0,Math.min(100,v))/100)*(svgH-pad*2);
+    return [Math.round(x*10)/10,Math.round(y*10)/10];
+  }});
+  const linePath=linePts.map((p,i)=>`${{i?'L':'M'}} ${{p[0]}} ${{p[1]}}`).join(' ');
+  const areaPath=linePts.length?`${{linePath}} L ${{linePts[linePts.length-1][0]}} ${{svgH-pad}} L ${{linePts[0][0]}} ${{svgH-pad}} Z`:'';
+  const topMarketMini=marketStats.slice(0,4).map(x=>{{
+    const c=colorForTaxa(x.taxa);
+    return`<div class="hist-market-mini-row">
+      <div class="hist-market-mini-name">${{x.m}}</div>
+      <div class="hist-market-mini-rate" style="color:${{c}}">${{x.taxa!=null?x.taxa+'%':'—'}}</div>
+      <div class="hist-market-mini-track"><div class="hist-market-mini-fill" style="width:${{x.taxa||0}}%;background:linear-gradient(90deg,${{c}},var(--purple2))"></div></div>
+    </div>`;
+  }}).join('');
+  const timeline=confirmedDias.map(d=>{{
     const dayData=ALL_DATA[d]||{{}};
-    if(!dayData.resultado_confirmado)return'';
     const s=dayData.resultado_stats||{{}};
     let ta=0,te=0;
     Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
     const t=ta+te>0?Math.round(ta/(ta+te)*100):null;
-    const c=t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
+    const c=colorForTaxa(t);
     const [dd,mm]=d.split('-');
     return`<div class="day-hist-row">
       <span class="day-hist-date">${{dd}}/${{mm}}</span>
       <div class="day-hist-bar">
         <div class="day-hist-fill" style="width:${{t||0}}%;background:${{c}}">${{t!=null&&t>15?t+'%':''}}</div>
       </div>
-      <span class="day-hist-info" style="color:${{c}}">${{t!=null?t+'%':'—'}} <span style="color:var(--muted);display:inline-flex;align-items:center;gap:4px"><span class="mini-stat ok"><i data-lucide="circle-check"></i>${{ta}}</span><span class="mini-stat err"><i data-lucide="circle-x"></i>${{te}}</span></span></span>
+      <span class="day-hist-info" style="color:${{c}}">${{t!=null?t+'%':'—'}} <span class="day-hist-detail">${{ta}} / ${{te}}</span></span>
     </div>`;
   }}).join('');
-
-  const taxa=g.taxa_geral;
-  const cG=taxa==null?'var(--muted)':taxa>=70?'var(--green)':taxa>=50?'var(--orange)':'var(--red)';
+  const spark=confirmedDias.slice(-14).map(d=>{{
+    const s=(ALL_DATA[d]||{{}}).resultado_stats||{{}};
+    let ta=0,te=0;
+    Object.values(s).forEach(x=>{{ta+=x.acertos||0;te+=x.erros||0;}});
+    const t=ta+te>0?Math.round(ta/(ta+te)*100):0;
+    const c=colorForTaxa(t);
+    return`<div class="hist-spark-bar" title="${{d}} · ${{t}}%" style="height:${{Math.max(8,t*.42)}}px;background:${{c}}"></div>`;
+  }}).join('');
 
   el.innerHTML=`
-    <div class="kpi-row" style="margin-bottom:20px">
-      <div class="kpi"><div class="kpi-val" style="color:${{cG}}">${{taxa!=null?taxa+'%':'—'}}</div><div class="kpi-lbl">Taxa Geral</div></div>
-      <div class="kpi"><div class="kpi-val g">${{g.total_acertos}}</div><div class="kpi-lbl">Total Acertos</div></div>
-      <div class="kpi"><div class="kpi-val r">${{g.total_erros}}</div><div class="kpi-lbl">Total Erros</div></div>
-      <div class="kpi"><div class="kpi-val b">${{g.total_palpites}}</div><div class="kpi-lbl">Total Palpites</div></div>
+    <div class="hist-page">
+      <div class="hist-hero">
+        <div>
+          <div class="hist-kicker">Histórico Global</div>
+          <div class="hist-title">Performance acumulada dos palpites confirmados</div>
+          <div class="hist-subtitle">Consolida apenas jogos com resultado processado. Mercados sem avaliação ficam fora do ranking.</div>
+        </div>
+        <div class="hist-hero-insights">
+          <div class="hist-insight">
+            <div class="hist-insight-label">Melhor categoria</div>
+            <div class="hist-insight-value"><span>${{melhorCategoria?melhorCategoria.label:'Sem histórico'}}</span><strong class="hist-insight-rate" style="color:${{melhorCategoriaRate?melhorCategoriaRate.color:'var(--muted)'}}">${{melhorCategoriaRate?melhorCategoriaRate.text:'—'}}</strong></div>
+          </div>
+          <div class="hist-insight">
+            <div class="hist-insight-label">Melhor mercado</div>
+            <div class="hist-insight-value"><span>${{melhor?melhor.m:'Sem mercado'}}</span><strong class="hist-insight-rate" style="color:${{melhorMercadoRate?melhorMercadoRate.color:'var(--muted)'}}">${{melhorMercadoRate?melhorMercadoRate.text:'—'}}</strong></div>
+          </div>
+        </div>
+        <div class="hist-score-card">
+          <div class="hist-score-label">Taxa geral</div>
+          <div class="hist-score-val" style="color:${{cG}}">${{taxa!=null?taxa+'%':'—'}}</div>
+          <div class="hist-score-note">${{g.total_acertos||0}} acertos · ${{g.total_erros||0}} erros</div>
+        </div>
+      </div>
 
-    </div>
-    <div class="sec-title"><i data-lucide="bar-chart-2"></i> Taxa por Mercado (acumulado)</div>
-    <div class="hist-grid">${{mktCards}}</div>
-    <div class="sec-title"><i data-lucide="calendar-days"></i> Evolução por Dia</div>
-    <div style="max-width:700px">${{timeline||'<div class="empty">Sem dias confirmados.</div>'}}</div>`;
+      <div class="hist-visual">
+        <div class="hist-visual-card">
+          <div class="hist-visual-title">Categorias</div>
+          <div class="hist-radial-wrap">
+            <div class="hist-radial">${{radialHtml}}<div class="hist-radial-core">${{taxa!=null?taxa+'%':'—'}}</div></div>
+            <div class="hist-vlegend">${{categoryLegend}}</div>
+          </div>
+          <div class="hist-legend-note"><strong>Alta</strong> = A+ · <strong>M&eacute;dia</strong> = A · <strong>Moderado</strong> = B. Taxas usam apenas palpites com resultado confirmado.</div>
+        </div>
+        <div class="hist-visual-card">
+          <div class="hist-visual-title">Evolu&ccedil;&atilde;o dos dias confirmados</div>
+          <svg class="hist-viz-svg" viewBox="0 0 320 118" preserveAspectRatio="none">
+            <defs>
+              <linearGradient id="histLineGrad" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" stop-color="#3B82F6"/>
+                <stop offset="55%" stop-color="#8B5CF6"/>
+                <stop offset="100%" stop-color="#00C896"/>
+              </linearGradient>
+              <linearGradient id="histAreaGrad" x1="0%" y1="0%" x2="0%" y2="100%">
+                <stop offset="0%" stop-color="#8B5CF6" stop-opacity=".32"/>
+                <stop offset="100%" stop-color="#8B5CF6" stop-opacity="0"/>
+              </linearGradient>
+            </defs>
+            <line class="hist-viz-axis" x1="12" y1="24" x2="308" y2="24"></line>
+            <line class="hist-viz-axis" x1="12" y1="59" x2="308" y2="59"></line>
+            <line class="hist-viz-axis" x1="12" y1="94" x2="308" y2="94"></line>
+            ${{areaPath?`<path class="hist-viz-area" d="${{areaPath}}"></path>`:''}}
+            ${{linePath?`<path class="hist-viz-line" d="${{linePath}}"></path>`:''}}
+          </svg>
+          <div class="hist-legend-note"><strong>Linha</strong> = taxa diária dos jogos confirmados. Serve para ver tendência, não entra como nova regra de cálculo.</div>
+        </div>
+        <div class="hist-visual-card">
+          <div class="hist-visual-title">Mercados em destaque</div>
+          <div class="hist-market-mini">${{topMarketMini||'<div class="empty">Sem mercados avaliados.</div>'}}</div>
+          <div class="hist-legend-note"><strong>Mercado</strong> = melhor taxa por tipo de palpite. Em empate, prioriza maior volume avaliado.</div>
+        </div>
+      </div>
+
+      <div class="hist-summary-grid">
+        <div class="hist-summary-card"><div class="hist-summary-label">Gerados</div><div class="hist-summary-value" style="color:var(--blue)">${{gerados}}</div><div class="hist-summary-note">todos disponíveis no site</div></div>
+        <div class="hist-summary-card"><div class="hist-summary-label">Auditados</div><div class="hist-summary-value" style="color:var(--purple2)">${{g.total_palpites||0}}</div><div class="hist-summary-note">${{avaliados}} com green/red</div></div>
+        <div class="hist-summary-card"><div class="hist-summary-label">Acertos</div><div class="hist-summary-value" style="color:var(--green)">${{g.total_acertos||0}}</div><div class="hist-summary-note">greens confirmados</div></div>
+        <div class="hist-summary-card"><div class="hist-summary-label">Erros</div><div class="hist-summary-value" style="color:var(--red)">${{g.total_erros||0}}</div><div class="hist-summary-note">reds confirmados</div></div>
+        <div class="hist-summary-card"><div class="hist-summary-label">Dias</div><div class="hist-summary-value" style="color:var(--teal)">${{g.dias_confirmados||0}}</div><div class="hist-summary-note">${{pendentes}} sem avaliação</div></div>
+      </div>
+
+      <div class="hist-audit-grid">
+        ${{auditPanel(
+          'Melhores Previsões',
+          'Taxa dos palpites exibidos na aba Melhores Previsões, separados por nível de confiança.',
+          bestStats.geral,
+          breakRow('Confiança Alta',bestStats.alta,'alta')+breakRow('Confiança Média',bestStats.media,'media')+breakRow('Moderado',bestStats.moderado,'moderado'),
+          'pro'
+        )}}
+        ${{auditPanel(
+          'Top 5 do Dia',
+          'Taxa acumulada dos cinco cards destacados diariamente na Visão Geral.',
+          topStats.geral,
+          breakRow('Cards Top 5',topStats.geral,'pro')
+        )}}
+        ${{auditPanel(
+          'Bilhetes',
+          'Taxa por bilhete fechado: green quando todas as seleções avaliadas batem.',
+          ticketPickStat(ticketStats.geral),
+          ticketRow('Bilhete do dia',ticketStats.dia)+ticketRow('Bingo do dia',ticketStats.bingo)+ticketRow('Premium 4x',ticketStats.premium)+ticketRow('Elite',ticketStats.elite)
+        )}}
+      </div>
+
+      <div class="hist-layout">
+        <div class="hist-panel">
+          <div class="hist-panel-head">
+            <div>
+              <div class="hist-panel-title">Ranking por mercado</div>
+              <div class="hist-summary-note">${{melhor?`Melhor: ${{melhor.m}} · ${{melhor.taxa}}%`:'Sem mercado avaliado'}}</div>
+            </div>
+            <div class="hist-panel-note">${{marketStats.length}} mercados</div>
+          </div>
+          <div class="hist-market-list">${{mktCards||'<div class="empty">Sem mercados avaliados.</div>'}}</div>
+        </div>
+
+        <div class="hist-panel">
+          <div class="hist-panel-head">
+            <div>
+              <div class="hist-panel-title">Evolução diária</div>
+              <div class="hist-summary-note">Últimos dias confirmados em ordem cronológica</div>
+            </div>
+            <div class="hist-panel-note">${{confirmedDias.length}} dias</div>
+          </div>
+          <div class="hist-days">${{timeline||'<div class="empty">Sem dias confirmados.</div>'}}</div>
+          ${{spark?`<div class="hist-spark">${{spark}}</div>`:''}}
+        </div>
+      </div>
+    </div>`;
 }}
 
 // ── Calendário ────────────────────────────────────────────────────
@@ -2319,17 +2248,74 @@ async function triggerWorkflow(workflow, inputs, token){{
 let activeDate=null;
 let activeMkt={{}};
 let historicoVisible=false;
+const FALLBACK_ICONS={{
+  'layout-dashboard':'<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+  'bar-chart-2':'<line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/>',
+  'target':'<circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/>',
+  'brain-circuit':'<path d="M12 5a3 3 0 0 0-5.8-1A3.5 3.5 0 0 0 3 7.5c0 1 .4 1.9 1 2.5a4 4 0 0 0 0 6 3.5 3.5 0 0 0 3.8 3.4A3 3 0 0 0 12 17"/><path d="M12 5a3 3 0 0 1 5.8-1A3.5 3.5 0 0 1 21 7.5c0 1-.4 1.9-1 2.5a4 4 0 0 1 0 6 3.5 3.5 0 0 1-3.8 3.4A3 3 0 0 1 12 17"/><path d="M9 12h6"/><path d="M12 9v6"/>',
+  'credit-card':'<rect x="2" y="5" width="20" height="14" rx="2"/><line x1="2" y1="10" x2="22" y2="10"/>',
+  'info':'<circle cx="12" cy="12" r="10"/><path d="M12 16v-4"/><path d="M12 8h.01"/>',
+  'log-in':'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><polyline points="10 17 15 12 10 7"/><line x1="15" y1="12" x2="3" y2="12"/>',
+  'chevron-down':'<path d="m6 9 6 6 6-6"/>',
+  'rocket':'<path d="M4.5 16.5c-1.5 1.3-2 3.4-2 5 1.6 0 3.7-.5 5-2"/><path d="M9 15 4 10l6-2 4-4c2-2 5-2 7-1-1 2-1 5-3 7l-4 4-2 6-5-5Z"/><path d="M14 6h.01"/>',
+  'arrow-right':'<path d="M5 12h14"/><path d="m12 5 7 7-7 7"/>',
+  'grid-2x2':'<rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/>',
+  'star':'<polygon points="12 2 15 8.5 22 9.3 17 14.1 18.2 21 12 17.6 5.8 21 7 14.1 2 9.3 9 8.5 12 2"/>',
+  'ticket':'<path d="M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 0 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"/><path d="M13 5v2"/><path d="M13 17v2"/><path d="M13 11v2"/>',
+  'trending-up':'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"/><polyline points="16 7 22 7 22 13"/>',
+  'shield-check':'<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"/><path d="m9 12 2 2 4-4"/>',
+  'crosshair':'<circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><line x1="6" y1="12" x2="2" y2="12"/><line x1="12" y1="6" x2="12" y2="2"/><line x1="12" y1="22" x2="12" y2="18"/>',
+  'corner-up-right':'<polyline points="15 14 20 9 15 4"/><path d="M4 20v-7a4 4 0 0 1 4-4h12"/>',
+  'layers':'<path d="m12 2 10 5-10 5L2 7Z"/><path d="m2 17 10 5 10-5"/><path d="m2 12 10 5 10-5"/>',
+  'clock':'<circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>',
+  'check':'<path d="M20 6 9 17l-5-5"/>',
+  'x':'<path d="M18 6 6 18"/><path d="m6 6 12 12"/>',
+  'circle-alert':'<circle cx="12" cy="12" r="10"/><line x1="12" y1="8" x2="12" y2="12"/><line x1="12" y1="16" x2="12.01" y2="16"/>',
+  'check-circle':'<path d="M22 11.1V12a10 10 0 1 1-5.9-9.1"/><path d="m9 11 3 3L22 4"/>',
+  'x-circle':'<circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/>',
+  'trophy':'<path d="M8 21h8"/><path d="M12 17v4"/><path d="M7 4h10v6a5 5 0 0 1-10 0Z"/><path d="M5 9H4a2 2 0 0 1-2-2V5h5"/><path d="M19 9h1a2 2 0 0 0 2-2V5h-5"/>',
+  'list-checks':'<path d="m3 17 2 2 4-4"/><path d="m3 7 2 2 4-4"/><path d="M13 6h8"/><path d="M13 12h8"/><path d="M13 18h8"/>',
+  'lock':'<rect x="3" y="11" width="18" height="11" rx="2"/><path d="M7 11V7a5 5 0 0 1 10 0v4"/>',
+  'circle-help':'<circle cx="12" cy="12" r="10"/><path d="M9.1 9a3 3 0 1 1 5.8 1c0 2-3 2-3 4"/><path d="M12 17h.01"/>'
+}};
+function renderFallbackIcons(){{
+  document.querySelectorAll('[data-lucide]').forEach(el=>{{
+    const name=el.getAttribute('data-lucide');
+    const body=FALLBACK_ICONS[name];
+    if(!body)return;
+    const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
+    svg.setAttribute('viewBox','0 0 24 24');
+    svg.setAttribute('fill','none');
+    svg.setAttribute('stroke','currentColor');
+    svg.setAttribute('stroke-width','2');
+    svg.setAttribute('stroke-linecap','round');
+    svg.setAttribute('stroke-linejoin','round');
+    svg.setAttribute('aria-hidden','true');
+    svg.setAttribute('data-lucide-fallback',name);
+    svg.innerHTML=body;
+    svg.className=el.className;
+    const style=el.getAttribute('style');
+    if(style)svg.setAttribute('style',style);
+    el.replaceWith(svg);
+  }});
+}}
+function refreshIcons(){{
+  if(typeof lucide !== 'undefined') lucide.createIcons();
+  else renderFallbackIcons();
+}}
 
 function showHistoricoGlobal(){{
   document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.date-strip-item').forEach(t=>t.classList.remove('active'));
-  document.getElementById('panel-historico').style.display='block';
   document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
   document.getElementById('sb-historico')?.classList.add('active');
+  const subBar=document.getElementById('sub-filter-bar');
+  if(subBar){{subBar.classList.remove('visible');subBar.innerHTML='';}}
+  document.getElementById('panel-historico').style.display='block';
 
   historicoVisible=true;
   renderHistoricoGlobal();
-  if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
+  refreshIcons();
 }}
 
 function switchDate(date){{
@@ -2349,6 +2335,7 @@ function switchDate(date){{
   activeDate=date;
   if(!activeMkt[date])activeMkt[date]='visao';
   switchMkt(date, activeMkt[date]);
+  refreshIcons();
 }}
 
 function switchMkt(date,mkt){{
@@ -2363,6 +2350,7 @@ function switchMkt(date,mkt){{
   if(mp)mp.classList.add('active');
   if(mt)mt.classList.add('active');
   renderMkt(date,mkt);
+  refreshIcons();
 }}
 
 function renderMkt(date,mkt){{
@@ -2375,7 +2363,6 @@ function renderMkt(date,mkt){{
   else if(mkt==='cartoes')   renderCart(date,jogos);
   else if(mkt==='bilhetes')     renderBilhetes(date,jogos);
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
-  if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
 }}
 
 // ── Sidebar navigation ──────────────────────────────────────────────
@@ -2386,12 +2373,7 @@ function sidebarNav(mkt){{
     if(d) switchDate(d);
     else return;
   }}
-  if(historicoVisible || document.getElementById('panel-historico')?.style.display==='block'){{
-    activeMkt[activeDate]=mkt;
-    switchDate(activeDate);
-  }} else {{
-    switchMkt(activeDate, mkt);
-  }}
+  switchMkt(activeDate, mkt);
   updateSidebarActive(mkt);
 }}
 
@@ -2409,6 +2391,7 @@ function updateSidebarActive(mkt){{
     const el = document.getElementById('sb-cnt-ranking');
     if(el) el.textContent = nprem || '—';
   }}
+  refreshIcons();
 }}
 
 // ── Market category & sub-filters ──────────────────────────────────
@@ -2416,7 +2399,7 @@ let activeCat = null;
 let activeSubFilter = null;
 
 const CAT_SUBFILTERS = {{
-  'gols':       [{{key:'over15',  label:'Over 1.5'}}, {{key:'over25', label:'Under'}}],
+  'gols':       [{{key:'over15',  label:'Over 1.5'}}, {{key:'over25', label:'Under 3.5'}}],
   'escanteios': [{{key:'esc75',   label:'Over 7.5'}}, {{key:'esc85',  label:'Over 8.5'}}],
   'cartoes':    [{{key:'cart25',  label:'Over 2.5'}}, {{key:'cart35', label:'Over 3.5'}}],
   'resultado':  [],
@@ -2450,6 +2433,7 @@ function renderSubFilters(cat){{
   bar.innerHTML = filters.map(f=>
     `<div class="sub-filter-btn${{activeSubFilter===f.key?' active':''}}" onclick="switchSubFilter('${{f.key}}')">${{f.label}}</div>`
   ).join('');
+  refreshIcons();
 }}
 
 function switchSubFilter(key){{
@@ -2474,6 +2458,7 @@ function switchCat(cat){{
   const firstKey = filters && filters.length ? filters[0].key : null;
   if(firstKey) activeSubFilter = firstKey;
   renderCatContent(activeDate, cat, firstKey);
+  refreshIcons();
 }}
 
 function renderCatContent(date, cat, subKey){{
@@ -2503,62 +2488,15 @@ function renderCatContent(date, cat, subKey){{
     if(p){{
       p.classList.add('active');
       p.innerHTML=`<div class="empty" style="padding:60px;text-align:center">
-        <div style="font-size:32px;margin-bottom:12px">🔒</div>
+        <div style="font-size:32px;margin-bottom:12px">${{ico('lock',28)}}</div>
         <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px">Resultado Final</div>
         <div style="font-size:13px;color:var(--muted)">Esta funcionalidade estará disponível em breve.</div>
       </div>`;
     }}
   }}
 }}
-// Inicializar ícones Lucide com fallback local para uso offline/file://
-function ensureLucideIcons(){{
-  if(typeof lucide !== 'undefined' && lucide.createIcons){{
-    lucide.createIcons();
-  }}
-  const paths = {{
-    'layout-dashboard':'<rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect>',
-    'bar-chart-2':'<line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line>',
-    'target':'<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
-    'brain-circuit':'<path d="M12 5a3 3 0 0 0-5.83-1"></path><path d="M12 5a3 3 0 0 1 5.83-1"></path><path d="M7 4a3 3 0 0 0-2 5"></path><path d="M17 4a3 3 0 0 1 2 5"></path><path d="M5 9a3 3 0 0 0 1 5.8"></path><path d="M19 9a3 3 0 0 1-1 5.8"></path><path d="M8 18a3 3 0 0 0 4-2"></path><path d="M16 18a3 3 0 0 1-4-2"></path><path d="M9 9h1"></path><path d="M14 9h1"></path><path d="M12 12v4"></path>',
-    'credit-card':'<rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line>',
-    'info':'<circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path>',
-    'search':'<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>',
-    'list':'<line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line>',
-    'calendar-days':'<path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path>',
-    'clock':'<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>',
-    'circle-x':'<circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path>',
-    'triangle-alert':'<path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path>',
-    'circle-help':'<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path>',
-    'flag':'<path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 8 2a6 6 0 0 0 4-1.2V14a6 6 0 0 1-4 1.2c-3 0-5-2-8-2a6 6 0 0 0-4 1.2"></path>',
-    'square':'<rect width="16" height="16" x="4" y="4" rx="2"></rect>',
-    'log-in':'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line>',
-    'chevron-down':'<path d="m6 9 6 6 6-6"></path>',
-    'rocket':'<path d="M4.5 16.5c-1.5 1.3-2 3-2 5 2 0 3.7-.5 5-2"></path><path d="M9 15 15 9"></path><path d="M15 9h4l2-6-6 2v4Z"></path><path d="M9 15H5l-2 6 6-2v-4Z"></path>',
-    'arrow-right':'<path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>',
-    'grid-2x2':'<rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect>',
-    'star':'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>',
-    'ticket':'<path d="M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 0 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2"></path><path d="M13 17v2"></path><path d="M13 11v2"></path>',
-    'trending-up':'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline>',
-    'circle-check':'<circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path>',
-    'shield-check':'<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"></path><path d="m9 12 2 2 4-4"></path>',
-    'crosshair':'<circle cx="12" cy="12" r="10"></circle><line x1="22" x2="18" y1="12" y2="12"></line><line x1="6" x2="2" y1="12" y2="12"></line><line x1="12" x2="12" y1="6" y2="2"></line><line x1="12" x2="12" y1="22" y2="18"></line>',
-    'corner-up-right':'<polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>',
-    'layers':'<path d="m12.83 2.18 8.05 4.02a1.25 1.25 0 0 1 0 2.24l-8.05 4.02a1.85 1.85 0 0 1-1.66 0L3.12 8.44a1.25 1.25 0 0 1 0-2.24l8.05-4.02a1.85 1.85 0 0 1 1.66 0Z"></path><path d="m22 12.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 12.5"></path><path d="m22 17.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 17.5"></path>',
-    'trophy':'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>'
-  }};
-  document.querySelectorAll('i[data-lucide]').forEach(el=>{{
-    const name = el.getAttribute('data-lucide');
-    const path = paths[name];
-    if(!path) return;
-    const style = el.getAttribute('style') || '';
-    const w = (style.match(/width:\\s*(\\d+)px/)||[])[1] || 14;
-    const h = (style.match(/height:\\s*(\\d+)px/)||[])[1] || w;
-    const wrap = document.createElement('span');
-    wrap.innerHTML = `<svg data-fallback-lucide="${{name}}" width="${{w}}" height="${{h}}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${{path}}</svg>`;
-    el.replaceWith(wrap.firstElementChild);
-  }});
-}}
-ensureLucideIcons();
+// Inicializar ícones Lucide
+if(typeof lucide !== 'undefined') lucide.createIcons();
 
 // ── Tema claro/escuro ──────────────────────────────────────────────
 function setThemeIcon(icon){{
@@ -2620,7 +2558,6 @@ const dates=Object.keys(ALL_DATA).sort((a,b)=>{{
 
 // Aguardar DOM completo antes de renderizar
 window.addEventListener('DOMContentLoaded',function(){{
-  renderGlobalHistoricoSearch();
   if(dates.length){{
     const today = new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
 const todayKey = today;
@@ -2635,7 +2572,6 @@ switchDate(targetDate);
 // Fallback se DOMContentLoaded já disparou
 if(document.readyState==='complete'||document.readyState==='interactive'){{
   setTimeout(function(){{
-    renderGlobalHistoricoSearch();
     if(dates.length&&!activeDate){{
       const today = new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
 const todayKey = today;
@@ -2667,3 +2603,4 @@ switchDate(targetDate);
 
 if __name__ == '__main__':
     gerar_site()
+
