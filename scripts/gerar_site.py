@@ -99,6 +99,7 @@ def day_panel_html(d, day_data):
     <div id="mkt-{d}-visao"        class="mkt-panel active"></div>
     <div id="mkt-{d}-ranking"      class="mkt-panel"></div>
     <div id="mkt-{d}-bilhetes"     class="mkt-panel"></div>
+    <div id="mkt-{d}-resultado"    class="mkt-panel"></div>
     <div id="mkt-{d}-over15"       class="mkt-panel"></div>
     <div id="mkt-{d}-over25"       class="mkt-panel"></div>
     <div id="mkt-{d}-escanteios"   class="mkt-panel"></div>
@@ -480,6 +481,23 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .callout strong{{font-weight:700}}
 .callout.info strong{{color:var(--blue)}}.callout.warn strong{{color:var(--orange)}}
 .callout.ok strong{{color:var(--green)}}.callout.gold strong{{color:var(--aplus)}}
+
+/* RESULTADO FINAL */
+.rf-grid{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-bottom:16px}}
+.rf-card{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:12px;min-width:0}}
+.rf-card span{{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:5px}}
+.rf-card span svg{{width:13px;height:13px;stroke:currentColor}}
+.rf-card strong{{display:block;font-family:'Inter',sans-serif;font-size:24px;font-weight:900;line-height:1;color:var(--text)}}
+.rf-card em{{display:block;font-style:normal;font-size:10px;color:var(--muted);font-family:'Inter',sans-serif;margin-top:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.rf-card.ok strong{{color:var(--green)}}.rf-card.err strong{{color:var(--red)}}.rf-card.void strong{{color:var(--yellow)}}.rf-card.blue strong{{color:var(--blue)}}
+.rf-market{{display:inline-flex;align-items:center;gap:5px;border-radius:5px;padding:3px 7px;font-size:10px;font-weight:800;font-family:'Inter',sans-serif;white-space:nowrap;border:1px solid rgba(59,130,246,.24);background:rgba(59,130,246,.08);color:var(--blue)}}
+.rf-market.win{{border-color:rgba(0,200,150,.28);background:rgba(0,200,150,.08);color:var(--green)}}
+.rf-market.dnb{{border-color:rgba(245,158,11,.32);background:rgba(245,158,11,.08);color:var(--yellow)}}
+.rf-market.dc{{border-color:rgba(59,130,246,.28);background:rgba(59,130,246,.08);color:var(--blue)}}
+.rf-reasons{{font-size:10px;color:var(--muted);line-height:1.45;max-width:320px}}
+.rf-score{{font-family:'Inter',sans-serif;font-size:14px;font-weight:900}}
+@media(max-width:920px){{.rf-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}}}
+@media(max-width:560px){{.rf-grid{{grid-template-columns:1fr}}}}
 
 /* PYRAMID */
 .cpyr{{display:flex;flex-direction:column;gap:2px;font-family:'JetBrains Mono',monospace;font-size:10px}}
@@ -996,7 +1014,6 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
     <div class="mkt-cat-bar" id="mkt-cat-bar">
       <div class="mkt-cat-tab" data-cat="resultado" onclick="switchCat('resultado')">
         <i data-lucide="shield-check" style="width:14px;height:14px"></i> Resultado Final
-        <span style="font-size:9px;background:rgba(100,116,139,.12);color:var(--muted);padding:1px 6px;border-radius:3px;margin-left:4px;letter-spacing:.3px;font-weight:500">Em breve</span>
       </div>
       <div class="mkt-cat-tab" data-cat="gols" onclick="switchCat('gols')">
         <i data-lucide="crosshair" style="width:14px;height:14px"></i> Gols
@@ -1416,6 +1433,111 @@ function approvedMarketsHtml(d, opts){{
   }}).join('')}}</div>`;
 }}
 
+// ── Resultado Final helpers ───────────────────────────────────────
+const RF_BACKTEST_START = '24-05-2026';
+function dateObj(date){{
+  const [dd,mm,yyyy]=String(date||'').split('-').map(Number);
+  return new Date(yyyy||1970,(mm||1)-1,dd||1);
+}}
+function todayKey(){{
+  return new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
+}}
+function numVal(v){{const n=parseFloat(v);return Number.isFinite(n)?n:null;}}
+function sideName(side){{return side==='home'?'Casa':'Visitante';}}
+function rfMarketLabel(p){{
+  if(!p)return'—';
+  if(p.market==='win')return`Vitória ${{sideName(p.side)}}`;
+  if(p.market==='dnb')return`${{sideName(p.side)}} DNB`;
+  return p.side==='home'?'Dupla Chance 1X':'Dupla Chance X2';
+}}
+function rfFavSide(d){{
+  const oh=numVal(d.odds_h), oa=numVal(d.odds_a);
+  const wh=numVal(d.win_home), wa=numVal(d.win_away);
+  if(oh&&oa&&oh!==oa)return {{side:oh<oa?'home':'away', favOdd:Math.min(oh,oa), dogOdd:Math.max(oh,oa), oddGap:Math.abs(oh-oa), impliedGap:Math.abs((1/oh)-(1/oa))*100, source:'odds'}};
+  if(wh!=null&&wa!=null&&Math.abs(wh-wa)>=8)return {{side:wh>wa?'home':'away', favOdd:null, dogOdd:null, oddGap:null, impliedGap:Math.abs(wh-wa), source:'api'}};
+  return null;
+}}
+function rfEdge(d, side){{
+  const sign = side==='home'?1:-1;
+  const metrics = [
+    {{name:'PPG', diff:((numVal(d.ppg_h)||0)-(numVal(d.ppg_a)||0))*sign, min:.35, weight:18}},
+    {{name:'xG', diff:((numVal(d.exg_h)||0)-(numVal(d.exg_a)||0))*sign, min:.25, weight:18}},
+    {{name:'Ataque', diff:((numVal(d.avg_sc_h)||0)-(numVal(d.avg_sc_a)||0))*sign, min:.25, weight:14}},
+    {{name:'Finalizações', diff:((numVal(d.avg_shots_h)||0)-(numVal(d.avg_shots_a)||0))*sign, min:2.5, weight:10}},
+    {{name:'SOT', diff:((numVal(d.avg_sot_h)||0)-(numVal(d.avg_sot_a)||0))*sign, min:.8, weight:10}},
+    {{name:'Prob. API', diff:((numVal(d.win_home)||0)-(numVal(d.win_away)||0))*sign, min:15, weight:20}},
+  ];
+  const ok = metrics.filter(m=>Number.isFinite(m.diff)&&m.diff>=m.min);
+  const strength = ok.reduce((acc,m)=>acc+m.weight+Math.min(12,Math.abs(m.diff)*2),0);
+  return {{ok, strength}};
+}}
+function rfPick(d){{
+  const fav=rfFavSide(d);
+  if(!fav)return null;
+  const side=fav.side;
+  const edge=rfEdge(d,side);
+  const aligned=edge.ok.length;
+  const isFriendly=String(d.liga||'').toLowerCase().includes('friendly');
+  const favOdd=fav.favOdd;
+  const oddsScore=favOdd?Math.max(0,100-(favOdd*22)):(55+Math.min(30,fav.impliedGap||0));
+  let score=Math.min(100,Math.round((oddsScore + edge.strength + Math.min(20,fav.impliedGap||0)) * 10)/10);
+  const reasons=[`favorito ${{sideName(side)}}${{favOdd?` @ ${{favOdd.toFixed(2)}}`:''}}`, `${{aligned}} sinais alinhados`].concat(edge.ok.slice(0,4).map(m=>`${{m.name}} +${{m.diff.toFixed(m.name==='Prob. API'?0:1)}}`));
+
+  if(isFriendly && (!favOdd || favOdd>1.30) && !edge.ok.find(m=>m.name==='PPG'||m.name==='Prob. API'))return null;
+
+  let market=null;
+  if((favOdd&&favOdd<=1.45&&aligned>=3) || (favOdd&&favOdd<=1.65&&aligned>=4&&edge.ok.find(m=>m.name==='Prob. API'))){{
+    market='win'; score=Math.max(score,88);
+  }} else if((favOdd&&favOdd<=1.75&&aligned>=3) || (!favOdd&&aligned>=4&&fav.impliedGap>=18)){{
+    market='dnb'; score=Math.max(score,82);
+  }} else if((favOdd&&favOdd<=1.90&&aligned>=2) || (!favOdd&&aligned>=3&&fav.impliedGap>=12)){{
+    market='dc'; score=Math.max(score,76);
+  }}
+  if(!market)return null;
+  return {{market,side,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),reasons}};
+}}
+function rfResult(jogo,pick){{
+  const res=getResultado(jogo);
+  if(!res)return 'PENDING';
+  const hg=numVal(res.gols_home), ag=numVal(res.gols_away);
+  if(hg==null||ag==null)return 'PENDING';
+  const homeWin=hg>ag, awayWin=ag>hg, draw=hg===ag;
+  if(pick.market==='win'){{
+    return ((pick.side==='home'&&homeWin)||(pick.side==='away'&&awayWin))?'GREEN':'RED';
+  }}
+  if(pick.market==='dnb'){{
+    if(draw)return 'VOID';
+    return ((pick.side==='home'&&homeWin)||(pick.side==='away'&&awayWin))?'GREEN':'RED';
+  }}
+  if(pick.market==='dc'){{
+    const lost=(pick.side==='home'&&awayWin)||(pick.side==='away'&&homeWin);
+    return lost?'RED':'GREEN';
+  }}
+  return 'PENDING';
+}}
+function rfBadge(result){{
+  if(result==='GREEN')return'<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
+  if(result==='RED')return'<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
+  if(result==='VOID')return'<span class="res-badge pending"><i data-lucide="rotate-ccw"></i> VOID</span>';
+  return'<span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span>';
+}}
+function rfRowsForDate(date){{
+  return getJogos(date).map(j=>({{j,p:rfPick(j)}})).filter(x=>x.p).sort((a,b)=>(b.p.score||0)-(a.p.score||0));
+}}
+function rfHistoricoRows(){{
+  const start=dateObj(RF_BACKTEST_START);
+  const end=dateObj(todayKey());
+  return Object.keys(ALL_DATA).filter(d=>dateObj(d)>=start&&dateObj(d)<=end).sort((a,b)=>dateObj(a)-dateObj(b)).flatMap(d=>rfRowsForDate(d).map(x=>({{date:d,...x,result:rfResult(x.j,x.p)}})));
+}}
+function rfSummary(rows){{
+  const s={{gerados:rows.length,green:0,red:0,void:0,pending:0}};
+  rows.forEach(r=>{{if(r.result==='GREEN')s.green++;else if(r.result==='RED')s.red++;else if(r.result==='VOID')s.void++;else s.pending++;}});
+  const den=s.green+s.red;
+  s.taxa=den?Math.round((s.green/den)*1000)/10:null;
+  return s;
+}}
+function rfTaxaText(t){{return t==null?'—':`${{t}}%`;}}
+
 function cardOverlayClass(jogo){{
   const res=getResultado(jogo);
   if(!res)return'';
@@ -1684,6 +1806,56 @@ function renderRanking(date,jogos){{
   }}
 
   el.innerHTML=`<div class="ranking-stack">${{groups.map(tableFor).join('')}}</div>`;
+}}
+
+// ── Resultado Final ────────────────────────────────────────────────
+function renderResultadoFinal(date,jogos){{
+  const el=document.getElementById('mkt-'+date+'-resultado');
+  const dayRows=rfRowsForDate(date).map(x=>({{date,j:x.j,p:x.p,result:rfResult(x.j,x.p)}}));
+  const histRows=rfHistoricoRows();
+  const hist=rfSummary(histRows.filter(r=>r.result!=='PENDING'));
+  const day=rfSummary(dayRows);
+  const byMarket=['win','dnb','dc'].map(m=>{{
+    const rows=histRows.filter(r=>r.p.market===m&&r.result!=='PENDING');
+    return {{m,...rfSummary(rows)}};
+  }});
+  const mLabel={{win:'Vitória seca',dnb:'Draw no Bet',dc:'Dupla Chance'}};
+  const marketCards=byMarket.map(x=>`<div class="rf-card">
+    <span><i data-lucide="${{x.m==='win'?'trophy':x.m==='dnb'?'shield-check':'shield'}}"></i>${{mLabel[x.m]}}</span>
+    <strong>${{rfTaxaText(x.taxa)}}</strong>
+    <em>${{x.green}} green · ${{x.red}} red · ${{x.void}} void · ${{x.gerados}} gerados</em>
+  </div>`).join('');
+  const rowsHtml=dayRows.map((r,i)=>{{
+    const res=getResultado(r.j);
+    const placar=res?`${{res.gols_home}}-${{res.gols_away}}`:'—';
+    const cls=r.result==='GREEN'?'row-hit':r.result==='RED'?'row-miss':'row-pending';
+    return`<tr class="${{cls}}">
+      <td class="row-num">${{i+1}}</td>
+      ${{jogoCell(r.j)}}
+      <td class="mono muted">${{r.j.hora||'—'}}</td>
+      <td><span class="rf-market ${{r.p.market}}">${{rfMarketLabel(r.p)}}</span></td>
+      <td class="rf-score" style="color:${{col(r.p.score)}}">${{pctText(r.p.score)}}</td>
+      <td>${{gradeHtml(r.p.grade)}}</td>
+      <td class="mono muted">${{r.j.odds_h?Number(r.j.odds_h).toFixed(2):'—'}} x ${{r.j.odds_a?Number(r.j.odds_a).toFixed(2):'—'}}</td>
+      <td class="mono">${{placar}}</td>
+      <td>${{rfBadge(r.result)}}</td>
+      <td><div class="rf-reasons">${{r.p.reasons.join(' · ')}}</div></td>
+    </tr>`;
+  }}).join('');
+
+  el.innerHTML=`
+    <div class="callout ok"><strong><i data-lucide="shield-check"></i> Resultado Final</strong> · Método conservador para Vitória, Draw no Bet e Dupla Chance. Histórico validado de 24/05 até hoje com GREEN/RED; DNB empatado entra como VOID.</div>
+    <div class="rf-grid">
+      <div class="rf-card ok"><span><i data-lucide="activity"></i>Taxa histórica</span><strong>${{rfTaxaText(hist.taxa)}}</strong><em>${{hist.green}} green · ${{hist.red}} red · ${{hist.void}} void · ${{hist.gerados}} gerados</em></div>
+      <div class="rf-card blue"><span><i data-lucide="calendar-days"></i>Data selecionada</span><strong>${{day.gerados}}</strong><em>${{day.green}} green · ${{day.red}} red · ${{day.void}} void · ${{day.pending}} aguardando</em></div>
+      ${{marketCards}}
+    </div>
+    <div class="sec-title"><i data-lucide="shield-check"></i> Palpites Resultado Final</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds Casa x Fora</th><th>Placar</th><th>Resultado</th><th>Motivos</th></tr></thead>
+      <tbody>${{rowsHtml||'<tr><td colspan="10" class="empty">Nenhum palpite de Resultado Final aprovado para esta data.</td></tr>'}}</tbody>
+    </table></div>`;
+  ensureLucideIcons();
 }}
 
 // ── Over 1.5 ───────────────────────────────────────────────────────
@@ -2277,7 +2449,11 @@ function renderHistoricoGlobal(){{
   const el=document.getElementById('historico-content');
   const g=GLOBAIS;
   const pm=g.por_mercado||{{}};
-  const dias=Object.keys(ALL_DATA).sort();
+  const dias=Object.keys(ALL_DATA).sort((a,b)=>{{
+    const [da,ma,ya]=a.split('-').map(Number);
+    const [db,mb,yb]=b.split('-').map(Number);
+    return new Date(ya,ma-1,da)-new Date(yb,mb-1,db);
+  }});
 
   if(g.dias_confirmados===0){{
     el.innerHTML=`<div class="callout warn" style="margin-top:20px"><strong><i data-lucide="clock"></i> Sem histórico confirmado ainda</strong> · Execute confirmar.py após os jogos de cada dia.</div>`;
@@ -2707,6 +2883,7 @@ function renderMkt(date,mkt){{
   const jogos=getJogos(date);
   if(mkt==='visao')          renderVisao(date,jogos);
   else if(mkt==='ranking')   renderRanking(date,jogos);
+  else if(mkt==='resultado') renderResultadoFinal(date,jogos);
   else if(mkt==='over15')    renderOver15(date,jogos);
   else if(mkt==='over25')    renderOver25(date,jogos);
   else if(mkt==='escanteios')renderEsc(date,jogos);
@@ -2835,17 +3012,10 @@ function renderCatContent(date, cat, subKey){{
     const p = document.getElementById('mkt-'+date+'-cartoes');
     if(p) p.classList.add('active');
   }} else if(cat === 'resultado'){{
-    // Em breve
+    renderResultadoFinal(date, jogos);
     document.querySelectorAll(`#day-${{date}} .mkt-panel`).forEach(p=>p.classList.remove('active'));
-    const p = document.getElementById('mkt-'+date+'-visao');
-    if(p){{
-      p.classList.add('active');
-      p.innerHTML=`<div class="empty" style="padding:60px;text-align:center">
-        <div style="font-size:32px;margin-bottom:12px">🔒</div>
-        <div style="font-size:16px;font-weight:700;color:var(--text);margin-bottom:6px">Resultado Final</div>
-        <div style="font-size:13px;color:var(--muted)">Esta funcionalidade estará disponível em breve.</div>
-      </div>`;
-    }}
+    const p = document.getElementById('mkt-'+date+'-resultado');
+    if(p) p.classList.add('active');
   }}
 }}
 // Inicializar ícones Lucide com fallback local para uso offline/file://
@@ -2882,7 +3052,10 @@ function ensureLucideIcons(){{
     'crosshair':'<circle cx="12" cy="12" r="10"></circle><line x1="22" x2="18" y1="12" y2="12"></line><line x1="6" x2="2" y1="12" y2="12"></line><line x1="12" x2="12" y1="6" y2="2"></line><line x1="12" x2="12" y1="22" y2="18"></line>',
     'corner-up-right':'<polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>',
     'layers':'<path d="m12.83 2.18 8.05 4.02a1.25 1.25 0 0 1 0 2.24l-8.05 4.02a1.85 1.85 0 0 1-1.66 0L3.12 8.44a1.25 1.25 0 0 1 0-2.24l8.05-4.02a1.85 1.85 0 0 1 1.66 0Z"></path><path d="m22 12.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 12.5"></path><path d="m22 17.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 17.5"></path>',
-    'trophy':'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>'
+    'trophy':'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>',
+    'shield':'<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"></path>',
+    'activity':'<path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>',
+    'rotate-ccw':'<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path>'
   }};
   document.querySelectorAll('i[data-lucide]').forEach(el=>{{
     const name = el.getAttribute('data-lucide');
