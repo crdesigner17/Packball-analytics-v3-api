@@ -517,11 +517,11 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .hist-score-card em{{font-style:normal;font-size:9px;color:var(--text2);font-family:'Inter',sans-serif;font-weight:800;line-height:1.25;text-align:right;white-space:normal}}
 .hist-score-card .hist-score-bar{{position:relative;z-index:1;height:6px;border-radius:999px;background:rgba(148,163,184,.14);overflow:hidden;margin-top:10px;width:100%}}
 .hist-score-card .hist-score-bar i{{display:block;height:100%;border-radius:999px;background:linear-gradient(90deg,var(--blue),var(--purple2));width:var(--score-width,0%)}}
-.hist-visual{{background:linear-gradient(135deg,rgba(31,32,56,.94),rgba(19,28,49,.96));border:1px solid rgba(139,92,246,.18);border-radius:16px;padding:14px;display:grid;grid-template-columns:220px minmax(0,1fr) 240px;gap:14px;align-items:stretch;box-shadow:0 14px 36px rgba(0,0,0,.28);overflow:hidden}}
+.hist-visual{{background:linear-gradient(135deg,rgba(31,32,56,.94),rgba(19,28,49,.96));border:1px solid rgba(139,92,246,.18);border-radius:16px;padding:14px;display:grid;grid-template-columns:300px minmax(0,1fr) 250px;gap:14px;align-items:stretch;box-shadow:0 14px 36px rgba(0,0,0,.28);overflow:hidden}}
 .hist-visual-card{{background:rgba(255,255,255,.025);border:1px solid rgba(148,163,184,.10);border-radius:12px;padding:12px;min-width:0}}
 .hist-visual-title{{font-size:10px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--text2);margin-bottom:10px}}
-.hist-radial-wrap{{display:grid;grid-template-columns:118px minmax(0,1fr);gap:12px;align-items:center}}
-.hist-radial{{width:118px;height:118px;border-radius:50%;position:relative;background:radial-gradient(circle at center,rgba(31,32,56,1) 0 40%,transparent 41%)}}
+.hist-radial-wrap{{display:grid;grid-template-columns:118px minmax(150px,1fr);gap:14px;align-items:center}}
+.hist-radial{{width:118px;height:118px;border-radius:50%;position:relative;background:radial-gradient(circle at center,rgba(31,32,56,1) 0 40%,transparent 41%);flex-shrink:0}}
 .hist-radial-ring{{position:absolute;inset:var(--inset);border-radius:50%;background:conic-gradient(var(--ring-color) 0 var(--ring-deg),rgba(255,255,255,.07) var(--ring-deg) 360deg)}}
 .hist-radial-ring::after{{content:'';position:absolute;inset:8px;border-radius:50%;background:rgb(31,32,56)}}
 .hist-radial-core{{position:absolute;inset:39px;border-radius:50%;background:rgba(17,24,39,.92);border:1px solid rgba(148,163,184,.14);display:flex;align-items:center;justify-content:center;font-family:'Inter',sans-serif;font-size:13px;font-weight:900;color:var(--text)}}
@@ -535,8 +535,8 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .hist-radial-ring.green{{stroke:var(--green)}}
 .hist-radial-ring.yellow{{stroke:var(--yellow)}}
 .hist-radial-ring.blue{{stroke:var(--blue)}}
-.hist-vlegend-item{{display:grid;grid-template-columns:8px minmax(0,1fr) 42px;gap:7px;align-items:center;font-size:10px;color:var(--muted)}}
-.hist-vlegend-item span:nth-child(2){{white-space:nowrap;overflow:hidden;text-overflow:ellipsis;color:var(--text2);font-weight:700}}
+.hist-vlegend-item{{display:grid;grid-template-columns:8px minmax(104px,1fr) 46px;gap:8px;align-items:center;font-size:10px;color:var(--muted)}}
+.hist-vlegend-item span:nth-child(2){{white-space:nowrap;overflow:visible;text-overflow:clip;color:var(--text2);font-weight:800}}
 .hist-vlegend-item strong{{font-family:'Inter',sans-serif;font-weight:900;text-align:right;color:var(--text)}}
 .hist-dot{{width:8px;height:8px;border-radius:50%;display:block}}
 .hist-dot.green{{background:var(--green)}}
@@ -572,15 +572,17 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .hist-summary-card em{{display:block;font-style:normal;font-size:9px;color:var(--muted);margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 .hist-summary-card.ok strong{{color:var(--green)}}
 .hist-summary-card.err strong{{color:var(--red)}}
-.hist-audit-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:start}}
-.hist-audit-panel{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px;min-width:0;position:relative;overflow:hidden}}
+.hist-audit-grid{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px;align-items:stretch}}
+.hist-audit-panel{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:11px;min-width:0;position:relative;overflow:hidden;display:flex;flex-direction:column;height:100%}}
 .hist-audit-panel.pro::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(135deg,#2563eb,#7c3aed)}}
-.hist-audit-main{{display:grid;grid-template-columns:88px minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border)}}
+.hist-audit-main{{display:grid;grid-template-columns:86px minmax(0,1fr);gap:10px;align-items:center;margin-bottom:8px;padding-bottom:8px;border-bottom:1px solid var(--border);min-height:84px}}
 .hist-audit-score{{height:68px;border-radius:9px;background:linear-gradient(135deg,rgba(37,99,235,.14),rgba(0,200,150,.08));border:1px solid rgba(148,163,184,.14);display:flex;flex-direction:column;align-items:center;justify-content:center}}
 .hist-audit-panel.pro .hist-audit-score{{background:linear-gradient(135deg,rgba(37,99,235,.24),rgba(124,58,237,.18));border-color:rgba(139,92,246,.32)}}
 .hist-audit-val{{font-family:'Inter',sans-serif;font-size:20px;font-weight:800;line-height:1}}
 .hist-audit-lbl{{font-size:8px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.7px;margin-top:3px}}
 .hist-audit-main span{{display:block;font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:3px}}
+.hist-audit-main .hist-audit-kicker{{display:flex;align-items:center;gap:6px;font-size:9px;color:var(--muted);font-weight:800;text-transform:uppercase;letter-spacing:.8px;margin-bottom:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hist-audit-kicker svg{{width:13px;height:13px;stroke:currentColor;flex-shrink:0}}
 .hist-audit-main strong{{display:block;font-size:12px;font-weight:800;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 .hist-audit-main em{{display:block;font-style:normal;font-size:9px;color:var(--muted);line-height:1.35;margin-top:3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
 .hist-audit-title{{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:.8px;color:var(--text)}}
@@ -903,6 +905,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   .hist-hero-insights{{grid-template-columns:1fr}}
   .hist-score-card{{min-width:0;width:100%;height:auto;padding:12px}}
   .hist-visual{{grid-template-columns:1fr;padding:12px;gap:10px;border-radius:12px}}
+  .hist-line{{height:132px}}
   .hist-radial-wrap{{grid-template-columns:112px minmax(0,1fr);gap:8px}}
   .hist-radial{{width:112px;height:112px}}
   .hist-summary-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}
@@ -2479,33 +2482,6 @@ function renderHistoricoGlobal(){{
         </div>
       </div>
 
-      <div class="hist-visual">
-        <div class="hist-visual-card">
-          <div class="hist-visual-title">Categorias</div>
-          <div class="hist-radial-wrap">
-            <svg class="hist-radial" viewBox="0 0 148 148" aria-hidden="true">
-              <circle class="hist-radial-bg" cx="74" cy="74" r="66"></circle>
-              <circle class="hist-radial-bg" cx="74" cy="74" r="57"></circle>
-              <circle class="hist-radial-bg" cx="74" cy="74" r="48"></circle>
-              ${{radialRows}}
-            </svg>
-            <div class="hist-vlegend">${{radialLegend}}</div>
-          </div>
-        </div>
-        <div class="hist-visual-card">
-          <div class="hist-visual-title">Evolução dos confirmados</div>
-          <svg class="hist-line" viewBox="0 0 300 126" preserveAspectRatio="none" aria-hidden="true">
-            <polygon points="${{areaPoints}}" class="hist-line-area"></polygon>
-            <polyline points="${{linePoints}}" class="hist-line-path"></polyline>
-          </svg>
-        </div>
-        <div class="hist-visual-card">
-          <div class="hist-visual-title">Mercados em destaque</div>
-          <div class="hist-market-mini">${{marketMini||'<div class="empty">Sem mercados confirmados.</div>'}}</div>
-        </div>
-        <div class="hist-legend-note"><strong>Legenda discreta:</strong> Confiança Alta = A+, Confiança Média = A, Moderado = B. Taxas usam somente itens confirmados com GREEN ou RED.</div>
-      </div>
-
       <div class="hist-summary-grid">
         <div class="hist-summary-card"><span>Gerados</span><strong>${{gerados}}</strong><em>todos os palpites disponíveis</em></div>
         <div class="hist-summary-card"><span>Confirmados</span><strong>${{auditados}}</strong><em>com GREEN ou RED</em></div>
@@ -2515,16 +2491,16 @@ function renderHistoricoGlobal(){{
       </div>
 
       <div class="hist-audit-grid">
-        <div class="hist-audit-panel pro">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{cG}}">${{fmtTaxa(taxa)}}</div><div><span>Melhores Previsões</span><strong>Taxas por confiança</strong><em>base completa dos jogos confirmados</em></div></div>
-          <div class="hist-break-list">${{categoryRows}}</div>
-        </div>
         <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(top5Taxa)}}">${{fmtTaxa(top5Taxa)}}</div><div><span>Top 5 do Dia</span><strong>Taxa geral</strong><em>${{top5Stats.auditados}} confirmados de ${{top5Stats.gerados}} gerados</em></div></div>
+          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(top5Taxa)}}">${{fmtTaxa(top5Taxa)}}</div><div><span class="hist-audit-kicker"><i data-lucide="star"></i>Top 5 do Dia</span><strong>Taxa geral</strong><em>${{top5Stats.auditados}} confirmados de ${{top5Stats.gerados}} gerados</em></div></div>
           <div class="hist-break-list">${{ticketRow('Top 5 Palpites do Dia',top5Stats)}}</div>
         </div>
         <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(taxaStat(ticketStats.geral))}}">${{fmtTaxa(taxaStat(ticketStats.geral))}}</div><div><span>Bilhetes</span><strong>Geral e por tipo</strong><em>${{ticketStats.geral.auditados}} bilhetes confirmados</em></div></div>
+          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{cG}}">${{fmtTaxa(taxa)}}</div><div><span class="hist-audit-kicker"><i data-lucide="sparkles"></i>Melhores Previsões</span><strong>Taxas por confiança</strong><em>base completa dos jogos confirmados</em></div></div>
+          <div class="hist-break-list">${{categoryRows}}</div>
+        </div>
+        <div class="hist-audit-panel">
+          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(taxaStat(ticketStats.geral))}}">${{fmtTaxa(taxaStat(ticketStats.geral))}}</div><div><span class="hist-audit-kicker"><i data-lucide="ticket"></i>Bilhetes</span><strong>Geral e por tipo</strong><em>${{ticketStats.geral.auditados}} bilhetes confirmados</em></div></div>
           <div class="hist-break-list">
             ${{ticketRow('Bilhetes geral',ticketStats.geral)}}
             ${{ticketRow('Bilhete do dia',ticketStats.dia)}}
