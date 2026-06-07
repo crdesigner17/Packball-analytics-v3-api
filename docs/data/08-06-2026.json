@@ -557,9 +557,9 @@
       "home_id": 2,
       "away_id": 771,
       "is_elite": false,
-      "odds_h": 1.14,
-      "odds_d": 7.5,
-      "odds_a": 17.5,
+      "odds_h": 1.15,
+      "odds_d": 7.0,
+      "odds_a": 18.5,
       "over15_g": null,
       "over25_g": null,
       "over15_h": null,
@@ -831,7 +831,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-07T02:58:53Z",
+    "created_at": "2026-06-07T09:59:36Z",
     "bilhetes": [
       {
         "tipo": "b1",
