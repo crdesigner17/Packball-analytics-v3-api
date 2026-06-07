@@ -897,11 +897,11 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   <span class="date-strip-dow">Sex</span>
   <span class="date-strip-day">05.06</span>
 </div>
-<div class="date-strip-item today" data-date="06-06-2026" onclick="switchDate('06-06-2026')">
+<div class="date-strip-item" data-date="06-06-2026" onclick="switchDate('06-06-2026')">
   <span class="date-strip-dow">Sáb</span>
   <span class="date-strip-day">06.06</span>
 </div>
-<div class="date-strip-item" data-date="07-06-2026" onclick="switchDate('07-06-2026')">
+<div class="date-strip-item today" data-date="07-06-2026" onclick="switchDate('07-06-2026')">
   <span class="date-strip-dow">Dom</span>
   <span class="date-strip-day">07.06</span>
 </div>
@@ -1642,7 +1642,7 @@ function rfResult(jogo,pick){
 function rfBadge(result){
   if(result==='GREEN')return'<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
   if(result==='RED')return'<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
-  if(result==='VOID')return'<span class="res-badge pending"><i data-lucide="rotate-ccw"></i> VOID</span>';
+  if(result==='VOID')return'<span class="res-badge pending"><i data-lucide="rotate-ccw"><Empate anula</span>';
   return'<span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span>';
 }
 function rfRowsForDate(date){
@@ -1943,11 +1943,20 @@ function renderResultadoFinal(date,jogos){
     const rows=histRows.filter(r=>r.p.market===m&&r.result!=='PENDING');
     return {m,...rfSummary(rows)};
   });
-  const mLabel={win:'Vitória seca',dnb:'Draw no Bet',dc:'Dupla Chance'};
+  const mLabel={win:'Vitória seca',dnb:'Empate anula',dc:'Dupla Chance'};
+  // Taxa do dia
+  const _taxaDia = day.green+day.red>0 ? Math.round(day.green/(day.green+day.red)*100) : null;
+  const _taxaDiaColor = _taxaDia==null?'var(--muted)':_taxaDia>=70?'var(--green)':_taxaDia>=50?'var(--orange)':'var(--red)';
+  const taxaDiaHtml = _taxaDia!=null ? `<div style="width:1px;height:24px;background:var(--border)"></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <i data-lucide="target" style="width:14px;height:14px;color:${_taxaDiaColor}"></i>
+        <span style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px">Acerto do dia</span>
+        <span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${_taxaDiaColor}">${_taxaDia}%</span>
+      </div>` : '';
   const marketCards=byMarket.map(x=>`<div class="rf-card">
     <span><i data-lucide="${x.m==='win'?'trophy':x.m==='dnb'?'shield-check':'shield'}"></i>${mLabel[x.m]}</span>
     <strong>${rfTaxaText(x.taxa)}</strong>
-    <em>${x.green} green · ${x.red} red · ${x.void} void · ${x.gerados} gerados</em>
+    <em>${x.green} green · ${x.red} red · ${x.void} empate anula · ${x.gerados} gerados</em>
   </div>`).join('');
   const rowsHtml=dayRows.map((r,i)=>{
     const res=getResultado(r.j);
@@ -1968,15 +1977,26 @@ function renderResultadoFinal(date,jogos){
   }).join('');
 
   el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="shield-check"></i> Resultado Final</strong> · Método conservador para Vitória, Draw no Bet e Dupla Chance. Histórico validado de 24/05 até hoje com GREEN/RED; DNB empatado entra como VOID.</div>
-    <div class="rf-grid">
-      <div class="rf-card ok"><span><i data-lucide="activity"></i>Taxa histórica</span><strong>${rfTaxaText(hist.taxa)}</strong><em>${hist.green} green · ${hist.red} red · ${hist.void} void · ${hist.gerados} gerados</em></div>
-      <div class="rf-card blue"><span><i data-lucide="calendar-days"></i>Data selecionada</span><strong>${day.gerados}</strong><em>${day.green} green · ${day.red} red · ${day.void} void · ${day.pending} aguardando</em></div>
-      ${marketCards}
+    
+    <div style="display:flex;align-items:center;gap:20px;padding:10px 0;margin-bottom:4px;flex-wrap:wrap">
+      <div style="display:flex;align-items:center;gap:8px">
+        <i data-lucide="activity" style="width:14px;height:14px;color:var(--green)"></i>
+        <span style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px">Taxa histórica</span>
+        <span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--green)">${rfTaxaText(hist.taxa)}</span>
+        <span style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace">${hist.green}✓ ${hist.red}✗ / ${hist.gerados}</span>
+      </div>
+      <div style="width:1px;height:24px;background:var(--border)"></div>
+      <div style="display:flex;align-items:center;gap:8px">
+        <i data-lucide="calendar-days" style="width:14px;height:14px;color:var(--blue)"></i>
+        <span style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px">Jogos do dia</span>
+        <span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--blue)">${day.gerados}</span>
+        <span style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace">${day.green}✓ ${day.red}✗ ${day.pending} aguardando</span>
+      </div>
+      ${taxaDiaHtml}
     </div>
     <div class="sec-title"><i data-lucide="shield-check"></i> Palpites Resultado Final</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds Casa x Fora</th><th>Placar</th><th>Resultado</th><th>Motivos</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds</th><th>Placar</th><th>Resultado</th><th>Motivos</th></tr></thead>
       <tbody>${rowsHtml||'<tr><td colspan="10" class="empty">Nenhum palpite de Resultado Final aprovado para esta data.</td></tr>'}</tbody>
     </table></div>`;
   ensureLucideIcons();
@@ -2269,6 +2289,22 @@ function avaliarBilhete(sels, confirmado){
   if(erros>0) return {status:'loss', acertos, erros, sd, total:sels.length};
   if(sd>0) return {status:'partial', acertos, erros, sd, total:sels.length};
   return {status:'win', acertos, erros:0, sd:0, total:sels.length};
+}
+
+// ── Bilhetes helpers ──────────────────────────────────────────────
+function oddText(s){
+  if(!s.oddVal) return '—';
+  return parseFloat(s.oddVal).toFixed(2);
+}
+
+function renderSelectionStatus(s){
+  const res = s.resultado;
+  if(!res) return '<span class="res-badge pending">⏳ Aguardando</span>';
+  const mktKey = MKT_RESULT[s.mkt]||'over15_ok';
+  const ok = resultOk(res, mktKey);
+  if(ok===true) return '<span class="res-badge hit">✓ GREEN</span>';
+  if(ok===false) return '<span class="res-badge miss">✗ RED</span>';
+  return '<span class="res-badge pending">⚠ Não confirmado</span>';
 }
 
 function renderBilhetes(date, jogos){
