@@ -1854,7 +1854,7 @@ function renderResultadoFinal(date,jogos){{
 
   el.innerHTML=`
     
-    <div style="display:flex;align-items:center;gap:20px;padding:10px 0;margin-bottom:4px;flex-wrap:wrap">
+    <div style="display:flex;align-items:center;gap:20px;padding:10px 0;margin-bottom:4px;flex-wrap:wrap;justify-content:center">
       <div style="display:flex;align-items:center;gap:8px">
         <i data-lucide="activity" style="width:14px;height:14px;color:var(--green)"></i>
         <span style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px">Taxa histórica</span>
