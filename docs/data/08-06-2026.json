@@ -108,7 +108,9 @@
       "justif_cards": "Média 5.55 cart · O2.5: 85.0% · O3.5: 85.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 71.9
+      "palpite_score": 71.9,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "08-06-2026",
@@ -217,7 +219,9 @@
       "justif_cards": "Média 6.699999999999999 cart · O2.5: 100.0% · O3.5: 100.0%",
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "A",
-      "palpite_score": 84.2
+      "palpite_score": 84.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "08-06-2026",
@@ -326,7 +330,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "A",
-      "palpite_score": 76.6
+      "palpite_score": 76.6,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "08-06-2026",
@@ -567,7 +573,9 @@
       "justif_cards": "Média 2.665 cart · O2.5: 66.65% · O3.5: 50.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 76.3
+      "palpite_score": 76.3,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "08-06-2026",
@@ -676,7 +684,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "08-06-2026",
@@ -785,7 +795,9 @@
       "justif_cards": "Média 3.415 cart · O2.5: 58.35% · O3.5: 33.35%",
       "palpite_mkt": "Over 0.5 HT",
       "palpite_grade": "B",
-      "palpite_score": 67.4
+      "palpite_score": 67.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "08-06-2026",
@@ -894,7 +906,9 @@
       "justif_cards": "Média 3.665 cart · O2.5: 66.7% · O3.5: 66.7%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 62.8
+      "palpite_score": 62.8,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -1123,11 +1137,11 @@
       "taxa": null
     },
     "BTTS": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Over 0.5 HT": {
       "palpites": 0,
