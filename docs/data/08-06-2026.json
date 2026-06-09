@@ -109,7 +109,28 @@
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
       "palpite_score": 71.9,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1520710,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "1-1",
+        "corners_total": 10,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
       "acertos": {}
     },
     {
@@ -220,8 +241,35 @@
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "A",
       "palpite_score": 84.2,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1520719,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "1-0",
+        "corners_total": 18,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Cart 2.5": {
+          "score": 84.2,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "08-06-2026",
@@ -1073,8 +1121,35 @@
       "score": 84.2,
       "grade": "A",
       "oddVal": null,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1520719,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "1-0",
+        "corners_total": 18,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
+      "acertos": {
+        "Cart 2.5": {
+          "score": 84.2,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "fixture_id": 1499461,
@@ -1218,8 +1293,35 @@
               "score": 84.2,
               "grade": "A",
               "oddVal": null,
-              "resultado": null,
-              "acertos": {}
+              "resultado": {
+                "fixture_id": 1520719,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 0,
+                "gols_total": 1,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": false,
+                "over25_ok": false,
+                "under35_ok": true,
+                "under45_ok": true,
+                "placar": "1-0",
+                "placar_ht": "1-0",
+                "corners_total": 18,
+                "cards_total": 5,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": true,
+                "cart35_ok": true
+              },
+              "acertos": {
+                "Cart 2.5": {
+                  "score": 84.2,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
             },
             {
               "fixture_id": 1499461,
@@ -1371,11 +1473,11 @@
       "taxa": null
     },
     "Cart 2.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Cart 3.5": {
       "palpites": 0,
@@ -1443,18 +1545,18 @@
       "taxa": 0.0
     },
     "Cart 2.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Cart 3.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     }
   },
   "stats": {
