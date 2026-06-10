@@ -590,11 +590,11 @@
         "placar": "2-1",
         "placar_ht": "1-1",
         "corners_total": 5,
-        "cards_total": 2,
+        "cards_total": 4,
         "esc75_ok": false,
         "esc85_ok": false,
-        "cart25_ok": false,
-        "cart35_ok": false
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -712,7 +712,28 @@
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "B",
       "palpite_score": 69.7,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1525494,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 0,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "3-0",
+        "placar_ht": "1-0",
+        "corners_total": 12,
+        "cards_total": 4,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
+      },
       "acertos": {}
     },
     {
@@ -987,11 +1008,11 @@
         "placar": "2-1",
         "placar_ht": "1-1",
         "corners_total": 5,
-        "cards_total": 2,
+        "cards_total": 4,
         "esc75_ok": false,
         "esc85_ok": false,
-        "cart25_ok": false,
-        "cart35_ok": false
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -1078,11 +1099,11 @@
                 "placar": "2-1",
                 "placar_ht": "1-1",
                 "corners_total": 5,
-                "cards_total": 2,
+                "cards_total": 4,
                 "esc75_ok": false,
                 "esc85_ok": false,
-                "cart25_ok": false,
-                "cart35_ok": false
+                "cart25_ok": true,
+                "cart35_ok": true
               },
               "acertos": {
                 "Over 1.5": {
@@ -1171,11 +1192,11 @@
                 "placar": "2-1",
                 "placar_ht": "1-1",
                 "corners_total": 5,
-                "cards_total": 2,
+                "cards_total": 4,
                 "esc75_ok": false,
                 "esc85_ok": false,
-                "cart25_ok": false,
-                "cart35_ok": false
+                "cart25_ok": true,
+                "cart35_ok": true
               },
               "acertos": {
                 "Over 1.5": {
@@ -1249,11 +1270,11 @@
             "placar": "2-1",
             "placar_ht": "1-1",
             "corners_total": 5,
-            "cards_total": 2,
+            "cards_total": 4,
             "esc75_ok": false,
             "esc85_ok": false,
-            "cart25_ok": false,
-            "cart35_ok": false
+            "cart25_ok": true,
+            "cart35_ok": true
           },
           "acertos": {
             "Over 1.5": {
