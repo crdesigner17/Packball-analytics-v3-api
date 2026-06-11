@@ -108,9 +108,7 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 100.0
     },
     {
       "date": "11-06-2026",
@@ -219,9 +217,7 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 50.0
     }
   ],
   "top5": [
