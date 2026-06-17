@@ -108,7 +108,30 @@
       "justif_cards": "Média 1.0 cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": {
+        "fixture_id": 1489382,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 1,
+        "gols_total": 4,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": false,
+        "under45_ok": true,
+        "placar": "3-1",
+        "placar_ht": "1-0",
+        "corners_total": 7,
+        "cards_total": 1,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {}
     },
     {
       "date": "17-06-2026",
@@ -217,7 +240,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "17-06-2026",
@@ -326,7 +351,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "17-06-2026",
@@ -435,7 +462,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "17-06-2026",
@@ -544,7 +573,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -560,9 +591,151 @@
     "bilhetes": [],
     "bilheteDia": null
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 1,
+      "acertos": 1,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "stats": {
     "total": 5,
     "over15_aprovados": 1,
