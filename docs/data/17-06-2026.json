@@ -256,10 +256,10 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "1-1",
-        "corners_total": 8,
+        "corners_total": 9,
         "cards_total": 4,
         "esc75_ok": true,
-        "esc85_ok": false,
+        "esc85_ok": true,
         "cart25_ok": true,
         "cart35_ok": true
       },
