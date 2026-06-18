@@ -123,7 +123,7 @@
       "is_elite": true,
       "odds_h": 5.0,
       "odds_d": 3.45,
-      "odds_a": 1.73,
+      "odds_a": 1.72,
       "over15_g": null,
       "over25_g": null,
       "over15_h": null,
@@ -340,7 +340,7 @@
       "away_id": 8395,
       "is_elite": false,
       "odds_h": 2.8,
-      "odds_d": 2.7,
+      "odds_d": 2.85,
       "odds_a": 2.55,
       "over15_g": 50.0,
       "over25_g": 25.0,
@@ -489,7 +489,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-17T11:29:52Z",
+    "created_at": "2026-06-18T11:06:27Z",
     "bilhetes": [
       {
         "tipo": "b1",
