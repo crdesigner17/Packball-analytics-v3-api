@@ -247,7 +247,28 @@
       "palpite_mkt": "Over 0.5 HT",
       "palpite_grade": "B",
       "palpite_score": 69.2,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1489390,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-1",
+        "corners_total": 6,
+        "cards_total": 2,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
       "acertos": {}
     },
     {
@@ -469,8 +490,35 @@
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "A",
       "palpite_score": 75.6,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1499479,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "1-1",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Under 3.5": {
+          "score": 75.6,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     }
   ],
   "top5": [
@@ -546,8 +594,35 @@
       "score": 75.6,
       "grade": "A",
       "oddVal": null,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1499479,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "1-1",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Under 3.5": {
+          "score": 75.6,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     }
   ],
   "bilhetes_snapshot": {
@@ -623,8 +698,35 @@
               "score": 75.6,
               "grade": "A",
               "oddVal": null,
-              "resultado": null,
-              "acertos": {}
+              "resultado": {
+                "fixture_id": 1499479,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 1,
+                "gols_total": 2,
+                "gols_ht": 2,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under35_ok": true,
+                "under45_ok": true,
+                "placar": "1-1",
+                "placar_ht": "1-1",
+                "corners_total": null,
+                "cards_total": null,
+                "esc75_ok": null,
+                "esc85_ok": null,
+                "cart25_ok": null,
+                "cart35_ok": null
+              },
+              "acertos": {
+                "Under 3.5": {
+                  "score": 75.6,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
             }
           ],
           "oddTotal": 1
@@ -797,11 +899,11 @@
       "taxa": null
     },
     "Under 3.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Esc 7.5": {
       "palpites": 0,
@@ -869,11 +971,11 @@
       "taxa": null
     },
     "Under 3.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Esc 7.5": {
       "palpites": 0,
