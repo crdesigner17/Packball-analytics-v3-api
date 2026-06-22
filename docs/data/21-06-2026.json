@@ -934,12 +934,12 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "1-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 14,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {}
     },
@@ -1066,12 +1066,12 @@
         "under45_ok": true,
         "placar": "0-1",
         "placar_ht": "0-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 5,
+        "cards_total": 7,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     },
@@ -1198,12 +1198,12 @@
         "under45_ok": true,
         "placar": "0-3",
         "placar_ht": "0-3",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 10,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -2389,12 +2389,12 @@
         "under45_ok": true,
         "placar": "0-3",
         "placar_ht": "0-3",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 10,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -3141,17 +3141,17 @@
     },
     "Cart 2.5": {
       "palpites": 1,
-      "acertos": 0,
+      "acertos": 1,
       "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "sem_dados": 0,
+      "taxa": 100.0
     },
     "Cart 3.5": {
       "palpites": 1,
       "acertos": 0,
-      "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
     }
   },
   "stats": {

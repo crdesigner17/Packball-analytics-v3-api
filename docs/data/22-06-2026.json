@@ -108,7 +108,9 @@
       "justif_cards": "Média 0.5 cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Over 2.5",
       "palpite_grade": "A+",
-      "palpite_score": 94.5
+      "palpite_score": 94.5,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-06-2026",
@@ -217,7 +219,9 @@
       "justif_cards": "Média 0.5 cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "BTTS",
       "palpite_grade": "A",
-      "palpite_score": 76.7
+      "palpite_score": 76.7,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-06-2026",
@@ -326,7 +330,9 @@
       "justif_cards": "Média 0.5 cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "BTTS",
       "palpite_grade": "A",
-      "palpite_score": 79.2
+      "palpite_score": 79.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-06-2026",
@@ -435,7 +441,9 @@
       "justif_cards": "Média 5.7 cart · O2.5: 95.0% · O3.5: 90.0%",
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "A",
-      "palpite_score": 76.4
+      "palpite_score": 76.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-06-2026",
@@ -544,7 +552,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 62.8
+      "palpite_score": 62.8,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -684,9 +694,151 @@
     ],
     "bilheteDia": null
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "stats": {
     "total": 5,
     "over15_aprovados": 1,
