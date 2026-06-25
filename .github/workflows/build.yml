@@ -1,8 +1,8 @@
-name: PackBall Analytics — Build Diário
+﻿name: PackBall Analytics â€” Build DiÃ¡rio
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # 04h Brasília
+    - cron: '0 7 * * *'  # 04h BrasÃ­lia
   push:
     branches: [main]
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Instalar dependências
+      - name: Instalar dependÃªncias
         run: pip install requests pandas numpy
 
       - name: Coletar dados da API
@@ -43,21 +43,27 @@ jobs:
           DATE="${{ github.event.inputs.date || 'today' }}"
 
           if [ "$DATE" = "today" ]; then
-            # Calcular datas em Brasília (UTC-3)
+            # Calcular datas em BrasÃ­lia (UTC-3)
             TODAY=$(TZ="America/Sao_Paulo" date +%Y-%m-%d)
             D1=$(TZ="America/Sao_Paulo" date -d "+1 day" +%Y-%m-%d)
             D2=$(TZ="America/Sao_Paulo" date -d "+2 days" +%Y-%m-%d)
+            D3=$(TZ="America/Sao_Paulo" date -d "+3 days" +%Y-%m-%d)
+            D4=$(TZ="America/Sao_Paulo" date -d "+4 days" +%Y-%m-%d)
+            D5=$(TZ="America/Sao_Paulo" date -d "+5 days" +%Y-%m-%d)
 
-            echo "📅 Coletando janela: $TODAY | $D1 | $D2"
+            echo "Coletando janela: $TODAY | $D1 | $D2 | $D3 | $D4 | $D5"
 
-            # D0 (hoje) — só coleta se ainda não existe
+            # D0 (hoje) - so coleta se ainda nao existe
             python scripts/coletar.py --key "$API_KEY" --date "$TODAY"
 
-            # D+1 e D+2 — sempre atualiza (dados melhoram conforme aproxima)
+            # D+1 a D+5 - sempre atualiza (dados melhoram conforme aproxima)
             python scripts/coletar.py --key "$API_KEY" --date "$D1" --force
             python scripts/coletar.py --key "$API_KEY" --date "$D2" --force
+            python scripts/coletar.py --key "$API_KEY" --date "$D3" --force
+            python scripts/coletar.py --key "$API_KEY" --date "$D4" --force
+            python scripts/coletar.py --key "$API_KEY" --date "$D5" --force
           else
-            # Coleta manual de data específica
+            # Coleta manual de data especÃ­fica
             python scripts/coletar.py --key "$API_KEY" --date "$DATE"
           fi
 
@@ -67,7 +73,7 @@ jobs:
           git config user.email "bot@packball.local"
           python scripts/gerar_site.py
           git add docs/
-          git diff --staged --quiet && echo "Sem mudanças" && exit 0
-          git commit -m "📊 Site atualizado $(date -u +'%d/%m/%Y %H:%M UTC')"
+          git diff --staged --quiet && echo "Sem mudanÃ§as" && exit 0
+          git commit -m "ðŸ“Š Site atualizado $(date -u +'%d/%m/%Y %H:%M UTC')"
           git pull origin main --rebase -X ours
           git push
