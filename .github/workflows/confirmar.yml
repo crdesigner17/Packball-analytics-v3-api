@@ -1,9 +1,9 @@
-name: PackBall — Confirmar Resultados
+﻿name: PackBall â€” Confirmar Resultados
 
 on:
   schedule:
-    - cron: '0 14-23 * * *'   # 11h às 20h Brasília (hora em hora)
-    - cron: '0 0,1,2 * * *'   # 21h às 23h Brasília
+    - cron: '0,30 14-23 * * *'   # 11h as 20h30 Brasilia (a cada 30 min)
+    - cron: '0,30 0,1,2 * * *'   # 21h as 23h30 Brasilia (a cada 30 min)
   workflow_dispatch:
     inputs:
       date:
@@ -35,13 +35,13 @@ jobs:
           API_KEY: ${{ secrets.APIFOOTBALL_KEY }}
         run: |
           if [ -n "${{ github.event.inputs.date }}" ]; then
-            # Execução manual — data específica
+            # ExecuÃ§Ã£o manual â€” data especÃ­fica
             python scripts/confirmar.py --key "$API_KEY" --date "${{ github.event.inputs.date }}"
           else
-            # Execução automática — confirma ontem e hoje
+            # ExecuÃ§Ã£o automÃ¡tica â€” confirma ontem e hoje
             YESTERDAY=$(TZ="America/Sao_Paulo" date -d "-1 day" +%Y-%m-%d)
             TODAY=$(TZ="America/Sao_Paulo" date +%Y-%m-%d)
-            echo "🔎 Confirmando: $YESTERDAY e $TODAY"
+            echo "ðŸ”Ž Confirmando: $YESTERDAY e $TODAY"
             python scripts/confirmar.py --key "$API_KEY" --date "$YESTERDAY" --no-site
             python scripts/confirmar.py --key "$API_KEY" --date "$TODAY"
           fi
@@ -51,7 +51,7 @@ jobs:
           git config user.name "PackBall Bot"
           git config user.email "bot@packball.local"
           git add docs/
-          git diff --staged --quiet && echo "Sem mudanças" && exit 0
-          git commit -m "✅ Resultados atualizados $(date -u +'%d/%m/%Y %H:%M UTC')"
+          git diff --staged --quiet && echo "Sem mudanÃ§as" && exit 0
+          git commit -m "âœ… Resultados atualizados $(date -u +'%d/%m/%Y %H:%M UTC')"
           git pull origin main --rebase -X ours
           git push
