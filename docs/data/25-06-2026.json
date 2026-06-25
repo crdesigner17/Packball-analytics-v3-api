@@ -12,8 +12,8 @@
       "home_id": 2382,
       "away_id": 25,
       "is_elite": true,
-      "odds_h": 5.4,
-      "odds_d": 4.4,
+      "odds_h": 5.0,
+      "odds_d": 4.75,
       "odds_a": 1.52,
       "over15_g": null,
       "over25_g": null,
@@ -108,9 +108,7 @@
       "justif_cards": "Média 2.5 cart · O2.5: 50.0% · O3.5: 50.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 79.1,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 79.1
     },
     {
       "date": "25-06-2026",
@@ -123,9 +121,9 @@
       "home_id": 5530,
       "away_id": 1501,
       "is_elite": true,
-      "odds_h": 13.0,
-      "odds_d": 7.5,
-      "odds_a": 1.16,
+      "odds_h": 14.0,
+      "odds_d": 8.0,
+      "odds_a": 1.14,
       "over15_g": null,
       "over25_g": null,
       "over15_h": null,
@@ -219,9 +217,7 @@
       "justif_cards": "Média 2.5 cart · O2.5: 50.0% · O3.5: 50.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 77.9,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 77.9
     },
     {
       "date": "25-06-2026",
@@ -330,9 +326,7 @@
       "justif_cards": "Média 1.75 cart · O2.5: 50.0% · O3.5: —%",
       "palpite_mkt": "Over 2.5",
       "palpite_grade": "A",
-      "palpite_score": 82.6,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 82.6
     },
     {
       "date": "25-06-2026",
@@ -345,9 +339,9 @@
       "home_id": 28,
       "away_id": 1118,
       "is_elite": true,
-      "odds_h": 24.0,
-      "odds_d": 10.5,
-      "odds_a": 1.07,
+      "odds_h": 21.0,
+      "odds_d": 9.2,
+      "odds_a": 1.1,
       "over15_g": null,
       "over25_g": null,
       "over15_h": null,
@@ -441,9 +435,7 @@
       "justif_cards": "Média 1.75 cart · O2.5: 50.0% · O3.5: —%",
       "palpite_mkt": "BTTS",
       "palpite_grade": "B",
-      "palpite_score": 73.3,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 73.3
     },
     {
       "date": "25-06-2026",
@@ -457,8 +449,8 @@
       "away_id": 2384,
       "is_elite": true,
       "odds_h": 3.45,
-      "odds_d": 3.85,
-      "odds_a": 1.92,
+      "odds_d": 3.95,
+      "odds_a": 1.9,
       "over15_g": 100.0,
       "over25_g": 100.0,
       "over15_h": null,
@@ -552,9 +544,7 @@
       "justif_cards": "Média 4.25 cart · O2.5: 75.0% · O3.5: 50.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 100.0
     },
     {
       "date": "25-06-2026",
@@ -567,9 +557,9 @@
       "home_id": 2380,
       "away_id": 20,
       "is_elite": true,
-      "odds_h": 2.68,
-      "odds_d": 2.32,
-      "odds_a": 3.8,
+      "odds_h": 2.7,
+      "odds_d": 2.26,
+      "odds_a": 3.9,
       "over15_g": null,
       "over25_g": null,
       "over15_h": null,
@@ -663,9 +653,7 @@
       "justif_cards": "Média 4.25 cart · O2.5: 75.0% · O3.5: 50.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 70.2,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 70.2
     },
     {
       "date": "25-06-2026",
@@ -774,9 +762,7 @@
       "justif_cards": "Média 5.0 cart · O2.5: 80.0% · O3.5: 75.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 72.2,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 72.2
     }
   ],
   "top5": [
