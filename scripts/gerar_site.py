@@ -84,6 +84,220 @@ def calcular_acertos_globais(all_data):
         'dias_confirmados': dias_confirmados,
     }
 
+def apply_visual_overrides(html):
+    """Aplica somente ajustes visuais ao HTML gerado, preservando dados e lógica."""
+    html = html.replace(
+        "--nav-h:56px;--search-h:126px;--date-strip-h:53px;--market-bar-h:42px;--top-gap:8px;",
+        "--nav-h:0px;--search-h:0px;--date-strip-h:53px;--market-bar-h:42px;--top-gap:0px;"
+    )
+    html = html.replace(
+        "[data-theme=\"light\"] .sidebar{background:#ffffff;border-right-color:#e2e6f3}",
+        "[data-theme=\"light\"] .sidebar{background:#ffffff;border-right-color:#e2e6f3}\n"
+        "[data-theme=\"light\"] .sidebar-logo-name{color:#0F172A}\n"
+        "[data-theme=\"light\"] .sidebar-logo{border-bottom-color:#e2e6f3}"
+    )
+    html = html.replace(
+        "  box-shadow:0 2px 20px rgba(0,0,0,.5);\n}\n",
+        "  box-shadow:0 2px 20px rgba(0,0,0,.5);\n}\n.navbar{display:none!important}\n",
+        1
+    )
+    html = html.replace(
+        ".history-search-global{\n  padding:var(--top-gap) 0 var(--top-gap);background:var(--bg);\n  position:sticky;top:var(--nav-h);z-index:130;width:calc(100% - 48px);max-width:1500px;margin:0 auto;\n}",
+        ".history-search-global{\n  padding:var(--top-gap) 0 var(--top-gap);background:var(--bg);\n  position:sticky;top:var(--nav-h);z-index:130;width:calc(100% - 48px);max-width:1500px;margin:0 auto;\n}\n.history-search-global{display:none!important}"
+    )
+    html = html.replace("@media(max-width:920px){:root{--search-h:172px}", "@media(max-width:920px){:root{--search-h:0px}")
+    html = html.replace("@media(max-width:560px){:root{--search-h:260px}", "@media(max-width:560px){:root{--search-h:0px}")
+    html = html.replace(
+        ".app-layout{display:flex;gap:var(--top-gap);min-height:calc(100vh - var(--nav-h));padding-top:var(--top-gap);background:var(--bg)}",
+        ".app-layout{display:flex;gap:0;min-height:100vh;padding-top:0;background:var(--bg)}"
+    )
+    html = html.replace(
+        "  position:sticky;top:calc(var(--nav-h) + var(--top-gap));height:calc(100vh - var(--nav-h) - var(--top-gap));\n"
+        "  overflow-y:auto;z-index:80;\n"
+        "  display:flex;flex-direction:column;\n"
+        "  padding:12px 0;border-radius:0 10px 10px 0;",
+        "  position:sticky;top:0;height:100vh;\n"
+        "  overflow-y:auto;z-index:80;\n"
+        "  display:flex;flex-direction:column;\n"
+        "  padding:0;border-radius:0;"
+    )
+    html = html.replace(
+        ".sidebar::-webkit-scrollbar{width:3px}",
+        ".sidebar-logo{\n"
+        "  padding:18px 20px 16px;display:flex;align-items:center;gap:10px;\n"
+        "  border-bottom:1px solid var(--border);min-height:94px;\n"
+        "}\n"
+        ".sidebar-logo-icon{width:34px;height:34px;flex:0 0 auto}\n"
+        ".sidebar-logo-text{display:flex;flex-direction:column;line-height:1}\n"
+        ".sidebar-logo-name{font-size:16px;font-weight:800;color:#fff;letter-spacing:-.4px}\n"
+        ".sidebar-logo-sub{font-size:9px;color:var(--blue);letter-spacing:2.4px;font-weight:700;text-transform:uppercase;margin-top:2px}\n"
+        ".sidebar::-webkit-scrollbar{width:3px}"
+    )
+    html = html.replace(".sidebar-section{padding:0 8px;margin-bottom:4px}", ".sidebar-section{padding:10px 8px 0;margin-bottom:4px}")
+    html = html.replace(
+        ".sidebar-divider{height:1px;background:var(--border);margin:12px 16px}",
+        ".sidebar-divider{height:1px;background:var(--border);margin:12px 16px}\n"
+        ".sidebar-item.is-hidden,\n"
+        ".sidebar-divider.is-hidden,\n"
+        ".mkt-panel[id*=\"-bilhetes\"]{display:none!important}"
+    )
+    html = html.replace(".content-area::before{", ".content-area::before{", 1)
+    html = html.replace(
+        ".content-area.hist-mode::before{display:none}",
+        ".content-area::before{display:none}\n.content-area.hist-mode::before{display:none}"
+    )
+    html = html.replace(
+        ".content-area.hist-mode .history-search-global,\n.content-area.hist-mode .date-strip,",
+        ".content-area.hist-mode .history-search-global,\n.content-area.hist-mode .date-strip-shell,\n.content-area.hist-mode .date-strip,"
+    )
+    page_hero_css = r'''
+.page-hero{
+  background:#090e18;border-bottom:1px solid var(--border);
+  box-shadow:0 1px 0 rgba(255,255,255,.02) inset;
+}
+.page-hero-search{
+  min-height:52px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;padding:0;
+  width:calc(100% - 48px);max-width:1500px;margin:0 auto;
+}
+.page-hero-searchbox{
+  width:306px;max-width:100%;height:31px;border:1px solid rgba(148,163,184,.18);
+  background:#111827;border-radius:6px;display:flex;align-items:center;gap:9px;
+  padding:0 11px;color:var(--dim);
+}
+.page-hero-searchbox svg{width:14px;height:14px;stroke:currentColor;flex:0 0 auto}
+.page-hero-searchbox input{
+  width:100%;min-width:0;border:0;outline:0;background:transparent;
+  color:var(--text2);font-size:12px;line-height:1;
+}
+.page-hero-searchbox input::placeholder{color:#68748a}
+.page-hero-title{
+  min-height:96px;padding:26px 0 20px;
+  width:calc(100% - 48px);max-width:1500px;margin:0 auto;
+  display:flex;flex-direction:column;align-items:flex-start;justify-content:center;
+}
+.page-hero-heading{display:flex;align-items:center;gap:9px;min-width:0}
+.page-hero-heading h1{
+  color:#fff;font-size:22px;font-weight:800;line-height:1.1;letter-spacing:-.3px;
+}
+.page-hero-pro{
+  display:none;font-size:9px;font-weight:800;line-height:1;color:#fff;
+  background:linear-gradient(135deg,#2563EB,#7C3AED);
+  border-radius:4px;padding:4px 7px;letter-spacing:.5px;
+}
+.page-hero-pro.visible{display:inline-flex}
+.page-hero-subtitle{
+  margin-top:8px;color:#9ba9e7;font-size:13px;font-weight:500;line-height:1.35;
+}
+[data-theme="light"] .page-hero{background:#ffffff}
+[data-theme="light"] .page-hero-searchbox{background:#f8fafc}
+[data-theme="light"] .page-hero-heading h1{color:#0F172A}
+[data-theme="light"] .page-hero-subtitle{color:#4f46e5}
+'''
+    html = html.replace("/* NEW DATE BAR */", page_hero_css + "\n/* NEW DATE BAR */")
+    html = html.replace(
+        ".date-strip{\n  background:var(--s1);border-bottom:1px solid var(--border);\n  display:flex;align-items:center;overflow-x:auto;\n  padding:0 16px;\n  scrollbar-width:thin;scrollbar-color:var(--border) transparent;\n  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap));z-index:120;\n  border-left:none;border-radius:10px 10px 0 0;\n  box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;\n  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;\n}\n.date-strip::-webkit-scrollbar{height:3px}\n.date-strip::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}",
+        ".date-strip-shell{\n  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap));z-index:120;\n  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;\n  display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:stretch;\n  background:var(--s1);border-bottom:1px solid var(--border);\n  border-radius:10px 10px 0 0;box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;\n}\n.date-strip{\n  background:var(--s1);border-bottom:0;\n  display:flex;align-items:center;overflow-x:auto;\n  padding:0 12px;scrollbar-width:none;\n  border-left:none;border-radius:0;box-shadow:none;overflow-y:hidden;\n  width:100%;max-width:none;margin:0;box-sizing:border-box;scroll-behavior:smooth;\n}\n.date-strip::-webkit-scrollbar{display:none}\n.date-strip::before,\n.date-strip::after{\n  content:'';flex:0 0 calc(50% - 36px);min-width:0;height:1px;pointer-events:none;\n}\n.date-strip-arrow{\n  height:var(--date-strip-h);border:0;background:rgba(17,24,39,.94);color:var(--muted);\n  display:flex;align-items:center;justify-content:center;cursor:pointer;\n  border-right:1px solid var(--border);transition:background .15s,color .15s;\n  font-size:25px;font-weight:700;line-height:1;\n}\n.date-strip-arrow.next{border-right:0;border-left:1px solid var(--border)}\n.date-strip-arrow:hover{background:rgba(37,99,235,.12);color:var(--text)}\n.date-strip-arrow .date-arrow-fallback{display:inline-flex;align-items:center;justify-content:center;transform:translateY(-1px)}"
+    )
+    html = html.replace(
+        ":root{--nav-h:52px}",
+        ":root{--nav-h:0px}"
+    )
+    html = html.replace(
+        ".main{padding:14px 0 18px;width:calc(100% - 16px)}",
+        ".main{padding:14px 0 18px;width:calc(100% - 16px)}\n  .page-hero-search,.page-hero-title{width:calc(100% - 16px)}"
+    )
+    html = html.replace(
+        ".date-strip,.mkt-cat-bar,.sub-filter-bar{width:calc(100% - 16px)}",
+        ".date-strip-shell,.mkt-cat-bar,.sub-filter-bar{width:calc(100% - 16px)}"
+    )
+    sidebar_logo_html = r'''
+    <div class="sidebar-logo">
+      <svg class="sidebar-logo-icon" viewBox="0 0 40 40" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+        <defs>
+          <linearGradient id="sidebarLogoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+            <stop offset="0%" style="stop-color:#2563EB"/>
+            <stop offset="100%" style="stop-color:#7C3AED"/>
+          </linearGradient>
+        </defs>
+        <path d="M4,28 L10,12 L16,24 L20,16 L24,24 L30,12 L36,28" fill="none" stroke="url(#sidebarLogoGrad)" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+        <path d="M26,10 L32,4" fill="none" stroke="#00C896" stroke-width="2.5" stroke-linecap="round"/>
+        <polygon points="32,4 28,6 30,10" fill="#00C896"/>
+      </svg>
+      <div class="sidebar-logo-text">
+        <span class="sidebar-logo-name">WinMetrics</span>
+        <span class="sidebar-logo-sub">Analytics</span>
+      </div>
+    </div>'''
+    html = html.replace('<aside class="sidebar" id="sidebar">\n    <div class="sidebar-section">', '<aside class="sidebar" id="sidebar">' + sidebar_logo_html + '\n    <div class="sidebar-section">')
+    html = html.replace('<div class="sidebar-divider"></div>\n      <div class="sidebar-item" id="sb-bilhetes"', '<div class="sidebar-divider is-hidden"></div>\n      <div class="sidebar-item is-hidden" id="sb-bilhetes"')
+    page_hero_html = r'''
+    <section class="page-hero" aria-label="Cabe&ccedil;alho da p&aacute;gina">
+      <div class="page-hero-search">
+        <label class="page-hero-searchbox">
+          <i data-lucide="search"></i>
+          <input id="page-hero-search-input" type="search" placeholder="Buscar jogos, times, ligas..." autocomplete="off">
+        </label>
+      </div>
+      <div class="page-hero-title">
+        <div class="page-hero-heading">
+          <h1 id="page-hero-title">Vis&atilde;o Geral</h1>
+          <span class="page-hero-pro" id="page-hero-pro">PRO</span>
+        </div>
+        <p class="page-hero-subtitle" id="page-hero-subtitle">Resumo dos principais indicadores e oportunidades do dia.</p>
+      </div>
+    </section>'''
+    html = html.replace('  <div class="content-area">\n    <div class="history-search-global"', '  <div class="content-area">' + page_hero_html + '\n    <div class="history-search-global"')
+    html = html.replace('    <!-- DATE STRIP -->\n    <div class="date-strip" id="date-strip">', '    <!-- DATE STRIP -->\n    <div class="date-strip-shell">\n      <button class="date-strip-arrow prev" type="button" aria-label="Ver datas anteriores" onclick="shiftDateStrip(-1)">\n        <span class="date-arrow-fallback" aria-hidden="true">&#8249;</span>\n      </button>\n    <div class="date-strip" id="date-strip">')
+    html = html.replace('    </div>\n\n    <!-- MARKET CATEGORY BAR -->', '    </div>\n      <button class="date-strip-arrow next" type="button" aria-label="Ver pr&oacute;ximas datas" onclick="shiftDateStrip(1)">\n        <span class="date-arrow-fallback" aria-hidden="true">&#8250;</span>\n      </button>\n    </div>\n\n    <!-- MARKET CATEGORY BAR -->', 1)
+    hero_js = r'''
+const PAGE_HERO_COPY = {
+  visao: {title: 'Vis\u00e3o Geral', subtitle: 'Resumo dos principais indicadores e oportunidades do dia.'},
+  ranking: {title: 'Melhores Previs\u00f5es', subtitle: 'As previs\u00f5es com maior probabilidade e valor esperado.', pro: true},
+  bilhetes: {title: 'Bilhetes', subtitle: 'Combina\u00e7\u00f5es sugeridas para organizar entradas com mais crit\u00e9rio.'},
+  historico: {title: 'Hist\u00f3rico Global', subtitle: 'Acompanhe a performance consolidada das previs\u00f5es.'},
+  resultado: {title: 'Resultado Final', subtitle: 'Mercados de vencedor, dupla chance e prote\u00e7\u00f5es por jogo.'},
+  gols: {title: 'Gols', subtitle: 'Leituras para linhas de gols com base nas estat\u00edsticas do confronto.'},
+  escanteios: {title: 'Escanteios', subtitle: 'Oportunidades em cantos com volume e tend\u00eancia por partida.'},
+  cartoes: {title: 'Cart\u00f5es', subtitle: 'An\u00e1lise disciplinar para linhas de cart\u00f5es.'}
+};
+function updatePageHero(key){
+  const copy = PAGE_HERO_COPY[key] || PAGE_HERO_COPY.visao;
+  const title = document.getElementById('page-hero-title');
+  const subtitle = document.getElementById('page-hero-subtitle');
+  const pro = document.getElementById('page-hero-pro');
+  if(title) title.textContent = copy.title;
+  if(subtitle) subtitle.textContent = copy.subtitle;
+  if(pro) pro.classList.toggle('visible', !!copy.pro);
+}
+function centerDateTab(tab, behavior='smooth'){
+  const strip = document.getElementById('date-strip');
+  if(!strip || !tab) return;
+  const left = tab.offsetLeft - (strip.clientWidth / 2) + (tab.offsetWidth / 2);
+  strip.scrollTo({left:Math.max(0,left), behavior});
+}
+function centerCurrentDate(behavior='auto'){
+  const today = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}).split('/').join('-');
+  const tab = document.querySelector(`.date-strip-item[data-date="${today}"]`) || document.querySelector('.date-strip-item.active');
+  centerDateTab(tab, behavior);
+}
+function shiftDateStrip(dir){
+  const strip = document.getElementById('date-strip');
+  if(!strip) return;
+  const step = Math.max(220, Math.round(strip.clientWidth * 0.55));
+  strip.scrollBy({left:dir * step, behavior:'smooth'});
+}
+'''
+    html = html.replace("let historicoVisible=false;\n", "let historicoVisible=false;\n\n" + hero_js + "\n")
+    html = html.replace("  historicoVisible=true;\n  renderHistoricoGlobal();", "  historicoVisible=true;\n  updatePageHero('historico');\n  renderHistoricoGlobal();")
+    html = html.replace("if(tab){tab.classList.add('active');tab.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});}", "if(tab){tab.classList.add('active');centerDateTab(tab);requestAnimationFrame(()=>centerDateTab(tab,'auto'));}")
+    html = html.replace("  if(mp)mp.classList.add('active');\n  if(mt)mt.classList.add('active');\n  renderMkt(date,mkt);", "  if(mp)mp.classList.add('active');\n  if(mt)mt.classList.add('active');\n  updatePageHero(mkt);\n  renderMkt(date,mkt);")
+    html = html.replace("  activeCat = cat;\n  activeSubFilter = null;\n  updateSidebarActive(null);", "  activeCat = cat;\n  activeSubFilter = null;\n  updateSidebarActive(null);\n  updatePageHero(cat);")
+    html = html.replace("switchDate(targetDate);\n  }", "switchDate(targetDate);\nsetTimeout(()=>centerCurrentDate('auto'), 80);\n  }", 1)
+    html = html.replace("switchDate(targetDate);\n    }", "switchDate(targetDate);\nsetTimeout(()=>centerCurrentDate('auto'), 80);\n    }", 1)
+    html = html.replace("</script>\n\n<!-- Bot", "window.addEventListener('load',()=>centerCurrentDate('auto'));\nwindow.addEventListener('resize',()=>centerCurrentDate('auto'));\n</script>\n\n<!-- Bot", 1)
+    return html
+
 def day_panel_html(d, day_data):
     jogos  = day_data.get('jogos', [])
     n15    = sum(1 for j in jogos if j['score_15'] >= 85 and j['passou_filtro'])
@@ -155,6 +369,7 @@ def gerar_site():
         globais_json=json.dumps(globais, ensure_ascii=False),
         n_dates=len(index),
     )
+    html = apply_visual_overrides(html)
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         f.write(html)
     print(f"✓ docs/index.html gerado — {len(index)} datas — {updated}")
