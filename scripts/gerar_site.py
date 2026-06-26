@@ -1,4 +1,4 @@
-"""
+﻿"""
 WinMetrics — Gerador de Site v3.1
 - Resultados integrados: linhas verde/vermelho/amarelo em cada tabela
 - Placar nos cards Top 5
@@ -6,7 +6,7 @@ WinMetrics — Gerador de Site v3.1
 - Aba Histórico com gráfico de evolução por mercado
 """
 import json, os
-from datetime import datetime
+from datetime import datetime, timezone
 from ligas_config import blocked_name, favorite_league_names
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
@@ -150,6 +150,11 @@ def apply_visual_overrides(html):
         ".content-area.hist-mode .history-search-global,\n.content-area.hist-mode .date-strip,",
         ".content-area.hist-mode .history-search-global,\n.content-area.hist-mode .date-strip-shell,\n.content-area.hist-mode .date-strip,"
     )
+    html = html.replace(
+        ".content-area.hist-mode .sub-filter-bar{display:none!important}",
+        ".content-area.hist-mode .sub-filter-bar{display:none!important}\n.content-area.hist-mode .page-hero-title{display:none!important}",
+        1
+    )
     page_hero_css = r'''
 .page-hero{
   background:#090e18;border-bottom:1px solid var(--border);
@@ -263,9 +268,11 @@ const PAGE_HERO_COPY = {
 };
 function updatePageHero(key){
   const copy = PAGE_HERO_COPY[key] || PAGE_HERO_COPY.visao;
+  const heroTitle = document.querySelector('.page-hero-title');
   const title = document.getElementById('page-hero-title');
   const subtitle = document.getElementById('page-hero-subtitle');
   const pro = document.getElementById('page-hero-pro');
+  if(heroTitle) heroTitle.hidden = key === 'historico';
   if(title) title.textContent = copy.title;
   if(subtitle) subtitle.textContent = copy.subtitle;
   if(pro) pro.classList.toggle('visible', !!copy.pro);
@@ -323,13 +330,15 @@ def day_panel_html(d, day_data):
 </div>'''
 
 
-def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, updated):
+def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, updated_iso_json):
     """
     Injeta apenas os dados dinâmicos no index.html existente, preservando
     todo o layout, CSS e JS do template.  Usa marcadores HTML como âncoras.
     """
     if not os.path.exists(OUT_FILE):
-        return None  # fallback para build_html
+        raise FileNotFoundError(
+            f"{OUT_FILE} nao existe. Crie/restaure o template visual antes de atualizar os dados."
+        )
 
     with open(OUT_FILE, 'r', encoding='utf-8') as f:
         html = f.read()
@@ -341,7 +350,12 @@ def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, upd
         '<!-- WM:DAY-PANELS-END -->',
     ]
     if not all(m in html for m in MARKERS):
-        return None  # marcadores ausentes → fallback
+        missing = [m for m in MARKERS if m not in html]
+        raise RuntimeError(
+            "Marcadores seguros ausentes em docs/index.html: "
+            + ", ".join(missing)
+            + ". O gerador nao recria layout; ele so atualiza dados."
+        )
 
     import re
 
@@ -370,6 +384,15 @@ def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, upd
         f'const GLOBAIS    = {globais_json};',
         html, flags=re.DOTALL
     )
+    html, updated_count = re.subn(
+        r'const WM_DATA_UPDATED_AT\s*=\s*.*?;',
+        f'const WM_DATA_UPDATED_AT = {updated_iso_json};',
+        html, flags=re.DOTALL
+    )
+    if updated_count != 1:
+        raise RuntimeError(
+            "Constante WM_DATA_UPDATED_AT ausente ou duplicada em docs/index.html."
+        )
 
     return html
 
@@ -411,7 +434,9 @@ def gerar_site():
 
     # Calcular acertos globais para o header
     globais = calcular_acertos_globais(all_data)
-    updated = datetime.now().strftime('%d/%m/%Y %H:%M UTC')
+    updated_dt = datetime.now(timezone.utc)
+    updated = updated_dt.strftime('%d/%m/%Y %H:%M UTC')
+    updated_iso = updated_dt.isoformat().replace('+00:00', 'Z')
 
     # Tenta injetar só os dados no template existente (preserva layout/CSS/JS)
     html = patch_html(
@@ -419,25 +444,17 @@ def gerar_site():
         day_panels_html='\n'.join(day_panels_html),
         all_data_json=json.dumps(all_data, ensure_ascii=False),
         globais_json=json.dumps(globais, ensure_ascii=False),
-        updated=updated,
+        updated_iso_json=json.dumps(updated_iso),
     )
 
     if html is None:
-        # Fallback: gera do zero (primeira execução ou marcadores ausentes)
-        print("⚠ Marcadores ausentes — gerando index.html do zero (fallback)")
-        html = build_html(
-            updated=updated,
-            date_tabs_html='\n'.join(date_tabs_html),
-            day_panels_html='\n'.join(day_panels_html),
-            all_data_json=json.dumps(all_data, ensure_ascii=False),
-            globais_json=json.dumps(globais, ensure_ascii=False),
-            n_dates=len(index),
+        raise RuntimeError(
+            "Atualizacao abortada: docs/index.html nao tem os marcadores WM. "
+            "O gerador nao recria layout; ele so atualiza dados."
         )
-        html = apply_visual_overrides(html)
-
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         f.write(html)
-    print(f"✓ docs/index.html atualizado (dados injetados) — {len(index)} datas — {updated}")
+    print(f"OK docs/index.html atualizado somente com dados - {len(index)} datas - {updated}")
 
 def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_json, n_dates):
     return f'''<!DOCTYPE html>
@@ -940,12 +957,13 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 
 /* ── HISTÓRICO GLOBAL — NOVO DASHBOARD ─────────────────────────── */
 .hg-page{{display:flex;flex-direction:column;gap:14px;padding:18px 0 28px}}
-.hg-hero{{background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(124,58,237,.08) 50%,rgba(0,200,150,.06));border:1px solid rgba(148,163,184,.16);border-radius:14px;padding:20px 24px;display:grid;grid-template-columns:minmax(300px,1.4fr) minmax(200px,.7fr) minmax(240px,.9fr);gap:18px;align-items:center;position:relative;overflow:hidden}}
+.hg-hero{{background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(124,58,237,.08) 50%,rgba(0,200,150,.06));border:1px solid rgba(148,163,184,.16);border-radius:14px;padding:20px 24px;display:grid;grid-template-columns:minmax(300px,1.4fr) minmax(200px,.7fr) minmax(240px,.9fr);gap:18px;align-items:stretch;position:relative;overflow:hidden}}
 .hg-hero::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple2),var(--green))}}
-.hg-hero-label{{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.6px;color:var(--green);margin-bottom:7px}}
-.hg-hero h2{{font-size:19px;font-weight:800;color:var(--text);line-height:1.2;margin:0 0 8px}}
-.hg-hero-sub{{font-size:11px;color:var(--muted);line-height:1.55}}
-.hg-taxa-box{{border:1px solid rgba(148,163,184,.16);border-radius:11px;padding:14px 16px;background:rgba(255,255,255,.025)}}
+.hg-hero-copy{{display:flex;flex-direction:column;justify-content:center}}
+.hg-hero-label{{font-size:10px;font-weight:900;text-transform:uppercase;letter-spacing:1.8px;color:var(--green);margin-bottom:8px}}
+.hg-hero h2{{font-size:22px;font-weight:900;color:var(--text);line-height:1.18;margin:0 0 10px}}
+.hg-hero-sub{{font-size:12px;color:#AFC4F5;line-height:1.55;font-weight:500}}
+.hg-taxa-box{{border:1px solid rgba(148,163,184,.16);border-radius:11px;padding:14px 16px;background:rgba(255,255,255,.025);height:100%;display:flex;flex-direction:column;justify-content:center}}
 .hg-taxa-label{{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:6px}}
 .hg-taxa-val{{font-size:38px;font-weight:900;line-height:1;font-family:'Inter',sans-serif}}
 .hg-taxa-note{{font-size:10px;color:var(--muted);margin:4px 0 10px;font-weight:600}}
@@ -1190,6 +1208,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .content-area.hist-mode .date-strip,
 .content-area.hist-mode .mkt-cat-bar,
 .content-area.hist-mode .sub-filter-bar{{display:none!important}}
+.content-area.hist-mode .page-hero-title{{display:none!important}}
 .content-area.hist-mode #panel-historico .main{{padding-top:0}}
 /* NEW DATE BAR */
 .date-strip{{
@@ -2736,7 +2755,7 @@ function renderBilhetes(date, jogos){{
 
     return`<div class="bilhete-card ${{cls}}${{overlayClass}}">
       <div class="bilhete-header">
-        <div>
+        <div class="hg-hero-copy">
           <div class="bilhete-title">${{label}}</div>
           <div style="font-size:10px;color:var(--muted);margin-top:2px">${{b.sels.length}} seleções${{tierLabel}}</div>
         </div>
@@ -3731,3 +3750,4 @@ switchDate(targetDate);
 
 if __name__ == '__main__':
     gerar_site()
+
