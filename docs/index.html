@@ -500,6 +500,119 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 .hist-spark{display:flex;align-items:flex-end;gap:4px;height:42px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}
 .hist-spark-bar{flex:1;min-width:5px;border-radius:3px 3px 0 0;opacity:.95}
 
+/* ── HISTÓRICO GLOBAL — NOVO DASHBOARD ─────────────────────────── */
+.hg-page{display:flex;flex-direction:column;gap:14px;padding:18px 0 28px}
+
+/* Hero */
+.hg-hero{background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(124,58,237,.08) 50%,rgba(0,200,150,.06));border:1px solid rgba(148,163,184,.16);border-radius:14px;padding:20px 24px;display:grid;grid-template-columns:minmax(300px,1.4fr) minmax(200px,.7fr) minmax(240px,.9fr);gap:18px;align-items:center;position:relative;overflow:hidden}
+.hg-hero::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple2),var(--green))}
+.hg-hero-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.6px;color:var(--green);margin-bottom:7px}
+.hg-hero h2{font-size:19px;font-weight:800;color:var(--text);line-height:1.2;margin:0 0 8px}
+.hg-hero-sub{font-size:11px;color:var(--muted);line-height:1.55}
+.hg-taxa-box{border:1px solid rgba(148,163,184,.16);border-radius:11px;padding:14px 16px;background:rgba(255,255,255,.025)}
+.hg-taxa-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:6px}
+.hg-taxa-val{font-size:38px;font-weight:900;line-height:1;color:var(--green);font-family:'Inter',sans-serif}
+.hg-taxa-note{font-size:10px;color:var(--muted);margin:4px 0 10px;font-weight:600}
+.hg-taxa-bar{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}
+.hg-taxa-bar-fill{height:100%;border-radius:99px;background:linear-gradient(90deg,var(--blue),var(--purple2))}
+.hg-insights{display:flex;flex-direction:column;gap:8px}
+.hg-insight{background:rgba(255,255,255,.03);border:1px solid rgba(148,163,184,.12);border-radius:9px;padding:10px 12px}
+.hg-insight-lbl{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px}
+.hg-insight-val{font-size:13px;font-weight:800;color:var(--text);margin-bottom:3px}
+.hg-insight-note{font-size:10px;color:var(--muted)}
+
+/* KPI row */
+.hg-kpi-row{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}
+.hg-kpi{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px 16px;display:flex;align-items:center;gap:13px;min-width:0}
+.hg-kpi-icon{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.hg-kpi-icon svg{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}
+.hg-kpi-icon.blue{background:rgba(59,130,246,.12);color:var(--blue)}
+.hg-kpi-icon.green{background:rgba(0,200,150,.12);color:var(--green)}
+.hg-kpi-icon.teal{background:rgba(0,200,150,.1);color:var(--teal)}
+.hg-kpi-icon.red{background:rgba(239,68,68,.1);color:var(--red)}
+.hg-kpi-icon.purple{background:rgba(124,58,237,.12);color:var(--purple2)}
+.hg-kpi-val{font-size:26px;font-weight:800;line-height:1;font-family:'Inter',sans-serif;color:var(--text)}
+.hg-kpi-lbl{font-size:10px;color:var(--muted);margin-top:3px;font-weight:600}
+.hg-kpi.ok .hg-kpi-val{color:var(--green)}
+.hg-kpi.err .hg-kpi-val{color:var(--red)}
+
+/* 4-panel row */
+.hg-panels{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}
+.hg-panel{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}
+.hg-panel::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:12px 12px 0 0}
+.hg-panel.p-blue::before{background:linear-gradient(90deg,var(--blue),var(--purple2))}
+.hg-panel.p-green::before{background:linear-gradient(90deg,var(--green),var(--teal))}
+.hg-panel.p-yellow::before{background:linear-gradient(90deg,var(--yellow),var(--orange))}
+.hg-panel.p-purple::before{background:linear-gradient(90deg,var(--purple2),var(--blue))}
+.hg-panel-label{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted)}
+.hg-panel-title{font-size:13px;font-weight:800;color:var(--text)}
+.hg-panel-note{font-size:10px;color:var(--muted);margin-top:2px}
+
+/* Donut gauge */
+.hg-donut-wrap{display:flex;flex-direction:column;align-items:center;gap:10px}
+.hg-donut-svg{display:block;overflow:visible}
+.hg-donut-bg{fill:none;stroke:rgba(255,255,255,.07);stroke-width:10}
+.hg-donut-ring{fill:none;stroke-width:10;stroke-linecap:round;transition:stroke-dasharray .6s ease}
+.hg-donut-val{font-size:22px;font-weight:900;font-family:'Inter',sans-serif;dominant-baseline:central;text-anchor:middle}
+.hg-donut-badge{display:inline-flex;align-items:center;gap:5px;background:rgba(0,200,150,.12);border:1px solid rgba(0,200,150,.25);border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;color:var(--green);align-self:flex-start}
+.hg-donut-badge svg{width:11px;height:11px;stroke:currentColor;fill:none}
+.hg-donut-stats{font-size:10px;color:var(--muted);text-align:center}
+.hg-donut-stats .ok{color:var(--green)}
+.hg-donut-stats .err{color:var(--red)}
+
+/* Category rows */
+.hg-cat-rows{display:flex;flex-direction:column;gap:6px;flex:1}
+.hg-cat-row{display:grid;grid-template-columns:minmax(0,1fr) 56px;gap:6px;align-items:center;padding:8px 10px;border-radius:8px;border-left:3px solid transparent}
+.hg-cat-row.alta{background:rgba(0,200,150,.07);border-left-color:var(--green)}
+.hg-cat-row.media{background:rgba(59,130,246,.07);border-left-color:var(--blue)}
+.hg-cat-row.moderado{background:rgba(245,158,11,.07);border-left-color:var(--orange)}
+.hg-cat-row-name{font-size:12px;font-weight:700;color:var(--text)}
+.hg-cat-row-detail{font-size:9px;color:var(--muted);margin-top:1px}
+.hg-cat-row .ok{color:var(--green)}
+.hg-cat-row .err{color:var(--red)}
+.hg-cat-rate{font-size:16px;font-weight:900;font-family:'Inter',sans-serif;text-align:right}
+
+/* Mercado mini list */
+.hg-mkt-mini{display:flex;flex-direction:column;gap:5px;flex:1}
+.hg-mkt-mini-row{display:grid;grid-template-columns:minmax(0,1fr) 54px;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid rgba(148,163,184,.08)}
+.hg-mkt-mini-row:last-child{border-bottom:none}
+.hg-mkt-mini-name{font-size:11px;font-weight:600;color:var(--text2)}
+.hg-mkt-mini-rate{font-size:13px;font-weight:800;font-family:'Inter',sans-serif;text-align:right}
+
+/* Bottom: ranking + dias */
+.hg-bottom{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,1fr);gap:14px;align-items:start}
+.hg-card{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0}
+.hg-card-title{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:7px}
+.hg-card-title svg{width:14px;height:14px;stroke:currentColor;fill:none}
+
+/* Ranking rows */
+.hg-rank-list{display:flex;flex-direction:column;gap:6px}
+.hg-rank-row{display:grid;grid-template-columns:32px 8px minmax(0,1fr) 70px;gap:10px;align-items:center;padding:10px 12px;border:1px solid rgba(148,163,184,.1);border-radius:9px;background:rgba(255,255,255,.015)}
+.hg-rank-row:hover{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.03)}
+.hg-rank-num{font-size:12px;font-weight:800;color:var(--muted);text-align:center;font-family:'Inter',sans-serif}
+.hg-rank-bar{width:4px;height:32px;border-radius:2px;flex-shrink:0}
+.hg-rank-main{min-width:0}
+.hg-rank-name{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.hg-rank-detail{font-size:10px;color:var(--muted);margin-top:2px}
+.hg-rank-detail .ok{color:var(--green)}
+.hg-rank-detail .err{color:var(--red)}
+.hg-rank-rate{font-size:15px;font-weight:900;font-family:'Inter',sans-serif;text-align:right}
+
+/* Dias bar */
+.hg-days-list{display:flex;flex-direction:column;gap:4px}
+.hg-day-row{display:grid;grid-template-columns:44px minmax(0,1fr) 110px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(148,163,184,.08)}
+.hg-day-row:last-child{border-bottom:none}
+.hg-day-date{font-size:11px;font-weight:700;color:var(--text2)}
+.hg-day-bar{height:18px;background:rgba(255,255,255,.05);border-radius:5px;overflow:hidden}
+.hg-day-fill{height:100%;border-radius:5px;min-width:2px}
+.hg-day-info{font-size:10px;font-weight:700;font-family:'Inter',sans-serif;text-align:right;white-space:nowrap}
+.hg-day-info .ok{color:var(--green)}
+.hg-day-info .err{color:var(--red)}
+
+@media(max-width:1100px){.hg-hero{grid-template-columns:1fr 1fr}.hg-hero-sub{display:none}}
+@media(max-width:900px){.hg-panels{grid-template-columns:repeat(2,1fr)}.hg-hero{grid-template-columns:1fr}.hg-insights{display:none}}
+@media(max-width:680px){.hg-kpi-row{grid-template-columns:repeat(3,1fr)}.hg-panels{grid-template-columns:1fr}.hg-bottom{grid-template-columns:1fr}}
+
 /* BILHETES */
 .bilhete-dia{background:linear-gradient(135deg,rgba(0,200,150,.08),rgba(37,99,235,.06));border:2px solid rgba(0,200,150,.4);border-radius:13px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden}
 .bilhete-dia::before{content:'';position:absolute;top:0;left:0;right:0;height:4px;background:linear-gradient(90deg,var(--green),var(--teal),var(--blue))}
@@ -959,6 +1072,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
         <span class="date-arrow-fallback" aria-hidden="true">&#8249;</span>
       </button>
     <div class="date-strip" id="date-strip">
+<!-- WM:DATE-TABS-START -->
       <div class="date-strip-item" data-date="24-05-2026" onclick="switchDate('24-05-2026')">
   <span class="date-strip-dow">Dom</span>
   <span class="date-strip-day">24.05</span>
@@ -1115,6 +1229,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   <span class="date-strip-dow">Qua</span>
   <span class="date-strip-day">01.07</span>
 </div>
+<!-- WM:DATE-TABS-END -->
     </div>
       <button class="date-strip-arrow next" type="button" aria-label="Ver pr&oacute;ximas datas" onclick="shiftDateStrip(1)">
         <span class="date-arrow-fallback" aria-hidden="true">&#8250;</span>
@@ -1140,6 +1255,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
     <!-- SUB FILTER BAR -->
     <div class="sub-filter-bar" id="sub-filter-bar"></div>
 
+<!-- WM:DAY-PANELS-START -->
     <!-- DAY PANELS -->
     
 <div id="day-24-05-2026" class="day-panel">
@@ -1688,6 +1804,7 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   </div>
 </div>
 
+<!-- WM:DAY-PANELS-END -->
     <!-- HISTÓRICO GLOBAL -->
     <div id="panel-historico" style="display:none">
       <div class="main">
@@ -3328,61 +3445,219 @@ function renderHistoricoGlobal(){
   const cG=taxaColor(taxa);
   const bestCategoryColor=bestCategory?categoryColor(bestCategory.grade):'var(--text)';
   const bestMarketColor=bestMarket?marketColor(bestMarket.m):'var(--text)';
+
+  // ── Vitória 1X2 stats ──────────────────────────────────────────
+  const rfRows=rfHistoricoRows();
+  const rfHist=rfSummary(rfRows.filter(r=>r.result!=='PENDING'));
+  const rfTaxa=rfHist.taxa;
+  const rfTaxaColor=taxaColor(rfTaxa);
+
+  // ── Donut SVG helper ───────────────────────────────────────────
+  function donutSvg(pct, color, size){
+    size=size||90;
+    const r=size/2-8;
+    const circ=2*Math.PI*r;
+    const filled=Math.round(circ*(pct||0)/100*10)/10;
+    const cx=size/2, cy=size/2;
+    return `<svg class="hg-donut-svg" width="${size}" height="${size}" viewBox="0 0 ${size} ${size}">
+      <circle class="hg-donut-bg" cx="${cx}" cy="${cy}" r="${r}"/>
+      <circle class="hg-donut-ring" cx="${cx}" cy="${cy}" r="${r}"
+        stroke="${color}" stroke-dasharray="${filled} ${circ-filled}"
+        transform="rotate(-90 ${cx} ${cy})" filter="drop-shadow(0 0 6px ${color}88)"/>
+      <text class="hg-donut-val" x="${cx}" y="${cy}" fill="${color}">${pct!=null?Math.round(pct)+'%':'—'}</text>
+    </svg>`;
+  }
+
+  // ── Top5 panel ─────────────────────────────────────────────────
+  const top5Pct=top5Taxa!=null?Math.round(top5Taxa):null;
+  const top5Lbl=top5Pct==null?'—':top5Pct>=80?'EXCELENTE':top5Pct>=65?'BOM':'REGULAR';
+  const top5LblColor=top5Pct==null?'var(--muted)':top5Pct>=80?'var(--green)':top5Pct>=65?'var(--yellow)':'var(--orange)';
+
+  // ── Category rows ──────────────────────────────────────────────
+  const catDefs=[
+    {key:'A+',label:'Confiança Alta',cls:'alta'},
+    {key:'A', label:'Confiança Média',cls:'media'},
+    {key:'B', label:'Moderado',cls:'moderado'},
+  ];
+  const catRowsHtml=catDefs.map(c=>{
+    const s=categoryStats[c.key];
+    const t=taxaStat(s);
+    return `<div class="hg-cat-row ${c.cls}">
+      <div>
+        <div class="hg-cat-row-name">${c.label}</div>
+        <div class="hg-cat-row-detail"><span class="ok">${s.acertos}✓</span> · <span class="err">${s.erros}✗</span> · ${s.auditados} confirmados</div>
+      </div>
+      <div class="hg-cat-rate" style="color:${taxaColor(t)}">${fmtTaxa(t)}</div>
+    </div>`;
+  }).join('');
+
+  // ── Mercado mini (Top 5) ───────────────────────────────────────
+  const mktMiniNames={
+    'Over 1.5':'Over 1.5','Over 2.5':'Over 2.5','Esc 7.5':'Escanteios (Over)',
+    'Esc 8.5':'Esc 8.5','Cart 2.5':'Cartões (Over)','Cart 3.5':'Cart 3.5',
+    'BTTS':'Ambas Marcam','Under 3.5':'Under 3.5','Under 4.5':'Under 4.5',
+    'Over 0.5 HT':'Over 0.5 HT'
+  };
+  const mktMiniHtml=[...marketStats].filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados)).slice(0,5)
+    .map(s=>`<div class="hg-mkt-mini-row">
+      <div class="hg-mkt-mini-name">${mktMiniNames[s.m]||s.m}</div>
+      <div class="hg-mkt-mini-rate" style="color:${taxaColor(s.taxa)}">${fmtTaxa(s.taxa)}</div>
+    </div>`).join('');
+
+  // ── Ranking rows ───────────────────────────────────────────────
+  const rankColors=['var(--green)','var(--green)','var(--blue)','var(--blue)','var(--orange)','var(--orange)','var(--red)','var(--red)'];
+  const rankRowsHtml=[...marketStats].filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados))
+    .map((s,i)=>`<div class="hg-rank-row">
+      <div class="hg-rank-num">${i+1}</div>
+      <div class="hg-rank-bar" style="background:${taxaColor(s.taxa)}"></div>
+      <div class="hg-rank-main">
+        <div class="hg-rank-name">${s.m}</div>
+        <div class="hg-rank-detail"><span class="ok">${s.acertos}✓</span> · <span class="err">${s.erros}✗</span> · ${s.auditados} confirmados</div>
+      </div>
+      <div class="hg-rank-rate" style="color:${taxaColor(s.taxa)}">${fmtTaxa(s.taxa)}</div>
+    </div>`).join('');
+
+  // ── Dias bar ───────────────────────────────────────────────────
+  const dayBarsHtml=dayStats.slice(-10).map(x=>{
+    const [dd,mm]=x.d.split('-');
+    const c=taxaColor(x.t);
+    const pct=x.t||0;
+    return `<div class="hg-day-row">
+      <div class="hg-day-date">${dd}/${mm}</div>
+      <div class="hg-day-bar"><div class="hg-day-fill" style="width:${pct}%;background:${c}"></div></div>
+      <div class="hg-day-info" style="color:${c}">${fmtTaxa(x.t)} · <span class="ok">${x.a}✓</span> <span class="err">${x.e}✗</span></div>
+    </div>`;
+  }).join('');
+
   el.innerHTML=`
-    <div class="hist-page">
-      <div class="hist-hero">
+    <div class="hg-page">
+
+      <!-- HERO -->
+      <div class="hg-hero">
         <div>
-          <div class="hist-eyebrow">Histórico Global</div>
+          <div class="hg-hero-label">Performance Geral</div>
           <h2>Performance validada por resultados reais.</h2>
-          <div class="hist-subtitle">Gerados: todos os palpites disponibilizados na plataforma. Confirmados: apenas previsões com resultado final definido (GREEN ou RED).</div>
+          <div class="hg-hero-sub">Gerados: todos os palpites disponibilizados na plataforma.<br>Confirmados: apenas previsões com resultado final definido (GREEN ou RED).</div>
         </div>
-        <div class="hist-score-card" style="--score-width:${taxa||0}%">
-          <span>Taxa geral</span>
-          <div class="hist-score-row">
-            <strong>${fmtTaxa(taxa)}</strong>
-            <em>Base estatística:<br>${auditados} previsões</em>
+        <div class="hg-taxa-box">
+          <div class="hg-taxa-label">Taxa Geral</div>
+          <div class="hg-taxa-val" style="color:${taxaColor(taxa)}">${fmtTaxa(taxa)}</div>
+          <div class="hg-taxa-note">Base estatística:<br>${auditados} previsões</div>
+          <div class="hg-taxa-bar"><div class="hg-taxa-bar-fill" style="width:${taxa||0}%;background:${taxaColor(taxa)}"></div></div>
+        </div>
+        <div class="hg-insights">
+          <div class="hg-insight">
+            <div class="hg-insight-lbl">Melhor Categoria</div>
+            <div class="hg-insight-val" style="color:${bestCategoryColor}">${bestCategory?bestCategory.label:'—'}</div>
+            <div class="hg-insight-note">${bestCategory?`<b style="color:${bestCategoryColor}">${fmtTaxa(bestCategory.taxa)}</b> · ${bestCategory.auditados} confirmados`:'sem amostra'}</div>
           </div>
-          <div class="hist-score-bar"><i></i></div>
-        </div>
-        <div class="hist-hero-insights">
-          <div class="hist-insight"><span>Melhor categoria</span><strong style="color:${bestCategoryColor}">${bestCategory?bestCategory.label:'—'}</strong><em>${bestCategory?`<b style="color:${bestCategoryColor}">${fmtTaxa(bestCategory.taxa)}</b> · ${bestCategory.auditados} confirmados`:'sem amostra'}</em></div>
-          <div class="hist-insight"><span>Melhor mercado</span><strong style="color:${bestMarketColor}">${bestMarket?bestMarket.m:'—'}</strong><em>${bestMarket?`<b style="color:${bestMarketColor}">${fmtTaxa(bestMarket.taxa)}</b> · ${bestMarket.auditados} confirmados`:'sem amostra'}</em></div>
-        </div>
-      </div>
-
-      <div class="hist-summary-grid">
-        <div class="hist-summary-card"><span>Gerados</span><strong>${gerados}</strong><em>todos os palpites disponíveis</em></div>
-        <div class="hist-summary-card"><span>Confirmados</span><strong>${auditados}</strong><em>com GREEN ou RED</em></div>
-        <div class="hist-summary-card ok"><span>Acertos</span><strong>${g.total_acertos||0}</strong><em>palpites confirmados</em></div>
-        <div class="hist-summary-card err"><span>Erros</span><strong>${g.total_erros||0}</strong><em>palpites confirmados</em></div>
-        <div class="hist-summary-card"><span>Dias</span><strong>${confirmedDays.length}</strong><em>dias confirmados</em></div>
-      </div>
-
-      <div class="hist-audit-grid">
-        <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${taxaColor(top5Taxa)}">${fmtTaxa(top5Taxa)}</div><div><span class="hist-audit-kicker"><i data-lucide="star"></i>Top 5 do Dia</span><strong>Taxa geral</strong><em>${top5Stats.auditados} confirmados de ${top5Stats.gerados} gerados</em></div></div>
-          <div class="hist-break-list">${ticketRow('Top 5 Palpites do Dia',top5Stats)}</div>
-        </div>
-        <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${cG}">${fmtTaxa(taxa)}</div><div><span class="hist-audit-kicker"><i data-lucide="sparkles"></i>Melhores Previsões</span><strong>Taxas por confiança</strong><em>base completa dos jogos confirmados</em></div></div>
-          <div class="hist-break-list">${categoryRows}</div>
-        </div>
-        <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${taxaColor(taxaStat(ticketStats.geral))}">${fmtTaxa(taxaStat(ticketStats.geral))}</div><div><span class="hist-audit-kicker"><i data-lucide="ticket"></i>Bilhetes</span><strong>Geral e por tipo</strong><em>${ticketStats.geral.auditados} bilhetes confirmados</em></div></div>
-          <div class="hist-break-list">
-            ${ticketRow('Bilhetes geral',ticketStats.geral)}
-            ${ticketRow('Bilhete do dia',ticketStats.dia)}
-            ${ticketRow('Bingo do dia',ticketStats.bingo)}
-            ${ticketRow('Premium 4x',ticketStats.premium)}
-            ${ticketRow('Elite',ticketStats.elite)}
+          <div class="hg-insight">
+            <div class="hg-insight-lbl">Melhor Mercado</div>
+            <div class="hg-insight-val" style="color:${bestMarketColor}">${bestMarket?bestMarket.m:'—'}</div>
+            <div class="hg-insight-note">${bestMarket?`<b style="color:${bestMarketColor}">${fmtTaxa(bestMarket.taxa)}</b> · ${bestMarket.auditados} confirmados`:'sem amostra'}</div>
           </div>
         </div>
       </div>
 
-      <div class="hist-layout">
-        <div class="hist-panel"><div class="sec-title"><i data-lucide="bar-chart-2"></i> Ranking por Mercado</div><div class="hist-market-list">${marketRows||'<div class="empty">Sem mercados confirmados.</div>'}</div></div>
-        <div class="hist-panel"><div class="sec-title"><i data-lucide="calendar-days"></i> Últimos Dias Confirmados</div>${dayBars||'<div class="empty">Sem dias confirmados.</div>'}</div>
+      <!-- KPIs -->
+      <div class="hg-kpi-row">
+        <div class="hg-kpi">
+          <div class="hg-kpi-icon blue"><svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></div>
+          <div><div class="hg-kpi-val">${gerados}</div><div class="hg-kpi-lbl">Gerados</div></div>
+        </div>
+        <div class="hg-kpi">
+          <div class="hg-kpi-icon teal"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div><div class="hg-kpi-val">${auditados}</div><div class="hg-kpi-lbl">Confirmados</div></div>
+        </div>
+        <div class="hg-kpi ok">
+          <div class="hg-kpi-icon green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div><div class="hg-kpi-val">${g.total_acertos||0}</div><div class="hg-kpi-lbl">Acertos</div></div>
+        </div>
+        <div class="hg-kpi err">
+          <div class="hg-kpi-icon red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+          <div><div class="hg-kpi-val">${g.total_erros||0}</div><div class="hg-kpi-lbl">Erros</div></div>
+        </div>
+        <div class="hg-kpi">
+          <div class="hg-kpi-icon purple"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div><div class="hg-kpi-val">${confirmedDays.length}</div><div class="hg-kpi-lbl">Dias</div></div>
+        </div>
       </div>
+
+      <!-- 4 PAINÉIS -->
+      <div class="hg-panels">
+
+        <!-- Top 5 do Dia -->
+        <div class="hg-panel p-blue">
+          <div>
+            <div class="hg-panel-label"><i data-lucide="trophy" style="width:11px;height:11px;display:inline;vertical-align:-1px"></i> Top 5 do Dia</div>
+            <div class="hg-panel-title">Taxa geral</div>
+            <div class="hg-panel-note">${top5Stats.auditados} confirmados de ${top5Stats.gerados} gerados</div>
+          </div>
+          <div class="hg-donut-wrap">
+            ${donutSvg(top5Taxa,taxaColor(top5Taxa),100)}
+            <div class="hg-donut-stats"><span class="ok">${top5Stats.acertos}✓</span> · <span class="err">${top5Stats.erros}x</span> · ${top5Stats.auditados} confirmados</div>
+            <div class="hg-donut-badge" style="color:${top5LblColor};border-color:${top5LblColor}44;background:${top5LblColor}18">
+              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+              ${top5Lbl}
+            </div>
+          </div>
+        </div>
+
+        <!-- Melhores Previsões -->
+        <div class="hg-panel p-green">
+          <div>
+            <div class="hg-panel-label"><i data-lucide="bar-chart-2" style="width:11px;height:11px;display:inline;vertical-align:-1px"></i> Melhores Previsões</div>
+            <div class="hg-panel-title">Taxas por confiança</div>
+            <div class="hg-panel-note">base completa dos jogos confirmados</div>
+          </div>
+          <div class="hg-cat-rows">${catRowsHtml}</div>
+        </div>
+
+        <!-- Vitória 1X2 -->
+        <div class="hg-panel p-yellow">
+          <div>
+            <div class="hg-panel-label"><i data-lucide="trophy" style="width:11px;height:11px;display:inline;vertical-align:-1px"></i> Vitória (1X2)</div>
+            <div class="hg-panel-title">Taxa de assertividade</div>
+            <div class="hg-panel-note">base completa dos jogos confirmados</div>
+          </div>
+          <div class="hg-donut-wrap">
+            ${donutSvg(rfTaxa,rfTaxaColor,100)}
+            <div class="hg-donut-stats"><span class="ok">${rfHist.green}✓</span> · <span class="err">${rfHist.red}x</span> · ${rfHist.green+rfHist.red} confirmados</div>
+          </div>
+        </div>
+
+        <!-- Taxa por Mercado -->
+        <div class="hg-panel p-purple">
+          <div>
+            <div class="hg-panel-label"><i data-lucide="pie-chart" style="width:11px;height:11px;display:inline;vertical-align:-1px"></i> Taxa por Mercado</div>
+            <div class="hg-panel-title">Desempenho geral</div>
+            <div class="hg-panel-note">base completa dos jogos confirmados</div>
+          </div>
+          <div class="hg-mkt-mini">${mktMiniHtml||'<div class="empty">Sem dados.</div>'}</div>
+        </div>
+
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="hg-bottom">
+        <div class="hg-card">
+          <div class="hg-card-title">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Ranking por Mercado
+          </div>
+          <div class="hg-rank-list">${rankRowsHtml||'<div class="empty">Sem mercados confirmados.</div>'}</div>
+        </div>
+        <div class="hg-card">
+          <div class="hg-card-title">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Últimos Dias Confirmados
+          </div>
+          <div class="hg-days-list">${dayBarsHtml||'<div class="empty">Sem dias confirmados.</div>'}</div>
+        </div>
+      </div>
+
     </div>`;
 }
 
@@ -3580,336 +3855,4 @@ function showHistoricoGlobal(){
 function switchDate(date){
   document.querySelector('.content-area')?.classList.remove('hist-mode');
   const histPanel=document.getElementById('panel-historico');
-  if(histPanel)histPanel.style.display='none';
-
-  historicoVisible=false;
-  document.querySelectorAll('.day-panel').forEach(p=>p.classList.remove('active'));
-  document.querySelectorAll('.date-strip-item').forEach(t=>t.classList.remove('active'));
-  const panel=document.getElementById('day-'+date);
-  const tab=document.querySelector(`[data-date="${date}"]`);
-  if(!panel){ console.warn('Panel not found for date:',date); return; }
-  panel.classList.add('active');
-  if(tab){tab.classList.add('active');centerDateTab(tab);requestAnimationFrame(()=>centerDateTab(tab,'auto'));}
-  // Update sidebar active state
-  updateSidebarActive(activeMkt[date]||'visao');
-  activeDate=date;
-  if(!activeMkt[date])activeMkt[date]='visao';
-  switchMkt(date, activeMkt[date]);
-}
-
-function switchMkt(date,mkt){
-  activeMkt[date]=mkt;
-  clearMarketCategoryState();
-  const panel=document.getElementById('day-'+date);
-  if(!panel)return;
-  panel.querySelectorAll('.mkt-panel').forEach(p=>p.classList.remove('active'));
-  panel.querySelectorAll('.mkt-tab').forEach(t=>t.classList.remove('active'));
-  const mp=panel.querySelector('#mkt-'+date+'-'+mkt);
-  const mt=panel.querySelector(`[data-mkt="${mkt}"]`);
-  if(mp)mp.classList.add('active');
-  if(mt)mt.classList.add('active');
-  updatePageHero(mkt);
-  renderMkt(date,mkt);
-}
-
-function renderMkt(date,mkt){
-  const jogos=getJogos(date);
-  if(mkt==='visao')          renderVisao(date,jogos);
-  else if(mkt==='ranking')   renderRanking(date,jogos);
-  else if(mkt==='resultado') renderResultadoFinal(date,jogos);
-  else if(mkt==='over15')    renderOver15(date,jogos);
-  else if(mkt==='over25')    renderOver25(date,jogos);
-  else if(mkt==='escanteios')renderEsc(date,jogos);
-  else if(mkt==='cartoes')   renderCart(date,jogos);
-  else if(mkt==='bilhetes')     renderBilhetes(date,jogos);
-  else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
-  if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
-}
-
-// ── Sidebar navigation ──────────────────────────────────────────────
-function sidebarNav(mkt){
-  // If no date active, use the most recent one
-  if(!activeDate){
-    const d = dates[dates.length-1];
-    if(d) switchDate(d);
-    else return;
-  }
-  if(historicoVisible || document.getElementById('panel-historico')?.style.display==='block'){
-    activeMkt[activeDate]=mkt;
-    switchDate(activeDate);
-  } else {
-    switchMkt(activeDate, mkt);
-  }
-  updateSidebarActive(mkt);
-}
-
-function updateSidebarActive(mkt){
-  document.querySelectorAll('.sidebar-item').forEach(el=>el.classList.remove('active'));
-  const map = {
-    'visao':'sb-visao','ranking':'sb-ranking','bilhetes':'sb-bilhetes'
-  };
-  const id = map[mkt];
-  if(id) document.getElementById(id)?.classList.add('active');
-  // Update sidebar counts
-  if(activeDate){
-    const jogos = getJogos(activeDate);
-    const nprem = jogos.filter(j=>j.best_grade==='A+'||j.best_grade==='A').length;
-    const el = document.getElementById('sb-cnt-ranking');
-    if(el) el.textContent = nprem || '—';
-  }
-}
-
-// ── Market category & sub-filters ──────────────────────────────────
-let activeCat = null;
-let activeSubFilter = null;
-
-const CAT_SUBFILTERS = {
-  'gols':       [{key:'over15',  label:'Over 1.5'}, {key:'over25', label:'Under'}],
-  'escanteios': [{key:'esc75',   label:'Over 7.5'}, {key:'esc85',  label:'Over 8.5'}],
-  'cartoes':    [{key:'cart25',  label:'Over 2.5'}, {key:'cart35', label:'Over 3.5'}],
-  'resultado':  [],
-};
-
-function clearMarketCategoryState(){
-  activeCat = null;
-  activeSubFilter = null;
-  document.querySelectorAll('.mkt-cat-tab').forEach(t=>t.classList.remove('active'));
-  const bar = document.getElementById('sub-filter-bar');
-  if(bar){
-    bar.classList.remove('visible');
-    bar.innerHTML = '';
-  }
-}
-
-function renderSubFilters(cat){
-  const bar = document.getElementById('sub-filter-bar');
-  if(!bar) return;
-  const filters = CAT_SUBFILTERS[cat] || [];
-  if(!filters.length){
-    bar.classList.remove('visible');
-    bar.innerHTML = '';
-    return;
-  }
-  bar.classList.add('visible');
-  // Default first sub-filter active
-  if(!activeSubFilter || !filters.find(f=>f.key===activeSubFilter)){
-    activeSubFilter = filters[0].key;
-  }
-  bar.innerHTML = filters.map(f=>
-    `<div class="sub-filter-btn${activeSubFilter===f.key?' active':''}" onclick="switchSubFilter('${f.key}')">${f.label}</div>`
-  ).join('');
-}
-
-function switchSubFilter(key){
-  if(!activeCat) return;
-  activeSubFilter = key;
-  // Re-render sub-filter buttons
-  renderSubFilters(activeCat);
-  if(!activeDate) return;
-  renderCatContent(activeDate, activeCat, key);
-}
-
-
-function switchCat(cat){
-  activeCat = cat;
-  activeSubFilter = null;
-  updateSidebarActive(null);
-  updatePageHero(cat);
-  document.querySelectorAll('.mkt-cat-tab').forEach(t=>t.classList.remove('active'));
-  document.querySelector(`[data-cat="${cat}"]`)?.classList.add('active');
-  renderSubFilters(cat);
-  if(!activeDate) return;
-  const filters = CAT_SUBFILTERS[cat];
-  const firstKey = filters && filters.length ? filters[0].key : null;
-  if(firstKey) activeSubFilter = firstKey;
-  renderCatContent(activeDate, cat, firstKey);
-}
-
-function renderCatContent(date, cat, subKey){
-  const jogos = getJogos(date);
-  if(cat === 'gols'){
-    if(subKey === 'over15') renderOver15(date, jogos);
-    else renderOver25(date, jogos);
-    const panel = document.getElementById('mkt-'+date+'-over15');
-    const panel2 = document.getElementById('mkt-'+date+'-over25');
-    document.querySelectorAll(`#day-${date} .mkt-panel`).forEach(p=>p.classList.remove('active'));
-    if(subKey === 'over15' && panel) panel.classList.add('active');
-    else if(panel2) panel2.classList.add('active');
-  } else if(cat === 'escanteios'){
-    renderEsc(date, jogos);
-    document.querySelectorAll(`#day-${date} .mkt-panel`).forEach(p=>p.classList.remove('active'));
-    const p = document.getElementById('mkt-'+date+'-escanteios');
-    if(p) p.classList.add('active');
-  } else if(cat === 'cartoes'){
-    renderCart(date, jogos);
-    document.querySelectorAll(`#day-${date} .mkt-panel`).forEach(p=>p.classList.remove('active'));
-    const p = document.getElementById('mkt-'+date+'-cartoes');
-    if(p) p.classList.add('active');
-  } else if(cat === 'resultado'){
-    renderResultadoFinal(date, jogos);
-    document.querySelectorAll(`#day-${date} .mkt-panel`).forEach(p=>p.classList.remove('active'));
-    const p = document.getElementById('mkt-'+date+'-resultado');
-    if(p) p.classList.add('active');
-  }
-}
-// Inicializar ícones Lucide com fallback local para uso offline/file://
-function ensureLucideIcons(){
-  if(typeof lucide !== 'undefined' && lucide.createIcons){
-    lucide.createIcons();
-  }
-  const paths = {
-    'layout-dashboard':'<rect width="7" height="9" x="3" y="3" rx="1"></rect><rect width="7" height="5" x="14" y="3" rx="1"></rect><rect width="7" height="9" x="14" y="12" rx="1"></rect><rect width="7" height="5" x="3" y="16" rx="1"></rect>',
-    'bar-chart-2':'<line x1="18" x2="18" y1="20" y2="10"></line><line x1="12" x2="12" y1="20" y2="4"></line><line x1="6" x2="6" y1="20" y2="14"></line>',
-    'target':'<circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="6"></circle><circle cx="12" cy="12" r="2"></circle>',
-    'brain-circuit':'<path d="M12 5a3 3 0 0 0-5.83-1"></path><path d="M12 5a3 3 0 0 1 5.83-1"></path><path d="M7 4a3 3 0 0 0-2 5"></path><path d="M17 4a3 3 0 0 1 2 5"></path><path d="M5 9a3 3 0 0 0 1 5.8"></path><path d="M19 9a3 3 0 0 1-1 5.8"></path><path d="M8 18a3 3 0 0 0 4-2"></path><path d="M16 18a3 3 0 0 1-4-2"></path><path d="M9 9h1"></path><path d="M14 9h1"></path><path d="M12 12v4"></path>',
-    'credit-card':'<rect width="20" height="14" x="2" y="5" rx="2"></rect><line x1="2" x2="22" y1="10" y2="10"></line>',
-    'info':'<circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4"></path><path d="M12 8h.01"></path>',
-    'search':'<circle cx="11" cy="11" r="8"></circle><path d="m21 21-4.3-4.3"></path>',
-    'list':'<line x1="8" x2="21" y1="6" y2="6"></line><line x1="8" x2="21" y1="12" y2="12"></line><line x1="8" x2="21" y1="18" y2="18"></line><line x1="3" x2="3.01" y1="6" y2="6"></line><line x1="3" x2="3.01" y1="12" y2="12"></line><line x1="3" x2="3.01" y1="18" y2="18"></line>',
-    'calendar-days':'<path d="M8 2v4"></path><path d="M16 2v4"></path><rect width="18" height="18" x="3" y="4" rx="2"></rect><path d="M3 10h18"></path><path d="M8 14h.01"></path><path d="M12 14h.01"></path><path d="M16 14h.01"></path><path d="M8 18h.01"></path><path d="M12 18h.01"></path><path d="M16 18h.01"></path>',
-    'clock':'<circle cx="12" cy="12" r="10"></circle><polyline points="12 6 12 12 16 14"></polyline>',
-    'circle-x':'<circle cx="12" cy="12" r="10"></circle><path d="m15 9-6 6"></path><path d="m9 9 6 6"></path>',
-    'triangle-alert':'<path d="m21.73 18-8-14a2 2 0 0 0-3.46 0l-8 14A2 2 0 0 0 4 21h16a2 2 0 0 0 1.73-3Z"></path><path d="M12 9v4"></path><path d="M12 17h.01"></path>',
-    'circle-help':'<circle cx="12" cy="12" r="10"></circle><path d="M9.09 9a3 3 0 1 1 5.83 1c0 2-3 2-3 4"></path><path d="M12 17h.01"></path>',
-    'flag':'<path d="M4 22V4a1 1 0 0 1 .4-.8A6 6 0 0 1 8 2c3 0 5 2 8 2a6 6 0 0 0 4-1.2V14a6 6 0 0 1-4 1.2c-3 0-5-2-8-2a6 6 0 0 0-4 1.2"></path>',
-    'square':'<rect width="16" height="16" x="4" y="4" rx="2"></rect>',
-    'log-in':'<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"></path><polyline points="10 17 15 12 10 7"></polyline><line x1="15" x2="3" y1="12" y2="12"></line>',
-    'chevron-down':'<path d="m6 9 6 6 6-6"></path>',
-    'rocket':'<path d="M4.5 16.5c-1.5 1.3-2 3-2 5 2 0 3.7-.5 5-2"></path><path d="M9 15 15 9"></path><path d="M15 9h4l2-6-6 2v4Z"></path><path d="M9 15H5l-2 6 6-2v-4Z"></path>',
-    'arrow-right':'<path d="M5 12h14"></path><path d="m12 5 7 7-7 7"></path>',
-    'grid-2x2':'<rect width="7" height="7" x="3" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="3" rx="1"></rect><rect width="7" height="7" x="14" y="14" rx="1"></rect><rect width="7" height="7" x="3" y="14" rx="1"></rect>',
-    'star':'<polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>',
-    'ticket':'<path d="M2 9a3 3 0 0 0 0 6v3a2 2 0 0 0 2 2h16a2 2 0 0 0 2-2v-3a3 3 0 0 0 0-6V6a2 2 0 0 0-2-2H4a2 2 0 0 0-2 2Z"></path><path d="M13 5v2"></path><path d="M13 17v2"></path><path d="M13 11v2"></path>',
-    'trending-up':'<polyline points="22 7 13.5 15.5 8.5 10.5 2 17"></polyline><polyline points="16 7 22 7 22 13"></polyline>',
-    'circle-check':'<circle cx="12" cy="12" r="10"></circle><path d="m9 12 2 2 4-4"></path>',
-    'shield-check':'<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"></path><path d="m9 12 2 2 4-4"></path>',
-    'crosshair':'<circle cx="12" cy="12" r="10"></circle><line x1="22" x2="18" y1="12" y2="12"></line><line x1="6" x2="2" y1="12" y2="12"></line><line x1="12" x2="12" y1="6" y2="2"></line><line x1="12" x2="12" y1="22" y2="18"></line>',
-    'corner-up-right':'<polyline points="15 14 20 9 15 4"></polyline><path d="M4 20v-7a4 4 0 0 1 4-4h12"></path>',
-    'layers':'<path d="m12.83 2.18 8.05 4.02a1.25 1.25 0 0 1 0 2.24l-8.05 4.02a1.85 1.85 0 0 1-1.66 0L3.12 8.44a1.25 1.25 0 0 1 0-2.24l8.05-4.02a1.85 1.85 0 0 1 1.66 0Z"></path><path d="m22 12.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 12.5"></path><path d="m22 17.5-9.17 4.58a1.85 1.85 0 0 1-1.66 0L2 17.5"></path>',
-    'trophy':'<path d="M6 9H4.5a2.5 2.5 0 0 1 0-5H6"></path><path d="M18 9h1.5a2.5 2.5 0 0 0 0-5H18"></path><path d="M4 22h16"></path><path d="M10 14.66V17c0 .55-.47.98-.97 1.21C7.85 18.75 7 20.24 7 22"></path><path d="M14 14.66V17c0 .55.47.98.97 1.21C16.15 18.75 17 20.24 17 22"></path><path d="M18 2H6v7a6 6 0 0 0 12 0V2Z"></path>',
-    'shield':'<path d="M20 13c0 5-3.5 7.5-8 9-4.5-1.5-8-4-8-9V5l8-3 8 3Z"></path>',
-    'activity':'<path d="M22 12h-4l-3 9L9 3l-3 9H2"></path>',
-    'rotate-ccw':'<path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"></path><path d="M3 3v5h5"></path>'
-  };
-  document.querySelectorAll('i[data-lucide]').forEach(el=>{
-    const name = el.getAttribute('data-lucide');
-    const path = paths[name];
-    if(!path) return;
-    const style = el.getAttribute('style') || '';
-    const w = (style.match(/width:\s*(\d+)px/)||[])[1] || 14;
-    const h = (style.match(/height:\s*(\d+)px/)||[])[1] || w;
-    const wrap = document.createElement('span');
-    wrap.innerHTML = `<svg data-fallback-lucide="${name}" width="${w}" height="${h}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${path}</svg>`;
-    el.replaceWith(wrap.firstElementChild);
-  });
-}
-ensureLucideIcons();
-
-// ── Tema claro/escuro ──────────────────────────────────────────────
-function setThemeIcon(icon){
-  const btn = document.getElementById('theme-btn');
-  if(!btn) return;
-  const sun=`<svg id="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-    <circle cx="12" cy="12" r="4"></circle>
-    <path d="M12 2v2M12 20v2M4.93 4.93l1.41 1.41M17.66 17.66l1.41 1.41M2 12h2M20 12h2M4.93 19.07l1.41-1.41M17.66 6.34l1.41-1.41"></path>
-  </svg>`;
-  const moon=`<svg id="theme-icon" viewBox="0 0 24 24" aria-hidden="true">
-    <path d="M21 12.79A9 9 0 1 1 11.21 3 7 7 0 0 0 21 12.79z"></path>
-  </svg>`;
-  btn.innerHTML=icon==='moon'?moon:sun;
-}
-function toggleTheme(){
-  const html = document.documentElement;
-  const isLight = html.getAttribute('data-theme') === 'light';
-  if(isLight){
-    html.removeAttribute('data-theme');
-    localStorage.setItem('wm_theme','dark');
-    setThemeIcon('sun');
-  } else {
-    html.setAttribute('data-theme','light');
-    localStorage.setItem('wm_theme','light');
-    setThemeIcon('moon');
-  }
-}
-// Restaurar tema salvo
-(function(){
-  const saved = localStorage.getItem('wm_theme');
-  if(saved === 'light'){
-    document.documentElement.setAttribute('data-theme','light');
-    setTimeout(()=>setThemeIcon('moon'),100);
-  } else {
-    setTimeout(()=>setThemeIcon('sun'),100);
-  }
-})();
-
-// Relógio navbar
-function updateClock(){
-  const now = new Date();
-  const d = String(now.getDate()).padStart(2,'0');
-  const m = String(now.getMonth()+1).padStart(2,'0');
-  const y = now.getFullYear();
-  const h = String(now.getHours()).padStart(2,'0');
-  const min = String(now.getMinutes()).padStart(2,'0');
-  const el = document.getElementById('navbar-clock');
-  if(el) el.textContent = `${d}/${m}/${y} ${h}:${min}`;
-}
-updateClock();
-setInterval(updateClock, 30000);
-
-// Ordenar datas corretamente (DD-MM-YYYY)
-const dates=Object.keys(ALL_DATA).sort((a,b)=>{
-  const [da,ma,ya]=a.split('-').map(Number);
-  const [db,mb,yb]=b.split('-').map(Number);
-  return new Date(ya,ma-1,da)-new Date(yb,mb-1,db);
-});
-
-// Aguardar DOM completo antes de renderizar
-window.addEventListener('DOMContentLoaded',function(){
-  renderGlobalHistoricoSearch();
-  if(dates.length){
-    const today = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}).split('/').join('-');
-const todayKey = today;
-const targetDate = dates.includes(todayKey) ? todayKey : dates.filter(d=>{
-  const [dd,mm,yyyy]=d.split('-').map(Number);
-  return new Date(yyyy,mm-1,dd) <= new Date();
-}).pop() || dates[dates.length-1];
-switchDate(targetDate);
-setTimeout(()=>centerCurrentDate('auto'), 80);
-  }
-});
-
-// Fallback se DOMContentLoaded já disparou
-if(document.readyState==='complete'||document.readyState==='interactive'){
-  setTimeout(function(){
-    renderGlobalHistoricoSearch();
-    if(dates.length&&!activeDate){
-      const today = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}).split('/').join('-');
-const todayKey = today;
-const targetDate = dates.includes(todayKey) ? todayKey : dates.filter(d=>{
-  const [dd,mm,yyyy]=d.split('-').map(Number);
-  return new Date(yyyy,mm-1,dd) <= new Date();
-}).pop() || dates[dates.length-1];
-switchDate(targetDate);
-setTimeout(()=>centerCurrentDate('auto'), 80);
-    }
-  },100);
-}
-window.addEventListener('load',()=>centerCurrentDate('auto'));
-window.addEventListener('resize',()=>centerCurrentDate('auto'));
-</script>
-
-<!-- Botão Histórico Global flutuante na date-bar -->
-<style>
-.hist-btn{
-  padding:7px 14px;font-size:12px;font-weight:600;color:var(--muted);
-  cursor:pointer;border:1px solid var(--border);border-radius:7px;
-  background:var(--s2);white-space:nowrap;transition:all .15s;
-  display:flex;align-items:center;gap:5px;flex-shrink:0;align-self:center;
-}
-.hist-btn:hover{color:var(--text);border-color:var(--accent)}
-</style>
-<script>
-
-</script>
-</body>
-</html>
+  if(histPanel)h
