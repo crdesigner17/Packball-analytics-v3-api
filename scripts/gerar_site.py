@@ -322,6 +322,58 @@ def day_panel_html(d, day_data):
   </div>
 </div>'''
 
+
+def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, updated):
+    """
+    Injeta apenas os dados dinâmicos no index.html existente, preservando
+    todo o layout, CSS e JS do template.  Usa marcadores HTML como âncoras.
+    """
+    if not os.path.exists(OUT_FILE):
+        return None  # fallback para build_html
+
+    with open(OUT_FILE, 'r', encoding='utf-8') as f:
+        html = f.read()
+
+    MARKERS = [
+        '<!-- WM:DATE-TABS-START -->',
+        '<!-- WM:DATE-TABS-END -->',
+        '<!-- WM:DAY-PANELS-START -->',
+        '<!-- WM:DAY-PANELS-END -->',
+    ]
+    if not all(m in html for m in MARKERS):
+        return None  # marcadores ausentes → fallback
+
+    import re
+
+    # 1. Substituir date-tabs
+    html = re.sub(
+        r'<!-- WM:DATE-TABS-START -->.*?<!-- WM:DATE-TABS-END -->',
+        f'<!-- WM:DATE-TABS-START -->\n{date_tabs_html}\n<!-- WM:DATE-TABS-END -->',
+        html, flags=re.DOTALL
+    )
+
+    # 2. Substituir day-panels (manter o <!-- DAY PANELS --> original entre os markers)
+    html = re.sub(
+        r'<!-- WM:DAY-PANELS-START -->.*?<!-- WM:DAY-PANELS-END -->',
+        f'<!-- WM:DAY-PANELS-START -->\n<!-- DAY PANELS -->\n{day_panels_html}\n<!-- WM:DAY-PANELS-END -->',
+        html, flags=re.DOTALL
+    )
+
+    # 3. Substituir ALL_DATA e GLOBAIS (linha inteira)
+    html = re.sub(
+        r'const ALL_DATA\s*=\s*\{.*?;',
+        f'const ALL_DATA   = {all_data_json};',
+        html, flags=re.DOTALL
+    )
+    html = re.sub(
+        r'const GLOBAIS\s*=\s*\{.*?;',
+        f'const GLOBAIS    = {globais_json};',
+        html, flags=re.DOTALL
+    )
+
+    return html
+
+
 def gerar_site():
     index = load_index()
     if not index:
@@ -361,18 +413,31 @@ def gerar_site():
     globais = calcular_acertos_globais(all_data)
     updated = datetime.now().strftime('%d/%m/%Y %H:%M UTC')
 
-    html = build_html(
-        updated=updated,
+    # Tenta injetar só os dados no template existente (preserva layout/CSS/JS)
+    html = patch_html(
         date_tabs_html='\n'.join(date_tabs_html),
         day_panels_html='\n'.join(day_panels_html),
         all_data_json=json.dumps(all_data, ensure_ascii=False),
         globais_json=json.dumps(globais, ensure_ascii=False),
-        n_dates=len(index),
+        updated=updated,
     )
-    html = apply_visual_overrides(html)
+
+    if html is None:
+        # Fallback: gera do zero (primeira execução ou marcadores ausentes)
+        print("⚠ Marcadores ausentes — gerando index.html do zero (fallback)")
+        html = build_html(
+            updated=updated,
+            date_tabs_html='\n'.join(date_tabs_html),
+            day_panels_html='\n'.join(day_panels_html),
+            all_data_json=json.dumps(all_data, ensure_ascii=False),
+            globais_json=json.dumps(globais, ensure_ascii=False),
+            n_dates=len(index),
+        )
+        html = apply_visual_overrides(html)
+
     with open(OUT_FILE, 'w', encoding='utf-8') as f:
         f.write(html)
-    print(f"✓ docs/index.html gerado — {len(index)} datas — {updated}")
+    print(f"✓ docs/index.html atualizado (dados injetados) — {len(index)} datas — {updated}")
 
 def build_html(updated, date_tabs_html, day_panels_html, all_data_json, globais_json, n_dates):
     return f'''<!DOCTYPE html>
@@ -872,6 +937,100 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 .day-hist-detail{{display:block;color:var(--muted);font-size:9px;font-weight:600;margin-top:2px}}
 .hist-spark{{display:flex;align-items:flex-end;gap:4px;height:42px;margin-top:10px;padding-top:8px;border-top:1px solid var(--border)}}
 .hist-spark-bar{{flex:1;min-width:5px;border-radius:3px 3px 0 0;opacity:.95}}
+
+/* ── HISTÓRICO GLOBAL — NOVO DASHBOARD ─────────────────────────── */
+.hg-page{{display:flex;flex-direction:column;gap:14px;padding:18px 0 28px}}
+.hg-hero{{background:linear-gradient(135deg,rgba(37,99,235,.12),rgba(124,58,237,.08) 50%,rgba(0,200,150,.06));border:1px solid rgba(148,163,184,.16);border-radius:14px;padding:20px 24px;display:grid;grid-template-columns:minmax(300px,1.4fr) minmax(200px,.7fr) minmax(240px,.9fr);gap:18px;align-items:center;position:relative;overflow:hidden}}
+.hg-hero::before{{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--blue),var(--purple2),var(--green))}}
+.hg-hero-label{{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.6px;color:var(--green);margin-bottom:7px}}
+.hg-hero h2{{font-size:19px;font-weight:800;color:var(--text);line-height:1.2;margin:0 0 8px}}
+.hg-hero-sub{{font-size:11px;color:var(--muted);line-height:1.55}}
+.hg-taxa-box{{border:1px solid rgba(148,163,184,.16);border-radius:11px;padding:14px 16px;background:rgba(255,255,255,.025)}}
+.hg-taxa-label{{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.2px;color:var(--muted);margin-bottom:6px}}
+.hg-taxa-val{{font-size:38px;font-weight:900;line-height:1;font-family:'Inter',sans-serif}}
+.hg-taxa-note{{font-size:10px;color:var(--muted);margin:4px 0 10px;font-weight:600}}
+.hg-taxa-bar{{height:5px;border-radius:99px;background:rgba(255,255,255,.08);overflow:hidden}}
+.hg-taxa-bar-fill{{height:100%;border-radius:99px}}
+.hg-insights{{display:flex;flex-direction:column;gap:8px}}
+.hg-insight{{background:rgba(255,255,255,.03);border:1px solid rgba(148,163,184,.12);border-radius:9px;padding:10px 12px}}
+.hg-insight-lbl{{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1px;color:var(--muted);margin-bottom:4px}}
+.hg-insight-val{{font-size:13px;font-weight:800;color:var(--text);margin-bottom:3px}}
+.hg-insight-note{{font-size:10px;color:var(--muted)}}
+.hg-kpi-row{{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));gap:8px}}
+.hg-kpi{{background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px 16px;display:flex;align-items:center;gap:13px;min-width:0}}
+.hg-kpi-icon{{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;flex-shrink:0}}
+.hg-kpi-icon svg{{width:18px;height:18px;stroke:currentColor;fill:none;stroke-width:1.8}}
+.hg-kpi-icon.blue{{background:rgba(59,130,246,.12);color:var(--blue)}}
+.hg-kpi-icon.green{{background:rgba(0,200,150,.12);color:var(--green)}}
+.hg-kpi-icon.teal{{background:rgba(0,200,150,.1);color:var(--teal)}}
+.hg-kpi-icon.red{{background:rgba(239,68,68,.1);color:var(--red)}}
+.hg-kpi-icon.purple{{background:rgba(124,58,237,.12);color:var(--purple2)}}
+.hg-kpi-val{{font-size:26px;font-weight:800;line-height:1;font-family:'Inter',sans-serif;color:var(--text)}}
+.hg-kpi-lbl{{font-size:10px;color:var(--muted);margin-top:3px;font-weight:600}}
+.hg-kpi.ok .hg-kpi-val{{color:var(--green)}}
+.hg-kpi.err .hg-kpi-val{{color:var(--red)}}
+.hg-panels{{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;align-items:stretch}}
+.hg-panel{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0;display:flex;flex-direction:column;gap:12px;position:relative;overflow:hidden}}
+.hg-panel::before{{content:'';position:absolute;top:0;left:0;right:0;height:2px;border-radius:12px 12px 0 0}}
+.hg-panel.p-blue::before{{background:linear-gradient(90deg,var(--blue),var(--purple2))}}
+.hg-panel.p-green::before{{background:linear-gradient(90deg,var(--green),var(--teal))}}
+.hg-panel.p-yellow::before{{background:linear-gradient(90deg,var(--yellow),var(--orange))}}
+.hg-panel.p-purple::before{{background:linear-gradient(90deg,var(--purple2),var(--blue))}}
+.hg-panel-label{{font-size:9px;font-weight:800;text-transform:uppercase;letter-spacing:1.4px;color:var(--muted)}}
+.hg-panel-title{{font-size:13px;font-weight:800;color:var(--text)}}
+.hg-panel-note{{font-size:10px;color:var(--muted);margin-top:2px}}
+.hg-donut-wrap{{display:flex;flex-direction:column;align-items:center;gap:10px}}
+.hg-donut-svg{{display:block;overflow:visible}}
+.hg-donut-bg{{fill:none;stroke:rgba(255,255,255,.07);stroke-width:10}}
+.hg-donut-ring{{fill:none;stroke-width:10;stroke-linecap:round}}
+.hg-donut-val{{font-size:22px;font-weight:900;font-family:'Inter',sans-serif;dominant-baseline:central;text-anchor:middle}}
+.hg-donut-badge{{display:inline-flex;align-items:center;gap:5px;border-radius:6px;padding:3px 8px;font-size:10px;font-weight:700;align-self:flex-start}}
+.hg-donut-badge svg{{width:11px;height:11px;stroke:currentColor;fill:none}}
+.hg-donut-stats{{font-size:10px;color:var(--muted);text-align:center}}
+.hg-donut-stats .ok{{color:var(--green)}}
+.hg-donut-stats .err{{color:var(--red)}}
+.hg-cat-rows{{display:flex;flex-direction:column;gap:6px;flex:1}}
+.hg-cat-row{{display:grid;grid-template-columns:minmax(0,1fr) 56px;gap:6px;align-items:center;padding:8px 10px;border-radius:8px;border-left:3px solid transparent}}
+.hg-cat-row.alta{{background:rgba(0,200,150,.07);border-left-color:var(--green)}}
+.hg-cat-row.media{{background:rgba(59,130,246,.07);border-left-color:var(--blue)}}
+.hg-cat-row.moderado{{background:rgba(245,158,11,.07);border-left-color:var(--orange)}}
+.hg-cat-row-name{{font-size:12px;font-weight:700;color:var(--text)}}
+.hg-cat-row-detail{{font-size:9px;color:var(--muted);margin-top:1px}}
+.hg-cat-row .ok{{color:var(--green)}}
+.hg-cat-row .err{{color:var(--red)}}
+.hg-cat-rate{{font-size:16px;font-weight:900;font-family:'Inter',sans-serif;text-align:right}}
+.hg-mkt-mini{{display:flex;flex-direction:column;gap:5px;flex:1}}
+.hg-mkt-mini-row{{display:grid;grid-template-columns:minmax(0,1fr) 54px;gap:8px;align-items:center;padding:5px 0;border-bottom:1px solid rgba(148,163,184,.08)}}
+.hg-mkt-mini-row:last-child{{border-bottom:none}}
+.hg-mkt-mini-name{{font-size:11px;font-weight:600;color:var(--text2)}}
+.hg-mkt-mini-rate{{font-size:13px;font-weight:800;font-family:'Inter',sans-serif;text-align:right}}
+.hg-bottom{{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,1fr);gap:14px;align-items:start}}
+.hg-card{{background:var(--s1);border:1px solid var(--border);border-radius:12px;padding:16px;min-width:0}}
+.hg-card-title{{font-size:11px;font-weight:800;text-transform:uppercase;letter-spacing:1.1px;color:var(--text);margin-bottom:14px;display:flex;align-items:center;gap:7px}}
+.hg-card-title svg{{width:14px;height:14px;stroke:currentColor;fill:none}}
+.hg-rank-list{{display:flex;flex-direction:column;gap:6px}}
+.hg-rank-row{{display:grid;grid-template-columns:32px 8px minmax(0,1fr) 70px;gap:10px;align-items:center;padding:10px 12px;border:1px solid rgba(148,163,184,.1);border-radius:9px;background:rgba(255,255,255,.015)}}
+.hg-rank-row:hover{{border-color:rgba(59,130,246,.3);background:rgba(59,130,246,.03)}}
+.hg-rank-num{{font-size:12px;font-weight:800;color:var(--muted);text-align:center;font-family:'Inter',sans-serif}}
+.hg-rank-bar{{width:4px;height:32px;border-radius:2px;flex-shrink:0}}
+.hg-rank-main{{min-width:0}}
+.hg-rank-name{{font-size:13px;font-weight:700;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.hg-rank-detail{{font-size:10px;color:var(--muted);margin-top:2px}}
+.hg-rank-detail .ok{{color:var(--green)}}
+.hg-rank-detail .err{{color:var(--red)}}
+.hg-rank-rate{{font-size:15px;font-weight:900;font-family:'Inter',sans-serif;text-align:right}}
+.hg-days-list{{display:flex;flex-direction:column;gap:4px}}
+.hg-day-row{{display:grid;grid-template-columns:44px minmax(0,1fr) 110px;align-items:center;gap:10px;padding:7px 0;border-bottom:1px solid rgba(148,163,184,.08)}}
+.hg-day-row:last-child{{border-bottom:none}}
+.hg-day-date{{font-size:11px;font-weight:700;color:var(--text2)}}
+.hg-day-bar{{height:18px;background:rgba(255,255,255,.05);border-radius:5px;overflow:hidden}}
+.hg-day-fill{{height:100%;border-radius:5px;min-width:2px}}
+.hg-day-info{{font-size:10px;font-weight:700;font-family:'Inter',sans-serif;text-align:right;white-space:nowrap}}
+.hg-day-info .ok{{color:var(--green)}}
+.hg-day-info .err{{color:var(--red)}}
+@media(max-width:1100px){{.hg-hero{{grid-template-columns:1fr 1fr}}.hg-hero-sub{{display:none}}}}
+@media(max-width:900px){{.hg-panels{{grid-template-columns:repeat(2,1fr)}}.hg-hero{{grid-template-columns:1fr}}.hg-insights{{display:none}}}}
+@media(max-width:680px){{.hg-kpi-row{{grid-template-columns:repeat(3,1fr)}}.hg-panels{{grid-template-columns:1fr}}.hg-bottom{{grid-template-columns:1fr}}}}
 
 /* BILHETES */
 .bilhete-dia{{background:linear-gradient(135deg,rgba(0,200,150,.08),rgba(37,99,235,.06));border:2px solid rgba(0,200,150,.4);border-radius:13px;padding:18px;margin-bottom:20px;position:relative;overflow:hidden}}
@@ -2887,61 +3046,204 @@ function renderHistoricoGlobal(){{
   const cG=taxaColor(taxa);
   const bestCategoryColor=bestCategory?categoryColor(bestCategory.grade):'var(--text)';
   const bestMarketColor=bestMarket?marketColor(bestMarket.m):'var(--text)';
+
+  // ── Vitória 1X2 stats ──────────────────────────────────────────
+  const rfRows=rfHistoricoRows();
+  const rfHist=rfSummary(rfRows.filter(r=>r.result!=='PENDING'));
+  const rfTaxa=rfHist.taxa;
+  const rfTaxaColor=taxaColor(rfTaxa);
+
+  // ── Donut SVG helper ───────────────────────────────────────────
+  function donutSvg(pct, color, size){{
+    size=size||90;
+    const r=size/2-8;
+    const circ=2*Math.PI*r;
+    const filled=Math.round(circ*(pct||0)/100*10)/10;
+    const cx=size/2, cy=size/2;
+    return `<svg class="hg-donut-svg" width="${{size}}" height="${{size}}" viewBox="0 0 ${{size}} ${{size}}">
+      <circle class="hg-donut-bg" cx="${{cx}}" cy="${{cy}}" r="${{r}}"/>
+      <circle class="hg-donut-ring" cx="${{cx}}" cy="${{cy}}" r="${{r}}"
+        stroke="${{color}}" stroke-dasharray="${{filled}} ${{circ-filled}}"
+        transform="rotate(-90 ${{cx}} ${{cy}})" filter="drop-shadow(0 0 6px ${{color}}88)"/>
+      <text class="hg-donut-val" x="${{cx}}" y="${{cy}}" fill="${{color}}">${{pct!=null?Math.round(pct)+'%':'—'}}</text>
+    </svg>`;
+  }}
+
+  // ── Top5 panel ─────────────────────────────────────────────────
+  const top5Pct=top5Taxa!=null?Math.round(top5Taxa):null;
+  const top5Lbl=top5Pct==null?'—':top5Pct>=80?'EXCELENTE':top5Pct>=65?'BOM':'REGULAR';
+  const top5LblColor=top5Pct==null?'var(--muted)':top5Pct>=80?'var(--green)':top5Pct>=65?'var(--yellow)':'var(--orange)';
+
+  // ── Category rows ──────────────────────────────────────────────
+  const catDefs=[
+    {{key:'A+',label:'Confiança Alta',cls:'alta'}},
+    {{key:'A', label:'Confiança Média',cls:'media'}},
+    {{key:'B', label:'Moderado',cls:'moderado'}},
+  ];
+  const catRowsHtml=catDefs.map(c=>{{
+    const s=categoryStats[c.key];
+    const t=taxaStat(s);
+    return `<div class="hg-cat-row ${{c.cls}}">
+      <div>
+        <div class="hg-cat-row-name">${{c.label}}</div>
+        <div class="hg-cat-row-detail"><span class="ok">${{s.acertos}}✓</span> · <span class="err">${{s.erros}}✗</span> · ${{s.auditados}} confirmados</div>
+      </div>
+      <div class="hg-cat-rate" style="color:${{taxaColor(t)}}">${{fmtTaxa(t)}}</div>
+    </div>`;
+  }}).join('');
+
+  // ── Mercado mini ───────────────────────────────────────────────
+  const mktMiniNames={{'Over 1.5':'Over 1.5','Over 2.5':'Over 2.5','Esc 7.5':'Escanteios (Over)','Esc 8.5':'Esc 8.5','Cart 2.5':'Cartões (Over)','Cart 3.5':'Cart 3.5','BTTS':'Ambas Marcam','Under 3.5':'Under 3.5','Under 4.5':'Under 4.5','Over 0.5 HT':'Over 0.5 HT'}};
+  const mktMiniHtml=[...marketStats].filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados)).slice(0,5)
+    .map(s=>`<div class="hg-mkt-mini-row">
+      <div class="hg-mkt-mini-name">${{mktMiniNames[s.m]||s.m}}</div>
+      <div class="hg-mkt-mini-rate" style="color:${{taxaColor(s.taxa)}}">${{fmtTaxa(s.taxa)}}</div>
+    </div>`).join('');
+
+  // ── Ranking rows ───────────────────────────────────────────────
+  const rankRowsHtml=[...marketStats].filter(x=>x.auditados>0)
+    .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados))
+    .map((s,i)=>`<div class="hg-rank-row">
+      <div class="hg-rank-num">${{i+1}}</div>
+      <div class="hg-rank-bar" style="background:${{taxaColor(s.taxa)}}"></div>
+      <div class="hg-rank-main">
+        <div class="hg-rank-name">${{s.m}}</div>
+        <div class="hg-rank-detail"><span class="ok">${{s.acertos}}✓</span> · <span class="err">${{s.erros}}✗</span> · ${{s.auditados}} confirmados</div>
+      </div>
+      <div class="hg-rank-rate" style="color:${{taxaColor(s.taxa)}}">${{fmtTaxa(s.taxa)}}</div>
+    </div>`).join('');
+
+  // ── Dias bar ───────────────────────────────────────────────────
+  const dayBarsHtml=dayStats.slice(-10).map(x=>{{
+    const [dd,mm]=x.d.split('-');
+    const c=taxaColor(x.t);
+    const pct=x.t||0;
+    return `<div class="hg-day-row">
+      <div class="hg-day-date">${{dd}}/${{mm}}</div>
+      <div class="hg-day-bar"><div class="hg-day-fill" style="width:${{pct}}%;background:${{c}}"></div></div>
+      <div class="hg-day-info" style="color:${{c}}">${{fmtTaxa(x.t)}} · <span class="ok">${{x.a}}✓</span> <span class="err">${{x.e}}✗</span></div>
+    </div>`;
+  }}).join('');
+
   el.innerHTML=`
-    <div class="hist-page">
-      <div class="hist-hero">
+    <div class="hg-page">
+
+      <!-- HERO -->
+      <div class="hg-hero">
         <div>
-          <div class="hist-eyebrow">Histórico Global</div>
+          <div class="hg-hero-label">Performance Geral</div>
           <h2>Performance validada por resultados reais.</h2>
-          <div class="hist-subtitle">Gerados: todos os palpites disponibilizados na plataforma. Confirmados: apenas previsões com resultado final definido (GREEN ou RED).</div>
+          <div class="hg-hero-sub">Gerados: todos os palpites disponibilizados na plataforma.<br>Confirmados: apenas previsões com resultado final definido (GREEN ou RED).</div>
         </div>
-        <div class="hist-score-card" style="--score-width:${{taxa||0}}%">
-          <span>Taxa geral</span>
-          <div class="hist-score-row">
-            <strong>${{fmtTaxa(taxa)}}</strong>
-            <em>Base estatística:<br>${{auditados}} previsões</em>
+        <div class="hg-taxa-box">
+          <div class="hg-taxa-label">Taxa Geral</div>
+          <div class="hg-taxa-val" style="color:${{taxaColor(taxa)}}">${{fmtTaxa(taxa)}}</div>
+          <div class="hg-taxa-note">Base estatística:<br>${{auditados}} previsões</div>
+          <div class="hg-taxa-bar"><div class="hg-taxa-bar-fill" style="width:${{taxa||0}}%;background:${{taxaColor(taxa)}}"></div></div>
+        </div>
+        <div class="hg-insights">
+          <div class="hg-insight">
+            <div class="hg-insight-lbl">Melhor Categoria</div>
+            <div class="hg-insight-val" style="color:${{bestCategoryColor}}">${{bestCategory?bestCategory.label:'—'}}</div>
+            <div class="hg-insight-note">${{bestCategory?`<b style="color:${{bestCategoryColor}}">${{fmtTaxa(bestCategory.taxa)}}</b> · ${{bestCategory.auditados}} confirmados`:'sem amostra'}}</div>
           </div>
-          <div class="hist-score-bar"><i></i></div>
-        </div>
-        <div class="hist-hero-insights">
-          <div class="hist-insight"><span>Melhor categoria</span><strong style="color:${{bestCategoryColor}}">${{bestCategory?bestCategory.label:'—'}}</strong><em>${{bestCategory?`<b style="color:${{bestCategoryColor}}">${{fmtTaxa(bestCategory.taxa)}}</b> · ${{bestCategory.auditados}} confirmados`:'sem amostra'}}</em></div>
-          <div class="hist-insight"><span>Melhor mercado</span><strong style="color:${{bestMarketColor}}">${{bestMarket?bestMarket.m:'—'}}</strong><em>${{bestMarket?`<b style="color:${{bestMarketColor}}">${{fmtTaxa(bestMarket.taxa)}}</b> · ${{bestMarket.auditados}} confirmados`:'sem amostra'}}</em></div>
-        </div>
-      </div>
-
-      <div class="hist-summary-grid">
-        <div class="hist-summary-card"><span>Gerados</span><strong>${{gerados}}</strong><em>todos os palpites disponíveis</em></div>
-        <div class="hist-summary-card"><span>Confirmados</span><strong>${{auditados}}</strong><em>com GREEN ou RED</em></div>
-        <div class="hist-summary-card ok"><span>Acertos</span><strong>${{g.total_acertos||0}}</strong><em>palpites confirmados</em></div>
-        <div class="hist-summary-card err"><span>Erros</span><strong>${{g.total_erros||0}}</strong><em>palpites confirmados</em></div>
-        <div class="hist-summary-card"><span>Dias</span><strong>${{confirmedDays.length}}</strong><em>dias confirmados</em></div>
-      </div>
-
-      <div class="hist-audit-grid">
-        <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(top5Taxa)}}">${{fmtTaxa(top5Taxa)}}</div><div><span class="hist-audit-kicker"><i data-lucide="star"></i>Top 5 do Dia</span><strong>Taxa geral</strong><em>${{top5Stats.auditados}} confirmados de ${{top5Stats.gerados}} gerados</em></div></div>
-          <div class="hist-break-list">${{ticketRow('Top 5 Palpites do Dia',top5Stats)}}</div>
-        </div>
-        <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{cG}}">${{fmtTaxa(taxa)}}</div><div><span class="hist-audit-kicker"><i data-lucide="sparkles"></i>Melhores Previsões</span><strong>Taxas por confiança</strong><em>base completa dos jogos confirmados</em></div></div>
-          <div class="hist-break-list">${{categoryRows}}</div>
-        </div>
-        <div class="hist-audit-panel">
-          <div class="hist-audit-main"><div class="hist-audit-score" style="color:${{taxaColor(taxaStat(ticketStats.geral))}}">${{fmtTaxa(taxaStat(ticketStats.geral))}}</div><div><span class="hist-audit-kicker"><i data-lucide="ticket"></i>Bilhetes</span><strong>Geral e por tipo</strong><em>${{ticketStats.geral.auditados}} bilhetes confirmados</em></div></div>
-          <div class="hist-break-list">
-            ${{ticketRow('Bilhetes geral',ticketStats.geral)}}
-            ${{ticketRow('Bilhete do dia',ticketStats.dia)}}
-            ${{ticketRow('Bingo do dia',ticketStats.bingo)}}
-            ${{ticketRow('Premium 4x',ticketStats.premium)}}
-            ${{ticketRow('Elite',ticketStats.elite)}}
+          <div class="hg-insight">
+            <div class="hg-insight-lbl">Melhor Mercado</div>
+            <div class="hg-insight-val" style="color:${{bestMarketColor}}">${{bestMarket?bestMarket.m:'—'}}</div>
+            <div class="hg-insight-note">${{bestMarket?`<b style="color:${{bestMarketColor}}">${{fmtTaxa(bestMarket.taxa)}}</b> · ${{bestMarket.auditados}} confirmados`:'sem amostra'}}</div>
           </div>
         </div>
       </div>
 
-      <div class="hist-layout">
-        <div class="hist-panel"><div class="sec-title"><i data-lucide="bar-chart-2"></i> Ranking por Mercado</div><div class="hist-market-list">${{marketRows||'<div class="empty">Sem mercados confirmados.</div>'}}</div></div>
-        <div class="hist-panel"><div class="sec-title"><i data-lucide="calendar-days"></i> Últimos Dias Confirmados</div>${{dayBars||'<div class="empty">Sem dias confirmados.</div>'}}</div>
+      <!-- KPIs -->
+      <div class="hg-kpi-row">
+        <div class="hg-kpi">
+          <div class="hg-kpi-icon blue"><svg viewBox="0 0 24 24"><rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><line x1="12" y1="11" x2="12" y2="17"/><line x1="9" y1="14" x2="15" y2="14"/></svg></div>
+          <div><div class="hg-kpi-val">${{gerados}}</div><div class="hg-kpi-lbl">Gerados</div></div>
+        </div>
+        <div class="hg-kpi">
+          <div class="hg-kpi-icon teal"><svg viewBox="0 0 24 24"><path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"/><polyline points="22 4 12 14.01 9 11.01"/></svg></div>
+          <div><div class="hg-kpi-val">${{auditados}}</div><div class="hg-kpi-lbl">Confirmados</div></div>
+        </div>
+        <div class="hg-kpi ok">
+          <div class="hg-kpi-icon green"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="22" y1="12" x2="18" y2="12"/><circle cx="12" cy="12" r="3"/></svg></div>
+          <div><div class="hg-kpi-val">${{g.total_acertos||0}}</div><div class="hg-kpi-lbl">Acertos</div></div>
+        </div>
+        <div class="hg-kpi err">
+          <div class="hg-kpi-icon red"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><line x1="15" y1="9" x2="9" y2="15"/><line x1="9" y1="9" x2="15" y2="15"/></svg></div>
+          <div><div class="hg-kpi-val">${{g.total_erros||0}}</div><div class="hg-kpi-lbl">Erros</div></div>
+        </div>
+        <div class="hg-kpi">
+          <div class="hg-kpi-icon purple"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg></div>
+          <div><div class="hg-kpi-val">${{confirmedDays.length}}</div><div class="hg-kpi-lbl">Dias</div></div>
+        </div>
       </div>
+
+      <!-- 4 PAINÉIS -->
+      <div class="hg-panels">
+        <div class="hg-panel p-blue">
+          <div>
+            <div class="hg-panel-label">Top 5 do Dia</div>
+            <div class="hg-panel-title">Taxa geral</div>
+            <div class="hg-panel-note">${{top5Stats.auditados}} confirmados de ${{top5Stats.gerados}} gerados</div>
+          </div>
+          <div class="hg-donut-wrap">
+            ${{donutSvg(top5Taxa,taxaColor(top5Taxa),100)}}
+            <div class="hg-donut-stats"><span class="ok">${{top5Stats.acertos}}✓</span> · <span class="err">${{top5Stats.erros}}x</span> · ${{top5Stats.auditados}} confirmados</div>
+            <div class="hg-donut-badge" style="color:${{top5LblColor}};border:1px solid ${{top5LblColor}}44;background:${{top5LblColor}}18">
+              <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/></svg>
+              ${{top5Lbl}}
+            </div>
+          </div>
+        </div>
+        <div class="hg-panel p-green">
+          <div>
+            <div class="hg-panel-label">Melhores Previsões</div>
+            <div class="hg-panel-title">Taxas por confiança</div>
+            <div class="hg-panel-note">base completa dos jogos confirmados</div>
+          </div>
+          <div class="hg-cat-rows">${{catRowsHtml}}</div>
+        </div>
+        <div class="hg-panel p-yellow">
+          <div>
+            <div class="hg-panel-label">Vitória (1X2)</div>
+            <div class="hg-panel-title">Taxa de assertividade</div>
+            <div class="hg-panel-note">base completa dos jogos confirmados</div>
+          </div>
+          <div class="hg-donut-wrap">
+            ${{donutSvg(rfTaxa,rfTaxaColor,100)}}
+            <div class="hg-donut-stats"><span class="ok">${{rfHist.green}}✓</span> · <span class="err">${{rfHist.red}}x</span> · ${{rfHist.green+rfHist.red}} confirmados</div>
+          </div>
+        </div>
+        <div class="hg-panel p-purple">
+          <div>
+            <div class="hg-panel-label">Taxa por Mercado</div>
+            <div class="hg-panel-title">Desempenho geral</div>
+            <div class="hg-panel-note">base completa dos jogos confirmados</div>
+          </div>
+          <div class="hg-mkt-mini">${{mktMiniHtml||'<div class="empty">Sem dados.</div>'}}</div>
+        </div>
+      </div>
+
+      <!-- BOTTOM -->
+      <div class="hg-bottom">
+        <div class="hg-card">
+          <div class="hg-card-title">
+            <svg viewBox="0 0 24 24"><line x1="18" y1="20" x2="18" y2="10"/><line x1="12" y1="20" x2="12" y2="4"/><line x1="6" y1="20" x2="6" y2="14"/></svg>
+            Ranking por Mercado
+          </div>
+          <div class="hg-rank-list">${{rankRowsHtml||'<div class="empty">Sem mercados confirmados.</div>'}}</div>
+        </div>
+        <div class="hg-card">
+          <div class="hg-card-title">
+            <svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+            Últimos Dias Confirmados
+          </div>
+          <div class="hg-days-list">${{dayBarsHtml||'<div class="empty">Sem dias confirmados.</div>'}}</div>
+        </div>
+      </div>
+
     </div>`;
 }}
 
