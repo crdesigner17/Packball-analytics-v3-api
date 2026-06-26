@@ -12,9 +12,9 @@
       "home_id": 2384,
       "away_id": 1113,
       "is_elite": true,
-      "odds_h": 1.47,
-      "odds_d": 4.1,
-      "odds_a": 6.8,
+      "odds_h": 1.41,
+      "odds_d": 4.2,
+      "odds_a": 8.1,
       "over15_g": 0.0,
       "over25_g": 0.0,
       "over15_h": null,
@@ -116,7 +116,7 @@
   ],
   "palpites_snapshot": [],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-26T15:03:55Z",
+    "created_at": "2026-06-26T22:57:54Z",
     "bilhetes": [],
     "bilheteDia": null
   },
