@@ -1,0 +1,45 @@
+name: PackBall - Sincronizar Dashboard
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - 'docs/data/**'
+      - 'scripts/sincronizar_index_data.js'
+  workflow_dispatch:
+  schedule:
+    - cron: '20 3 * * *'
+
+concurrency:
+  group: sincronizar-dashboard
+  cancel-in-progress: true
+
+jobs:
+  sincronizar:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Atualizar HTML com JSONs atuais
+        run: node scripts/sincronizar_index_data.js
+
+      - name: Commit e push se o dashboard mudou
+        run: |
+          git config user.name "PackBall Bot"
+          git config user.email "bot@packball.local"
+          git add docs/index.html
+          git diff --staged --quiet && echo "Dashboard ja estava atualizado" && exit 0
+          git commit -m "Atualiza dashboard com dados mais recentes"
+          git pull origin main --rebase -X ours
+          git push
