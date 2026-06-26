@@ -940,12 +940,12 @@
         "under45_ok": true,
         "placar": "2-2",
         "placar_ht": "0-2",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     }
