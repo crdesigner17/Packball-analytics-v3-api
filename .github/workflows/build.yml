@@ -1,8 +1,8 @@
-﻿name: PackBall Analytics â€” Build DiÃ¡rio
+name: PackBall Analytics — Build Diário
 
 on:
   schedule:
-    - cron: '0 7 * * *'  # 04h BrasÃ­lia
+    - cron: '0 7 * * *'  # 04h Brasília
   push:
     branches: [main]
   workflow_dispatch:
@@ -33,7 +33,7 @@ jobs:
           python-version: '3.11'
           cache: 'pip'
 
-      - name: Instalar dependÃªncias
+      - name: Instalar dependências
         run: pip install requests pandas numpy
 
       - name: Coletar dados da API
@@ -43,7 +43,7 @@ jobs:
           DATE="${{ github.event.inputs.date || 'today' }}"
 
           if [ "$DATE" = "today" ]; then
-            # Calcular datas em BrasÃ­lia (UTC-3)
+            # Calcular datas em Brasília (UTC-3)
             TODAY=$(TZ="America/Sao_Paulo" date +%Y-%m-%d)
             D1=$(TZ="America/Sao_Paulo" date -d "+1 day" +%Y-%m-%d)
             D2=$(TZ="America/Sao_Paulo" date -d "+2 days" +%Y-%m-%d)
@@ -63,7 +63,7 @@ jobs:
             python scripts/coletar.py --key "$API_KEY" --date "$D4" --force
             python scripts/coletar.py --key "$API_KEY" --date "$D5" --force
           else
-            # Coleta manual de data especÃ­fica
+            # Coleta manual de data específica
             python scripts/coletar.py --key "$API_KEY" --date "$DATE"
           fi
 
@@ -73,7 +73,7 @@ jobs:
           git config user.email "bot@packball.local"
           python scripts/gerar_site.py
           git add docs/
-          git diff --staged --quiet && echo "Sem mudanÃ§as" && exit 0
-          git commit -m "ðŸ“Š Site atualizado $(date -u +'%d/%m/%Y %H:%M UTC')"
+          git diff --staged --quiet && echo "Sem mudanças" && exit 0
+          git commit -m "📊 Site atualizado $(date -u +'%d/%m/%Y %H:%M UTC')"
           git pull origin main --rebase -X ours
           git push
