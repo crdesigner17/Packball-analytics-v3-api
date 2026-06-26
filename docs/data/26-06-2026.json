@@ -378,9 +378,7 @@
       "justif_cards": "Média 2.25 cart · O2.5: 25.0% · O3.5: 25.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 100.0
     },
     {
       "date": "26-06-2026",
@@ -489,9 +487,7 @@
       "justif_cards": "Média 2.25 cart · O2.5: 25.0% · O3.5: 25.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 79.8,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 79.8
     },
     {
       "date": "26-06-2026",
@@ -600,9 +596,7 @@
       "justif_cards": "Média 5.949999999999999 cart · O2.5: 90.0% · O3.5: 90.0%",
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "A",
-      "palpite_score": 77.7,
-      "resultado": null,
-      "acertos": {}
+      "palpite_score": 77.7
     }
   ],
   "top5": [
