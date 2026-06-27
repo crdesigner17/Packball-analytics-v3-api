@@ -913,6 +913,10 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
                     "palpite_grade":  j.get("palpite_grade") or j.get("best_grade"),
                     "palpite_score":  j.get("palpite_score", j.get("best_score")),
                 }
+            if not force and jogos_existentes_count > 0:
+                print(f"  Auditoria: {date_fmt} ja possui palpites congelados.")
+                print("  Mantendo JSON existente. Use --force apenas para recalcular conscientemente.")
+                return
         except:
             pass
 
