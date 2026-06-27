@@ -1,4 +1,4 @@
-name: PackBall — Reprocessar Intervalo de Datas
+name: PackBall - Reprocessar Intervalo de Datas
 
 on:
   workflow_dispatch:
@@ -11,6 +11,14 @@ on:
         description: 'Data final (YYYY-MM-DD)'
         required: true
         default: '2026-05-31'
+      recalcular_palpites:
+        description: 'Recalcular palpites? Use true apenas para reconstruir historico.'
+        required: true
+        default: 'false'
+        type: choice
+        options:
+          - 'false'
+          - 'true'
 
 jobs:
   reprocessar:
@@ -27,7 +35,7 @@ jobs:
         with:
           python-version: '3.11'
 
-      - name: Instalar dependências
+      - name: Instalar dependencias
         run: pip install requests pandas numpy
 
       - name: Processar intervalo de datas
@@ -39,30 +47,32 @@ jobs:
           from datetime import date, timedelta
 
           start = date.fromisoformat("${{ github.event.inputs.date_start }}")
-          end   = date.fromisoformat("${{ github.event.inputs.date_end }}")
+          end = date.fromisoformat("${{ github.event.inputs.date_end }}")
           today = date.today()
+          recalcular_palpites = "${{ github.event.inputs.recalcular_palpites }}" == "true"
 
           current = start
           while current <= end:
               ds = current.strftime("%Y-%m-%d")
-              print(f"\n{'='*50}")
-              print(f"📅 Processando {ds}...")
-              print(f"{'='*50}")
+              print(f"\n{'=' * 50}")
+              print(f"Processando {ds}...")
+              print(f"{'=' * 50}")
 
-              # Sempre coleta (palpites)
-              print(f"\n🔄 Coletando palpites...")
-              r = subprocess.run(
-                  [sys.executable, "scripts/coletar.py",
-                   "--key", "${{ secrets.APIFOOTBALL_KEY }}",
-                   "--date", ds, "--no-site"],
-                  capture_output=False
-              )
-              if r.returncode != 0:
-                  print(f"⚠ coletar.py retornou erro para {ds}, continuando...")
+              if recalcular_palpites:
+                  print("\nRecalculando palpites...")
+                  r = subprocess.run(
+                      [sys.executable, "scripts/coletar.py",
+                       "--key", "${{ secrets.APIFOOTBALL_KEY }}",
+                       "--date", ds, "--no-site"],
+                      capture_output=False
+                  )
+                  if r.returncode != 0:
+                      print(f"coletar.py retornou erro para {ds}, continuando...")
+              else:
+                  print("\nPalpites preservados; apenas resultados serao confirmados.")
 
-              # Confirma apenas datas passadas ou hoje
               if current <= today:
-                  print(f"\n✅ Confirmando resultados...")
+                  print("\nConfirmando resultados...")
                   r2 = subprocess.run(
                       [sys.executable, "scripts/confirmar.py",
                        "--key", "${{ secrets.APIFOOTBALL_KEY }}",
@@ -70,14 +80,13 @@ jobs:
                       capture_output=False
                   )
                   if r2.returncode != 0:
-                      print(f"⚠ confirmar.py retornou erro para {ds}, continuando...")
+                      print(f"confirmar.py retornou erro para {ds}, continuando...")
 
               current += timedelta(days=1)
 
-          # Gera o site uma única vez no final
-          print(f"\n🌐 Gerando site...")
+          print("\nGerando site...")
           subprocess.run([sys.executable, "scripts/gerar_site.py"])
-          print("\n✅ Reprocessamento concluído!")
+          print("\nReprocessamento concluido!")
           PYEOF
 
       - name: Commit e push
@@ -85,6 +94,6 @@ jobs:
           git config user.name "PackBall Bot"
           git config user.email "bot@packball.local"
           git add docs/
-          git diff --staged --quiet || git commit -m "🔄 Reprocessado ${{ github.event.inputs.date_start }} → ${{ github.event.inputs.date_end }}"
+          git diff --staged --quiet || git commit -m "Reprocessado ${{ github.event.inputs.date_start }} -> ${{ github.event.inputs.date_end }}"
           git pull origin main --rebase -X ours
           git push

@@ -1,9 +1,9 @@
-name: PackBall — Confirmar Resultados
+name: PackBall - Confirmar Resultados
 
 on:
   schedule:
-    - cron: '0,30 14-23 * * *'   # 11h as 20h30 Brasilia (a cada 30 min)
-    - cron: '0,30 0,1,2 * * *'   # 21h as 23h30 Brasilia (a cada 30 min)
+    - cron: '0,30 14-23 * * *'   # 11h as 20h30 Brasilia, a cada 30 min
+    - cron: '0,30 0,1,2 * * *'   # 21h as 23h30 Brasilia, a cada 30 min
   workflow_dispatch:
     inputs:
       date:
@@ -35,13 +35,15 @@ jobs:
           API_KEY: ${{ secrets.APIFOOTBALL_KEY }}
         run: |
           if [ -n "${{ github.event.inputs.date }}" ]; then
-            # Execução manual — data específica
+            # Execucao manual: data especifica.
             python scripts/confirmar.py --key "$API_KEY" --date "${{ github.event.inputs.date }}"
           else
-            # Execução automática — confirma ontem e hoje
+            # Execucao automatica: confirma anteontem, ontem e hoje.
+            TWO_DAYS_AGO=$(TZ="America/Sao_Paulo" date -d "-2 day" +%Y-%m-%d)
             YESTERDAY=$(TZ="America/Sao_Paulo" date -d "-1 day" +%Y-%m-%d)
             TODAY=$(TZ="America/Sao_Paulo" date +%Y-%m-%d)
-            echo "🔎 Confirmando: $YESTERDAY e $TODAY"
+            echo "Confirmando: $TWO_DAYS_AGO, $YESTERDAY e $TODAY"
+            python scripts/confirmar.py --key "$API_KEY" --date "$TWO_DAYS_AGO" --no-site
             python scripts/confirmar.py --key "$API_KEY" --date "$YESTERDAY" --no-site
             python scripts/confirmar.py --key "$API_KEY" --date "$TODAY"
           fi
@@ -51,7 +53,7 @@ jobs:
           git config user.name "PackBall Bot"
           git config user.email "bot@packball.local"
           git add docs/
-          git diff --staged --quiet && echo "Sem mudanças" && exit 0
-          git commit -m "✅ Resultados atualizados $(date -u +'%d/%m/%Y %H:%M UTC')"
+          git diff --staged --quiet && echo "Sem mudancas" && exit 0
+          git commit -m "Resultados atualizados $(date -u +'%d/%m/%Y %H:%M UTC')"
           git pull origin main --rebase -X ours
           git push

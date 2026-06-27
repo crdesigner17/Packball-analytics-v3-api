@@ -3,8 +3,6 @@ name: PackBall Analytics — Build Diário
 on:
   schedule:
     - cron: '0 7 * * *'  # 04h Brasília
-  push:
-    branches: [main]
   workflow_dispatch:
     inputs:
       date:
