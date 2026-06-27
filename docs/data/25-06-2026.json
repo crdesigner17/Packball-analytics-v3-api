@@ -539,11 +539,11 @@
         "placar": "1-3",
         "placar_ht": "0-2",
         "corners_total": 10,
-        "cards_total": 0,
+        "cards_total": null,
         "esc75_ok": true,
         "esc85_ok": true,
-        "cart25_ok": false,
-        "cart35_ok": false
+        "cart25_ok": null,
+        "cart35_ok": null
       },
       "acertos": {}
     },
