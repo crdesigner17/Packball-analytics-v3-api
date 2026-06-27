@@ -150,23 +150,31 @@ def buscar_resultados_api(client, date_str_api):
         if stat_data and stat_data.get("response"):
             corners_total = 0
             cards_total   = 0
+            has_corners   = False
+            has_cards     = False
             for team_stat in stat_data["response"]:
                 for item in team_stat.get("statistics", []):
                     t = item.get("type", "")
-                    v = item.get("value") or 0
-                    try: v = int(v)
-                    except: v = 0
+                    raw_v = item.get("value")
+                    if raw_v is None:
+                        continue
+                    try: v = int(raw_v)
+                    except: continue
                     if t == "Corner Kicks":
+                        if v > 0:
+                            has_corners = True
                         corners_total += v
                     if t in ("Yellow Cards", "Red Cards"):
+                        if v > 0:
+                            has_cards = True
                         cards_total += v
 
-            resultado["corners_total"]  = corners_total
-            resultado["cards_total"]    = cards_total
-            resultado["esc75_ok"]       = corners_total > 7.5
-            resultado["esc85_ok"]       = corners_total > 8.5
-            resultado["cart25_ok"]      = cards_total > 2.5
-            resultado["cart35_ok"]      = cards_total > 3.5
+            resultado["corners_total"]  = corners_total if has_corners else None
+            resultado["cards_total"]    = cards_total if has_cards else None
+            resultado["esc75_ok"]       = corners_total > 7.5 if has_corners else None
+            resultado["esc85_ok"]       = corners_total > 8.5 if has_corners else None
+            resultado["cart25_ok"]      = cards_total > 2.5 if has_cards else None
+            resultado["cart35_ok"]      = cards_total > 3.5 if has_cards else None
         else:
             resultado["corners_total"]  = None
             resultado["cards_total"]    = None
