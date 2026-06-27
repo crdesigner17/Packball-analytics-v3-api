@@ -385,6 +385,8 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
 .rf-market.dc{border-color:rgba(59,130,246,.28);background:rgba(59,130,246,.08);color:var(--blue)}
 .rf-reasons{font-size:10px;color:var(--muted);line-height:1.45;max-width:320px}
 .rf-score{font-family:'Inter',sans-serif;font-size:14px;font-weight:900}
+.rf-prob{display:inline-flex;align-items:center;justify-content:center;min-width:62px;font-family:'Inter',sans-serif;font-size:15px;font-weight:900;letter-spacing:0}
+.rf-score-mini{display:inline-flex;align-items:center;justify-content:center;min-width:56px;padding:2px 7px;border:1px solid rgba(148,163,184,.14);border-radius:999px;background:rgba(148,163,184,.06);font-size:11px;font-weight:800;color:var(--muted)}
 @media(max-width:920px){.rf-grid{grid-template-columns:repeat(2,minmax(0,1fr))}}
 @media(max-width:560px){.rf-grid{grid-template-columns:1fr}}
 
@@ -2581,6 +2583,12 @@ function pctText(v){
   if(!Number.isFinite(n))return'—';
   return (Math.round(n*10)/10).toString().replace('.0','')+'%';
 }
+function scoreText(v){
+  if(v==null||v==='')return'—';
+  const n=Number(v);
+  if(!Number.isFinite(n))return'—';
+  return (Math.round(n*10)/10).toString().replace('.0','');
+}
 function fmtNum(v,dec){
   if(v==null||v==='')return'--';
   const n=Number(v);
@@ -2759,6 +2767,14 @@ function gradeFromScore(score){
   if(score>=60)return'C';
   return'D';
 }
+function gradeColor(grade){
+  if(grade==='A+')return'var(--green)';
+  if(grade==='A')return'var(--yellow)';
+  if(grade==='B')return'var(--blue)';
+  if(grade==='C')return'var(--purple2)';
+  return'var(--red)';
+}
+function scoreGradeColor(score){return gradeColor(gradeFromScore(Number(score)||0));}
 
 function approvedMarketsHtml(d, opts){
   opts = opts || {};
@@ -2823,7 +2839,8 @@ function rfPick(d){
   const isFriendly=String(d.liga||'').toLowerCase().includes('friendly');
   const favOdd=fav.favOdd;
   const oddsScore=favOdd?Math.max(0,100-(favOdd*22)):(55+Math.min(30,fav.impliedGap||0));
-  let score=Math.min(100,Math.round((oddsScore + edge.strength + Math.min(20,fav.impliedGap||0)) * 10)/10);
+  const rawScore=Math.round((oddsScore + edge.strength + Math.min(20,fav.impliedGap||0)) * 10)/10;
+  let score=Math.min(100,rawScore);
   const reasons=[`favorito ${sideName(side)}${favOdd?` @ ${favOdd.toFixed(2)}`:''}`, `${aligned} sinais alinhados`].concat(edge.ok.slice(0,4).map(m=>`${m.name} +${m.diff.toFixed(m.name==='Prob. API'?0:1)}`));
 
   if(isFriendly && (!favOdd || favOdd>1.30) && !edge.ok.find(m=>m.name==='PPG'||m.name==='Prob. API'))return null;
@@ -2837,7 +2854,7 @@ function rfPick(d){
     market='dc'; score=Math.max(score,76);
   }
   if(!market)return null;
-  return {market,side,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),reasons};
+  return {market,side,score:Math.min(100,Math.round(score*10)/10),rawScore,grade:gradeFromScore(score),reasons,aligned,favOdd,impliedGap:fav.impliedGap||0};
 }
 function rfResult(jogo,pick){
   const res=getResultado(jogo);
@@ -2864,8 +2881,13 @@ function rfBadge(result){
   if(result==='VOID')return'<span class="res-badge pending"><i data-lucide="rotate-ccw"><Empate anula</span>';
   return'<span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span>';
 }
+function rfVisualPick(pick){
+  if(!pick)return null;
+  if(pick.market!=='dnb')return pick;
+  return {...pick,market:'dc',originalMarket:'dnb'};
+}
 function rfRowsForDate(date){
-  return getJogos(date).map(j=>({j,p:rfPick(j)})).filter(x=>x.p).sort((a,b)=>(b.p.score||0)-(a.p.score||0));
+  return getJogos(date).map(j=>({j,p:rfVisualPick(rfPick(j))})).filter(x=>x.p).sort((a,b)=>(b.p.score||0)-(a.p.score||0));
 }
 function rfHistoricoRows(){
   const start=dateObj(RF_BACKTEST_START);
@@ -2880,6 +2902,53 @@ function rfSummary(rows){
   return s;
 }
 function rfTaxaText(t){return t==null?'—':`${t}%`;}
+function rfProbClamp(v,min,max){return Math.max(min,Math.min(max,v));}
+function rfProbColor(v){return scoreGradeColor(v);}
+function rfConfirmedRows(rows){return rows.filter(r=>r.result==='GREEN'||r.result==='RED');}
+function rfHitRate(rows){
+  const c=rfConfirmedRows(rows);
+  if(!c.length)return null;
+  return Math.round((c.filter(r=>r.result==='GREEN').length/c.length)*1000)/10;
+}
+function rfProbability(pick,histRows){
+  const confirmed=rfConfirmedRows(histRows);
+  const marketRows=confirmed.filter(r=>r.p.market===pick.market);
+  const raw=Number.isFinite(pick.rawScore)?pick.rawScore:pick.score;
+  const bucketSize=35;
+  const bucket=Math.floor(raw/bucketSize);
+  const bucketRows=marketRows.filter(r=>Math.floor((Number.isFinite(r.p.rawScore)?r.p.rawScore:r.p.score)/bucketSize)===bucket);
+  const generalRate=rfHitRate(confirmed);
+  const marketRate=rfHitRate(marketRows);
+  const bucketRate=rfHitRate(bucketRows);
+  const sigmoid=1/(1+Math.exp(-(raw-105)/45));
+  const minByMarket={win:58,dnb:64,dc:70};
+  const maxByMarket={win:88,dnb:91,dc:94};
+  const hardMax={win:92,dnb:94,dc:96};
+  let model=minByMarket[pick.market]+sigmoid*(maxByMarket[pick.market]-minByMarket[pick.market]);
+  if(pick.favOdd){
+    const implied=100/pick.favOdd;
+    const impliedAdj=pick.market==='dc'?implied+15:pick.market==='dnb'?implied+8:implied;
+    model=(model*.65)+(rfProbClamp(impliedAdj,50,hardMax[pick.market])*.35);
+  }
+  model+=Math.min(4,(pick.aligned||0)*.7);
+  let prob=model;
+  if(bucketRows.length>=8&&bucketRate!=null)prob=(model*.45)+(bucketRate*.55);
+  else if(marketRows.length>=15&&marketRate!=null)prob=(model*.65)+(marketRate*.35);
+  else if(confirmed.length>=25&&generalRate!=null)prob=(model*.75)+(generalRate*.25);
+  prob=rfProbClamp(prob,50,hardMax[pick.market]);
+  return {prob:Math.round(prob*10)/10,bucketSample:bucketRows.length,marketSample:marketRows.length,generalSample:confirmed.length,marketRate,bucketRate};
+}
+function rfProbHtml(pick,histRows){
+  const p=rfProbability(pick,histRows);
+  const raw=Number.isFinite(pick.rawScore)?pick.rawScore:pick.score;
+  const title=`Probabilidade estimada por score bruto, odds/sinais e histórico confirmado. Score bruto: ${scoreText(raw)}. Amostra mercado: ${p.marketSample}.`;
+  return `<span class="rf-prob" title="${title}" style="color:${rfProbColor(p.prob)}">${pctText(p.prob)}</span>`;
+}
+function rfProbGradeHtml(pick,histRows){
+  const p=rfProbability(pick,histRows);
+  const g=gradeFromScore(p.prob);
+  return gradeHtml(g);
+}
 
 function cardOverlayClass(jogo){
   const res=getResultado(jogo);
@@ -3158,11 +3227,11 @@ function renderResultadoFinal(date,jogos){
   const histRows=rfHistoricoRows();
   const hist=rfSummary(histRows.filter(r=>r.result!=='PENDING'));
   const day=rfSummary(dayRows);
-  const byMarket=['win','dnb','dc'].map(m=>{
+  const byMarket=['win','dc'].map(m=>{
     const rows=histRows.filter(r=>r.p.market===m&&r.result!=='PENDING');
     return {m,...rfSummary(rows)};
   });
-  const mLabel={win:'Vitória seca',dnb:'Empate anula',dc:'Dupla Chance'};
+  const mLabel={win:'Vitória seca',dc:'Dupla Chance'};
   // Taxa do dia
   const _taxaDia = day.green+day.red>0 ? Math.round(day.green/(day.green+day.red)*100) : null;
   const _taxaDiaColor = _taxaDia==null?'var(--muted)':_taxaDia>=70?'var(--green)':_taxaDia>=50?'var(--orange)':'var(--red)';
@@ -3173,9 +3242,9 @@ function renderResultadoFinal(date,jogos){
         <span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${_taxaDiaColor}">${_taxaDia}%</span>
       </div>` : '';
   const marketCards=byMarket.map(x=>`<div class="rf-card">
-    <span><i data-lucide="${x.m==='win'?'trophy':x.m==='dnb'?'shield-check':'shield'}"></i>${mLabel[x.m]}</span>
+    <span><i data-lucide="${x.m==='win'?'trophy':'shield'}"></i>${mLabel[x.m]}</span>
     <strong>${rfTaxaText(x.taxa)}</strong>
-    <em>${x.green} green · ${x.red} red · ${x.void} empate anula · ${x.gerados} gerados</em>
+    <em>${x.green} green · ${x.red} red · ${x.gerados} gerados</em>
   </div>`).join('');
   const rowsHtml=dayRows.map((r,i)=>{
     const res=getResultado(r.j);
@@ -3186,8 +3255,9 @@ function renderResultadoFinal(date,jogos){
       ${jogoCell(r.j)}
       <td class="mono muted">${r.j.hora||'—'}</td>
       <td><span class="rf-market ${r.p.market}">${rfMarketLabel(r.p)}</span></td>
-      <td class="rf-score" style="color:${col(r.p.score)}">${pctText(r.p.score)}</td>
-      <td>${gradeHtml(r.p.grade)}</td>
+      <td>${rfProbHtml(r.p,histRows)}</td>
+      <td><span class="rf-score-mini" title="Score bruto real calculado antes do limite visual de 100" style="color:${scoreGradeColor(r.p.rawScore||r.p.score)}">${scoreText(r.p.rawScore||r.p.score)}</span></td>
+      <td>${rfProbGradeHtml(r.p,histRows)}</td>
       <td class="mono muted">${r.j.odds_h?Number(r.j.odds_h).toFixed(2):'—'} x ${r.j.odds_a?Number(r.j.odds_a).toFixed(2):'—'}</td>
       <td class="mono">${placar}</td>
       <td>${rfBadge(r.result)}</td>
@@ -3215,8 +3285,8 @@ function renderResultadoFinal(date,jogos){
     </div>
     <div class="sec-title"><i data-lucide="shield-check"></i> Palpites Resultado Final</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds</th><th>Placar</th><th>Resultado</th><th>Motivos</th></tr></thead>
-      <tbody>${rowsHtml||'<tr><td colspan="10" class="empty">Nenhum palpite de Resultado Final aprovado para esta data.</td></tr>'}</tbody>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Probabilidade</th><th>Score</th><th>Confiança</th><th>Odds</th><th>Placar</th><th>Resultado</th><th>Motivos</th></tr></thead>
+      <tbody>${rowsHtml||'<tr><td colspan="11" class="empty">Nenhum palpite de Resultado Final aprovado para esta data.</td></tr>'}</tbody>
     </table></div>`;
   ensureLucideIcons();
 }
