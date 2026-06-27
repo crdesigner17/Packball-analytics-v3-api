@@ -1746,7 +1746,36 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": {
+        "fixture_id": 1499495,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 1,
+        "gols_total": 1,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "0-1",
+        "placar_ht": "0-1",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": false
+        }
+      }
     },
     {
       "date": "27-06-2026",
@@ -1855,7 +1884,30 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "B",
-      "palpite_score": 66.9
+      "palpite_score": 66.9,
+      "resultado": {
+        "fixture_id": 1499492,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 0,
+        "gols_total": 0,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "0-0",
+        "placar_ht": "0-0",
+        "corners_total": null,
+        "cards_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null,
+        "cart25_ok": null,
+        "cart35_ok": null
+      },
+      "acertos": {}
     },
     {
       "date": "27-06-2026",
@@ -1964,7 +2016,9 @@
       "justif_cards": "Média — cart · O2.5: —% · O3.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 90.0
+      "palpite_score": 90.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "27-06-2026",
@@ -2948,9 +3002,9 @@
   "resultado_confirmado": true,
   "resultado_stats": {
     "Over 1.5": {
-      "palpites": 1,
+      "palpites": 2,
       "acertos": 0,
-      "erros": 1,
+      "erros": 2,
       "sem_dados": 0,
       "taxa": 0.0
     },
