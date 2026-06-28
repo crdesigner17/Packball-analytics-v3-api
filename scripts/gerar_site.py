@@ -1837,6 +1837,29 @@ function todayKey(){{
 }}
 function numVal(v){{const n=parseFloat(v);return Number.isFinite(n)?n:null;}}
 function sideName(side){{return side==='home'?'Casa':'Visitante';}}
+function rfFirstVal(d, keys){{
+  for(const k of keys){{
+    const v=numVal(d[k]);
+    if(v!=null)return v;
+  }}
+  return null;
+}}
+function rfPair(d, homeKeys, awayKeys){{
+  return {{h:rfFirstVal(d,homeKeys),a:rfFirstVal(d,awayKeys)}};
+}}
+function rfTier(v, tiers){{
+  if(v==null)return 0;
+  for(const t of tiers)if(v>=t[0])return t[1];
+  return 0;
+}}
+function rfOddsPoints(odd){{
+  if(odd==null)return 0;
+  if(odd<=1.35)return 20;
+  if(odd<=1.50)return 17;
+  if(odd<=1.70)return 13;
+  if(odd<=1.90)return 8;
+  return 0;
+}}
 function rfMarketLabel(p){{
   if(!p)return'—';
   if(p.market==='win')return`Vitória ${{sideName(p.side)}}`;
@@ -1852,17 +1875,66 @@ function rfFavSide(d){{
 }}
 function rfEdge(d, side){{
   const sign = side==='home'?1:-1;
+  const shots=rfPair(d,['shots_h','avg_shots_h'],['shots_a','avg_shots_a']);
+  const sot=rfPair(d,['sot_h','avg_sot_h'],['sot_a','avg_sot_a']);
   const metrics = [
     {{name:'PPG', diff:((numVal(d.ppg_h)||0)-(numVal(d.ppg_a)||0))*sign, min:.35, weight:18}},
     {{name:'xG', diff:((numVal(d.exg_h)||0)-(numVal(d.exg_a)||0))*sign, min:.25, weight:18}},
     {{name:'Ataque', diff:((numVal(d.avg_sc_h)||0)-(numVal(d.avg_sc_a)||0))*sign, min:.25, weight:14}},
-    {{name:'Finalizações', diff:((numVal(d.avg_shots_h)||0)-(numVal(d.avg_shots_a)||0))*sign, min:2.5, weight:10}},
-    {{name:'SOT', diff:((numVal(d.avg_sot_h)||0)-(numVal(d.avg_sot_a)||0))*sign, min:.8, weight:10}},
+    {{name:'Finalizações', diff:((shots.h||0)-(shots.a||0))*sign, min:2.5, weight:10}},
+    {{name:'SOT', diff:((sot.h||0)-(sot.a||0))*sign, min:.8, weight:10}},
     {{name:'Prob. API', diff:((numVal(d.win_home)||0)-(numVal(d.win_away)||0))*sign, min:15, weight:20}},
   ];
   const ok = metrics.filter(m=>Number.isFinite(m.diff)&&m.diff>=m.min);
   const strength = ok.reduce((acc,m)=>acc+m.weight+Math.min(12,Math.abs(m.diff)*2),0);
   return {{ok, strength}};
+}}
+function rfDominanceIndex(d, side, favOdd){{
+  const sign=side==='home'?1:-1;
+  const used=[];
+  let total=0;
+  function add(name, exists, points){{
+    if(exists)used.push(name);
+    total += points||0;
+  }}
+  const ppg=rfPair(d,['ppg_h'],['ppg_a']);
+  const xg=rfPair(d,['exg_h'],['exg_a']);
+  const attack=rfPair(d,['avg_sc_h'],['avg_sc_a']);
+  const defense=rfPair(d,['avg_co_h'],['avg_co_a']);
+  const shots=rfPair(d,['shots_h','avg_shots_h'],['shots_a','avg_shots_a']);
+  const sot=rfPair(d,['sot_h','avg_sot_h'],['sot_a','avg_sot_a']);
+  const apiProb=side==='home'?numVal(d.win_home):numVal(d.win_away);
+  const ppgDiff=ppg.h!=null&&ppg.a!=null?((ppg.h-ppg.a)*sign):null;
+  const xgDiff=xg.h!=null&&xg.a!=null?((xg.h-xg.a)*sign):null;
+  const attackDiff=attack.h!=null&&attack.a!=null?((attack.h-attack.a)*sign):null;
+  const defenseDiff=defense.h!=null&&defense.a!=null?((defense.a-defense.h)*sign):null;
+  const shotsDiff=shots.h!=null&&shots.a!=null?((shots.h-shots.a)*sign):null;
+  const sotDiff=sot.h!=null&&sot.a!=null?((sot.h-sot.a)*sign):null;
+
+  add('Odds',favOdd!=null,rfOddsPoints(favOdd));
+  add('PPG',ppgDiff!=null,rfTier(ppgDiff,[[1,20],[.70,16],[.50,12],[.30,8],[.15,4]]));
+  add('xG',xgDiff!=null,rfTier(xgDiff,[[1.20,20],[.90,16],[.60,12],[.30,8],[.15,4]]));
+  add('Ataque',attackDiff!=null,rfTier(attackDiff,[[1.20,15],[.80,12],[.50,9],[.30,6],[.15,3]]));
+  add('Defesa',defenseDiff!=null,rfTier(defenseDiff,[[.80,10],[.60,8],[.40,6],[.20,3]]));
+  add('Finalizações',shotsDiff!=null,rfTier(shotsDiff,[[5,5],[3,3]]));
+  add('SOT',sotDiff!=null,rfTier(sotDiff,[[2,5],[1,3]]));
+  add('API',apiProb!=null,rfTier(apiProb,[[70,5],[60,4],[55,3],[50,2]]));
+
+  const quality=(used.length/8)*100;
+  const mult=quality>=90 ? 1 : quality>=80 ? .97 : quality>=70 ? .94 : quality>=60 ? .90 : .85;
+  const dominance=Math.max(0,Math.min(100,Math.round(total*mult*10)/10));
+  return {{dominance,quality:Math.round(quality),used,total,apiProb}};
+}}
+function rfDominanceContextFloor(d, side, favOdd, dom){{
+  const isWorldCup=String(d.liga||'').toLowerCase().includes('world cup');
+  const ppg=rfPair(d,['ppg_h'],['ppg_a']);
+  const sign=side==='home'?1:-1;
+  const ppgDiff=ppg.h!=null&&ppg.a!=null?((ppg.h-ppg.a)*sign):null;
+  let dominance=dom.dominance;
+  if(isWorldCup && favOdd!=null && favOdd<=1.20 && dominance>=60)dominance=Math.max(dominance,95);
+  else if(isWorldCup && favOdd!=null && favOdd<=1.25 && dominance>=60)dominance=Math.max(dominance,92);
+  if(!isWorldCup && favOdd!=null && favOdd<=1.90 && ppgDiff!=null && ppgDiff>=1 && dominance>=55)dominance=Math.max(dominance,70);
+  return {{...dom,dominance:Math.round(Math.min(100,dominance)*10)/10,isWorldCup}};
 }}
 function rfPick(d){{
   const fav=rfFavSide(d);
@@ -1887,7 +1959,14 @@ function rfPick(d){{
     market='dc'; score=Math.max(score,76);
   }}
   if(!market)return null;
-  return {{market,side,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),reasons}};
+  const dom=rfDominanceContextFloor(d,side,favOdd,rfDominanceIndex(d,side,favOdd));
+  if(dom.dominance<65)return null;
+  const apiWinOk=dom.apiProb!=null && (dom.apiProb>=55 || (dom.isWorldCup && favOdd!=null && favOdd<=1.25 && dom.dominance>=90));
+  if(!(market==='win' && dom.dominance>=85 && favOdd!=null && favOdd<=1.60 && apiWinOk)){{
+    market='dc';
+  }}
+  reasons.push(`Dominância ${{Math.round(dom.dominance)}}`);
+  return {{market,side,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),dominance:dom.dominance,dataQuality:dom.quality,reasons}};
 }}
 function rfResult(jogo,pick){{
   const res=getResultado(jogo);
