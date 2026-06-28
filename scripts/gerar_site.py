@@ -1864,32 +1864,6 @@ function rfEdge(d, side){{
   const strength = ok.reduce((acc,m)=>acc+m.weight+Math.min(12,Math.abs(m.diff)*2),0);
   return {{ok, strength}};
 }}
-function rfDominance(fav, edge, favOdd){{
-  const byName=(name)=>edge.ok.find(m=>m.name===name);
-  const metric=(name,strong,max)=>{{
-    const m=byName(name);
-    if(!m||m.diff==null||!Number.isFinite(m.diff))return 0;
-    return Math.min(max,Math.max(0,(m.diff/strong)*max));
-  }};
-  const oddsPts=favOdd?
-    (favOdd<=1.20?25:favOdd<=1.35?23:favOdd<=1.55?19:favOdd<=1.75?13:favOdd<=1.90?9:favOdd<=2.05?5:0):
-    Math.min(14,Math.max(0,(fav.impliedGap||0)*0.55));
-  const ppgPts=metric('PPG',1.00,18);
-  const xgPts=metric('xG',1.00,16);
-  const atkPts=metric('Ataque',1.00,14);
-  const shotsPts=metric('Finalizações',6.0,7)+metric('SOT',2.5,7);
-  const apiDiff=byName('Prob. API')?.diff;
-  let apiPts=0;
-  if(apiDiff!=null&&Number.isFinite(apiDiff)){{
-    apiPts=Math.min(12,Math.max(0,(apiDiff/45)*12));
-    if(edge.favProb!=null&&edge.favProb<50)apiPts=Math.min(apiPts,7);
-  }}
-  const dataPts=edge.quality>=.85?8:edge.quality>=.70?6:edge.quality>=.50?3:0;
-  let dom=oddsPts+ppgPts+xgPts+atkPts+shotsPts+apiPts+dataPts;
-  if(edge.contra.length>=1)dom-=8;
-  if(edge.contra.length>=2)dom-=12;
-  return Math.max(0,Math.min(100,Math.round(dom*10)/10));
-}}
 function rfPick(d){{
   const fav=rfFavSide(d);
   if(!fav)return null;
@@ -1897,45 +1871,23 @@ function rfPick(d){{
   const edge=rfEdge(d,side);
   const aligned=edge.ok.length;
   const isFriendly=String(d.liga||'').toLowerCase().includes('friendly');
-  const isWorldCup=String(d.liga||'').toLowerCase().includes('world cup') || String(d.liga||'').toLowerCase().includes('copa do mundo');
   const favOdd=fav.favOdd;
-  const oddsScore=favOdd?Math.max(0,100-(favOdd*22)):(55+Math.min(25,fav.impliedGap||0));
-  const dataPenalty = edge.quality>=.85 ? 1 : edge.quality>=.70 ? .97 : edge.quality>=.50 ? .93 : .86;
-  let score=Math.round(((oddsScore*.35)+(edge.strength*.65)+Math.min(8,fav.impliedGap||0))*dataPenalty*10)/10;
-  const dominance=rfDominance(fav,edge,favOdd);
-  const ppgSignal=edge.ok.find(m=>m.name==='PPG');
-  const hasShotSignal=!!edge.ok.find(m=>m.name==='Finalizações'||m.name==='SOT');
-  const hasApiSignal=!!edge.ok.find(m=>m.name==='Prob. API');
-  const reasons=[`favorito ${{sideName(side)}}${{favOdd?` @ ${{favOdd.toFixed(2)}}`:''}}`, `${{aligned}} sinais alinhados`, `dominância ${{dominance}}`]
-    .concat(edge.ok.slice(0,4).map(m=>`${{m.name}} +${{m.diff.toFixed(m.name==='Prob. API'?0:1)}}`))
-    .concat(edge.contra.slice(0,2).map(x=>`alerta: ${{x}}`));
+  const oddsScore=favOdd?Math.max(0,100-(favOdd*22)):(55+Math.min(30,fav.impliedGap||0));
+  let score=Math.min(100,Math.round((oddsScore + edge.strength + Math.min(20,fav.impliedGap||0)) * 10)/10);
+  const reasons=[`favorito ${{sideName(side)}}${{favOdd?` @ ${{favOdd.toFixed(2)}}`:''}}`, `${{aligned}} sinais alinhados`].concat(edge.ok.slice(0,4).map(m=>`${{m.name}} +${{m.diff.toFixed(m.name==='Prob. API'?0:1)}}`));
 
   if(isFriendly && (!favOdd || favOdd>1.30) && !edge.ok.find(m=>m.name==='PPG'||m.name==='Prob. API'))return null;
-  if(edge.quality<.50)return null;
-  if(edge.contra.length>=3)return null;
-  if(edge.favProb!=null && edge.favProb<42 && (!favOdd || favOdd>1.55))return null;
 
   let market=null;
-  if(favOdd&&favOdd<=1.30&&aligned>=3&&dominance>=62&&score>=64&&edge.contra.length<=1){{
-    market='win';
-  }} else if(favOdd&&favOdd<=1.55&&aligned>=4&&dominance>=70&&score>=76&&edge.contra.length<=1){{
-    market='win';
-  }} else if(favOdd&&favOdd<=1.90&&aligned>=3&&dominance>=50&&score>=56&&edge.contra.length<=1){{
-    market='dc';
-  }} else if(favOdd&&favOdd<=1.75&&aligned>=2&&hasApiSignal&&dominance>=38&&score>=58&&edge.contra.length<=1){{
-    market='dc';
-  }} else if(isWorldCup&&favOdd&&favOdd<=1.75&&aligned>=2&&hasApiSignal&&edge.contra.length<=1){{
-    market='dc';
-  }} else if(!favOdd&&aligned>=3&&dominance>=52&&score>=62&&fav.impliedGap>=18&&edge.contra.length<=1){{
-    market='dc';
+  if((favOdd&&favOdd<=1.45&&aligned>=3) || (favOdd&&favOdd<=1.65&&aligned>=4&&edge.ok.find(m=>m.name==='Prob. API'))){{
+    market='win'; score=Math.max(score,88);
+  }} else if((favOdd&&favOdd<=1.75&&aligned>=3) || (!favOdd&&aligned>=4&&fav.impliedGap>=18)){{
+    market='dnb'; score=Math.max(score,82);
+  }} else if((favOdd&&favOdd<=1.90&&aligned>=2) || (!favOdd&&aligned>=3&&fav.impliedGap>=12)){{
+    market='dc'; score=Math.max(score,76);
   }}
   if(!market)return null;
-
-  // Trava anti-falso favorito: casa com odd mediana, API abaixo de 50%, PPG curto e sem volume ofensivo.
-  // Mantém Copa/favoritos fortes quando há dominância real ou sinal de finalizações/SOT.
-  if(market==='dc' && !isWorldCup && side==='home' && favOdd&&favOdd>=1.60&&favOdd<=1.90 && edge.favProb!=null&&edge.favProb<50 && aligned<=4 && !hasShotSignal && (!ppgSignal || ppgSignal.diff<0.65) && dominance<58)return null;
-
-  return {{market,side,score:Math.min(100,Math.round(score*10)/10),dominance,grade:gradeFromScore(score),reasons}};
+  return {{market,side,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),reasons}};
 }}
 function rfResult(jogo,pick){{
   const res=getResultado(jogo);
