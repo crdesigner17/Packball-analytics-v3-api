@@ -31,6 +31,7 @@ import requests
 import numpy as np
 from ligas_config import blocked_name, favorite_league_names
 from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
+from cards.pipeline_adapter import apply_cards_engine_to_matches
 
 # ── Configuração ────────────────────────────────────────────────────
 BASE_URL  = "https://v3.football.api-sports.io"
@@ -314,6 +315,14 @@ def get_odds(client: APIClient, fixture_id: int) -> dict:
                 for k, v in vals.items():
                     if "over 2.5" in k:  result["odds_cards_25"] = v
                     if "over 3.5" in k:  result["odds_cards_35"] = v
+                    if "over 4.5" in k:  result["odds_cards_45"] = v
+                    if "over 5.5" in k:  result["odds_cards_55"] = v
+                    if "over 6.5" in k:  result["odds_cards_65"] = v
+                    if "under 2.5" in k: result["odds_cards_under_25"] = v
+                    if "under 3.5" in k: result["odds_cards_under_35"] = v
+                    if "under 4.5" in k: result["odds_cards_under_45"] = v
+                    if "under 5.5" in k: result["odds_cards_under_55"] = v
+                    if "under 6.5" in k: result["odds_cards_under_65"] = v
 
     # Converter odds para probabilidades implícitas (sem margem)
     def to_prob(odd): return round(100 / odd, 1) if odd and odd > 1 else None
@@ -775,10 +784,12 @@ def processar_data(client: APIClient, date_str: str) -> list:
                 "date":     date_str.replace("-","")[:4][::-1] if False else f"{date_str[8:10]}-{date_str[5:7]}-{date_str[:4]}",
                 "jogo":     f"{home_nm} x {away_nm}",
                 "liga":     liga_nome,
+                "country":  fix.get("league", {}).get("country"),
                 "hora":     hora,
                 "home":     home_nm,
                 "away":     away_nm,
                 "fixture_id": fid,
+                "referee":   fix.get("fixture", {}).get("referee"),
                 "home_id":  home_id,
                 "away_id":  away_id,
                 "is_elite": is_elite,
@@ -787,6 +798,16 @@ def processar_data(client: APIClient, date_str: str) -> list:
                 "odds_h":  odds.get("odds_h"),
                 "odds_d":  odds.get("odds_d"),
                 "odds_a":  odds.get("odds_a"),
+                "odds_cards_25": odds.get("odds_cards_25"),
+                "odds_cards_35": odds.get("odds_cards_35"),
+                "odds_cards_45": odds.get("odds_cards_45"),
+                "odds_cards_55": odds.get("odds_cards_55"),
+                "odds_cards_65": odds.get("odds_cards_65"),
+                "odds_cards_under_25": odds.get("odds_cards_under_25"),
+                "odds_cards_under_35": odds.get("odds_cards_under_35"),
+                "odds_cards_under_45": odds.get("odds_cards_under_45"),
+                "odds_cards_under_55": odds.get("odds_cards_under_55"),
+                "odds_cards_under_65": odds.get("odds_cards_under_65"),
 
                 # Over gols
                 "over15_g": o15g,
@@ -863,11 +884,10 @@ def processar_data(client: APIClient, date_str: str) -> list:
             jogo["ppg_avg"] = scores.get("ppg_avg")
             jogo["ppg_min"] = scores.get("ppg_min")
             jogo["btts_cf"] = scores.get("btts_cf")
-
             results.append(jogo)
             print(f"       ✓ score_best={jogo['best_score']} ({jogo['best_grade']}) → {jogo['best_mkt']}")
 
-    return results
+    return apply_cards_engine_to_matches(results)
 
 # ── Gravar JSON ─────────────────────────────────────────────────────
 def gravar_dia(date_str_api: str, jogos: list, force: bool = False):

@@ -13,6 +13,7 @@ from datetime import datetime
 import warnings
 from ligas_config import blocked_name, favorite_countries, favorite_league_names
 from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
+from cards.pipeline_adapter import apply_cards_engine_to_matches
 warnings.filterwarnings('ignore')
 
 # ── Configuração ───────────────────────────────────────────────────
@@ -117,7 +118,7 @@ def fex(raw, idx_map):
     ll = df.iloc[:, 2].str.lower().fillna('')
     df = df[~ll.apply(blocked_name)]
     if df.shape[1] < 10:
-        return pd.DataFrame(columns=['home','away','league','hour'])
+        return pd.DataFrame(columns=['country','home','away','league','hour'])
     teams = (
         df.iloc[:, 5].astype(str).str.lower().fillna('') + ' ' +
         df.iloc[:, 8].astype(str).str.lower().fillna('')
@@ -129,6 +130,7 @@ def fex(raw, idx_map):
     ).reset_index(drop=True)
 
     result = pd.DataFrame({
+        'country': df.iloc[:, 0],
         'home':   df.iloc[:, 5],
         'away':   df.iloc[:, 8],
         'league': df.iloc[:, 2],
@@ -514,10 +516,11 @@ def processar_dia(date_str, dfs):
         best = max(candidatos, key=lambda x: x[1] if x[2] else 0)
         best_mkt, best_score = best[0], best[1]
 
-        results.append({
+        jogo_out = {
             'date':   date_str,
             'jogo':   f"{r['home']} x {r['away']}",
             'liga':   liga,
+            'country': str(r.get('country', '')),
             'hora':   hora,
             'home':   str(r['home']),
             'away':   str(r['away']),
@@ -602,9 +605,10 @@ def processar_dia(date_str, dfs):
             'justif_15':   justif_15(),
             'justif_esc':  justif_esc(),
             'justif_cards': justif_cards(),
-        })
+        }
+        results.append(jogo_out)
 
-    return results
+    return apply_cards_engine_to_matches(results)
 
 
 # ── Consolidar histórico ───────────────────────────────────────────
