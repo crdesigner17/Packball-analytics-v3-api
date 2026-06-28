@@ -1,0 +1,994 @@
+{
+  "generated_at": "2026-06-28T15:07:11",
+  "description": "Mapeamento real das colunas usadas pelo pipeline de cartoes.",
+  "dates": {
+    "27-06-2026:cartoes": {
+      "rows_raw": 850,
+      "rows_after_filter": 14,
+      "csv_path": "C:\\Users\\Carlo\\Documents\\Codex\\2026-06-28\\npm-install-playwright-npx-playwright-install\\outputs\\winmetrics-cards-audit-tool\\scripts\\..\\data\\csv\\27-06-2026\\PackBall Custom CARTåES  27-06-2026.csv",
+      "csv_kind": "cart",
+      "header_mode": "single_detected_packball_duplicate_groups",
+      "columns_raw": [
+        "Country",
+        "Short",
+        "League",
+        "Hour",
+        "Status",
+        "Home Team",
+        "Result Home",
+        "Result Visitor",
+        "Visitor Team",
+        "Result Home HT",
+        "Result Visitor HT",
+        "Casa",
+        "Fora",
+        "Casa.1",
+        "Fora.1",
+        "Global",
+        "Global.1",
+        "Global.2",
+        "Global.3",
+        "Global.4",
+        "Global.5",
+        "Global.6",
+        "Global.7",
+        "Casa.2",
+        "Fora.2",
+        "Casa.3",
+        "Fora.3"
+      ],
+      "columns_by_index": [
+        {
+          "index": 0,
+          "column": "Country"
+        },
+        {
+          "index": 1,
+          "column": "Short"
+        },
+        {
+          "index": 2,
+          "column": "League"
+        },
+        {
+          "index": 3,
+          "column": "Hour"
+        },
+        {
+          "index": 4,
+          "column": "Status"
+        },
+        {
+          "index": 5,
+          "column": "Home Team"
+        },
+        {
+          "index": 6,
+          "column": "Result Home"
+        },
+        {
+          "index": 7,
+          "column": "Result Visitor"
+        },
+        {
+          "index": 8,
+          "column": "Visitor Team"
+        },
+        {
+          "index": 9,
+          "column": "Result Home HT"
+        },
+        {
+          "index": 10,
+          "column": "Result Visitor HT"
+        },
+        {
+          "index": 11,
+          "column": "Casa"
+        },
+        {
+          "index": 12,
+          "column": "Fora"
+        },
+        {
+          "index": 13,
+          "column": "Casa.1"
+        },
+        {
+          "index": 14,
+          "column": "Fora.1"
+        },
+        {
+          "index": 15,
+          "column": "Global"
+        },
+        {
+          "index": 16,
+          "column": "Global.1"
+        },
+        {
+          "index": 17,
+          "column": "Global.2"
+        },
+        {
+          "index": 18,
+          "column": "Global.3"
+        },
+        {
+          "index": 19,
+          "column": "Global.4"
+        },
+        {
+          "index": 20,
+          "column": "Global.5"
+        },
+        {
+          "index": 21,
+          "column": "Global.6"
+        },
+        {
+          "index": 22,
+          "column": "Global.7"
+        },
+        {
+          "index": 23,
+          "column": "Casa.2"
+        },
+        {
+          "index": 24,
+          "column": "Fora.2"
+        },
+        {
+          "index": 25,
+          "column": "Casa.3"
+        },
+        {
+          "index": 26,
+          "column": "Fora.3"
+        }
+      ],
+      "fields": {
+        "country": {
+          "source_column": "Country",
+          "source_index": 0,
+          "method": "alias",
+          "aliases_checked": [
+            "country",
+            "pais",
+            "país"
+          ],
+          "non_null_after_filter": 14
+        },
+        "league": {
+          "source_column": "League",
+          "source_index": 2,
+          "method": "alias",
+          "aliases_checked": [
+            "league",
+            "liga",
+            "competition",
+            "competicao",
+            "competition name"
+          ],
+          "non_null_after_filter": 14
+        },
+        "hour": {
+          "source_column": "Hour",
+          "source_index": 3,
+          "method": "alias",
+          "aliases_checked": [
+            "hour",
+            "hora",
+            "time",
+            "kickoff",
+            "kick off"
+          ],
+          "non_null_after_filter": 14
+        },
+        "status": {
+          "source_column": "Status",
+          "source_index": 4,
+          "method": "alias",
+          "aliases_checked": [
+            "status",
+            "fixture status",
+            "match status"
+          ],
+          "non_null_after_filter": 14
+        },
+        "home": {
+          "source_column": "Home Team",
+          "source_index": 5,
+          "method": "alias",
+          "aliases_checked": [
+            "home",
+            "home team",
+            "team home",
+            "casa",
+            "mandante"
+          ],
+          "non_null_after_filter": 14
+        },
+        "away": {
+          "source_column": "Visitor Team",
+          "source_index": 8,
+          "method": "alias",
+          "aliases_checked": [
+            "visitor team",
+            "away",
+            "away team",
+            "team away",
+            "fora",
+            "visitante"
+          ],
+          "non_null_after_filter": 14
+        },
+        "avg_cards_h": {
+          "source_column": "Casa",
+          "source_index": 11,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_h",
+            "home_cards_avg",
+            "home avg cards",
+            "home cards avg",
+            "cards avg home",
+            "cards home avg",
+            "home cards",
+            "team a cards",
+            "team_a_cards",
+            "cards_home",
+            "avg cards home",
+            "yellow cards home",
+            "home yellow cards",
+            "home team cards",
+            "casa cartoes",
+            "mandante cartoes",
+            "casa"
+          ],
+          "non_null_after_filter": 14
+        },
+        "avg_cards_a": {
+          "source_column": "Fora",
+          "source_index": 12,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_a",
+            "away_cards_avg",
+            "away avg cards",
+            "away cards avg",
+            "cards avg away",
+            "cards away avg",
+            "away cards",
+            "team b cards",
+            "team_b_cards",
+            "cards_away",
+            "avg cards away",
+            "yellow cards away",
+            "away yellow cards",
+            "away team cards",
+            "fora cartoes",
+            "visitante cartoes",
+            "fora"
+          ],
+          "non_null_after_filter": 14
+        },
+        "avg_cards_total": {
+          "source_column": "Global",
+          "source_index": 15,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_total",
+            "avg_cards",
+            "average cards total",
+            "cards average total",
+            "avg total cards",
+            "total cards avg",
+            "match cards avg",
+            "cards per match",
+            "cards per game",
+            "cartoes media",
+            "media cartoes",
+            "total cards average",
+            "card average total",
+            "global"
+          ],
+          "non_null_after_filter": 14
+        },
+        "over25_cards": {
+          "source_column": "Global.2",
+          "source_index": 17,
+          "method": "alias",
+          "aliases_checked": [
+            "over25_cards",
+            "over_25_cards",
+            "over 2.5 cards",
+            "over 2,5 cards",
+            "cards over 2.5",
+            "cards over 2,5",
+            "o25 cards",
+            "+2.5 cards",
+            "+2,5 cards",
+            "2.5+ cards",
+            "2,5+ cards",
+            "+2.5",
+            "over 25 cards",
+            "cartoes over 2.5",
+            "mais de 2.5 cartoes",
+            "global 2"
+          ],
+          "non_null_after_filter": 14
+        },
+        "over35_cards": {
+          "source_column": "Global.3",
+          "source_index": 18,
+          "method": "alias",
+          "aliases_checked": [
+            "over35_cards",
+            "over_35_cards",
+            "over 3.5 cards",
+            "over 3,5 cards",
+            "cards over 3.5",
+            "cards over 3,5",
+            "o35 cards",
+            "+3.5 cards",
+            "+3,5 cards",
+            "3.5+ cards",
+            "3,5+ cards",
+            "+3.5",
+            "over 35 cards",
+            "cartoes over 3.5",
+            "mais de 3.5 cartoes",
+            "global 3"
+          ],
+          "non_null_after_filter": 14
+        },
+        "over45_cards": {
+          "source_column": "Global.4",
+          "source_index": 19,
+          "method": "alias",
+          "aliases_checked": [
+            "over45_cards",
+            "over_45_cards",
+            "over 4.5 cards",
+            "over 4,5 cards",
+            "cards over 4.5",
+            "cards over 4,5",
+            "o45 cards",
+            "+4.5 cards",
+            "+4,5 cards",
+            "4.5+ cards",
+            "4,5+ cards",
+            "+4.5",
+            "over 45 cards",
+            "cartoes over 4.5",
+            "mais de 4.5 cartoes",
+            "global 4"
+          ],
+          "non_null_after_filter": 14
+        },
+        "over55_cards": {
+          "source_column": "Global.5",
+          "source_index": 20,
+          "method": "alias",
+          "aliases_checked": [
+            "over55_cards",
+            "over_55_cards",
+            "over 5.5 cards",
+            "over 5,5 cards",
+            "cards over 5.5",
+            "cards over 5,5",
+            "o55 cards",
+            "+5.5 cards",
+            "+5,5 cards",
+            "5.5+ cards",
+            "5,5+ cards",
+            "+5.5",
+            "over 55 cards",
+            "cartoes over 5.5",
+            "mais de 5.5 cartoes",
+            "global 5"
+          ],
+          "non_null_after_filter": 14
+        },
+        "avg_cards": {
+          "source_column": "Global",
+          "source_index": 15,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_total",
+            "avg_cards",
+            "average cards total",
+            "cards average total",
+            "avg total cards",
+            "total cards avg",
+            "match cards avg",
+            "cards per match",
+            "cards per game",
+            "cartoes media",
+            "media cartoes",
+            "total cards average",
+            "card average total",
+            "global"
+          ],
+          "non_null_after_filter": 14,
+          "internal_alias_of": "avg_cards_total"
+        },
+        "home_cards_avg": {
+          "source_column": "Casa",
+          "source_index": 11,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_h",
+            "home_cards_avg",
+            "home avg cards",
+            "home cards avg",
+            "cards avg home",
+            "cards home avg",
+            "home cards",
+            "team a cards",
+            "team_a_cards",
+            "cards_home",
+            "avg cards home",
+            "yellow cards home",
+            "home yellow cards",
+            "home team cards",
+            "casa cartoes",
+            "mandante cartoes",
+            "casa"
+          ],
+          "non_null_after_filter": 14,
+          "internal_alias_of": "avg_cards_h"
+        },
+        "away_cards_avg": {
+          "source_column": "Fora",
+          "source_index": 12,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_a",
+            "away_cards_avg",
+            "away avg cards",
+            "away cards avg",
+            "cards avg away",
+            "cards away avg",
+            "away cards",
+            "team b cards",
+            "team_b_cards",
+            "cards_away",
+            "avg cards away",
+            "yellow cards away",
+            "away yellow cards",
+            "away team cards",
+            "fora cartoes",
+            "visitante cartoes",
+            "fora"
+          ],
+          "non_null_after_filter": 14,
+          "internal_alias_of": "avg_cards_a"
+        },
+        "under25_cards": {
+          "source_column": "Global.2",
+          "source_index": 17,
+          "method": "derived_from_over25_cards",
+          "formula": "100 - over25_cards",
+          "non_null_after_filter": 14
+        },
+        "under35_cards": {
+          "source_column": "Global.3",
+          "source_index": 18,
+          "method": "derived_from_over35_cards",
+          "formula": "100 - over35_cards",
+          "non_null_after_filter": 14
+        },
+        "under45_cards": {
+          "source_column": "Global.4",
+          "source_index": 19,
+          "method": "derived_from_over45_cards",
+          "formula": "100 - over45_cards",
+          "non_null_after_filter": 14
+        },
+        "under55_cards": {
+          "source_column": "Global.5",
+          "source_index": 20,
+          "method": "derived_from_over55_cards",
+          "formula": "100 - over55_cards",
+          "non_null_after_filter": 14
+        }
+      }
+    },
+    "28-06-2026:cartoes": {
+      "rows_raw": 466,
+      "rows_after_filter": 10,
+      "csv_path": "C:\\Users\\Carlo\\Documents\\Codex\\2026-06-28\\npm-install-playwright-npx-playwright-install\\outputs\\winmetrics-cards-audit-tool\\scripts\\..\\data\\csv\\28-06-2026\\PackBall Custom CARTåES  28-06-2026.csv",
+      "csv_kind": "cart",
+      "header_mode": "single_detected_packball_duplicate_groups",
+      "columns_raw": [
+        "Country",
+        "Short",
+        "League",
+        "Hour",
+        "Status",
+        "Home Team",
+        "Result Home",
+        "Result Visitor",
+        "Visitor Team",
+        "Result Home HT",
+        "Result Visitor HT",
+        "Casa",
+        "Fora",
+        "Casa.1",
+        "Fora.1",
+        "Global",
+        "Global.1",
+        "Global.2",
+        "Global.3",
+        "Global.4",
+        "Global.5",
+        "Global.6",
+        "Global.7",
+        "Casa.2",
+        "Fora.2",
+        "Casa.3",
+        "Fora.3"
+      ],
+      "columns_by_index": [
+        {
+          "index": 0,
+          "column": "Country"
+        },
+        {
+          "index": 1,
+          "column": "Short"
+        },
+        {
+          "index": 2,
+          "column": "League"
+        },
+        {
+          "index": 3,
+          "column": "Hour"
+        },
+        {
+          "index": 4,
+          "column": "Status"
+        },
+        {
+          "index": 5,
+          "column": "Home Team"
+        },
+        {
+          "index": 6,
+          "column": "Result Home"
+        },
+        {
+          "index": 7,
+          "column": "Result Visitor"
+        },
+        {
+          "index": 8,
+          "column": "Visitor Team"
+        },
+        {
+          "index": 9,
+          "column": "Result Home HT"
+        },
+        {
+          "index": 10,
+          "column": "Result Visitor HT"
+        },
+        {
+          "index": 11,
+          "column": "Casa"
+        },
+        {
+          "index": 12,
+          "column": "Fora"
+        },
+        {
+          "index": 13,
+          "column": "Casa.1"
+        },
+        {
+          "index": 14,
+          "column": "Fora.1"
+        },
+        {
+          "index": 15,
+          "column": "Global"
+        },
+        {
+          "index": 16,
+          "column": "Global.1"
+        },
+        {
+          "index": 17,
+          "column": "Global.2"
+        },
+        {
+          "index": 18,
+          "column": "Global.3"
+        },
+        {
+          "index": 19,
+          "column": "Global.4"
+        },
+        {
+          "index": 20,
+          "column": "Global.5"
+        },
+        {
+          "index": 21,
+          "column": "Global.6"
+        },
+        {
+          "index": 22,
+          "column": "Global.7"
+        },
+        {
+          "index": 23,
+          "column": "Casa.2"
+        },
+        {
+          "index": 24,
+          "column": "Fora.2"
+        },
+        {
+          "index": 25,
+          "column": "Casa.3"
+        },
+        {
+          "index": 26,
+          "column": "Fora.3"
+        }
+      ],
+      "fields": {
+        "country": {
+          "source_column": "Country",
+          "source_index": 0,
+          "method": "alias",
+          "aliases_checked": [
+            "country",
+            "pais",
+            "país"
+          ],
+          "non_null_after_filter": 10
+        },
+        "league": {
+          "source_column": "League",
+          "source_index": 2,
+          "method": "alias",
+          "aliases_checked": [
+            "league",
+            "liga",
+            "competition",
+            "competicao",
+            "competition name"
+          ],
+          "non_null_after_filter": 10
+        },
+        "hour": {
+          "source_column": "Hour",
+          "source_index": 3,
+          "method": "alias",
+          "aliases_checked": [
+            "hour",
+            "hora",
+            "time",
+            "kickoff",
+            "kick off"
+          ],
+          "non_null_after_filter": 10
+        },
+        "status": {
+          "source_column": "Status",
+          "source_index": 4,
+          "method": "alias",
+          "aliases_checked": [
+            "status",
+            "fixture status",
+            "match status"
+          ],
+          "non_null_after_filter": 10
+        },
+        "home": {
+          "source_column": "Home Team",
+          "source_index": 5,
+          "method": "alias",
+          "aliases_checked": [
+            "home",
+            "home team",
+            "team home",
+            "casa",
+            "mandante"
+          ],
+          "non_null_after_filter": 10
+        },
+        "away": {
+          "source_column": "Visitor Team",
+          "source_index": 8,
+          "method": "alias",
+          "aliases_checked": [
+            "visitor team",
+            "away",
+            "away team",
+            "team away",
+            "fora",
+            "visitante"
+          ],
+          "non_null_after_filter": 10
+        },
+        "avg_cards_h": {
+          "source_column": "Casa",
+          "source_index": 11,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_h",
+            "home_cards_avg",
+            "home avg cards",
+            "home cards avg",
+            "cards avg home",
+            "cards home avg",
+            "home cards",
+            "team a cards",
+            "team_a_cards",
+            "cards_home",
+            "avg cards home",
+            "yellow cards home",
+            "home yellow cards",
+            "home team cards",
+            "casa cartoes",
+            "mandante cartoes",
+            "casa"
+          ],
+          "non_null_after_filter": 10
+        },
+        "avg_cards_a": {
+          "source_column": "Fora",
+          "source_index": 12,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_a",
+            "away_cards_avg",
+            "away avg cards",
+            "away cards avg",
+            "cards avg away",
+            "cards away avg",
+            "away cards",
+            "team b cards",
+            "team_b_cards",
+            "cards_away",
+            "avg cards away",
+            "yellow cards away",
+            "away yellow cards",
+            "away team cards",
+            "fora cartoes",
+            "visitante cartoes",
+            "fora"
+          ],
+          "non_null_after_filter": 10
+        },
+        "avg_cards_total": {
+          "source_column": "Global",
+          "source_index": 15,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_total",
+            "avg_cards",
+            "average cards total",
+            "cards average total",
+            "avg total cards",
+            "total cards avg",
+            "match cards avg",
+            "cards per match",
+            "cards per game",
+            "cartoes media",
+            "media cartoes",
+            "total cards average",
+            "card average total",
+            "global"
+          ],
+          "non_null_after_filter": 10
+        },
+        "over25_cards": {
+          "source_column": "Global.2",
+          "source_index": 17,
+          "method": "alias",
+          "aliases_checked": [
+            "over25_cards",
+            "over_25_cards",
+            "over 2.5 cards",
+            "over 2,5 cards",
+            "cards over 2.5",
+            "cards over 2,5",
+            "o25 cards",
+            "+2.5 cards",
+            "+2,5 cards",
+            "2.5+ cards",
+            "2,5+ cards",
+            "+2.5",
+            "over 25 cards",
+            "cartoes over 2.5",
+            "mais de 2.5 cartoes",
+            "global 2"
+          ],
+          "non_null_after_filter": 10
+        },
+        "over35_cards": {
+          "source_column": "Global.3",
+          "source_index": 18,
+          "method": "alias",
+          "aliases_checked": [
+            "over35_cards",
+            "over_35_cards",
+            "over 3.5 cards",
+            "over 3,5 cards",
+            "cards over 3.5",
+            "cards over 3,5",
+            "o35 cards",
+            "+3.5 cards",
+            "+3,5 cards",
+            "3.5+ cards",
+            "3,5+ cards",
+            "+3.5",
+            "over 35 cards",
+            "cartoes over 3.5",
+            "mais de 3.5 cartoes",
+            "global 3"
+          ],
+          "non_null_after_filter": 10
+        },
+        "over45_cards": {
+          "source_column": "Global.4",
+          "source_index": 19,
+          "method": "alias",
+          "aliases_checked": [
+            "over45_cards",
+            "over_45_cards",
+            "over 4.5 cards",
+            "over 4,5 cards",
+            "cards over 4.5",
+            "cards over 4,5",
+            "o45 cards",
+            "+4.5 cards",
+            "+4,5 cards",
+            "4.5+ cards",
+            "4,5+ cards",
+            "+4.5",
+            "over 45 cards",
+            "cartoes over 4.5",
+            "mais de 4.5 cartoes",
+            "global 4"
+          ],
+          "non_null_after_filter": 10
+        },
+        "over55_cards": {
+          "source_column": "Global.5",
+          "source_index": 20,
+          "method": "alias",
+          "aliases_checked": [
+            "over55_cards",
+            "over_55_cards",
+            "over 5.5 cards",
+            "over 5,5 cards",
+            "cards over 5.5",
+            "cards over 5,5",
+            "o55 cards",
+            "+5.5 cards",
+            "+5,5 cards",
+            "5.5+ cards",
+            "5,5+ cards",
+            "+5.5",
+            "over 55 cards",
+            "cartoes over 5.5",
+            "mais de 5.5 cartoes",
+            "global 5"
+          ],
+          "non_null_after_filter": 10
+        },
+        "avg_cards": {
+          "source_column": "Global",
+          "source_index": 15,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_total",
+            "avg_cards",
+            "average cards total",
+            "cards average total",
+            "avg total cards",
+            "total cards avg",
+            "match cards avg",
+            "cards per match",
+            "cards per game",
+            "cartoes media",
+            "media cartoes",
+            "total cards average",
+            "card average total",
+            "global"
+          ],
+          "non_null_after_filter": 10,
+          "internal_alias_of": "avg_cards_total"
+        },
+        "home_cards_avg": {
+          "source_column": "Casa",
+          "source_index": 11,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_h",
+            "home_cards_avg",
+            "home avg cards",
+            "home cards avg",
+            "cards avg home",
+            "cards home avg",
+            "home cards",
+            "team a cards",
+            "team_a_cards",
+            "cards_home",
+            "avg cards home",
+            "yellow cards home",
+            "home yellow cards",
+            "home team cards",
+            "casa cartoes",
+            "mandante cartoes",
+            "casa"
+          ],
+          "non_null_after_filter": 10,
+          "internal_alias_of": "avg_cards_h"
+        },
+        "away_cards_avg": {
+          "source_column": "Fora",
+          "source_index": 12,
+          "method": "alias",
+          "aliases_checked": [
+            "avg_cards_a",
+            "away_cards_avg",
+            "away avg cards",
+            "away cards avg",
+            "cards avg away",
+            "cards away avg",
+            "away cards",
+            "team b cards",
+            "team_b_cards",
+            "cards_away",
+            "avg cards away",
+            "yellow cards away",
+            "away yellow cards",
+            "away team cards",
+            "fora cartoes",
+            "visitante cartoes",
+            "fora"
+          ],
+          "non_null_after_filter": 10,
+          "internal_alias_of": "avg_cards_a"
+        },
+        "under25_cards": {
+          "source_column": "Global.2",
+          "source_index": 17,
+          "method": "derived_from_over25_cards",
+          "formula": "100 - over25_cards",
+          "non_null_after_filter": 10
+        },
+        "under35_cards": {
+          "source_column": "Global.3",
+          "source_index": 18,
+          "method": "derived_from_over35_cards",
+          "formula": "100 - over35_cards",
+          "non_null_after_filter": 10
+        },
+        "under45_cards": {
+          "source_column": "Global.4",
+          "source_index": 19,
+          "method": "derived_from_over45_cards",
+          "formula": "100 - over45_cards",
+          "non_null_after_filter": 10
+        },
+        "under55_cards": {
+          "source_column": "Global.5",
+          "source_index": 20,
+          "method": "derived_from_over55_cards",
+          "formula": "100 - over55_cards",
+          "non_null_after_filter": 10
+        }
+      }
+    }
+  }
+}
