@@ -61,6 +61,21 @@ function textKey(value) {
     .toLowerCase();
 }
 
+function makeRefereeId(name) {
+  return textKey(name)
+    .replace(/[^a-z0-9]+/g, "_")
+    .replace(/^_+|_+$/g, "");
+}
+
+function calculateRefereeConfidence(matches) {
+  if (matches >= 30) return 100;
+  if (matches >= 20) return 95;
+  if (matches >= 15) return 90;
+  if (matches >= 10) return 80;
+  if (matches >= 5) return 70;
+  return 50;
+}
+
 function normalizeRefereeName(value) {
   return normalizeText(value);
 }
@@ -95,11 +110,12 @@ function round(value, decimals = 2) {
 }
 
 function classifyDisciplineTier(cardsAvgTotal) {
-  if (cardsAvgTotal >= 6.0) return "very_hot";
-  if (cardsAvgTotal >= 5.5) return "hot";
-  if (cardsAvgTotal >= 5.0) return "balanced_over";
-  if (cardsAvgTotal >= 4.5) return "neutral";
-  return "cold";
+  if (cardsAvgTotal >= 6.2) return "ELITE_OVER";
+  if (cardsAvgTotal >= 5.7) return "FORTE_OVER";
+  if (cardsAvgTotal >= 5.1) return "MODERADO_OVER";
+  if (cardsAvgTotal >= 4.5) return "NEUTRO";
+  if (cardsAvgTotal >= 4.0) return "MODERADO_UNDER";
+  return "ELITE_UNDER";
 }
 
 function buildHeaderMap(headers) {
@@ -191,9 +207,12 @@ function makeProfile(raw, leagueConfig, debugLeague, row) {
   const redCards = normalizeBrazilianNumber(raw.red_cards);
   const penalties = normalizeBrazilianNumber(raw.penalties);
   const yellowAvg = round(yellowCards / matches, 2);
+  const redAvg = round(redCards / matches, 2);
+  const penaltyAvg = round(penalties / matches, 2);
   const cardsAvgTotal = round((yellowCards + secondYellowCards + redCards) / matches, 2);
 
   return {
+    id: makeRefereeId(referee),
     source: "Transfermarkt",
     country: leagueConfig.country,
     league: leagueConfig.league,
@@ -205,8 +224,11 @@ function makeProfile(raw, leagueConfig, debugLeague, row) {
     yellow_avg: yellowAvg,
     second_yellow_cards: secondYellowCards,
     red_cards: redCards,
+    red_avg: redAvg,
     penalties,
+    penalty_avg: penaltyAvg,
     cards_avg_total: cardsAvgTotal,
+    confidence: calculateRefereeConfidence(matches),
     discipline_tier: classifyDisciplineTier(cardsAvgTotal),
     updated_at: nowIsoDate()
   };
