@@ -444,11 +444,13 @@ def get_recent_fixture_stats(client: APIClient, team_id: int, league_id: int, se
             corners_list.append(ch + ca)
 
         # Cards (yellow + red)
-        yh = stat(home_stats, "Yellow Cards") or 0
-        rh = stat(home_stats, "Red Cards") or 0
-        ya = stat(away_stats, "Yellow Cards") or 0
-        ra = stat(away_stats, "Red Cards") or 0
-        cards_list.append(yh + rh + ya + ra)
+        yh = stat(home_stats, "Yellow Cards")
+        rh = stat(home_stats, "Red Cards")
+        ya = stat(away_stats, "Yellow Cards")
+        ra = stat(away_stats, "Red Cards")
+        card_values = [yh, rh, ya, ra]
+        if any(v is not None for v in card_values):
+            cards_list.append(sum(v or 0 for v in card_values))
 
         # Shots
         sh = stat(home_stats, "Total Shots"); sa = stat(away_stats, "Total Shots")

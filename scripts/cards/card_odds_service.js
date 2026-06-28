@@ -76,6 +76,24 @@ function parseMarket(market, normalized) {
   if (Array.isArray(outcomes)) outcomes.forEach((outcome) => parseOutcome(outcome, marketName, normalized));
 }
 
+function flatOddsForLine(match, line, side) {
+  const suffix = String(line).replace(".", "");
+  if (side === "under") return toNumber(match[`odds_cards_under_${suffix}`]);
+  return toNumber(match[`odds_cards_${suffix}`] ?? match[`odds_cards_over_${suffix}`]);
+}
+
+function parseFlatOdds(match, normalized) {
+  for (const line of [2.5, 3.5, 4.5, 5.5, 6.5]) {
+    upsertLine(normalized.total_cards, line, "over", flatOddsForLine(match, line, "over"));
+    upsertLine(normalized.total_cards, line, "under", flatOddsForLine(match, line, "under"));
+  }
+
+  normalized.both_teams_card.yes_odds = toNumber(match.odds_cards_both_yes) ?? normalized.both_teams_card.yes_odds;
+  normalized.both_teams_card.no_odds = toNumber(match.odds_cards_both_no) ?? normalized.both_teams_card.no_odds;
+  normalized.both_teams_2plus_cards.yes_odds = toNumber(match.odds_cards_both_2plus_yes) ?? normalized.both_teams_2plus_cards.yes_odds;
+  normalized.both_teams_2plus_cards.no_odds = toNumber(match.odds_cards_both_2plus_no) ?? normalized.both_teams_2plus_cards.no_odds;
+}
+
 function extractCardOddsFromMatch(match = {}) {
   const normalized = {
     available: false,
@@ -84,6 +102,7 @@ function extractCardOddsFromMatch(match = {}) {
     both_teams_2plus_cards: { yes_odds: null, no_odds: null }
   };
 
+  parseFlatOdds(match, normalized);
   flattenMarkets(match).forEach((market) => parseMarket(market, normalized));
   normalized.total_cards.sort((a, b) => a.line - b.line);
   normalized.available = normalized.total_cards.length > 0

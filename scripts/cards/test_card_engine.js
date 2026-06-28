@@ -61,6 +61,8 @@ function run() {
   const hot = analyzeCardsMarket(baseHot);
   assert.equal(hot.approved, true, "jogo quente deve aprovar algum mercado");
   assert(hot.submarkets.some((item) => item.market_key === "cards_over_55"), "jogo quente deve sustentar Over 5.5");
+  assert(hot.breakdown?.team_stats?.max === 35, "analise deve expor breakdown do score");
+  assert(Number.isFinite(hot.line_value), "analise deve expor line_value da melhor linha");
 
   const cold = analyzeCardsMarket(baseCold);
   assert.equal(cold.approved, true, "jogo frio deve aprovar under");
@@ -74,7 +76,8 @@ function run() {
     home_cards_avg: 3.0,
     away_cards_avg: 3.0
   });
-  assert(serieBOver.submarkets.some((item) => item.market_key === "cards_over_55"), "Serie B quente deve aprovar Over 5.5");
+  assert(serieBOver.submarkets.some((item) => item.market_key === "cards_over_45"), "Serie B quente com media 6.0 deve migrar para linha Over 4.5");
+  assert(!serieBOver.submarkets.some((item) => item.market_key === "cards_over_55"), "Over 5.5 exige line_value minimo apos calibracao");
 
   const worldCup = analyzeCardsMarket({
     league: "World Cup",
@@ -91,6 +94,8 @@ function run() {
     referee: ""
   });
   assert.equal(noReferee.diagnostics.referee.found, false, "jogo sem arbitro deve ser tratado");
+  assert.equal(noReferee.data_source_level, "ALTA", "jogo com odds, times, liga e contexto sem arbitro deve ser fonte ALTA");
+  assert(noReferee.score <= 92, "jogo sem arbitro deve respeitar teto ALTA");
 
   const noOdds = analyzeCardsMarket({
     ...baseHot,
@@ -104,6 +109,35 @@ function run() {
     ...cardOdds([[4.5, 1.9, 1.9]])
   });
   assert.equal(noTeamAvg.diagnostics.team_stats.available, false, "jogo sem media dos times deve reduzir qualidade");
+
+  const combinedTeamAvg = analyzeCardsMarket({
+    country: "Brazil",
+    league: "Serie B",
+    round: "Final",
+    avg_cards: 6.4
+  });
+  assert.equal(combinedTeamAvg.diagnostics.team_stats.available, true, "media agregada do CSV deve alimentar estatistica de times");
+  assert.equal(combinedTeamAvg.diagnostics.team_stats.source, "combined", "media agregada deve ser marcada como origem combinada");
+  assert.equal(combinedTeamAvg.approved, true, "times + liga + contexto devem gerar palpite sem arbitro e sem odds");
+  assert.equal(combinedTeamAvg.data_source_level, "MEDIA", "times + liga + contexto sem arbitro e odds devem ser fonte MEDIA");
+  assert.equal(combinedTeamAvg.score_cap, 89, "fonte MEDIA sem arbitro e odds deve ter teto 89");
+  assert(combinedTeamAvg.score <= 89, "score final deve respeitar teto MEDIA");
+  assert(combinedTeamAvg.score_before_cap >= combinedTeamAvg.score, "score bruto deve ser preservado antes do teto");
+
+  const leagueContextOnly = analyzeCardsMarket({
+    country: "Brazil",
+    league: "Serie B",
+    round: "Final"
+  });
+  assert(leagueContextOnly.data_quality >= 50, "liga + contexto devem atingir a faixa minima de qualidade");
+  assert.equal(leagueContextOnly.approved, false, "sem media de cartoes nao deve aprovar linha apos calibracao");
+
+  const flatOdds = extractCardOddsFromMatch({
+    odds_cards_25: "1.72",
+    odds_cards_under_25: "2,05"
+  });
+  assert.equal(flatOdds.available, true, "odds planas do pipeline devem ser detectadas");
+  assert.deepEqual(flatOdds.total_cards[0], { line: 2.5, over_odds: 1.72, under_odds: 2.05 }, "odds planas devem ser normalizadas");
 
   const normalizedOdds = extractCardOddsFromMatch({
     bookmakers: [

@@ -39,6 +39,18 @@ const AWAY_PATHS = [
   "statistics.away.cards"
 ];
 
+const COMBINED_PATHS = [
+  "avg_cards",
+  "avg_cards_total",
+  "cards_avg",
+  "cards_avg_total",
+  "average_cards",
+  "total_cards_avg",
+  "cards_per_game",
+  "statistics.cards",
+  "teams.cards_avg"
+];
+
 function firstNumber(match, paths) {
   for (const path of paths) {
     const value = toNumber(valueAtPath(match, path));
@@ -50,9 +62,17 @@ function firstNumber(match, paths) {
 function getTeamCardsStats(match = {}) {
   const home_avg = firstNumber(match, HOME_PATHS);
   const away_avg = firstNumber(match, AWAY_PATHS);
-  const available = home_avg !== null && away_avg !== null;
-  const combined_avg = available ? Number((home_avg + away_avg).toFixed(2)) : null;
-  return { available, home_avg, away_avg, combined_avg };
+  const combined_direct = firstNumber(match, COMBINED_PATHS);
+  const hasSplitStats = home_avg !== null && away_avg !== null;
+  const available = hasSplitStats || combined_direct !== null;
+  const combined_avg = hasSplitStats ? Number((home_avg + away_avg).toFixed(2)) : combined_direct;
+  return {
+    available,
+    home_avg,
+    away_avg,
+    combined_avg,
+    source: hasSplitStats ? "home_away" : combined_direct !== null ? "combined" : "missing"
+  };
 }
 
 function getCombinedCardsAvg(match) {

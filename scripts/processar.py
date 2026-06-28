@@ -9,6 +9,8 @@ import numpy as np
 import json
 import os
 import sys
+import re
+import unicodedata
 from datetime import datetime
 import warnings
 from ligas_config import blocked_name, favorite_countries, favorite_league_names
@@ -20,6 +22,7 @@ warnings.filterwarnings('ignore')
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'data', 'csv')
 OUT_DIR  = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 os.makedirs(OUT_DIR, exist_ok=True)
+COLUMN_REPORT = {}
 
 COUNTRIES_OK = [
     'Europe','England','Spain','Italy','Germany','France',
@@ -144,6 +147,170 @@ def fex(raw, idx_map):
     return result
 
 # ── Carregar CSVs ──────────────────────────────────────────────────
+def norm_col(value):
+    text = unicodedata.normalize('NFD', str(value or ''))
+    text = ''.join(ch for ch in text if unicodedata.category(ch) != 'Mn')
+    text = text.lower().replace('%', ' percent ')
+    return re.sub(r'[^a-z0-9]+', ' ', text).strip()
+
+def colspec(index, aliases):
+    return {'index': index, 'aliases': aliases}
+
+BASE_COLUMNS = {
+    'country': colspec(0, ['country', 'pais', 'país']),
+    'league': colspec(2, ['league', 'liga', 'competition', 'competicao', 'competition name']),
+    'hour': colspec(3, ['hour', 'hora', 'time', 'kickoff', 'kick off']),
+    'status': colspec(4, ['status', 'fixture status', 'match status']),
+    'home': colspec(5, ['home', 'home team', 'team home', 'casa', 'mandante']),
+    'away': colspec(8, ['visitor team', 'away', 'away team', 'team away', 'fora', 'visitante'])
+}
+
+def resolve_column(df, spec):
+    if isinstance(spec, int):
+        spec = colspec(spec, [])
+    columns = list(df.columns)
+    normalized = {norm_col(col): idx for idx, col in enumerate(columns)}
+    aliases = [norm_col(alias) for alias in spec.get('aliases', [])]
+    for alias in aliases:
+        if alias in normalized:
+            idx = normalized[alias]
+            return idx, columns[idx], 'alias'
+    for alias in aliases:
+        for col_norm, idx in normalized.items():
+            if alias and alias in col_norm:
+                return idx, columns[idx], 'alias_partial'
+    idx = spec.get('index')
+    if isinstance(idx, int) and idx < df.shape[1]:
+        return idx, columns[idx], 'index_fallback'
+    return None, None, 'missing'
+
+def safe_series(df, spec, default=np.nan):
+    idx, _, _ = resolve_column(df, spec)
+    if idx is None:
+        return pd.Series([default] * len(df), index=df.index)
+    return df.iloc[:, idx]
+
+def unique_column_names(names):
+    counts = {}
+    unique = []
+    for name in names:
+        base = str(name).strip() or 'unnamed'
+        count = counts.get(base, 0)
+        unique.append(base if count == 0 else f'{base}.{count}')
+        counts[base] = count + 1
+    return unique
+
+def clean_header_part(value):
+    text = str(value or '').strip()
+    if not text or text.lower().startswith('unnamed:'):
+        return ''
+    return text
+
+def flatten_multi_columns(columns):
+    flattened = []
+    for col in columns:
+        if isinstance(col, tuple):
+            parts = [clean_header_part(part) for part in col]
+            flattened.append(' | '.join([part for part in parts if part]))
+        else:
+            flattened.append(clean_header_part(col))
+    return unique_column_names(flattened)
+
+def row_looks_like_match_data(values):
+    sample = [str(value).strip() for value in values[:12]]
+    status_hits = sum(1 for value in sample if value in STATUS_OK)
+    country_hits = sum(1 for value in sample if value in COUNTRIES_OK)
+    numeric_hits = sum(1 for value in sample if re.fullmatch(r'-?\d+(?:[,.]\d+)?', value or ''))
+    date_hits = sum(1 for value in sample if re.search(r'\d{2}[-/]\d{2}[-/]\d{4}', value))
+    return (status_hits + country_hits + date_hits) >= 2 or numeric_hits >= 4
+
+def read_packball_csv(path, kind):
+    simple = pd.read_csv(path, sep=None, engine='python', encoding='utf-8-sig', header=0)
+    simple.columns = unique_column_names([str(col).strip() for col in simple.columns])
+    header_mode = 'single'
+
+    try:
+        multi = pd.read_csv(path, sep=None, engine='python', encoding='utf-8-sig', header=[0, 1])
+        first_second_level = [col[1] if isinstance(col, tuple) and len(col) > 1 else '' for col in multi.columns]
+        if not row_looks_like_match_data(first_second_level):
+            multi.columns = flatten_multi_columns(multi.columns)
+            df = multi
+            header_mode = 'multi'
+        else:
+            df = simple
+            header_mode = 'single_detected_packball_duplicate_groups'
+    except Exception:
+        df = simple
+
+    df.attrs['packball_import'] = {
+        'path': path,
+        'kind': kind,
+        'header_mode': header_mode,
+        'columns': [
+            {'index': idx, 'column': str(col)}
+            for idx, col in enumerate(df.columns)
+        ]
+    }
+    return df
+
+def build_mapping_report(raw, filtered, idx_map):
+    import_info = raw.attrs.get('packball_import', {})
+    report = {
+        'rows_raw': int(len(raw)),
+        'rows_after_filter': int(len(filtered)),
+        'csv_path': import_info.get('path'),
+        'csv_kind': import_info.get('kind'),
+        'header_mode': import_info.get('header_mode'),
+        'columns_raw': [str(col) for col in raw.columns],
+        'columns_by_index': import_info.get('columns', []),
+        'fields': {}
+    }
+    for name, spec in {**BASE_COLUMNS, **idx_map}.items():
+        idx, col, method = resolve_column(raw, spec)
+        aliases = spec.get('aliases', []) if isinstance(spec, dict) else []
+        report['fields'][name] = {
+            'source_column': str(col) if col is not None else None,
+            'source_index': int(idx) if idx is not None else None,
+            'method': method,
+            'aliases_checked': aliases,
+            'non_null_after_filter': int(filtered.iloc[:, idx].notna().sum()) if idx is not None and len(filtered) else 0
+        }
+    return report
+
+def fex(raw, idx_map, report_key=None):
+    """Filtra linhas validas e extrai colunas por nome, com fallback por indice."""
+    df = raw.copy()
+    df = df[safe_series(df, BASE_COLUMNS['status']).isin(STATUS_OK)]
+    df = df[safe_series(df, BASE_COLUMNS['country']).isin(COUNTRIES_OK)]
+    ll = safe_series(df, BASE_COLUMNS['league']).astype(str).str.lower().fillna('')
+    df = df[~ll.apply(blocked_name)]
+    if df.shape[1] < 10:
+        return pd.DataFrame(columns=['country','home','away','league','hour'])
+    teams = (
+        safe_series(df, BASE_COLUMNS['home']).astype(str).str.lower().fillna('') + ' ' +
+        safe_series(df, BASE_COLUMNS['away']).astype(str).str.lower().fillna('')
+    )
+    df = df[~teams.apply(blocked_name)]
+    df = df[safe_series(df, BASE_COLUMNS['league']).astype(str).str.strip().isin(LIGAS_OK)]
+    home_col = safe_series(df, BASE_COLUMNS['home']).name
+    away_col = safe_series(df, BASE_COLUMNS['away']).name
+    league_col = safe_series(df, BASE_COLUMNS['league']).name
+    df = df.drop_duplicates(subset=[home_col, away_col, league_col]).reset_index(drop=True)
+
+    result = pd.DataFrame({
+        'country': safe_series(df, BASE_COLUMNS['country']),
+        'home':   safe_series(df, BASE_COLUMNS['home']),
+        'away':   safe_series(df, BASE_COLUMNS['away']),
+        'league': safe_series(df, BASE_COLUMNS['league']),
+        'hour':   safe_series(df, BASE_COLUMNS['hour']),
+    })
+    for name, spec in idx_map.items():
+        idx, _, _ = resolve_column(df, spec)
+        result[name] = df.iloc[:, idx].apply(cp) if idx is not None else np.nan
+    if report_key:
+        COLUMN_REPORT[report_key] = build_mapping_report(raw, df, idx_map)
+    return result
+
 def load_csvs(date_str):
     folder = os.path.join(DATA_DIR, date_str)
     if not os.path.isdir(folder):
@@ -166,8 +333,8 @@ def load_csvs(date_str):
         print(f"  ⚠ CSVs não encontrados: {missing}")
         return None
     try:
-        dfs = {k: pd.read_csv(v, sep=None, engine='python', encoding='utf-8-sig')
-               for k, v in paths.items()}
+        dfs = {k: read_packball_csv(v, k) for k, v in paths.items()}
+        dfs['_paths'] = paths
         print(f"  ✓ CSVs carregados para {date_str}")
         return dfs
     except Exception as e:
@@ -227,17 +394,92 @@ def processar_dia(date_str, dfs):
 
     # ── Mapeamento colunas CARTÕES ──
     c = fex(cart_raw, {
-        'avg_cards_h': 29, 'avg_cards_a': 30,
-        'avg_cards_total': 28,
-        'over25_cards': 47, 'over35_cards': 48, 'over45_cards': 49,
-    })
+        'avg_cards_h': colspec(11, [
+            'avg_cards_h', 'home_cards_avg', 'home avg cards', 'home cards avg',
+            'cards avg home', 'cards home avg', 'home cards', 'team a cards',
+            'team_a_cards', 'cards_home', 'avg cards home', 'yellow cards home',
+            'home yellow cards', 'home team cards', 'casa cartoes', 'mandante cartoes',
+            'casa'
+        ]),
+        'avg_cards_a': colspec(12, [
+            'avg_cards_a', 'away_cards_avg', 'away avg cards', 'away cards avg',
+            'cards avg away', 'cards away avg', 'away cards', 'team b cards',
+            'team_b_cards', 'cards_away', 'avg cards away', 'yellow cards away',
+            'away yellow cards', 'away team cards', 'fora cartoes', 'visitante cartoes',
+            'fora'
+        ]),
+        'avg_cards_total': colspec(15, [
+            'avg_cards_total', 'avg_cards', 'average cards total', 'cards average total',
+            'avg total cards', 'total cards avg', 'match cards avg',
+            'cards per match', 'cards per game', 'cartoes media', 'media cartoes',
+            'total cards average', 'card average total', 'global'
+        ]),
+        'over25_cards': colspec(17, [
+            'over25_cards', 'over_25_cards', 'over 2.5 cards', 'over 2,5 cards',
+            'cards over 2.5', 'cards over 2,5', 'o25 cards', '+2.5 cards',
+            '+2,5 cards', '2.5+ cards', '2,5+ cards', '+2.5', 'over 25 cards',
+            'cartoes over 2.5', 'mais de 2.5 cartoes', 'global 2'
+        ]),
+        'over35_cards': colspec(18, [
+            'over35_cards', 'over_35_cards', 'over 3.5 cards', 'over 3,5 cards',
+            'cards over 3.5', 'cards over 3,5', 'o35 cards', '+3.5 cards',
+            '+3,5 cards', '3.5+ cards', '3,5+ cards', '+3.5', 'over 35 cards',
+            'cartoes over 3.5', 'mais de 3.5 cartoes', 'global 3'
+        ]),
+        'over45_cards': colspec(19, [
+            'over45_cards', 'over_45_cards', 'over 4.5 cards', 'over 4,5 cards',
+            'cards over 4.5', 'cards over 4,5', 'o45 cards', '+4.5 cards',
+            '+4,5 cards', '4.5+ cards', '4,5+ cards', '+4.5', 'over 45 cards',
+            'cartoes over 4.5', 'mais de 4.5 cartoes', 'global 4'
+        ]),
+        'over55_cards': colspec(20, [
+            'over55_cards', 'over_55_cards', 'over 5.5 cards', 'over 5,5 cards',
+            'cards over 5.5', 'cards over 5,5', 'o55 cards', '+5.5 cards',
+            '+5,5 cards', '5.5+ cards', '5,5+ cards', '+5.5', 'over 55 cards',
+            'cartoes over 5.5', 'mais de 5.5 cartoes', 'global 5'
+        ]),
+    }, report_key=f'{date_str}:cartoes')
+    if f'{date_str}:cartoes' in COLUMN_REPORT:
+        COLUMN_REPORT[f'{date_str}:cartoes']['csv_path'] = dfs.get('_paths', {}).get('cart')
+    for over_col, under_col in [
+        ('over25_cards', 'under25_cards'),
+        ('over35_cards', 'under35_cards'),
+        ('over45_cards', 'under45_cards'),
+        ('over55_cards', 'under55_cards'),
+    ]:
+        if over_col in c.columns:
+            c[under_col] = c[over_col].apply(lambda value: 100 - value if pd.notna(value) else np.nan)
+    report_key = f'{date_str}:cartoes'
+    if report_key in COLUMN_REPORT:
+        fields = COLUMN_REPORT[report_key]['fields']
+        if 'avg_cards_total' in fields:
+            fields['avg_cards'] = {**fields['avg_cards_total'], 'internal_alias_of': 'avg_cards_total'}
+        if 'avg_cards_h' in fields:
+            fields['home_cards_avg'] = {**fields['avg_cards_h'], 'internal_alias_of': 'avg_cards_h'}
+        if 'avg_cards_a' in fields:
+            fields['away_cards_avg'] = {**fields['avg_cards_a'], 'internal_alias_of': 'avg_cards_a'}
+        for over_col, under_col in [
+            ('over25_cards', 'under25_cards'),
+            ('over35_cards', 'under35_cards'),
+            ('over45_cards', 'under45_cards'),
+            ('over55_cards', 'under55_cards'),
+        ]:
+            if over_col in fields:
+                fields[under_col] = {
+                    'source_column': fields[over_col].get('source_column'),
+                    'source_index': fields[over_col].get('source_index'),
+                    'method': f'derived_from_{over_col}',
+                    'formula': f'100 - {over_col}',
+                    'non_null_after_filter': fields[over_col].get('non_null_after_filter', 0)
+                }
 
     # Garantir colunas mesmo se vazio
     for col in ['avg_corners_h','avg_corners_a','avg_corners_total',
                 'over65_c','over75_c','over85_c','over95_c','over105_c','avg_shots']:
         if col not in e.columns: e[col] = np.nan
     for col in ['avg_cards_h','avg_cards_a','avg_cards_total',
-                'over25_cards','over35_cards','over45_cards']:
+                'over25_cards','over35_cards','over45_cards','over55_cards',
+                'under25_cards','under35_cards','under45_cards','under55_cards']:
         if col not in c.columns: c[col] = np.nan
 
     # ── Merge ──
@@ -248,7 +490,8 @@ def processar_dia(date_str, dfs):
                 on=['home','away','league'], how='left')
          .merge(c[['home','away','league',
                    'avg_cards_h','avg_cards_a','avg_cards_total',
-                   'over25_cards','over35_cards','over45_cards']],
+                   'over25_cards','over35_cards','over45_cards','over55_cards',
+                   'under25_cards','under35_cards','under45_cards','under55_cards']],
                 on=['home','away','league'], how='left'))
 
     results = []
@@ -277,9 +520,24 @@ def processar_dia(date_str, dfs):
         avg_shots = s(r.get('avg_shots'))
         avg_cards = s(r.get('avg_cards_total'))
         ch_cards  = s(r.get('avg_cards_h')); ca_cards = s(r.get('avg_cards_a'))
+        if avg_cards is None:
+            avg_cards = avg_nn(ch_cards, ca_cards)
         o25cards  = s(r.get('over25_cards'))
         o35cards  = s(r.get('over35_cards'))
         o45cards  = s(r.get('over45_cards'))
+        o55cards  = s(r.get('over55_cards'))
+        u25cards  = s(r.get('under25_cards'))
+        u35cards  = s(r.get('under35_cards'))
+        u45cards  = s(r.get('under45_cards'))
+        u55cards  = s(r.get('under55_cards'))
+        if o25cards is not None and 0 < o25cards <= 1: o25cards *= 100
+        if o35cards is not None and 0 < o35cards <= 1: o35cards *= 100
+        if o45cards is not None and 0 < o45cards <= 1: o45cards *= 100
+        if o55cards is not None and 0 < o55cards <= 1: o55cards *= 100
+        if u25cards is not None and 0 < u25cards <= 1: u25cards *= 100
+        if u35cards is not None and 0 < u35cards <= 1: u35cards *= 100
+        if u45cards is not None and 0 < u45cards <= 1: u45cards *= 100
+        if u55cards is not None and 0 < u55cards <= 1: u55cards *= 100
 
         # ── Derivados ──
         exg_tot   = avg_nn(exg_h, exg_a) and (exg_h + exg_a) if (exg_h is not None and exg_a is not None) else None
@@ -551,7 +809,14 @@ def processar_dia(date_str, dfs):
 
             # Cartões
             'avg_cards': avg_cards,
-            'over25_cards': o25cards, 'over35_cards': o35cards, 'over45_cards': o45cards,
+            'avg_cards_h': ch_cards,
+            'avg_cards_a': ca_cards,
+            'home_cards_avg': ch_cards,
+            'away_cards_avg': ca_cards,
+            'over25_cards': o25cards, 'over35_cards': o35cards,
+            'over45_cards': o45cards, 'over55_cards': o55cards,
+            'under25_cards': u25cards, 'under35_cards': u35cards,
+            'under45_cards': u45cards, 'under55_cards': u55cards,
 
             # Probabilidades Poisson
             'poisson_o15': round(prob_o15_poisson, 1) if prob_o15_poisson else None,
@@ -676,6 +941,19 @@ def consolidar_historico(all_results):
 
 
 # ── Entry point ────────────────────────────────────────────────────
+def salvar_relatorio_colunas_cartoes():
+    if not COLUMN_REPORT:
+        return
+    report = {
+        'generated_at': datetime.now().isoformat(timespec='seconds'),
+        'description': 'Mapeamento real das colunas usadas pelo pipeline de cartoes.',
+        'dates': COLUMN_REPORT
+    }
+    out_path = os.path.join(OUT_DIR, 'card_pipeline_column_report.json')
+    with open(out_path, 'w', encoding='utf-8') as f:
+        json.dump(report, f, ensure_ascii=False, indent=2)
+    print(f"Relatorio de colunas de cartoes gravado em {out_path}")
+
 if __name__ == '__main__':
     date_dirs = sorted([
         d for d in os.listdir(DATA_DIR)
@@ -703,5 +981,7 @@ if __name__ == '__main__':
     if all_results:
         print(f"\nConsolidando {len(all_results)} jogos...")
         consolidar_historico(all_results)
+        salvar_relatorio_colunas_cartoes()
     else:
+        salvar_relatorio_colunas_cartoes()
         print("Nenhum resultado gerado.")

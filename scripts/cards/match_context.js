@@ -29,7 +29,7 @@ function getMatchContext(match = {}) {
   ].join(" "));
 
   const isKnockout = Boolean(match.is_knockout || match.is_cup)
-    || /copa|cup|final|semifinal|semi final|quarter|quartas|oitavas|mata mata|playoff|play off/.test(text);
+    || /copa|cup|final|semifinal|semi final|quarter|quartas|oitavas|round of 16|knockout|mata mata|playoff|play off/.test(text);
   const isFinal = /final|semifinal|semi final/.test(text);
   const isClassic = Boolean(match.is_classic || match.rivalry || match.is_rivalry)
     || /classico|rival/.test(text);

@@ -81,8 +81,19 @@ function compactAnalysis(analysis) {
     line: analysis.line,
     side: analysis.side,
     score: analysis.score,
+    score_before_cap: analysis.score_before_cap,
+    score_bruto: analysis.score_bruto,
+    score_cap: analysis.score_cap,
+    score_final: analysis.score_final,
+    final_score: analysis.final_score,
     confidence: analysis.confidence,
     data_quality: analysis.data_quality,
+    data_quality_tier: analysis.data_quality_tier,
+    data_source_level: analysis.data_source_level,
+    line_value: analysis.line_value,
+    line_value_score: analysis.line_value_score,
+    line_risk_penalty: analysis.line_risk_penalty,
+    breakdown: analysis.breakdown,
     odds_available: analysis.odds_available,
     odds: analysis.odds,
     reasons: analysis.reasons,
@@ -90,7 +101,9 @@ function compactAnalysis(analysis) {
     referee: analysis.diagnostics?.referee || null,
     referee_under: analysis.diagnostics?.referee_under || null,
     team_stats: analysis.diagnostics?.team_stats || null,
-    context: analysis.diagnostics?.context || null
+    odds_data: analysis.diagnostics?.odds || null,
+    context: analysis.diagnostics?.context || null,
+    league_data: analysis.diagnostics?.league_data || false
   };
 }
 
@@ -111,8 +124,12 @@ function toPipelinePatch(match) {
     cards_best_market: analysis.best_market,
     cards_market_key: analysis.market_key,
     cards_best_score: analysis.score,
+    cards_score_before_cap: analysis.score_before_cap,
+    cards_score_cap: analysis.score_cap,
+    cards_score_final: analysis.score_final,
     cards_best_grade: analysis.confidence,
     cards_data_quality: analysis.data_quality,
+    cards_data_source_level: analysis.data_source_level,
     cards_odds_available: analysis.odds_available,
     cards_reasons: analysis.reasons,
     score_cards25: Number(scoreCards25.toFixed(1)),

@@ -21,9 +21,11 @@ function normalizeText(value) {
 }
 
 function normalizeRefereeName(name) {
-  return normalizeText(name)
+  const text = normalizeText(name).split(",")[0].replace(/\([^)]*\)/g, " ");
+  return text
     .normalize("NFD")
     .replace(/[\u0300-\u036f]/g, "")
+    .replace(/\b(brasil|brazil|argentina|uruguay|paraguay|chile|colombia|peru|ecuador|bolivia|venezuela)\b/gi, " ")
     .replace(/[^a-zA-Z0-9 ]+/g, " ")
     .replace(/\s+/g, " ")
     .trim()
