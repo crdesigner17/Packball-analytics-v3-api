@@ -809,18 +809,18 @@
         "under45_ok": true,
         "placar": "2-0",
         "placar_ht": "2-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 8,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Esc 7.5": {
           "score": 79.6,
           "palpite": true,
-          "acertou": null
+          "acertou": true
         }
       }
     },
@@ -947,12 +947,12 @@
         "under45_ok": true,
         "placar": "2-0",
         "placar_ht": "2-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 10,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {}
     },
@@ -1079,12 +1079,12 @@
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "0-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 11,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -1217,18 +1217,18 @@
         "under45_ok": true,
         "placar": "2-1",
         "placar_ht": "1-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 8,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {
         "Cart 2.5": {
           "score": 76.6,
           "palpite": true,
-          "acertou": null
+          "acertou": true
         }
       }
     },
@@ -1355,18 +1355,18 @@
         "under45_ok": true,
         "placar": "0-1",
         "placar_ht": "0-1",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Cart 2.5": {
           "score": 77.9,
           "palpite": true,
-          "acertou": null
+          "acertou": false
         }
       }
     },
@@ -2624,12 +2624,12 @@
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "0-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 11,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -2679,18 +2679,18 @@
         "under45_ok": true,
         "placar": "2-0",
         "placar_ht": "2-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 8,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Esc 7.5": {
           "score": 79.6,
           "palpite": true,
-          "acertou": null
+          "acertou": true
         }
       }
     },
@@ -2720,18 +2720,18 @@
         "under45_ok": true,
         "placar": "0-1",
         "placar_ht": "0-1",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Cart 2.5": {
           "score": 77.9,
           "palpite": true,
-          "acertou": null
+          "acertou": false
         }
       }
     },
@@ -2761,18 +2761,18 @@
         "under45_ok": true,
         "placar": "2-1",
         "placar_ht": "1-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 8,
+        "cards_total": 5,
+        "esc75_ok": true,
+        "esc85_ok": false,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {
         "Cart 2.5": {
           "score": 76.6,
           "palpite": true,
-          "acertou": null
+          "acertou": true
         }
       }
     }
@@ -2810,12 +2810,12 @@
                 "under45_ok": true,
                 "placar": "1-0",
                 "placar_ht": "0-0",
-                "corners_total": null,
-                "cards_total": null,
-                "esc75_ok": null,
-                "esc85_ok": null,
-                "cart25_ok": null,
-                "cart35_ok": null
+                "corners_total": 11,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
               },
               "acertos": {
                 "Over 1.5": {
@@ -2865,18 +2865,18 @@
                 "under45_ok": true,
                 "placar": "2-0",
                 "placar_ht": "2-0",
-                "corners_total": null,
-                "cards_total": null,
-                "esc75_ok": null,
-                "esc85_ok": null,
-                "cart25_ok": null,
-                "cart35_ok": null
+                "corners_total": 8,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": false,
+                "cart25_ok": false,
+                "cart35_ok": false
               },
               "acertos": {
                 "Esc 7.5": {
                   "score": 79.6,
                   "palpite": true,
-                  "acertou": null
+                  "acertou": true
                 }
               }
             },
@@ -2906,18 +2906,18 @@
                 "under45_ok": true,
                 "placar": "0-1",
                 "placar_ht": "0-1",
-                "corners_total": null,
-                "cards_total": null,
-                "esc75_ok": null,
-                "esc85_ok": null,
-                "cart25_ok": null,
-                "cart35_ok": null
+                "corners_total": 9,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
               },
               "acertos": {
                 "Cart 2.5": {
                   "score": 77.9,
                   "palpite": true,
-                  "acertou": null
+                  "acertou": false
                 }
               }
             }
@@ -2957,12 +2957,12 @@
                 "under45_ok": true,
                 "placar": "1-0",
                 "placar_ht": "0-0",
-                "corners_total": null,
-                "cards_total": null,
-                "esc75_ok": null,
-                "esc85_ok": null,
-                "cart25_ok": null,
-                "cart35_ok": null
+                "corners_total": 11,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
               },
               "acertos": {
                 "Over 1.5": {
@@ -3021,12 +3021,12 @@
             "under45_ok": true,
             "placar": "1-0",
             "placar_ht": "0-0",
-            "corners_total": null,
-            "cards_total": null,
-            "esc75_ok": null,
-            "esc85_ok": null,
-            "cart25_ok": null,
-            "cart35_ok": null
+            "corners_total": 11,
+            "cards_total": 2,
+            "esc75_ok": true,
+            "esc85_ok": true,
+            "cart25_ok": false,
+            "cart35_ok": false
           },
           "acertos": {
             "Over 1.5": {
@@ -3100,10 +3100,10 @@
     },
     "Esc 7.5": {
       "palpites": 1,
-      "acertos": 0,
+      "acertos": 1,
       "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "sem_dados": 0,
+      "taxa": 100.0
     },
     "Esc 8.5": {
       "palpites": 0,
@@ -3114,10 +3114,10 @@
     },
     "Cart 2.5": {
       "palpites": 2,
-      "acertos": 0,
-      "erros": 0,
-      "sem_dados": 2,
-      "taxa": null
+      "acertos": 1,
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 50.0
     },
     "Cart 3.5": {
       "palpites": 0,
@@ -3172,31 +3172,31 @@
     },
     "Esc 7.5": {
       "palpites": 1,
-      "acertos": 0,
+      "acertos": 1,
       "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "sem_dados": 0,
+      "taxa": 100.0
     },
     "Esc 8.5": {
       "palpites": 1,
       "acertos": 0,
-      "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
     },
     "Cart 2.5": {
       "palpites": 2,
-      "acertos": 0,
-      "erros": 0,
-      "sem_dados": 2,
-      "taxa": null
+      "acertos": 1,
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 50.0
     },
     "Cart 3.5": {
       "palpites": 1,
       "acertos": 0,
-      "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
     }
   },
   "stats": {

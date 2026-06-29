@@ -2580,12 +2580,12 @@
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "1-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 7,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     },
