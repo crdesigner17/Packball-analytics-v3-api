@@ -5,7 +5,7 @@ WinMetrics — Gerador de Site v3.1
 - KPI de assertividade no header
 - Aba Histórico com gráfico de evolução por mercado
 """
-import json, os
+import csv, json, os, re, unicodedata
 from datetime import datetime, timezone
 from ligas_config import blocked_name, favorite_league_names
 
@@ -38,7 +38,109 @@ def load_day(date_str):
     path = os.path.join(DATA_DIR, f'{date_str}.json')
     if not os.path.exists(path): return None
     with open(path, encoding='utf-8') as f:
-        return filter_favorite_leagues(json.load(f))
+        day_data = filter_favorite_leagues(json.load(f))
+    return enrich_resultado_final_csv(date_str, day_data)
+
+def norm_team_name(value):
+    text = unicodedata.normalize('NFKD', str(value or '')).encode('ascii', 'ignore').decode('ascii')
+    text = re.sub(r'\b(ec|fc|sc|ac|afc|cf|club|recife|campinas)\b', ' ', text.lower())
+    text = re.sub(r'[^a-z0-9]+', ' ', text).strip()
+    aliases = {
+        'atletico go': 'atletico goianiense',
+        'athletico': 'athletic',
+        'nautico': 'nautico',
+        'goias': 'goias',
+        'ceara': 'ceara',
+        'avai': 'avai',
+        'confianca': 'confianca',
+        'maranhao': 'maranhao',
+    }
+    return aliases.get(text, text)
+
+def team_match_score(a, b):
+    na, nb = norm_team_name(a), norm_team_name(b)
+    if not na or not nb:
+        return 0
+    if na == nb or na in nb or nb in na:
+        return 3
+    ta, tb = set(na.split()), set(nb.split())
+    return len(ta & tb)
+
+def csv_float(value):
+    try:
+        text = str(value or '').strip().replace(',', '.')
+        return float(text) if text else None
+    except Exception:
+        return None
+
+def find_resultado_final_csv(date_str):
+    root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    candidates = [
+        os.path.join(root, 'data', 'csv', date_str),
+        os.path.join(root, 'data', 'csv'),
+        os.path.join(root, 'scripts'),
+        os.path.join(root, 'docs', 'data'),
+        root,
+        os.path.join(os.path.expanduser('~'), 'Downloads'),
+    ]
+    target = date_str.lower()
+    for folder in candidates:
+        if not os.path.isdir(folder):
+            continue
+        for fname in os.listdir(folder):
+            lower = fname.lower()
+            if not lower.endswith('.csv'):
+                continue
+            if target in lower and 'resultado' in lower and ('final' in lower or '1x2' in lower):
+                return os.path.join(folder, fname)
+    return None
+
+def read_resultado_final_rows(path, date_str):
+    rows = []
+    if not path:
+        return rows
+    with open(path, encoding='utf-8-sig', newline='') as f:
+        reader = csv.reader(f, delimiter=';')
+        next(reader, None)
+        for raw in reader:
+            if len(raw) < 13 or not str(raw[3] if len(raw) > 3 else '').startswith(date_str):
+                continue
+            rows.append({
+                'source': os.path.basename(path),
+                'country': raw[0] if len(raw) > 0 else None,
+                'league': raw[2] if len(raw) > 2 else None,
+                'hour': raw[3] if len(raw) > 3 else None,
+                'home': raw[5] if len(raw) > 5 else None,
+                'away': raw[8] if len(raw) > 8 else None,
+                'odds_h': csv_float(raw[11] if len(raw) > 11 else None),
+                'odds_a': csv_float(raw[12] if len(raw) > 12 else None),
+                'ppg_h': csv_float(raw[38] if len(raw) > 38 else None),
+                'ppg_a': csv_float(raw[39] if len(raw) > 39 else None),
+                'exg_h': csv_float(raw[51] if len(raw) > 51 else None),
+                'exg_a': csv_float(raw[52] if len(raw) > 52 else None),
+                'avg_shots_h': csv_float(raw[60] if len(raw) > 60 else None),
+                'avg_shots_a': csv_float(raw[61] if len(raw) > 61 else None),
+                'avg_sot_h': csv_float(raw[62] if len(raw) > 62 else None),
+                'avg_sot_a': csv_float(raw[63] if len(raw) > 63 else None),
+                'raw': raw,
+            })
+    return rows
+
+def enrich_resultado_final_csv(date_str, day_data):
+    if not isinstance(day_data, dict) or not day_data.get('jogos'):
+        return day_data
+    rows = read_resultado_final_rows(find_resultado_final_csv(date_str), date_str)
+    if not rows:
+        return day_data
+    for jogo in day_data.get('jogos', []):
+        best, best_score = None, 0
+        for row in rows:
+            score = team_match_score(jogo.get('home'), row.get('home')) + team_match_score(jogo.get('away'), row.get('away'))
+            if score > best_score:
+                best, best_score = row, score
+        if best and best_score >= 4:
+            jogo['rf_csv'] = best
+    return day_data
 
 def load_cards_audit():
     path = os.path.join(DATA_DIR, 'cards_audit_report.json')
@@ -1913,10 +2015,11 @@ function todayKey(){{
   return new Date().toLocaleDateString('pt-BR',{{day:'2-digit',month:'2-digit',year:'numeric'}}).split('/').join('-');
 }}
 function numVal(v){{const n=parseFloat(v);return Number.isFinite(n)?n:null;}}
+function rfNum(d,k){{const v=numVal(d[k]);return v!=null?v:numVal((d.rf_csv||{{}})[k]);}}
 function sideName(side){{return side==='home'?'Casa':'Visitante';}}
 function rfFirstVal(d, keys){{
   for(const k of keys){{
-    const v=numVal(d[k]);
+    const v=rfNum(d,k);
     if(v!=null)return v;
   }}
   return null;
@@ -1940,12 +2043,11 @@ function rfOddsPoints(odd){{
 function rfMarketLabel(p){{
   if(!p)return'—';
   if(p.market==='win')return`Vitória ${{sideName(p.side)}}`;
-  if(p.market==='dnb')return`${{sideName(p.side)}} DNB`;
   return p.side==='home'?'Dupla Chance 1X':'Dupla Chance X2';
 }}
 function rfFavSide(d){{
-  const oh=numVal(d.odds_h), oa=numVal(d.odds_a);
-  const wh=numVal(d.win_home), wa=numVal(d.win_away);
+  const oh=rfNum(d,'odds_h'), oa=rfNum(d,'odds_a');
+  const wh=rfNum(d,'win_home'), wa=rfNum(d,'win_away');
   if(oh&&oa&&oh!==oa)return {{side:oh<oa?'home':'away', favOdd:Math.min(oh,oa), dogOdd:Math.max(oh,oa), oddGap:Math.abs(oh-oa), impliedGap:Math.abs((1/oh)-(1/oa))*100, source:'odds'}};
   if(wh!=null&&wa!=null&&Math.abs(wh-wa)>=8)return {{side:wh>wa?'home':'away', favOdd:null, dogOdd:null, oddGap:null, impliedGap:Math.abs(wh-wa), source:'api'}};
   return null;
@@ -1955,12 +2057,12 @@ function rfEdge(d, side){{
   const shots=rfPair(d,['shots_h','avg_shots_h'],['shots_a','avg_shots_a']);
   const sot=rfPair(d,['sot_h','avg_sot_h'],['sot_a','avg_sot_a']);
   const metrics = [
-    {{name:'PPG', diff:((numVal(d.ppg_h)||0)-(numVal(d.ppg_a)||0))*sign, min:.35, weight:18}},
-    {{name:'xG', diff:((numVal(d.exg_h)||0)-(numVal(d.exg_a)||0))*sign, min:.25, weight:18}},
-    {{name:'Ataque', diff:((numVal(d.avg_sc_h)||0)-(numVal(d.avg_sc_a)||0))*sign, min:.25, weight:14}},
+    {{name:'PPG', diff:((rfNum(d,'ppg_h')||0)-(rfNum(d,'ppg_a')||0))*sign, min:.35, weight:18}},
+    {{name:'xG', diff:((rfNum(d,'exg_h')||0)-(rfNum(d,'exg_a')||0))*sign, min:.25, weight:18}},
+    {{name:'Ataque', diff:((rfNum(d,'avg_sc_h')||0)-(rfNum(d,'avg_sc_a')||0))*sign, min:.25, weight:14}},
     {{name:'Finalizações', diff:((shots.h||0)-(shots.a||0))*sign, min:2.5, weight:10}},
     {{name:'SOT', diff:((sot.h||0)-(sot.a||0))*sign, min:.8, weight:10}},
-    {{name:'Prob. API', diff:((numVal(d.win_home)||0)-(numVal(d.win_away)||0))*sign, min:15, weight:20}},
+    {{name:'Prob. API', diff:((rfNum(d,'win_home')||0)-(rfNum(d,'win_away')||0))*sign, min:15, weight:20}},
   ];
   const ok = metrics.filter(m=>Number.isFinite(m.diff)&&m.diff>=m.min);
   const strength = ok.reduce((acc,m)=>acc+m.weight+Math.min(12,Math.abs(m.diff)*2),0);
@@ -1980,7 +2082,7 @@ function rfDominanceIndex(d, side, favOdd){{
   const defense=rfPair(d,['avg_co_h'],['avg_co_a']);
   const shots=rfPair(d,['shots_h','avg_shots_h'],['shots_a','avg_shots_a']);
   const sot=rfPair(d,['sot_h','avg_sot_h'],['sot_a','avg_sot_a']);
-  const apiProb=side==='home'?numVal(d.win_home):numVal(d.win_away);
+  const apiProb=side==='home'?rfNum(d,'win_home'):rfNum(d,'win_away');
   const ppgDiff=ppg.h!=null&&ppg.a!=null?((ppg.h-ppg.a)*sign):null;
   const xgDiff=xg.h!=null&&xg.a!=null?((xg.h-xg.a)*sign):null;
   const attackDiff=attack.h!=null&&attack.a!=null?((attack.h-attack.a)*sign):null;
@@ -2013,9 +2115,20 @@ function rfDominanceContextFloor(d, side, favOdd, dom){{
   if(!isWorldCup && favOdd!=null && favOdd<=1.90 && ppgDiff!=null && ppgDiff>=1 && dominance>=55)dominance=Math.max(dominance,70);
   return {{...dom,dominance:Math.round(Math.min(100,dominance)*10)/10,isWorldCup}};
 }}
-function rfPick(d){{
+function rfNameMatchesSide(d, side, name){{
+  const target=String(side==='home'?d.home:d.away||'').toLowerCase();
+  const value=String(name||'').toLowerCase();
+  return !!target && !!value && (target.includes(value)||value.includes(target));
+}}
+function rfStrongWinFallback(d, side, favOdd, aligned, edge, dom){{
+  if(!(favOdd!=null && favOdd<=1.45 && aligned>=4 && dom.dominance>=55))return false;
+  const apiAligned=dom.apiProb!=null && dom.apiProb>=50 && rfNameMatchesSide(d,side,d.pred_winner);
+  const hasCore=edge.ok.some(m=>m.name==='PPG') && edge.ok.some(m=>m.name==='xG') && edge.ok.some(m=>m.name==='Prob. API');
+  return apiAligned && hasCore;
+}}
+function rfAnalysis(d){{
   const fav=rfFavSide(d);
-  if(!fav)return null;
+  if(!fav)return {{approved:false,stage:'Sem favorito',reason:'odds 1X2 ausentes/iguais e probabilidade API sem diferença mínima',score:null,grade:null,p:null}};
   const side=fav.side;
   const edge=rfEdge(d,side);
   const aligned=edge.ok.length;
@@ -2025,7 +2138,9 @@ function rfPick(d){{
   let score=Math.min(100,Math.round((oddsScore + edge.strength + Math.min(20,fav.impliedGap||0)) * 10)/10);
   const reasons=[`favorito ${{sideName(side)}}${{favOdd?` @ ${{favOdd.toFixed(2)}}`:''}}`, `${{aligned}} sinais alinhados`].concat(edge.ok.slice(0,4).map(m=>`${{m.name}} +${{m.diff.toFixed(m.name==='Prob. API'?0:1)}}`));
 
-  if(isFriendly && (!favOdd || favOdd>1.30) && !edge.ok.find(m=>m.name==='PPG'||m.name==='Prob. API'))return null;
+  if(isFriendly && (!favOdd || favOdd>1.30) && !edge.ok.find(m=>m.name==='PPG'||m.name==='Prob. API')){{
+    return {{approved:false,stage:'Contexto',reason:'amistoso sem odd forte e sem PPG/API alinhado',side,score,grade:gradeFromScore(score),reasons,p:null}};
+  }}
 
   let market=null;
   if((favOdd&&favOdd<=1.45&&aligned>=3) || (favOdd&&favOdd<=1.65&&aligned>=4&&edge.ok.find(m=>m.name==='Prob. API'))){{
@@ -2035,15 +2150,25 @@ function rfPick(d){{
   }} else if((favOdd&&favOdd<=1.90&&aligned>=2) || (!favOdd&&aligned>=3&&fav.impliedGap>=12)){{
     market='dc'; score=Math.max(score,76);
   }}
-  if(!market)return null;
+  if(!market){{
+    return {{approved:false,stage:'Seleção de mercado',reason:'não atingiu odds/sinais mínimos para Vitória ou Dupla Chance',side,score,grade:gradeFromScore(score),reasons,p:null}};
+  }}
   const dom=rfDominanceContextFloor(d,side,favOdd,rfDominanceIndex(d,side,favOdd));
-  if(dom.dominance<65)return null;
+  const strongWinFallback=market==='win' && rfStrongWinFallback(d,side,favOdd,aligned,edge,dom);
+  if(dom.dominance<65 && !strongWinFallback){{
+    reasons.push(`Dominância ${{Math.round(dom.dominance)}}`);
+    return {{approved:false,stage:'Dominância',reason:`dominância ${{Math.round(dom.dominance)}} abaixo do mínimo 65`,side,market,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),dominance:dom.dominance,dataQuality:dom.quality,reasons,p:null}};
+  }}
   const apiWinOk=dom.apiProb!=null && (dom.apiProb>=55 || (dom.isWorldCup && favOdd!=null && favOdd<=1.25 && dom.dominance>=90));
-  if(!(market==='win' && dom.dominance>=85 && favOdd!=null && favOdd<=1.60 && apiWinOk)){{
+  if(!(strongWinFallback || (market==='win' && dom.dominance>=85 && favOdd!=null && favOdd<=1.60 && apiWinOk))){{
     market='dc';
   }}
   reasons.push(`Dominância ${{Math.round(dom.dominance)}}`);
-  return {{market,side,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),dominance:dom.dominance,dataQuality:dom.quality,reasons}};
+  const p={{market,side,score:Math.min(100,Math.round(score*10)/10),grade:gradeFromScore(score),dominance:dom.dominance,dataQuality:dom.quality,reasons}};
+  return {{approved:true,stage:'Aprovado',reason:'aprovado pelo filtro 1X2',side,market,score:p.score,grade:p.grade,dominance:dom.dominance,dataQuality:dom.quality,reasons,p}};
+}}
+function rfPick(d){{
+  return rfAnalysis(d).p;
 }}
 function rfResult(jogo,pick){{
   const res=getResultado(jogo);
@@ -2067,11 +2192,22 @@ function rfResult(jogo,pick){{
 function rfBadge(result){{
   if(result==='GREEN')return'<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
   if(result==='RED')return'<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
-  if(result==='VOID')return'<span class="res-badge pending"><i data-lucide="rotate-ccw"><Empate anula</span>';
+  if(result==='VOID')return'<span class="res-badge pending"><i data-lucide="rotate-ccw"></i> Anulado</span>';
   return'<span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span>';
 }}
+function rfVisualPick(pick){{
+  if(!pick)return null;
+  if(pick.market!=='dnb')return pick;
+  return {{...pick,market:'dc',originalMarket:'dnb'}};
+}}
+function rfVisualAnalysis(analysis){{
+  if(!analysis)return analysis;
+  const p=rfVisualPick(analysis.p);
+  const market=analysis.market==='dnb'?'dc':analysis.market;
+  return {{...analysis,p,market}};
+}}
 function rfRowsForDate(date){{
-  return getJogos(date).map(j=>({{j,p:rfPick(j)}})).filter(x=>x.p).sort((a,b)=>(b.p.score||0)-(a.p.score||0));
+  return getJogos(date).map(j=>({{j,p:rfVisualPick(rfPick(j))}})).filter(x=>x.p).sort((a,b)=>(b.p.score||0)-(a.p.score||0));
 }}
 function rfHistoricoRows(){{
   const start=dateObj(RF_BACKTEST_START);
@@ -2361,14 +2497,17 @@ function renderRanking(date,jogos){{
 function renderResultadoFinal(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-resultado');
   const dayRows=rfRowsForDate(date).map(x=>({{date,j:x.j,p:x.p,result:rfResult(x.j,x.p)}}));
+  const analysisRows=getJogos(date).map(j=>({{date,j,a:rfVisualAnalysis(rfAnalysis(j))}}));
+  const approvedAnalysis=analysisRows.filter(r=>r.a.approved);
+  const rejectedAnalysis=analysisRows.filter(r=>!r.a.approved);
   const histRows=rfHistoricoRows();
   const hist=rfSummary(histRows.filter(r=>r.result!=='PENDING'));
   const day=rfSummary(dayRows);
-  const byMarket=['win','dnb','dc'].map(m=>{{
+  const byMarket=['win','dc'].map(m=>{{
     const rows=histRows.filter(r=>r.p.market===m&&r.result!=='PENDING');
     return {{m,...rfSummary(rows)}};
   }});
-  const mLabel={{win:'Vitória seca',dnb:'Empate anula',dc:'Dupla Chance'}};
+  const mLabel={{win:'Vitória seca',dc:'Dupla Chance'}};
   // Taxa do dia
   const _taxaDia = day.green+day.red>0 ? Math.round(day.green/(day.green+day.red)*100) : null;
   const _taxaDiaColor = _taxaDia==null?'var(--muted)':_taxaDia>=70?'var(--green)':_taxaDia>=50?'var(--orange)':'var(--red)';
@@ -2379,25 +2518,45 @@ function renderResultadoFinal(date,jogos){{
         <span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:${{_taxaDiaColor}}">${{_taxaDia}}%</span>
       </div>` : '';
   const marketCards=byMarket.map(x=>`<div class="rf-card">
-    <span><i data-lucide="${{x.m==='win'?'trophy':x.m==='dnb'?'shield-check':'shield'}}"></i>${{mLabel[x.m]}}</span>
+    <span><i data-lucide="${{x.m==='win'?'trophy':'shield'}}"></i>${{mLabel[x.m]}}</span>
     <strong>${{rfTaxaText(x.taxa)}}</strong>
-    <em>${{x.green}} green · ${{x.red}} red · ${{x.void}} empate anula · ${{x.gerados}} gerados</em>
+    <em>${{x.green}} green · ${{x.red}} red · ${{x.gerados}} gerados</em>
   </div>`).join('');
-  const rowsHtml=dayRows.map((r,i)=>{{
+  const approvedRowsHtml=approvedAnalysis.map((r,i)=>{{
+    const p=r.a.p;
     const res=getResultado(r.j);
     const placar=res?`${{res.gols_home}}-${{res.gols_away}}`:'—';
-    const cls=r.result==='GREEN'?'row-hit':r.result==='RED'?'row-miss':'row-pending';
+    const result=rfResult(r.j,p);
+    const cls=result==='GREEN'?'row-hit':result==='RED'?'row-miss':'row-pending';
     return`<tr class="${{cls}}">
       <td class="row-num">${{i+1}}</td>
       ${{jogoCell(r.j)}}
       <td class="mono muted">${{r.j.hora||'—'}}</td>
-      <td><span class="rf-market ${{r.p.market}}">${{rfMarketLabel(r.p)}}</span></td>
-      <td class="rf-score" style="color:${{col(r.p.score)}}">${{pctText(r.p.score)}}</td>
-      <td>${{gradeHtml(r.p.grade)}}</td>
-      <td class="mono muted">${{r.j.odds_h?Number(r.j.odds_h).toFixed(2):'—'}} x ${{r.j.odds_a?Number(r.j.odds_a).toFixed(2):'—'}}</td>
+      <td><span class="rf-market ${{p.market}}">${{rfMarketLabel(p)}}</span></td>
+      <td class="rf-score" style="color:${{col(p.score)}}">${{pctText(p.score)}}</td>
+      <td>${{gradeHtml(p.grade)}}</td>
+      <td class="mono muted">${{rfNum(r.j,'odds_h')?Number(rfNum(r.j,'odds_h')).toFixed(2):'—'}} x ${{rfNum(r.j,'odds_a')?Number(rfNum(r.j,'odds_a')).toFixed(2):'—'}}</td>
       <td class="mono">${{placar}}</td>
-      <td>${{rfBadge(r.result)}}</td>
-      <td><div class="rf-reasons">${{r.p.reasons.join(' · ')}}</div></td>
+      <td>${{rfBadge(result)}}</td>
+      <td><div class="rf-reasons">${{p.reasons.join(' · ')}}</div></td>
+    </tr>`;
+  }}).join('');
+  const rejectedRowsHtml=rejectedAnalysis.map((r,i)=>{{
+    const a=r.a;
+    const res=getResultado(r.j);
+    const placar=res?`${{res.gols_home}}-${{res.gols_away}}`:'—';
+    const displayPick=a.market?{{...a,market:a.market}}:(a.side?{{...a,market:'win'}}:null);
+    return`<tr class="row-pending">
+      <td class="row-num">${{i+1}}</td>
+      ${{jogoCell(r.j)}}
+      <td class="mono muted">${{r.j.hora||'—'}}</td>
+      <td>${{displayPick?`<span class="rf-market ${{displayPick.market}}">${{rfMarketLabel(displayPick)}}</span>`:'<span class="mono muted">Sem favorito</span>'}}</td>
+      <td class="rf-score" style="color:${{col(a.score||0)}}">${{a.score!=null?pctText(a.score):'—'}}</td>
+      <td>${{a.grade?gradeHtml(a.grade):'<span class="mono muted">—</span>'}}</td>
+      <td class="mono muted">${{rfNum(r.j,'odds_h')?Number(rfNum(r.j,'odds_h')).toFixed(2):'—'}} x ${{rfNum(r.j,'odds_a')?Number(rfNum(r.j,'odds_a')).toFixed(2):'—'}}</td>
+      <td class="mono">${{placar}}</td>
+      <td><span class="res-badge pending"><i data-lucide="filter-x"></i> Reprovado</span></td>
+      <td><div class="rf-reasons"><strong>${{a.stage}}:</strong> ${{a.reason}}${{a.reasons&&a.reasons.length?` · ${{a.reasons.join(' · ')}}`:''}}</div></td>
     </tr>`;
   }}).join('');
 
@@ -2413,16 +2572,21 @@ function renderResultadoFinal(date,jogos){{
       <div style="width:1px;height:24px;background:var(--border)"></div>
       <div style="display:flex;align-items:center;gap:8px">
         <i data-lucide="calendar-days" style="width:14px;height:14px;color:var(--blue)"></i>
-        <span style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px">Jogos do dia</span>
-        <span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--blue)">${{day.gerados}}</span>
-        <span style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace">${{day.green}}✓ ${{day.red}}✗ ${{day.pending}} aguardando</span>
+        <span style="font-size:11px;color:var(--muted);font-weight:600;text-transform:uppercase;letter-spacing:.8px">Analisados</span>
+        <span style="font-size:18px;font-weight:700;font-family:'JetBrains Mono',monospace;color:var(--blue)">${{analysisRows.length}}</span>
+        <span style="font-size:11px;color:var(--muted);font-family:'JetBrains Mono',monospace">${{approvedAnalysis.length}} aprovados · ${{rejectedAnalysis.length}} reprovados</span>
       </div>
       ${{taxaDiaHtml}}
     </div>
-    <div class="sec-title"><i data-lucide="shield-check"></i> Palpites Resultado Final</div>
+    <div class="sec-title"><i data-lucide="shield-check"></i> Aprovado pelo filtro</div>
     <div class="tbl-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds</th><th>Placar</th><th>Resultado</th><th>Motivos</th></tr></thead>
-      <tbody>${{rowsHtml||'<tr><td colspan="10" class="empty">Nenhum palpite de Resultado Final aprovado para esta data.</td></tr>'}}</tbody>
+      <tbody>${{approvedRowsHtml||'<tr><td colspan="10" class="empty">Nenhum palpite de Resultado Final aprovado para esta data.</td></tr>'}}</tbody>
+    </table></div>
+    <div class="sec-title" style="margin-top:14px"><i data-lucide="filter-x"></i> Reprovado pelo filtro</div>
+    <div class="tbl-wrap"><table>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds</th><th>Placar</th><th>Status</th><th>Motivo técnico</th></tr></thead>
+      <tbody>${{rejectedRowsHtml||'<tr><td colspan="10" class="empty">Nenhum jogo reprovado pelo filtro nesta data.</td></tr>'}}</tbody>
     </table></div>`;
   ensureLucideIcons();
 }}
