@@ -75,16 +75,40 @@ def csv_float(value):
 
 def find_resultado_final_csv(date_str):
     root = os.path.abspath(os.path.join(os.path.dirname(__file__), '..'))
+    date_short = '-'.join(date_str.split('-')[:2])
     candidates = [
         os.path.join(root, 'data', 'csv', date_str),
+        os.path.join(root, 'data', 'csv', date_short),
         os.path.join(root, 'data', 'csv'),
+        os.path.join(root, 'data', 'packball', date_str),
+        os.path.join(root, 'data', 'packball', date_short),
+        os.path.join(root, 'frontend', 'data', 'packball', date_str),
+        os.path.join(root, 'frontend', 'data', 'packball', date_short),
         os.path.join(root, 'scripts'),
         os.path.join(root, 'docs', 'data'),
         root,
         os.path.join(os.path.expanduser('~'), 'Downloads'),
     ]
     target = date_str.lower()
-    for folder in candidates:
+    packball_roots = [
+        os.path.join(root, 'data', 'packball'),
+        os.path.join(root, 'frontend', 'data', 'packball'),
+    ]
+    search_folders = list(candidates)
+    for packball_root in packball_roots:
+        if os.path.isdir(packball_root):
+            for current, dirs, _files in os.walk(packball_root):
+                depth = os.path.relpath(current, packball_root).count(os.sep)
+                if depth > 1:
+                    dirs[:] = []
+                    continue
+                search_folders.append(current)
+    seen = set()
+    for folder in search_folders:
+        folder_key = os.path.abspath(folder).lower()
+        if folder_key in seen:
+            continue
+        seen.add(folder_key)
         if not os.path.isdir(folder):
             continue
         for fname in os.listdir(folder):
