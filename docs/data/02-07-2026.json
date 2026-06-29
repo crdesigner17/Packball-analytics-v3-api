@@ -5,16 +5,28 @@
       "date": "02-07-2026",
       "jogo": "Spain x Austria",
       "liga": "FIFA World Cup",
+      "country": "World",
       "hora": "16:00",
       "home": "Spain",
       "away": "Austria",
       "fixture_id": 1567311,
+      "referee": null,
       "home_id": 9,
       "away_id": 775,
       "is_elite": true,
-      "odds_h": 1.27,
-      "odds_d": 4.85,
-      "odds_a": 13.0,
+      "odds_h": 1.29,
+      "odds_d": 5.0,
+      "odds_a": 11.0,
+      "odds_cards_25": null,
+      "odds_cards_35": null,
+      "odds_cards_45": null,
+      "odds_cards_55": null,
+      "odds_cards_65": null,
+      "odds_cards_under_25": null,
+      "odds_cards_under_35": null,
+      "odds_cards_under_45": null,
+      "odds_cards_under_55": null,
+      "odds_cards_under_65": null,
       "over15_g": null,
       "over25_g": null,
       "over15_h": null,
@@ -79,8 +91,8 @@
       "score_u35": 43.7,
       "score_esc75": 40.7,
       "score_esc85": 35.1,
-      "score_cards25": 37.0,
-      "score_cards35": 37.1,
+      "score_cards25": 88.4,
+      "score_cards35": 86.2,
       "passou_filtro": true,
       "via": "Via 2",
       "under35_filter": false,
@@ -92,38 +104,603 @@
       "grade_u35": "D",
       "grade_esc85": "D",
       "grade_esc75": "D",
-      "grade_cart25": "D",
+      "grade_cart25": "A+",
       "odd_justa_15": null,
       "odd_justa_25": null,
       "odd_justa_btts": 2.0,
       "odd_justa_05ht": 1.2,
       "odd_justa_esc85": 6.01,
       "odd_justa_cart25": 3.0,
-      "best_mkt": "Over 2.5",
-      "best_score": 64.7,
-      "best_grade": "C",
-      "best_risk": "Arriscado",
+      "best_mkt": "Cart 3.5",
+      "best_score": 86.2,
+      "best_grade": "A",
+      "best_risk": "Baixo",
       "justif_15": "xG 3.7 · PPG 1.8 · Via 2 ✓",
       "justif_esc": "Média 6.67 cant · O8.5: 16.65% · O7.5: 16.65%",
-      "justif_cards": "Média 2.5 cart · O2.5: 33.3% · O3.5: 33.3%",
-      "palpite_mkt": "Over 2.5",
-      "palpite_grade": "C",
-      "palpite_score": 64.7
+      "justif_cards": "Media combinada de cartoes acima da linha · Liga historicamente quente para cartoes · Jogo eliminatorio ou fase final",
+      "cards_analysis": {
+        "market_group": "Cartoes",
+        "approved": true,
+        "best_market": "Over 3.5 Cartoes",
+        "market_key": "cards_over_35",
+        "line": 3.5,
+        "side": "over",
+        "score": 86.2,
+        "score_before_cap": 86.2,
+        "score_bruto": 86.2,
+        "score_cap": 89,
+        "score_final": 86.2,
+        "final_score": 86.2,
+        "confidence": "A",
+        "data_quality": 85,
+        "data_quality_tier": "team_context_league",
+        "data_source_level": "MEDIA",
+        "line_value": 1.5,
+        "line_value_score": 13,
+        "line_risk_penalty": 1,
+        "breakdown": {
+          "team_stats": {
+            "score": 35,
+            "max": 35
+          },
+          "referee": {
+            "score": 0,
+            "max": 25
+          },
+          "league": {
+            "score": 0,
+            "max": 15
+          },
+          "context": {
+            "score": 15,
+            "max": 15
+          },
+          "odds": {
+            "score": 0,
+            "max": 10
+          },
+          "raw_total": 50,
+          "distribution_adjustment": -0.5,
+          "adjusted_raw_total": 49.5,
+          "available_score_max": 65,
+          "score_base": 76.2,
+          "line_value": 1.5,
+          "line_value_score": 13,
+          "line_risk_penalty": 1,
+          "under_context_penalty": 0,
+          "data_quality_penalty": 2,
+          "quality_penalty": -2,
+          "availability": {
+            "team": true,
+            "referee": false,
+            "league": true,
+            "context": true,
+            "odds": false
+          },
+          "data_source_level": "MEDIA",
+          "score_before_cap": 86.2,
+          "score_bruto": 86.2,
+          "score_cap": 89,
+          "score_cap_penalty": 0,
+          "final_score": 86.2,
+          "total": 86.2
+        },
+        "odds_available": false,
+        "odds": null,
+        "reasons": [
+          "Media combinada de cartoes acima da linha",
+          "Liga historicamente quente para cartoes",
+          "Jogo eliminatorio ou fase final"
+        ],
+        "submarkets": [
+          {
+            "market": "Over 3.5 Cartoes",
+            "market_key": "cards_over_35",
+            "approved": true,
+            "score": 86.2,
+            "confidence": "A",
+            "odds": null,
+            "odds_available": false,
+            "line": 3.5,
+            "side": "over",
+            "line_value": 1.5,
+            "line_value_score": 13,
+            "line_risk_penalty": 1,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 0,
+                "max": 15
+              },
+              "context": {
+                "score": 15,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": -0.5,
+              "adjusted_raw_total": 49.5,
+              "available_score_max": 65,
+              "score_base": 76.2,
+              "line_value": 1.5,
+              "line_value_score": 13,
+              "line_risk_penalty": 1,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 86.2,
+              "score_bruto": 86.2,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 86.2,
+              "total": 86.2
+            },
+            "selection_score": 94.2,
+            "score_before_cap": 86.2,
+            "score_bruto": 86.2,
+            "score_cap": 89,
+            "score_final": 86.2,
+            "final_score": 86.2,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 2.5 Cartoes",
+            "market_key": "cards_over_25",
+            "approved": true,
+            "score": 88.4,
+            "confidence": "A+",
+            "odds": null,
+            "odds_available": false,
+            "line": 2.5,
+            "side": "over",
+            "line_value": 2.5,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 0,
+                "max": 15
+              },
+              "context": {
+                "score": 15,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": -1,
+              "adjusted_raw_total": 49,
+              "available_score_max": 65,
+              "score_base": 75.4,
+              "line_value": 2.5,
+              "line_value_score": 15,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 88.4,
+              "score_bruto": 88.4,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 88.4,
+              "total": 88.4
+            },
+            "selection_score": 88.4,
+            "score_before_cap": 88.4,
+            "score_bruto": 88.4,
+            "score_cap": 89,
+            "score_final": 88.4,
+            "final_score": 88.4,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Ambas equipes recebem cartao",
+            "market_key": "cards_both_card",
+            "approved": true,
+            "score": 88.4,
+            "odds": null,
+            "odds_available": false,
+            "side": "yes",
+            "line": null,
+            "line_value": 2.5,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 0,
+                "max": 15
+              },
+              "context": {
+                "score": 15,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": -1,
+              "adjusted_raw_total": 49,
+              "available_score_max": 65,
+              "score_base": 75.4,
+              "line_value": 2.5,
+              "line_value_score": 15,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 88.4,
+              "score_bruto": 88.4,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 88.4,
+              "total": 88.4
+            },
+            "selection_score": 86.4,
+            "score_before_cap": 88.4,
+            "score_bruto": 88.4,
+            "score_cap": 89,
+            "score_final": 88.4,
+            "final_score": 88.4,
+            "data_source_level": "MEDIA",
+            "confidence": "A+"
+          }
+        ],
+        "referee": {
+          "found": false,
+          "referee": "",
+          "score": 0,
+          "confidence": 0,
+          "tier": "UNKNOWN"
+        },
+        "referee_under": {
+          "found": false,
+          "score": 0,
+          "tier": "UNKNOWN",
+          "confidence": 0
+        },
+        "team_stats": {
+          "available": true,
+          "home_avg": 3,
+          "away_avg": 2,
+          "combined_avg": 5,
+          "source": "home_away"
+        },
+        "odds_data": {
+          "available": false,
+          "total_cards": [],
+          "both_teams_card": {
+            "yes_odds": null,
+            "no_odds": null
+          },
+          "both_teams_2plus_cards": {
+            "yes_odds": null,
+            "no_odds": null
+          }
+        },
+        "context": {
+          "available": true,
+          "importance": "high",
+          "over_score": 15,
+          "under_score": 0,
+          "reasons": [
+            "Jogo eliminatorio ou fase final"
+          ],
+          "score": 15
+        },
+        "league_data": true
+      },
+      "card_markets": [
+        {
+          "market": "Over 3.5 Cartoes",
+          "market_key": "cards_over_35",
+          "approved": true,
+          "score": 86.2,
+          "confidence": "A",
+          "odds": null,
+          "odds_available": false,
+          "line": 3.5,
+          "side": "over",
+          "line_value": 1.5,
+          "line_value_score": 13,
+          "line_risk_penalty": 1,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 0,
+              "max": 15
+            },
+            "context": {
+              "score": 15,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": -0.5,
+            "adjusted_raw_total": 49.5,
+            "available_score_max": 65,
+            "score_base": 76.2,
+            "line_value": 1.5,
+            "line_value_score": 13,
+            "line_risk_penalty": 1,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 86.2,
+            "score_bruto": 86.2,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 86.2,
+            "total": 86.2
+          },
+          "selection_score": 94.2,
+          "score_before_cap": 86.2,
+          "score_bruto": 86.2,
+          "score_cap": 89,
+          "score_final": 86.2,
+          "final_score": 86.2,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 2.5 Cartoes",
+          "market_key": "cards_over_25",
+          "approved": true,
+          "score": 88.4,
+          "confidence": "A+",
+          "odds": null,
+          "odds_available": false,
+          "line": 2.5,
+          "side": "over",
+          "line_value": 2.5,
+          "line_value_score": 15,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 0,
+              "max": 15
+            },
+            "context": {
+              "score": 15,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": -1,
+            "adjusted_raw_total": 49,
+            "available_score_max": 65,
+            "score_base": 75.4,
+            "line_value": 2.5,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 88.4,
+            "score_bruto": 88.4,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 88.4,
+            "total": 88.4
+          },
+          "selection_score": 88.4,
+          "score_before_cap": 88.4,
+          "score_bruto": 88.4,
+          "score_cap": 89,
+          "score_final": 88.4,
+          "final_score": 88.4,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Ambas equipes recebem cartao",
+          "market_key": "cards_both_card",
+          "approved": true,
+          "score": 88.4,
+          "odds": null,
+          "odds_available": false,
+          "side": "yes",
+          "line": null,
+          "line_value": 2.5,
+          "line_value_score": 15,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 0,
+              "max": 15
+            },
+            "context": {
+              "score": 15,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": -1,
+            "adjusted_raw_total": 49,
+            "available_score_max": 65,
+            "score_base": 75.4,
+            "line_value": 2.5,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 88.4,
+            "score_bruto": 88.4,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 88.4,
+            "total": 88.4
+          },
+          "selection_score": 86.4,
+          "score_before_cap": 88.4,
+          "score_bruto": 88.4,
+          "score_cap": 89,
+          "score_final": 88.4,
+          "final_score": 88.4,
+          "data_source_level": "MEDIA",
+          "confidence": "A+"
+        }
+      ],
+      "cards_best_mkt": "Cart 3.5",
+      "cards_best_market": "Over 3.5 Cartoes",
+      "cards_market_key": "cards_over_35",
+      "cards_best_score": 86.2,
+      "cards_score_before_cap": 86.2,
+      "cards_score_cap": 89,
+      "cards_score_final": 86.2,
+      "cards_best_grade": "A",
+      "cards_data_quality": 85,
+      "cards_data_source_level": "MEDIA",
+      "cards_odds_available": false,
+      "cards_reasons": [
+        "Media combinada de cartoes acima da linha",
+        "Liga historicamente quente para cartoes",
+        "Jogo eliminatorio ou fase final"
+      ],
+      "score_cards45": 67,
+      "score_cards55": 26.7,
+      "score_cards65": 20.3,
+      "grade_cart35": "A",
+      "grade_cart45": "C",
+      "grade_cart55": "D",
+      "grade_cart65": "D",
+      "palpite_mkt": "Cart 3.5",
+      "palpite_grade": "A",
+      "palpite_score": 86.2
     },
     {
       "date": "02-07-2026",
       "jogo": "Portugal x Croatia",
       "liga": "FIFA World Cup",
+      "country": "World",
       "hora": "20:00",
       "home": "Portugal",
       "away": "Croatia",
       "fixture_id": 1567309,
+      "referee": null,
       "home_id": 27,
       "away_id": 3,
       "is_elite": true,
-      "odds_h": null,
-      "odds_d": null,
-      "odds_a": null,
+      "odds_h": 1.8,
+      "odds_d": 3.4,
+      "odds_a": 4.5,
+      "odds_cards_25": null,
+      "odds_cards_35": null,
+      "odds_cards_45": null,
+      "odds_cards_55": null,
+      "odds_cards_65": null,
+      "odds_cards_under_25": null,
+      "odds_cards_under_35": null,
+      "odds_cards_under_45": null,
+      "odds_cards_under_55": null,
+      "odds_cards_under_65": null,
       "over15_g": 75.0,
       "over25_g": 50.0,
       "over15_h": null,
@@ -158,9 +735,9 @@
       "over85_c": 50.0,
       "over95_c": 16.65,
       "over105_c": 0.0,
-      "avg_cards": 1.83,
+      "avg_cards": 2.165,
       "avg_cards_h": 2.33,
-      "avg_cards_a": 1.33,
+      "avg_cards_a": 2.0,
       "over25_cards": 16.65,
       "over35_cards": 16.65,
       "over45_cards": 0.0,
@@ -188,8 +765,8 @@
       "score_u35": 43.7,
       "score_esc75": 53.2,
       "score_esc85": 51.6,
-      "score_cards25": 26.6,
-      "score_cards35": 26.3,
+      "score_cards25": 87,
+      "score_cards35": 80.8,
       "passou_filtro": true,
       "via": "Via 2",
       "under35_filter": false,
@@ -201,38 +778,603 @@
       "grade_u35": "D",
       "grade_esc85": "C",
       "grade_esc75": "C",
-      "grade_cart25": "D",
+      "grade_cart25": "A",
       "odd_justa_15": 1.33,
       "odd_justa_25": 2.0,
       "odd_justa_btts": 2.0,
       "odd_justa_05ht": 1.5,
       "odd_justa_esc85": 2.0,
       "odd_justa_cart25": 6.01,
-      "best_mkt": "Over 1.5",
-      "best_score": 75.0,
+      "best_mkt": "Cart 3.5",
+      "best_score": 80.8,
       "best_grade": "A",
-      "best_risk": "Confiança Média",
+      "best_risk": "Baixo",
       "justif_15": "O1.5 75% · xG 3.7 · PPG 1.8 · H2H 2.5 gols · Via 2 ✓",
       "justif_esc": "Média 7.5 cant · O8.5: 50.0% · O7.5: 50.0%",
-      "justif_cards": "Média 1.83 cart · O2.5: 16.65% · O3.5: 16.65%",
-      "palpite_mkt": "Over 1.5",
+      "justif_cards": "Media combinada de cartoes acima da linha · Liga historicamente quente para cartoes · Jogo eliminatorio ou fase final",
+      "cards_analysis": {
+        "market_group": "Cartoes",
+        "approved": true,
+        "best_market": "Over 3.5 Cartoes",
+        "market_key": "cards_over_35",
+        "line": 3.5,
+        "side": "over",
+        "score": 80.8,
+        "score_before_cap": 80.8,
+        "score_bruto": 80.8,
+        "score_cap": 89,
+        "score_final": 80.8,
+        "final_score": 80.8,
+        "confidence": "A",
+        "data_quality": 85,
+        "data_quality_tier": "team_context_league",
+        "data_source_level": "MEDIA",
+        "line_value": 0.83,
+        "line_value_score": 7,
+        "line_risk_penalty": 1,
+        "breakdown": {
+          "team_stats": {
+            "score": 35,
+            "max": 35
+          },
+          "referee": {
+            "score": 0,
+            "max": 25
+          },
+          "league": {
+            "score": 0,
+            "max": 15
+          },
+          "context": {
+            "score": 15,
+            "max": 15
+          },
+          "odds": {
+            "score": 0,
+            "max": 10
+          },
+          "raw_total": 50,
+          "distribution_adjustment": -0.1,
+          "adjusted_raw_total": 49.9,
+          "available_score_max": 65,
+          "score_base": 76.8,
+          "line_value": 0.83,
+          "line_value_score": 7,
+          "line_risk_penalty": 1,
+          "under_context_penalty": 0,
+          "data_quality_penalty": 2,
+          "quality_penalty": -2,
+          "availability": {
+            "team": true,
+            "referee": false,
+            "league": true,
+            "context": true,
+            "odds": false
+          },
+          "data_source_level": "MEDIA",
+          "score_before_cap": 80.8,
+          "score_bruto": 80.8,
+          "score_cap": 89,
+          "score_cap_penalty": 0,
+          "final_score": 80.8,
+          "total": 80.8
+        },
+        "odds_available": false,
+        "odds": null,
+        "reasons": [
+          "Media combinada de cartoes acima da linha",
+          "Liga historicamente quente para cartoes",
+          "Jogo eliminatorio ou fase final"
+        ],
+        "submarkets": [
+          {
+            "market": "Over 3.5 Cartoes",
+            "market_key": "cards_over_35",
+            "approved": true,
+            "score": 80.8,
+            "confidence": "A",
+            "odds": null,
+            "odds_available": false,
+            "line": 3.5,
+            "side": "over",
+            "line_value": 0.83,
+            "line_value_score": 7,
+            "line_risk_penalty": 1,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 0,
+                "max": 15
+              },
+              "context": {
+                "score": 15,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": -0.1,
+              "adjusted_raw_total": 49.9,
+              "available_score_max": 65,
+              "score_base": 76.8,
+              "line_value": 0.83,
+              "line_value_score": 7,
+              "line_risk_penalty": 1,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 80.8,
+              "score_bruto": 80.8,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 80.8,
+              "total": 80.8
+            },
+            "selection_score": 88.8,
+            "score_before_cap": 80.8,
+            "score_bruto": 80.8,
+            "score_cap": 89,
+            "score_final": 80.8,
+            "final_score": 80.8,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 2.5 Cartoes",
+            "market_key": "cards_over_25",
+            "approved": true,
+            "score": 87,
+            "confidence": "A",
+            "odds": null,
+            "odds_available": false,
+            "line": 2.5,
+            "side": "over",
+            "line_value": 1.83,
+            "line_value_score": 13,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 0,
+                "max": 15
+              },
+              "context": {
+                "score": 15,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": -0.6,
+              "adjusted_raw_total": 49.4,
+              "available_score_max": 65,
+              "score_base": 76,
+              "line_value": 1.83,
+              "line_value_score": 13,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 87,
+              "score_bruto": 87,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 87,
+              "total": 87
+            },
+            "selection_score": 87,
+            "score_before_cap": 87,
+            "score_bruto": 87,
+            "score_cap": 89,
+            "score_final": 87,
+            "final_score": 87,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Ambas equipes recebem cartao",
+            "market_key": "cards_both_card",
+            "approved": true,
+            "score": 87,
+            "odds": null,
+            "odds_available": false,
+            "side": "yes",
+            "line": null,
+            "line_value": 1.83,
+            "line_value_score": 13,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 0,
+                "max": 15
+              },
+              "context": {
+                "score": 15,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": -0.6,
+              "adjusted_raw_total": 49.4,
+              "available_score_max": 65,
+              "score_base": 76,
+              "line_value": 1.83,
+              "line_value_score": 13,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 87,
+              "score_bruto": 87,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 87,
+              "total": 87
+            },
+            "selection_score": 85,
+            "score_before_cap": 87,
+            "score_bruto": 87,
+            "score_cap": 89,
+            "score_final": 87,
+            "final_score": 87,
+            "data_source_level": "MEDIA",
+            "confidence": "A"
+          }
+        ],
+        "referee": {
+          "found": false,
+          "referee": "",
+          "score": 0,
+          "confidence": 0,
+          "tier": "UNKNOWN"
+        },
+        "referee_under": {
+          "found": false,
+          "score": 0,
+          "tier": "UNKNOWN",
+          "confidence": 0
+        },
+        "team_stats": {
+          "available": true,
+          "home_avg": 2.33,
+          "away_avg": 2,
+          "combined_avg": 4.33,
+          "source": "home_away"
+        },
+        "odds_data": {
+          "available": false,
+          "total_cards": [],
+          "both_teams_card": {
+            "yes_odds": null,
+            "no_odds": null
+          },
+          "both_teams_2plus_cards": {
+            "yes_odds": null,
+            "no_odds": null
+          }
+        },
+        "context": {
+          "available": true,
+          "importance": "high",
+          "over_score": 15,
+          "under_score": 0,
+          "reasons": [
+            "Jogo eliminatorio ou fase final"
+          ],
+          "score": 15
+        },
+        "league_data": true
+      },
+      "card_markets": [
+        {
+          "market": "Over 3.5 Cartoes",
+          "market_key": "cards_over_35",
+          "approved": true,
+          "score": 80.8,
+          "confidence": "A",
+          "odds": null,
+          "odds_available": false,
+          "line": 3.5,
+          "side": "over",
+          "line_value": 0.83,
+          "line_value_score": 7,
+          "line_risk_penalty": 1,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 0,
+              "max": 15
+            },
+            "context": {
+              "score": 15,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": -0.1,
+            "adjusted_raw_total": 49.9,
+            "available_score_max": 65,
+            "score_base": 76.8,
+            "line_value": 0.83,
+            "line_value_score": 7,
+            "line_risk_penalty": 1,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 80.8,
+            "score_bruto": 80.8,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 80.8,
+            "total": 80.8
+          },
+          "selection_score": 88.8,
+          "score_before_cap": 80.8,
+          "score_bruto": 80.8,
+          "score_cap": 89,
+          "score_final": 80.8,
+          "final_score": 80.8,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 2.5 Cartoes",
+          "market_key": "cards_over_25",
+          "approved": true,
+          "score": 87,
+          "confidence": "A",
+          "odds": null,
+          "odds_available": false,
+          "line": 2.5,
+          "side": "over",
+          "line_value": 1.83,
+          "line_value_score": 13,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 0,
+              "max": 15
+            },
+            "context": {
+              "score": 15,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": -0.6,
+            "adjusted_raw_total": 49.4,
+            "available_score_max": 65,
+            "score_base": 76,
+            "line_value": 1.83,
+            "line_value_score": 13,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 87,
+            "score_bruto": 87,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 87,
+            "total": 87
+          },
+          "selection_score": 87,
+          "score_before_cap": 87,
+          "score_bruto": 87,
+          "score_cap": 89,
+          "score_final": 87,
+          "final_score": 87,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Ambas equipes recebem cartao",
+          "market_key": "cards_both_card",
+          "approved": true,
+          "score": 87,
+          "odds": null,
+          "odds_available": false,
+          "side": "yes",
+          "line": null,
+          "line_value": 1.83,
+          "line_value_score": 13,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 0,
+              "max": 15
+            },
+            "context": {
+              "score": 15,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": -0.6,
+            "adjusted_raw_total": 49.4,
+            "available_score_max": 65,
+            "score_base": 76,
+            "line_value": 1.83,
+            "line_value_score": 13,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 87,
+            "score_bruto": 87,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 87,
+            "total": 87
+          },
+          "selection_score": 85,
+          "score_before_cap": 87,
+          "score_bruto": 87,
+          "score_cap": 89,
+          "score_final": 87,
+          "final_score": 87,
+          "data_source_level": "MEDIA",
+          "confidence": "A"
+        }
+      ],
+      "cards_best_mkt": "Cart 3.5",
+      "cards_best_market": "Over 3.5 Cartoes",
+      "cards_market_key": "cards_over_35",
+      "cards_best_score": 80.8,
+      "cards_score_before_cap": 80.8,
+      "cards_score_cap": 89,
+      "cards_score_final": 80.8,
+      "cards_best_grade": "A",
+      "cards_data_quality": 85,
+      "cards_data_source_level": "MEDIA",
+      "cards_odds_available": false,
+      "cards_reasons": [
+        "Media combinada de cartoes acima da linha",
+        "Liga historicamente quente para cartoes",
+        "Jogo eliminatorio ou fase final"
+      ],
+      "score_cards45": 42.1,
+      "score_cards55": 15,
+      "score_cards65": 20.9,
+      "grade_cart35": "A",
+      "grade_cart45": "D",
+      "grade_cart55": "D",
+      "grade_cart65": "D",
+      "palpite_mkt": "Cart 3.5",
       "palpite_grade": "A",
-      "palpite_score": 75.0
+      "palpite_score": 80.8
     },
     {
       "date": "02-07-2026",
       "jogo": "Cuiaba x America Mineiro",
       "liga": "Serie B",
+      "country": "Brazil",
       "hora": "20:00",
       "home": "Cuiaba",
       "away": "America Mineiro",
       "fixture_id": 1520753,
+      "referee": null,
       "home_id": 1193,
       "away_id": 125,
       "is_elite": false,
-      "odds_h": 2.05,
-      "odds_d": 2.9,
-      "odds_a": 3.8,
+      "odds_h": 1.85,
+      "odds_d": 3.0,
+      "odds_a": 4.5,
+      "odds_cards_25": null,
+      "odds_cards_35": null,
+      "odds_cards_45": null,
+      "odds_cards_55": null,
+      "odds_cards_65": null,
+      "odds_cards_under_25": null,
+      "odds_cards_under_35": null,
+      "odds_cards_under_45": null,
+      "odds_cards_under_55": null,
+      "odds_cards_under_65": null,
       "over15_g": 70.0,
       "over25_g": 50.0,
       "over15_h": null,
@@ -297,8 +1439,8 @@
       "score_u35": 75.6,
       "score_esc75": 64.7,
       "score_esc85": 59.2,
-      "score_cards25": 58.5,
-      "score_cards35": 56.6,
+      "score_cards25": 93,
+      "score_cards35": 92,
       "passou_filtro": false,
       "via": "Reprovado",
       "under35_filter": true,
@@ -310,104 +1452,1075 @@
       "grade_u35": "A",
       "grade_esc85": "C",
       "grade_esc75": "C",
-      "grade_cart25": "C",
+      "grade_cart25": "A+",
       "odd_justa_15": 1.43,
       "odd_justa_25": 2.0,
       "odd_justa_btts": 1.5,
       "odd_justa_05ht": 1.44,
       "odd_justa_esc85": 1.75,
       "odd_justa_cart25": 1.46,
-      "best_mkt": "Under 3.5",
-      "best_score": 75.6,
+      "best_mkt": "Cart 5.5",
+      "best_score": 84.6,
       "best_grade": "A",
-      "best_risk": "Confiança Média",
+      "best_risk": "Baixo",
       "justif_15": "O1.5 70% · xG 1.4 · PPG 0.9 · H2H 2.2 gols",
       "justif_esc": "Média 9.35 cant · O8.5: 57.2% · O7.5: 68.35%",
-      "justif_cards": "Média 4.535 cart · O2.5: 68.35% · O3.5: 63.35%",
-      "palpite_mkt": "Under 3.5",
+      "justif_cards": "Media combinada de cartoes acima da linha · Liga historicamente quente para cartoes",
+      "cards_analysis": {
+        "market_group": "Cartoes",
+        "approved": true,
+        "best_market": "Over 5.5 Cartoes",
+        "market_key": "cards_over_55",
+        "line": 5.5,
+        "side": "over",
+        "score": 84.6,
+        "score_before_cap": 84.6,
+        "score_bruto": 84.6,
+        "score_cap": 89,
+        "score_final": 84.6,
+        "final_score": 84.6,
+        "confidence": "A",
+        "data_quality": 85,
+        "data_quality_tier": "team_context_league",
+        "data_source_level": "MEDIA",
+        "line_value": 3.57,
+        "line_value_score": 15,
+        "line_risk_penalty": 5,
+        "breakdown": {
+          "team_stats": {
+            "score": 35,
+            "max": 35
+          },
+          "referee": {
+            "score": 0,
+            "max": 25
+          },
+          "league": {
+            "score": 13,
+            "max": 15
+          },
+          "context": {
+            "score": 0,
+            "max": 15
+          },
+          "odds": {
+            "score": 0,
+            "max": 10
+          },
+          "raw_total": 48,
+          "distribution_adjustment": 1.8,
+          "adjusted_raw_total": 49.8,
+          "available_score_max": 65,
+          "score_base": 76.6,
+          "line_value": 3.57,
+          "line_value_score": 15,
+          "line_risk_penalty": 5,
+          "under_context_penalty": 0,
+          "data_quality_penalty": 2,
+          "quality_penalty": -2,
+          "availability": {
+            "team": true,
+            "referee": false,
+            "league": true,
+            "context": true,
+            "odds": false
+          },
+          "data_source_level": "MEDIA",
+          "score_before_cap": 84.6,
+          "score_bruto": 84.6,
+          "score_cap": 89,
+          "score_cap_penalty": 0,
+          "final_score": 84.6,
+          "total": 84.6
+        },
+        "odds_available": false,
+        "odds": null,
+        "reasons": [
+          "Media combinada de cartoes acima da linha",
+          "Liga historicamente quente para cartoes"
+        ],
+        "submarkets": [
+          {
+            "market": "Over 5.5 Cartoes",
+            "market_key": "cards_over_55",
+            "approved": true,
+            "score": 84.6,
+            "confidence": "A",
+            "odds": null,
+            "odds_available": false,
+            "line": 5.5,
+            "side": "over",
+            "line_value": 3.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 5,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 13,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 48,
+              "distribution_adjustment": 1.8,
+              "adjusted_raw_total": 49.8,
+              "available_score_max": 65,
+              "score_base": 76.6,
+              "line_value": 3.57,
+              "line_value_score": 15,
+              "line_risk_penalty": 5,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 84.6,
+              "score_bruto": 84.6,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 84.6,
+              "total": 84.6
+            },
+            "selection_score": 108.6,
+            "score_before_cap": 84.6,
+            "score_bruto": 84.6,
+            "score_cap": 89,
+            "score_final": 84.6,
+            "final_score": 84.6,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 4.5 Cartoes",
+            "market_key": "cards_over_45",
+            "approved": true,
+            "score": 89,
+            "confidence": "A+",
+            "odds": null,
+            "odds_available": false,
+            "line": 4.5,
+            "side": "over",
+            "line_value": 4.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 1.7,
+              "adjusted_raw_total": 51.7,
+              "available_score_max": 65,
+              "score_base": 79.5,
+              "line_value": 4.57,
+              "line_value_score": 15,
+              "line_risk_penalty": 3,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 89.5,
+              "score_bruto": 89.5,
+              "score_cap": 89,
+              "score_cap_penalty": -0.5,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 105.5,
+            "score_before_cap": 89.5,
+            "score_bruto": 89.5,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 3.5 Cartoes",
+            "market_key": "cards_over_35",
+            "approved": true,
+            "score": 89,
+            "confidence": "A+",
+            "odds": null,
+            "odds_available": false,
+            "line": 3.5,
+            "side": "over",
+            "line_value": 5.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 1,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2,
+              "adjusted_raw_total": 52,
+              "available_score_max": 65,
+              "score_base": 80,
+              "line_value": 5.57,
+              "line_value_score": 15,
+              "line_risk_penalty": 1,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 92,
+              "score_bruto": 92,
+              "score_cap": 89,
+              "score_cap_penalty": -3,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 100,
+            "score_before_cap": 92,
+            "score_bruto": 92,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 2.5 Cartoes",
+            "market_key": "cards_over_25",
+            "approved": true,
+            "score": 89,
+            "confidence": "A+",
+            "odds": null,
+            "odds_available": false,
+            "line": 2.5,
+            "side": "over",
+            "line_value": 6.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2,
+              "adjusted_raw_total": 52,
+              "available_score_max": 65,
+              "score_base": 80,
+              "line_value": 6.57,
+              "line_value_score": 15,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 93,
+              "score_bruto": 93,
+              "score_cap": 89,
+              "score_cap_penalty": -4,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 93,
+            "score_before_cap": 93,
+            "score_bruto": 93,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Ambas equipes recebem cartao",
+            "market_key": "cards_both_card",
+            "approved": true,
+            "score": 89,
+            "odds": null,
+            "odds_available": false,
+            "side": "yes",
+            "line": null,
+            "line_value": 6.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2,
+              "adjusted_raw_total": 52,
+              "available_score_max": 65,
+              "score_base": 80,
+              "line_value": 6.57,
+              "line_value_score": 15,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 93,
+              "score_bruto": 93,
+              "score_cap": 89,
+              "score_cap_penalty": -4,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 91,
+            "score_before_cap": 93,
+            "score_bruto": 93,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA",
+            "confidence": "A+"
+          },
+          {
+            "market": "Ambas equipes 2+ cartoes",
+            "market_key": "cards_both_2plus",
+            "approved": true,
+            "score": 89,
+            "odds": null,
+            "odds_available": false,
+            "side": "yes",
+            "line": null,
+            "line_value": 4.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 1.7,
+              "adjusted_raw_total": 51.7,
+              "available_score_max": 65,
+              "score_base": 79.5,
+              "line_value": 4.57,
+              "line_value_score": 15,
+              "line_risk_penalty": 3,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 89.5,
+              "score_bruto": 89.5,
+              "score_cap": 89,
+              "score_cap_penalty": -0.5,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 87.5,
+            "score_before_cap": 89.5,
+            "score_bruto": 89.5,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA",
+            "confidence": "A+"
+          }
+        ],
+        "referee": {
+          "found": false,
+          "referee": "",
+          "score": 0,
+          "confidence": 0,
+          "tier": "UNKNOWN"
+        },
+        "referee_under": {
+          "found": false,
+          "score": 0,
+          "tier": "UNKNOWN",
+          "confidence": 0
+        },
+        "team_stats": {
+          "available": true,
+          "home_avg": 4.4,
+          "away_avg": 4.67,
+          "combined_avg": 9.07,
+          "source": "home_away"
+        },
+        "odds_data": {
+          "available": false,
+          "total_cards": [],
+          "both_teams_card": {
+            "yes_odds": null,
+            "no_odds": null
+          },
+          "both_teams_2plus_cards": {
+            "yes_odds": null,
+            "no_odds": null
+          }
+        },
+        "context": {
+          "available": true,
+          "importance": "normal",
+          "over_score": 0,
+          "under_score": 10,
+          "reasons": [
+            "Jogo comum"
+          ],
+          "score": 0
+        },
+        "league_data": true
+      },
+      "card_markets": [
+        {
+          "market": "Over 5.5 Cartoes",
+          "market_key": "cards_over_55",
+          "approved": true,
+          "score": 84.6,
+          "confidence": "A",
+          "odds": null,
+          "odds_available": false,
+          "line": 5.5,
+          "side": "over",
+          "line_value": 3.57,
+          "line_value_score": 15,
+          "line_risk_penalty": 5,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 13,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 48,
+            "distribution_adjustment": 1.8,
+            "adjusted_raw_total": 49.8,
+            "available_score_max": 65,
+            "score_base": 76.6,
+            "line_value": 3.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 5,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 84.6,
+            "score_bruto": 84.6,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 84.6,
+            "total": 84.6
+          },
+          "selection_score": 108.6,
+          "score_before_cap": 84.6,
+          "score_bruto": 84.6,
+          "score_cap": 89,
+          "score_final": 84.6,
+          "final_score": 84.6,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 4.5 Cartoes",
+          "market_key": "cards_over_45",
+          "approved": true,
+          "score": 89,
+          "confidence": "A+",
+          "odds": null,
+          "odds_available": false,
+          "line": 4.5,
+          "side": "over",
+          "line_value": 4.57,
+          "line_value_score": 15,
+          "line_risk_penalty": 3,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 1.7,
+            "adjusted_raw_total": 51.7,
+            "available_score_max": 65,
+            "score_base": 79.5,
+            "line_value": 4.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 89.5,
+            "score_bruto": 89.5,
+            "score_cap": 89,
+            "score_cap_penalty": -0.5,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 105.5,
+          "score_before_cap": 89.5,
+          "score_bruto": 89.5,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 3.5 Cartoes",
+          "market_key": "cards_over_35",
+          "approved": true,
+          "score": 89,
+          "confidence": "A+",
+          "odds": null,
+          "odds_available": false,
+          "line": 3.5,
+          "side": "over",
+          "line_value": 5.57,
+          "line_value_score": 15,
+          "line_risk_penalty": 1,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2,
+            "adjusted_raw_total": 52,
+            "available_score_max": 65,
+            "score_base": 80,
+            "line_value": 5.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 1,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 92,
+            "score_bruto": 92,
+            "score_cap": 89,
+            "score_cap_penalty": -3,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 100,
+          "score_before_cap": 92,
+          "score_bruto": 92,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 2.5 Cartoes",
+          "market_key": "cards_over_25",
+          "approved": true,
+          "score": 89,
+          "confidence": "A+",
+          "odds": null,
+          "odds_available": false,
+          "line": 2.5,
+          "side": "over",
+          "line_value": 6.57,
+          "line_value_score": 15,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2,
+            "adjusted_raw_total": 52,
+            "available_score_max": 65,
+            "score_base": 80,
+            "line_value": 6.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 93,
+            "score_bruto": 93,
+            "score_cap": 89,
+            "score_cap_penalty": -4,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 93,
+          "score_before_cap": 93,
+          "score_bruto": 93,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Ambas equipes recebem cartao",
+          "market_key": "cards_both_card",
+          "approved": true,
+          "score": 89,
+          "odds": null,
+          "odds_available": false,
+          "side": "yes",
+          "line": null,
+          "line_value": 6.57,
+          "line_value_score": 15,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2,
+            "adjusted_raw_total": 52,
+            "available_score_max": 65,
+            "score_base": 80,
+            "line_value": 6.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 93,
+            "score_bruto": 93,
+            "score_cap": 89,
+            "score_cap_penalty": -4,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 91,
+          "score_before_cap": 93,
+          "score_bruto": 93,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA",
+          "confidence": "A+"
+        },
+        {
+          "market": "Ambas equipes 2+ cartoes",
+          "market_key": "cards_both_2plus",
+          "approved": true,
+          "score": 89,
+          "odds": null,
+          "odds_available": false,
+          "side": "yes",
+          "line": null,
+          "line_value": 4.57,
+          "line_value_score": 15,
+          "line_risk_penalty": 3,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 1.7,
+            "adjusted_raw_total": 51.7,
+            "available_score_max": 65,
+            "score_base": 79.5,
+            "line_value": 4.57,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 89.5,
+            "score_bruto": 89.5,
+            "score_cap": 89,
+            "score_cap_penalty": -0.5,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 87.5,
+          "score_before_cap": 89.5,
+          "score_bruto": 89.5,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA",
+          "confidence": "A+"
+        }
+      ],
+      "cards_best_mkt": "Cart 5.5",
+      "cards_best_market": "Over 5.5 Cartoes",
+      "cards_market_key": "cards_over_55",
+      "cards_best_score": 84.6,
+      "cards_score_before_cap": 84.6,
+      "cards_score_cap": 89,
+      "cards_score_final": 84.6,
+      "cards_best_grade": "A",
+      "cards_data_quality": 85,
+      "cards_data_source_level": "MEDIA",
+      "cards_odds_available": false,
+      "cards_reasons": [
+        "Media combinada de cartoes acima da linha",
+        "Liga historicamente quente para cartoes"
+      ],
+      "score_cards45": 89.5,
+      "score_cards55": 84.6,
+      "score_cards65": 69.8,
+      "grade_cart35": "A+",
+      "grade_cart45": "A+",
+      "grade_cart55": "A",
+      "grade_cart65": "B",
+      "palpite_mkt": "Cart 5.5",
       "palpite_grade": "A",
-      "palpite_score": 75.6
+      "palpite_score": 84.6
     },
     {
       "date": "02-07-2026",
       "jogo": "Fortaleza EC x Ponte Preta",
       "liga": "Serie B",
+      "country": "Brazil",
       "hora": "21:00",
       "home": "Fortaleza EC",
       "away": "Ponte Preta",
       "fixture_id": 1520754,
+      "referee": null,
       "home_id": 154,
       "away_id": 139,
       "is_elite": false,
       "odds_h": null,
       "odds_d": null,
       "odds_a": null,
+      "odds_cards_25": null,
+      "odds_cards_35": null,
+      "odds_cards_45": null,
+      "odds_cards_55": null,
+      "odds_cards_65": null,
+      "odds_cards_under_25": null,
+      "odds_cards_under_35": null,
+      "odds_cards_under_45": null,
+      "odds_cards_under_55": null,
+      "odds_cards_under_65": null,
       "over15_g": 100.0,
       "over25_g": 0.0,
       "over15_h": null,
       "over15_a": null,
       "over25_h": null,
       "over25_a": null,
-      "exg_h": 1.1,
+      "exg_h": 1.2,
       "exg_a": 0.7,
-      "ppg_h": 1.57,
-      "ppg_a": 0.57,
+      "ppg_h": 1.67,
+      "ppg_a": 0.53,
       "h2h_goals": 2.0,
       "h2h_n": 2,
-      "avg_sc_h": 1.1,
+      "avg_sc_h": 1.2,
       "avg_sc_a": 0.7,
       "avg_co_h": 1.1,
       "avg_co_a": 1.9,
-      "btts_h": 57.1,
-      "btts_a": 85.7,
+      "btts_h": 60.0,
+      "btts_a": 86.7,
       "over05_ht": 78.35,
-      "over15_ht": 30.55,
-      "avg_shots_h": 28.89,
-      "avg_shots_a": 28.6,
-      "avg_sot_h": 8.67,
-      "avg_sot_a": 9.1,
-      "avg_sot": 8.885,
-      "avg_shots": 28.745,
-      "avg_corners": 11.219999999999999,
-      "avg_corners_h": 10.44,
-      "avg_corners_a": 12.0,
+      "over15_ht": 25.0,
+      "avg_shots_h": 29.78,
+      "avg_shots_a": 29.2,
+      "avg_sot_h": 9.22,
+      "avg_sot_a": 9.3,
+      "avg_sot": 9.260000000000002,
+      "avg_shots": 29.490000000000002,
+      "avg_corners": 11.23,
+      "avg_corners_h": 10.56,
+      "avg_corners_a": 11.9,
       "over65_c": 83.35,
-      "over75_c": 77.8,
-      "over85_c": 72.8,
+      "over75_c": 83.35,
+      "over85_c": 67.8,
       "over95_c": 57.2,
       "over105_c": 47.2,
-      "avg_cards": 5.9350000000000005,
+      "avg_cards": 5.734999999999999,
       "avg_cards_h": 5.67,
-      "avg_cards_a": 6.2,
-      "over25_cards": 88.9,
-      "over35_cards": 83.9,
-      "over45_cards": 78.35,
+      "avg_cards_a": 5.8,
+      "over25_cards": 83.9,
+      "over35_cards": 78.9,
+      "over45_cards": 73.35,
       "pred_winner": "Fortaleza EC",
       "pred_advice": "Winner : Fortaleza EC",
       "win_home": 45.0,
       "win_away": 10.0,
-      "form_h": "WLWLD",
-      "form_a": "LDLLL",
+      "form_h": "LWLDW",
+      "form_a": "DLLLL",
       "under25_h": null,
       "under25_a": null,
-      "exg_tot": 1.8,
-      "ppg_avg": 1.07,
-      "ppg_min": 0.57,
-      "btts_cf": 71.4,
-      "poisson_o15": 53.7,
-      "poisson_o25": 26.9,
-      "poisson_u45": 96.4,
-      "poisson_u35": 89.1,
+      "exg_tot": 1.9,
+      "ppg_avg": 1.1,
+      "ppg_min": 0.53,
+      "btts_cf": 73.3,
+      "poisson_o15": 56.6,
+      "poisson_o25": 29.6,
+      "poisson_u45": 95.6,
+      "poisson_u35": 87.5,
       "score_15": 100.0,
-      "score_25": 22.4,
-      "score_btts": 55.1,
-      "score_05ht": 53.0,
-      "score_u45": 69.0,
-      "score_u35": 71.1,
-      "score_esc75": 74.2,
-      "score_esc85": 72.1,
-      "score_cards25": 74.5,
-      "score_cards35": 72.8,
+      "score_25": 23.2,
+      "score_btts": 56.3,
+      "score_05ht": 52.7,
+      "score_u45": 68.4,
+      "score_u35": 69.9,
+      "score_esc75": 76.2,
+      "score_esc85": 71.4,
+      "score_cards25": 94.4,
+      "score_cards35": 93.4,
       "passou_filtro": true,
       "via": "Via 4",
       "under35_filter": false,
@@ -418,21 +2531,980 @@
       "grade_u45": "B",
       "grade_u35": "D",
       "grade_esc85": "B",
-      "grade_esc75": "B",
-      "grade_cart25": "B",
+      "grade_esc75": "A",
+      "grade_cart25": "A+",
       "odd_justa_15": 1.0,
       "odd_justa_25": null,
-      "odd_justa_btts": 1.4,
+      "odd_justa_btts": 1.36,
       "odd_justa_05ht": 1.28,
-      "odd_justa_esc85": 1.37,
-      "odd_justa_cart25": 1.12,
+      "odd_justa_esc85": 1.47,
+      "odd_justa_cart25": 1.19,
       "best_mkt": "Over 1.5",
       "best_score": 100.0,
       "best_grade": "A+",
       "best_risk": "Confiança Alta",
-      "justif_15": "O1.5 100% · xG 1.8 · PPG 1.1 · H2H 2.0 gols · Via 4 ✓",
-      "justif_esc": "Média 11.219999999999999 cant · O8.5: 72.8% · O7.5: 77.8%",
-      "justif_cards": "Média 5.9350000000000005 cart · O2.5: 88.9% · O3.5: 83.9%",
+      "justif_15": "O1.5 100% · xG 1.9 · PPG 1.1 · H2H 2.0 gols · Via 4 ✓",
+      "justif_esc": "Média 11.23 cant · O8.5: 67.8% · O7.5: 83.35%",
+      "justif_cards": "Media combinada de cartoes acima da linha · Liga historicamente quente para cartoes",
+      "cards_analysis": {
+        "market_group": "Cartoes",
+        "approved": true,
+        "best_market": "Over 5.5 Cartoes",
+        "market_key": "cards_over_55",
+        "line": 5.5,
+        "side": "over",
+        "score": 86.8,
+        "score_before_cap": 86.8,
+        "score_bruto": 86.8,
+        "score_cap": 89,
+        "score_final": 86.8,
+        "final_score": 86.8,
+        "confidence": "A",
+        "data_quality": 85,
+        "data_quality_tier": "team_context_league",
+        "data_source_level": "MEDIA",
+        "line_value": 5.97,
+        "line_value_score": 15,
+        "line_risk_penalty": 5,
+        "breakdown": {
+          "team_stats": {
+            "score": 35,
+            "max": 35
+          },
+          "referee": {
+            "score": 0,
+            "max": 25
+          },
+          "league": {
+            "score": 13,
+            "max": 15
+          },
+          "context": {
+            "score": 0,
+            "max": 15
+          },
+          "odds": {
+            "score": 0,
+            "max": 10
+          },
+          "raw_total": 48,
+          "distribution_adjustment": 3.2,
+          "adjusted_raw_total": 51.2,
+          "available_score_max": 65,
+          "score_base": 78.8,
+          "line_value": 5.97,
+          "line_value_score": 15,
+          "line_risk_penalty": 5,
+          "under_context_penalty": 0,
+          "data_quality_penalty": 2,
+          "quality_penalty": -2,
+          "availability": {
+            "team": true,
+            "referee": false,
+            "league": true,
+            "context": true,
+            "odds": false
+          },
+          "data_source_level": "MEDIA",
+          "score_before_cap": 86.8,
+          "score_bruto": 86.8,
+          "score_cap": 89,
+          "score_cap_penalty": 0,
+          "final_score": 86.8,
+          "total": 86.8
+        },
+        "odds_available": false,
+        "odds": null,
+        "reasons": [
+          "Media combinada de cartoes acima da linha",
+          "Liga historicamente quente para cartoes"
+        ],
+        "submarkets": [
+          {
+            "market": "Over 5.5 Cartoes",
+            "market_key": "cards_over_55",
+            "approved": true,
+            "score": 86.8,
+            "confidence": "A",
+            "odds": null,
+            "odds_available": false,
+            "line": 5.5,
+            "side": "over",
+            "line_value": 5.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 5,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 13,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 48,
+              "distribution_adjustment": 3.2,
+              "adjusted_raw_total": 51.2,
+              "available_score_max": 65,
+              "score_base": 78.8,
+              "line_value": 5.97,
+              "line_value_score": 15,
+              "line_risk_penalty": 5,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 86.8,
+              "score_bruto": 86.8,
+              "score_cap": 89,
+              "score_cap_penalty": 0,
+              "final_score": 86.8,
+              "total": 86.8
+            },
+            "selection_score": 110.8,
+            "score_before_cap": 86.8,
+            "score_bruto": 86.8,
+            "score_cap": 89,
+            "score_final": 86.8,
+            "final_score": 86.8,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 4.5 Cartoes",
+            "market_key": "cards_over_45",
+            "approved": true,
+            "score": 89,
+            "confidence": "A+",
+            "odds": null,
+            "odds_available": false,
+            "line": 4.5,
+            "side": "over",
+            "line_value": 6.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2.6,
+              "adjusted_raw_total": 52.6,
+              "available_score_max": 65,
+              "score_base": 80.9,
+              "line_value": 6.97,
+              "line_value_score": 15,
+              "line_risk_penalty": 3,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 90.9,
+              "score_bruto": 90.9,
+              "score_cap": 89,
+              "score_cap_penalty": -1.9,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 106.9,
+            "score_before_cap": 90.9,
+            "score_bruto": 90.9,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 3.5 Cartoes",
+            "market_key": "cards_over_35",
+            "approved": true,
+            "score": 89,
+            "confidence": "A+",
+            "odds": null,
+            "odds_available": false,
+            "line": 3.5,
+            "side": "over",
+            "line_value": 7.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 1,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2.9,
+              "adjusted_raw_total": 52.9,
+              "available_score_max": 65,
+              "score_base": 81.4,
+              "line_value": 7.97,
+              "line_value_score": 15,
+              "line_risk_penalty": 1,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 93.4,
+              "score_bruto": 93.4,
+              "score_cap": 89,
+              "score_cap_penalty": -4.4,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 101.4,
+            "score_before_cap": 93.4,
+            "score_bruto": 93.4,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Over 2.5 Cartoes",
+            "market_key": "cards_over_25",
+            "approved": true,
+            "score": 89,
+            "confidence": "A+",
+            "odds": null,
+            "odds_available": false,
+            "line": 2.5,
+            "side": "over",
+            "line_value": 8.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2.9,
+              "adjusted_raw_total": 52.9,
+              "available_score_max": 65,
+              "score_base": 81.4,
+              "line_value": 8.97,
+              "line_value_score": 15,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 94.4,
+              "score_bruto": 94.4,
+              "score_cap": 89,
+              "score_cap_penalty": -5.4,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 94.4,
+            "score_before_cap": 94.4,
+            "score_bruto": 94.4,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA"
+          },
+          {
+            "market": "Ambas equipes recebem cartao",
+            "market_key": "cards_both_card",
+            "approved": true,
+            "score": 89,
+            "odds": null,
+            "odds_available": false,
+            "side": "yes",
+            "line": null,
+            "line_value": 8.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2.9,
+              "adjusted_raw_total": 52.9,
+              "available_score_max": 65,
+              "score_base": 81.4,
+              "line_value": 8.97,
+              "line_value_score": 15,
+              "line_risk_penalty": 0,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 94.4,
+              "score_bruto": 94.4,
+              "score_cap": 89,
+              "score_cap_penalty": -5.4,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 92.4,
+            "score_before_cap": 94.4,
+            "score_bruto": 94.4,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA",
+            "confidence": "A+"
+          },
+          {
+            "market": "Ambas equipes 2+ cartoes",
+            "market_key": "cards_both_2plus",
+            "approved": true,
+            "score": 89,
+            "odds": null,
+            "odds_available": false,
+            "side": "yes",
+            "line": null,
+            "line_value": 6.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "breakdown": {
+              "team_stats": {
+                "score": 35,
+                "max": 35
+              },
+              "referee": {
+                "score": 0,
+                "max": 25
+              },
+              "league": {
+                "score": 15,
+                "max": 15
+              },
+              "context": {
+                "score": 0,
+                "max": 15
+              },
+              "odds": {
+                "score": 0,
+                "max": 10
+              },
+              "raw_total": 50,
+              "distribution_adjustment": 2.6,
+              "adjusted_raw_total": 52.6,
+              "available_score_max": 65,
+              "score_base": 80.9,
+              "line_value": 6.97,
+              "line_value_score": 15,
+              "line_risk_penalty": 3,
+              "under_context_penalty": 0,
+              "data_quality_penalty": 2,
+              "quality_penalty": -2,
+              "availability": {
+                "team": true,
+                "referee": false,
+                "league": true,
+                "context": true,
+                "odds": false
+              },
+              "data_source_level": "MEDIA",
+              "score_before_cap": 90.9,
+              "score_bruto": 90.9,
+              "score_cap": 89,
+              "score_cap_penalty": -1.9,
+              "final_score": 89,
+              "total": 89
+            },
+            "selection_score": 88.9,
+            "score_before_cap": 90.9,
+            "score_bruto": 90.9,
+            "score_cap": 89,
+            "score_final": 89,
+            "final_score": 89,
+            "data_source_level": "MEDIA",
+            "confidence": "A+"
+          }
+        ],
+        "referee": {
+          "found": false,
+          "referee": "",
+          "score": 0,
+          "confidence": 0,
+          "tier": "UNKNOWN"
+        },
+        "referee_under": {
+          "found": false,
+          "score": 0,
+          "tier": "UNKNOWN",
+          "confidence": 0
+        },
+        "team_stats": {
+          "available": true,
+          "home_avg": 5.67,
+          "away_avg": 5.8,
+          "combined_avg": 11.47,
+          "source": "home_away"
+        },
+        "odds_data": {
+          "available": false,
+          "total_cards": [],
+          "both_teams_card": {
+            "yes_odds": null,
+            "no_odds": null
+          },
+          "both_teams_2plus_cards": {
+            "yes_odds": null,
+            "no_odds": null
+          }
+        },
+        "context": {
+          "available": true,
+          "importance": "normal",
+          "over_score": 0,
+          "under_score": 10,
+          "reasons": [
+            "Jogo comum"
+          ],
+          "score": 0
+        },
+        "league_data": true
+      },
+      "card_markets": [
+        {
+          "market": "Over 5.5 Cartoes",
+          "market_key": "cards_over_55",
+          "approved": true,
+          "score": 86.8,
+          "confidence": "A",
+          "odds": null,
+          "odds_available": false,
+          "line": 5.5,
+          "side": "over",
+          "line_value": 5.97,
+          "line_value_score": 15,
+          "line_risk_penalty": 5,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 13,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 48,
+            "distribution_adjustment": 3.2,
+            "adjusted_raw_total": 51.2,
+            "available_score_max": 65,
+            "score_base": 78.8,
+            "line_value": 5.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 5,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 86.8,
+            "score_bruto": 86.8,
+            "score_cap": 89,
+            "score_cap_penalty": 0,
+            "final_score": 86.8,
+            "total": 86.8
+          },
+          "selection_score": 110.8,
+          "score_before_cap": 86.8,
+          "score_bruto": 86.8,
+          "score_cap": 89,
+          "score_final": 86.8,
+          "final_score": 86.8,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 4.5 Cartoes",
+          "market_key": "cards_over_45",
+          "approved": true,
+          "score": 89,
+          "confidence": "A+",
+          "odds": null,
+          "odds_available": false,
+          "line": 4.5,
+          "side": "over",
+          "line_value": 6.97,
+          "line_value_score": 15,
+          "line_risk_penalty": 3,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2.6,
+            "adjusted_raw_total": 52.6,
+            "available_score_max": 65,
+            "score_base": 80.9,
+            "line_value": 6.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 90.9,
+            "score_bruto": 90.9,
+            "score_cap": 89,
+            "score_cap_penalty": -1.9,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 106.9,
+          "score_before_cap": 90.9,
+          "score_bruto": 90.9,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 3.5 Cartoes",
+          "market_key": "cards_over_35",
+          "approved": true,
+          "score": 89,
+          "confidence": "A+",
+          "odds": null,
+          "odds_available": false,
+          "line": 3.5,
+          "side": "over",
+          "line_value": 7.97,
+          "line_value_score": 15,
+          "line_risk_penalty": 1,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2.9,
+            "adjusted_raw_total": 52.9,
+            "available_score_max": 65,
+            "score_base": 81.4,
+            "line_value": 7.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 1,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 93.4,
+            "score_bruto": 93.4,
+            "score_cap": 89,
+            "score_cap_penalty": -4.4,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 101.4,
+          "score_before_cap": 93.4,
+          "score_bruto": 93.4,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Over 2.5 Cartoes",
+          "market_key": "cards_over_25",
+          "approved": true,
+          "score": 89,
+          "confidence": "A+",
+          "odds": null,
+          "odds_available": false,
+          "line": 2.5,
+          "side": "over",
+          "line_value": 8.97,
+          "line_value_score": 15,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2.9,
+            "adjusted_raw_total": 52.9,
+            "available_score_max": 65,
+            "score_base": 81.4,
+            "line_value": 8.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 94.4,
+            "score_bruto": 94.4,
+            "score_cap": 89,
+            "score_cap_penalty": -5.4,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 94.4,
+          "score_before_cap": 94.4,
+          "score_bruto": 94.4,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA"
+        },
+        {
+          "market": "Ambas equipes recebem cartao",
+          "market_key": "cards_both_card",
+          "approved": true,
+          "score": 89,
+          "odds": null,
+          "odds_available": false,
+          "side": "yes",
+          "line": null,
+          "line_value": 8.97,
+          "line_value_score": 15,
+          "line_risk_penalty": 0,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2.9,
+            "adjusted_raw_total": 52.9,
+            "available_score_max": 65,
+            "score_base": 81.4,
+            "line_value": 8.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 0,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 94.4,
+            "score_bruto": 94.4,
+            "score_cap": 89,
+            "score_cap_penalty": -5.4,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 92.4,
+          "score_before_cap": 94.4,
+          "score_bruto": 94.4,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA",
+          "confidence": "A+"
+        },
+        {
+          "market": "Ambas equipes 2+ cartoes",
+          "market_key": "cards_both_2plus",
+          "approved": true,
+          "score": 89,
+          "odds": null,
+          "odds_available": false,
+          "side": "yes",
+          "line": null,
+          "line_value": 6.97,
+          "line_value_score": 15,
+          "line_risk_penalty": 3,
+          "breakdown": {
+            "team_stats": {
+              "score": 35,
+              "max": 35
+            },
+            "referee": {
+              "score": 0,
+              "max": 25
+            },
+            "league": {
+              "score": 15,
+              "max": 15
+            },
+            "context": {
+              "score": 0,
+              "max": 15
+            },
+            "odds": {
+              "score": 0,
+              "max": 10
+            },
+            "raw_total": 50,
+            "distribution_adjustment": 2.6,
+            "adjusted_raw_total": 52.6,
+            "available_score_max": 65,
+            "score_base": 80.9,
+            "line_value": 6.97,
+            "line_value_score": 15,
+            "line_risk_penalty": 3,
+            "under_context_penalty": 0,
+            "data_quality_penalty": 2,
+            "quality_penalty": -2,
+            "availability": {
+              "team": true,
+              "referee": false,
+              "league": true,
+              "context": true,
+              "odds": false
+            },
+            "data_source_level": "MEDIA",
+            "score_before_cap": 90.9,
+            "score_bruto": 90.9,
+            "score_cap": 89,
+            "score_cap_penalty": -1.9,
+            "final_score": 89,
+            "total": 89
+          },
+          "selection_score": 88.9,
+          "score_before_cap": 90.9,
+          "score_bruto": 90.9,
+          "score_cap": 89,
+          "score_final": 89,
+          "final_score": 89,
+          "data_source_level": "MEDIA",
+          "confidence": "A+"
+        }
+      ],
+      "cards_best_mkt": "Cart 5.5",
+      "cards_best_market": "Over 5.5 Cartoes",
+      "cards_market_key": "cards_over_55",
+      "cards_best_score": 86.8,
+      "cards_score_before_cap": 86.8,
+      "cards_score_cap": 89,
+      "cards_score_final": 86.8,
+      "cards_best_grade": "A",
+      "cards_data_quality": 85,
+      "cards_data_source_level": "MEDIA",
+      "cards_odds_available": false,
+      "cards_reasons": [
+        "Media combinada de cartoes acima da linha",
+        "Liga historicamente quente para cartoes"
+      ],
+      "score_cards45": 90.9,
+      "score_cards55": 86.8,
+      "score_cards65": 72.7,
+      "grade_cart35": "A+",
+      "grade_cart45": "A+",
+      "grade_cart55": "A",
+      "grade_cart65": "B",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
       "palpite_score": 100.0
@@ -440,9 +3512,9 @@
   ],
   "top5": [
     "Fortaleza EC x Ponte Preta",
+    "Spain x Austria",
     "Cuiaba x America Mineiro",
-    "Portugal x Croatia",
-    "Spain x Austria"
+    "Portugal x Croatia"
   ],
   "palpites_snapshot": [
     {
@@ -460,14 +3532,28 @@
       "acertos": {}
     },
     {
+      "fixture_id": 1567311,
+      "jogo": "Spain x Austria",
+      "home": "Spain",
+      "away": "Austria",
+      "liga": "FIFA World Cup",
+      "hora": "16:00",
+      "mkt": "Cart 3.5",
+      "score": 86.2,
+      "grade": "A",
+      "oddVal": null,
+      "resultado": null,
+      "acertos": {}
+    },
+    {
       "fixture_id": 1520753,
       "jogo": "Cuiaba x America Mineiro",
       "home": "Cuiaba",
       "away": "America Mineiro",
       "liga": "Serie B",
       "hora": "20:00",
-      "mkt": "Under 3.5",
-      "score": 75.6,
+      "mkt": "Cart 5.5",
+      "score": 84.6,
       "grade": "A",
       "oddVal": null,
       "resultado": null,
@@ -480,8 +3566,8 @@
       "away": "Croatia",
       "liga": "FIFA World Cup",
       "hora": "20:00",
-      "mkt": "Over 1.5",
-      "score": 75.0,
+      "mkt": "Cart 3.5",
+      "score": 80.8,
       "grade": "A",
       "oddVal": null,
       "resultado": null,
@@ -489,7 +3575,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-06-28T10:01:46Z",
+    "created_at": "2026-06-29T11:57:12Z",
     "bilhetes": [
       {
         "tipo": "b1",
@@ -510,14 +3596,28 @@
               "acertos": {}
             },
             {
+              "fixture_id": 1567311,
+              "jogo": "Spain x Austria",
+              "home": "Spain",
+              "away": "Austria",
+              "liga": "FIFA World Cup",
+              "hora": "16:00",
+              "mkt": "Cart 3.5",
+              "score": 86.2,
+              "grade": "A",
+              "oddVal": null,
+              "resultado": null,
+              "acertos": {}
+            },
+            {
               "fixture_id": 1520753,
               "jogo": "Cuiaba x America Mineiro",
               "home": "Cuiaba",
               "away": "America Mineiro",
               "liga": "Serie B",
               "hora": "20:00",
-              "mkt": "Under 3.5",
-              "score": 75.6,
+              "mkt": "Cart 5.5",
+              "score": 84.6,
               "grade": "A",
               "oddVal": null,
               "resultado": null,
@@ -530,8 +3630,8 @@
               "away": "Croatia",
               "liga": "FIFA World Cup",
               "hora": "20:00",
-              "mkt": "Over 1.5",
-              "score": 75.0,
+              "mkt": "Cart 3.5",
+              "score": 80.8,
               "grade": "A",
               "oddVal": null,
               "resultado": null,
@@ -552,8 +3652,8 @@
   "stats": {
     "total": 4,
     "over15_aprovados": 1,
-    "esc85_aprovados": 0,
-    "cart25_aprovados": 0,
-    "premium": 3
+    "esc85_aprovados": 1,
+    "cart25_aprovados": 4,
+    "premium": 4
   }
 }
