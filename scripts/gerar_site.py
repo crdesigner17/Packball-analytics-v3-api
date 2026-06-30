@@ -349,7 +349,7 @@ def apply_visual_overrides(html):
     html = html.replace("/* NEW DATE BAR */", page_hero_css + "\n/* NEW DATE BAR */")
     html = html.replace(
         ".date-strip{\n  background:var(--s1);border-bottom:1px solid var(--border);\n  display:flex;align-items:center;overflow-x:auto;\n  padding:0 16px;\n  scrollbar-width:thin;scrollbar-color:var(--border) transparent;\n  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap));z-index:120;\n  border-left:none;border-radius:10px 10px 0 0;\n  box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;\n  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;\n}\n.date-strip::-webkit-scrollbar{height:3px}\n.date-strip::-webkit-scrollbar-thumb{background:var(--border);border-radius:2px}",
-        ".date-strip-shell{\n  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap));z-index:120;\n  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;\n  display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:stretch;\n  background:var(--s1);border-bottom:1px solid var(--border);\n  border-radius:10px 10px 0 0;box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;\n}\n.date-strip{\n  background:var(--s1);border-bottom:0;\n  display:flex;align-items:center;overflow-x:auto;\n  padding:0 12px;scrollbar-width:none;\n  border-left:none;border-radius:0;box-shadow:none;overflow-y:hidden;\n  width:100%;max-width:none;margin:0;box-sizing:border-box;scroll-behavior:smooth;\n}\n.date-strip::-webkit-scrollbar{display:none}\n.date-strip::before,\n.date-strip::after{\n  content:'';flex:0 0 calc(50% - 36px);min-width:0;height:1px;pointer-events:none;\n}\n.date-strip-arrow{\n  height:var(--date-strip-h);border:0;background:rgba(17,24,39,.94);color:var(--muted);\n  display:flex;align-items:center;justify-content:center;cursor:pointer;\n  border-right:1px solid var(--border);transition:background .15s,color .15s;\n  font-size:25px;font-weight:700;line-height:1;\n}\n.date-strip-arrow.next{border-right:0;border-left:1px solid var(--border)}\n.date-strip-arrow:hover{background:rgba(37,99,235,.12);color:var(--text)}\n.date-strip-arrow .date-arrow-fallback{display:inline-flex;align-items:center;justify-content:center;transform:translateY(-1px)}"
+        ".date-strip-shell{\n  position:sticky;top:calc(var(--nav-h) + var(--search-h) + var(--top-gap));z-index:120;\n  width:calc(100% - 48px);max-width:1500px;margin:0 auto;box-sizing:border-box;\n  display:grid;grid-template-columns:44px minmax(0,1fr) 44px;align-items:stretch;\n  background:var(--s1);border-bottom:1px solid var(--border);\n  border-radius:10px 10px 0 0;box-shadow:0 8px 16px rgba(0,0,0,.18);overflow:hidden;\n}\n.date-strip{\n  background:var(--s1);border-bottom:0;\n  display:flex;align-items:center;overflow-x:auto;\n  padding:0 12px;scrollbar-width:none;\n  border-left:none;border-radius:0;box-shadow:none;overflow-y:hidden;\n  width:100%;max-width:none;margin:0;box-sizing:border-box;scroll-behavior:smooth;\n}\n.date-strip::-webkit-scrollbar{display:none}\n.date-strip-arrow{\n  height:var(--date-strip-h);border:0;background:rgba(17,24,39,.94);color:var(--muted);\n  display:flex;align-items:center;justify-content:center;cursor:pointer;\n  border-right:1px solid var(--border);transition:background .15s,color .15s;\n  font-size:25px;font-weight:700;line-height:1;\n}\n.date-strip-arrow.next{border-right:0;border-left:1px solid var(--border)}\n.date-strip-arrow:hover{background:rgba(37,99,235,.12);color:var(--text)}\n.date-strip-arrow .date-arrow-fallback{display:inline-flex;align-items:center;justify-content:center;transform:translateY(-1px)}"
     )
     html = html.replace(
         ":root{--nav-h:52px}",
@@ -428,7 +428,8 @@ function centerDateTab(tab, behavior='smooth'){
   const strip = document.getElementById('date-strip');
   if(!strip || !tab) return;
   const left = tab.offsetLeft - (strip.clientWidth / 2) + (tab.offsetWidth / 2);
-  strip.scrollTo({left:Math.max(0,left), behavior});
+  const maxLeft = Math.max(0, strip.scrollWidth - strip.clientWidth);
+  strip.scrollTo({left:Math.min(maxLeft, Math.max(0,left)), behavior});
 }
 function centerCurrentDate(behavior='auto'){
   const today = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}).split('/').join('-');
@@ -438,8 +439,21 @@ function centerCurrentDate(behavior='auto'){
 function shiftDateStrip(dir){
   const strip = document.getElementById('date-strip');
   if(!strip) return;
-  const step = Math.max(220, Math.round(strip.clientWidth * 0.55));
-  strip.scrollBy({left:dir * step, behavior:'smooth'});
+  const tabs = [...strip.querySelectorAll('.date-strip-item')].filter(tab=>!tab.hidden);
+  if(!tabs.length) return;
+  const center = strip.scrollLeft + (strip.clientWidth / 2);
+  let currentIndex = 0;
+  let bestDistance = Infinity;
+  tabs.forEach((tab,index)=>{
+    const tabCenter = tab.offsetLeft + (tab.offsetWidth / 2);
+    const distance = Math.abs(tabCenter - center);
+    if(distance < bestDistance){
+      bestDistance = distance;
+      currentIndex = index;
+    }
+  });
+  const nextIndex = Math.min(tabs.length - 1, Math.max(0, currentIndex + dir));
+  centerDateTab(tabs[nextIndex]);
 }
 '''
     html = html.replace("let historicoVisible=false;\n", "let historicoVisible=false;\n\n" + hero_js + "\n")
