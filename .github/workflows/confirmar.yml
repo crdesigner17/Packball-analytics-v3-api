@@ -7,8 +7,17 @@ on:
   workflow_dispatch:
     inputs:
       date:
-        description: 'Data YYYY-MM-DD ou "yesterday"'
-        default: 'yesterday'
+        description: 'Data unica YYYY-MM-DD ou "yesterday" (opcional se usar intervalo)'
+        required: false
+        default: ''
+      start_date:
+        description: 'Inicio do intervalo YYYY-MM-DD (opcional)'
+        required: false
+        default: ''
+      end_date:
+        description: 'Fim do intervalo YYYY-MM-DD (opcional)'
+        required: false
+        default: ''
 
 concurrency:
   group: confirmar-resultados
@@ -34,7 +43,35 @@ jobs:
         env:
           API_KEY: ${{ secrets.APIFOOTBALL_KEY }}
         run: |
-          if [ -n "${{ github.event.inputs.date }}" ]; then
+          if [ -n "${{ github.event.inputs.start_date }}" ] || [ -n "${{ github.event.inputs.end_date }}" ]; then
+            # Execucao manual: intervalo de datas.
+            START_DATE="${{ github.event.inputs.start_date }}"
+            END_DATE="${{ github.event.inputs.end_date }}"
+
+            if [ -z "$START_DATE" ] || [ -z "$END_DATE" ]; then
+              echo "Para usar intervalo, preencha start_date e end_date."
+              exit 1
+            fi
+
+            START_TS=$(date -d "$START_DATE" +%s)
+            END_TS=$(date -d "$END_DATE" +%s)
+
+            if [ "$START_TS" -gt "$END_TS" ]; then
+              echo "start_date nao pode ser maior que end_date."
+              exit 1
+            fi
+
+            CURRENT="$START_DATE"
+            while [ "$(date -d "$CURRENT" +%s)" -le "$END_TS" ]; do
+              echo "Confirmando: $CURRENT"
+              if [ "$(date -d "$CURRENT" +%s)" -lt "$END_TS" ]; then
+                python scripts/confirmar.py --key "$API_KEY" --date "$CURRENT" --no-site
+              else
+                python scripts/confirmar.py --key "$API_KEY" --date "$CURRENT"
+              fi
+              CURRENT=$(date -d "$CURRENT +1 day" +%Y-%m-%d)
+            done
+          elif [ -n "${{ github.event.inputs.date }}" ]; then
             # Execucao manual: data especifica.
             python scripts/confirmar.py --key "$API_KEY" --date "${{ github.event.inputs.date }}"
           else
