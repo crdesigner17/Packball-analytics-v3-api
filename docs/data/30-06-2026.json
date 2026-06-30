@@ -674,8 +674,35 @@
       "palpite_mkt": "Cart 3.5",
       "palpite_grade": "A",
       "palpite_score": 86.2,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1564789,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "0-1",
+        "corners_total": 17,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Cart 3.5": {
+          "score": 86.2,
+          "palpite": true,
+          "acertou": false
+        }
+      }
     },
     {
       "date": "30-06-2026",
@@ -3995,8 +4022,35 @@
       "score": 86.2,
       "grade": "A",
       "oddVal": null,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1564789,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "0-1",
+        "corners_total": 17,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Cart 3.5": {
+          "score": 86.2,
+          "palpite": true,
+          "acertou": false
+        }
+      }
     },
     {
       "fixture_id": 1565177,
@@ -4073,8 +4127,35 @@
               "score": 86.2,
               "grade": "A",
               "oddVal": null,
-              "resultado": null,
-              "acertos": {}
+              "resultado": {
+                "fixture_id": 1564789,
+                "status": "FT",
+                "gols_home": 1,
+                "gols_away": 2,
+                "gols_total": 3,
+                "gols_ht": 1,
+                "btts": true,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": true,
+                "under35_ok": true,
+                "under45_ok": true,
+                "placar": "1-2",
+                "placar_ht": "0-1",
+                "corners_total": 17,
+                "cards_total": 1,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
+              },
+              "acertos": {
+                "Cart 3.5": {
+                  "score": 86.2,
+                  "palpite": true,
+                  "acertou": false
+                }
+              }
             },
             {
               "fixture_id": 1565177,
@@ -4203,11 +4284,11 @@
       "taxa": null
     },
     "Cart 3.5": {
-      "palpites": 0,
+      "palpites": 1,
       "acertos": 0,
-      "erros": 0,
+      "erros": 1,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 0.0
     }
   },
   "resultado_stats_full": {
@@ -4268,18 +4349,18 @@
       "taxa": null
     },
     "Cart 2.5": {
-      "palpites": 0,
+      "palpites": 1,
       "acertos": 0,
-      "erros": 0,
+      "erros": 1,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 0.0
     },
     "Cart 3.5": {
-      "palpites": 0,
+      "palpites": 1,
       "acertos": 0,
-      "erros": 0,
+      "erros": 1,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 0.0
     }
   },
   "stats": {
