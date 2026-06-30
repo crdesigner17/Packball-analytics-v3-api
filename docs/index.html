@@ -940,10 +940,6 @@ select{background:var(--s2);border:1px solid var(--border);color:var(--text);pad
   width:100%;max-width:none;margin:0;box-sizing:border-box;scroll-behavior:smooth;
 }
 .date-strip::-webkit-scrollbar{display:none}
-.date-strip::before,
-.date-strip::after{
-  content:'';flex:0 0 calc(50% - 36px);min-width:0;height:1px;pointer-events:none;
-}
 .date-strip-arrow{
   height:var(--date-strip-h);border:0;background:rgba(17,24,39,.94);color:var(--muted);
   display:flex;align-items:center;justify-content:center;cursor:pointer;
@@ -5147,7 +5143,8 @@ function centerDateTab(tab, behavior='smooth'){
   const strip = document.getElementById('date-strip');
   if(!strip || !tab) return;
   const left = tab.offsetLeft - (strip.clientWidth / 2) + (tab.offsetWidth / 2);
-  strip.scrollTo({left:Math.max(0,left), behavior});
+  const maxLeft = Math.max(0, strip.scrollWidth - strip.clientWidth);
+  strip.scrollTo({left:Math.min(maxLeft, Math.max(0,left)), behavior});
 }
 function centerCurrentDate(behavior='auto'){
   const today = new Date().toLocaleDateString('pt-BR',{day:'2-digit',month:'2-digit',year:'numeric'}).split('/').join('-');
@@ -5157,8 +5154,21 @@ function centerCurrentDate(behavior='auto'){
 function shiftDateStrip(dir){
   const strip = document.getElementById('date-strip');
   if(!strip) return;
-  const step = Math.max(220, Math.round(strip.clientWidth * 0.55));
-  strip.scrollBy({left:dir * step, behavior:'smooth'});
+  const tabs = [...strip.querySelectorAll('.date-strip-item')].filter(tab=>!tab.hidden);
+  if(!tabs.length) return;
+  const center = strip.scrollLeft + (strip.clientWidth / 2);
+  let currentIndex = 0;
+  let bestDistance = Infinity;
+  tabs.forEach((tab,index)=>{
+    const tabCenter = tab.offsetLeft + (tab.offsetWidth / 2);
+    const distance = Math.abs(tabCenter - center);
+    if(distance < bestDistance){
+      bestDistance = distance;
+      currentIndex = index;
+    }
+  });
+  const nextIndex = Math.min(tabs.length - 1, Math.max(0, currentIndex + dir));
+  centerDateTab(tabs[nextIndex]);
 }
 
 const WM_MONTHS_LONG = ['janeiro','fevereiro','mar\u00e7o','abril','maio','junho','julho','agosto','setembro','outubro','novembro','dezembro'];
