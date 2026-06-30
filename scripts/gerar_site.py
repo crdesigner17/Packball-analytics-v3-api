@@ -2044,7 +2044,7 @@ function approvedMarketsHtml(d, opts){{
 }}
 
 // ── Resultado Final helpers ───────────────────────────────────────
-const RF_BACKTEST_START = '24-05-2026';
+const RF_BACKTEST_START = '01-05-2026';
 function dateObj(date){{
   const [dd,mm,yyyy]=String(date||'').split('-').map(Number);
   return new Date(yyyy||1970,(mm||1)-1,dd||1);
