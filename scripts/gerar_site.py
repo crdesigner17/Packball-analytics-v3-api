@@ -2570,7 +2570,11 @@ function renderResultadoFinal(date,jogos){{
     const res=getResultado(r.j);
     const placar=res?`${{res.gols_home}}-${{res.gols_away}}`:'—';
     const displayPick=a.market?{{...a,market:a.market}}:(a.side?{{...a,market:'win'}}:null);
-    return`<tr class="row-pending">
+    const resultPick=rfVisualPick(displayPick);
+    const rejectedResult=resultPick?rfResult(r.j,resultPick):'PENDING';
+    const rejectedStatus=rfBadge(rejectedResult);
+    const rejectedCls=rejectedResult==='GREEN'?'row-hit':rejectedResult==='RED'?'row-miss':'row-pending';
+    return`<tr class="${{rejectedCls}}">
       <td class="row-num">${{i+1}}</td>
       ${{jogoCell(r.j)}}
       <td class="mono muted">${{r.j.hora||'—'}}</td>
@@ -2579,7 +2583,7 @@ function renderResultadoFinal(date,jogos){{
       <td>${{a.grade?gradeHtml(a.grade):'<span class="mono muted">—</span>'}}</td>
       <td class="mono muted">${{rfNum(r.j,'odds_h')?Number(rfNum(r.j,'odds_h')).toFixed(2):'—'}} x ${{rfNum(r.j,'odds_a')?Number(rfNum(r.j,'odds_a')).toFixed(2):'—'}}</td>
       <td class="mono">${{placar}}</td>
-      <td><span class="res-badge pending"><i data-lucide="filter-x"></i> Reprovado</span></td>
+      <td>${{rejectedStatus}}</td>
       <td><div class="rf-reasons"><strong>${{a.stage}}:</strong> ${{a.reason}}${{a.reasons&&a.reasons.length?` · ${{a.reasons.join(' · ')}}`:''}}</div></td>
     </tr>`;
   }}).join('');
@@ -2609,7 +2613,7 @@ function renderResultadoFinal(date,jogos){{
     </table></div>
     <div class="sec-title" style="margin-top:14px"><i data-lucide="filter-x"></i> Reprovado pelo filtro</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds</th><th>Placar</th><th>Status</th><th>Motivo técnico</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th><th>Score</th><th>Confiança</th><th>Odds</th><th>Placar</th><th>Resultado</th><th>Motivo técnico</th></tr></thead>
       <tbody>${{rejectedRowsHtml||'<tr><td colspan="10" class="empty">Nenhum jogo reprovado pelo filtro nesta data.</td></tr>'}}</tbody>
     </table></div>`;
   ensureLucideIcons();
