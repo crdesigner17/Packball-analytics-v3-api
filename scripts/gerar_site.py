@@ -1694,6 +1694,7 @@ const MKT_MIN = {{
   'Over 1.5':85,'Over 2.5':75,'BTTS':70,'Over 0.5 HT':75,'Under 4.5':75,'Under 3.5':75,
   'Esc 7.5':75,'Esc 8.5':75,'Cart 2.5':75,'Cart 3.5':75,
 }};
+const CARD_MARKETS = new Set(['Cart 2.5','Cart 3.5']);
 
 // ── Helpers ────────────────────────────────────────────────────────
 // ── KPI Filter ────────────────────────────────────────────────────
@@ -1733,7 +1734,7 @@ function kpiFilter(date, tipo, count){{
   }}
   const rows=filtrados.map((d,i)=>{{
     const cardPick=d.__cardPick||null;
-    const mktKey=cardPick?null:(MKT_RESULT[getPalpiteMkt(d)]||'over15_ok');
+    const mktKey=cardPick?null:getPalpiteKey(d);
     const rc=cardPick?cardRowClass(cardPick):rowClass(d,mktKey);
     const scoreField=cardPick?cardPick.score_final:(tipo==='prem'?getPalpiteScore(d):tipo==='15'?d.score_15:tipo==='esc'?d.score_esc75:d.score_cards25);
     const mktShow=cardPick?cardMarketLabel(cardPick.market_key,cardPick.market):(tipo==='prem'?getPalpiteMkt(d):tipo==='15'?'Over 1.5':tipo==='esc'?'Esc 7.5':'Cart 2.5');
@@ -1891,19 +1892,89 @@ function scoreForMkt(jogo,mkt){{
   if(field && jogo[field] != null) return jogo[field];
   return jogo.palpite_score!=null?jogo.palpite_score:(jogo.best_score!=null?jogo.best_score:(jogo.score||0));
 }}
+function mainMarketCandidates(jogo){{
+  const mkts=[];
+  function push(mkt,key,score,grade,enabled=true){{
+    const n=Number(score);
+    if(!enabled || !Number.isFinite(n))return;
+    mkts.push({{mkt,key,score:n,grade:grade||gradeFromScore(n),kind:'main'}});
+  }}
+  push('Over 1.5','over15_ok',jogo.score_15,jogo.grade_15,jogo.passou_filtro);
+  push('Over 2.5','over25_ok',jogo.score_25,jogo.grade_25);
+  push('BTTS','btts',jogo.score_btts,jogo.grade_btts);
+  push('Over 0.5 HT','over05_ht_ok',jogo.score_05ht,jogo.grade_05ht);
+  push('Under 4.5','under45_ok',jogo.score_u45,jogo.grade_u45);
+  push('Under 3.5','under35_ok',jogo.score_u35,jogo.grade_u35,under35Filter(jogo));
+  push('Esc 7.5','esc75_ok',jogo.score_esc75,jogo.grade_esc75);
+  push('Esc 8.5','esc85_ok',jogo.score_esc85,jogo.grade_esc85);
+  const rf=rfVisualPick(rfPick(jogo));
+  if(rf){{
+    mkts.push({{mkt:rfMarketLabel(rf),key:'rf',score:rf.score,grade:rf.grade||gradeFromScore(rf.score),kind:'rf',rf}});
+  }}
+  return mkts.sort((a,b)=>(b.score||0)-(a.score||0));
+}}
+function mainBestPick(jogo){{
+  const picks=mainMarketCandidates(jogo);
+  if(picks.length)return picks[0];
+  const legacy=jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';
+  if(legacy && !CARD_MARKETS.has(legacy)){{
+    return {{mkt:legacy,key:MKT_RESULT[legacy]||'over15_ok',score:scoreForMkt(jogo,legacy),grade:gradeForMkt(jogo,legacy),kind:'main'}};
+  }}
+  return {{mkt:'Over 1.5',key:'over15_ok',score:jogo.score_15||0,grade:jogo.grade_15||gradeFromScore(jogo.score_15||0),kind:'main'}};
+}}
 function normalizedPalpite(jogo){{
-  let mkt = jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';
+  const pick = mainBestPick(jogo);
+  let mkt = pick.mkt||'';
   if(mkt==='Over 2.5' && (jogo.score_15||0)>=MKT_MIN['Over 1.5'] && jogo.passou_filtro && ((jogo.score_25||0)-(jogo.score_15||0))<LINHA_SEGURA_DIFF){{
     mkt='Over 1.5';
   }}
   if(mkt==='Esc 8.5' && jogo.score_esc75 != null && ((jogo.score_esc85||0)-(jogo.score_esc75||0))<LINHA_SEGURA_DIFF){{
     mkt='Esc 7.5';
   }}
-  return {{mkt, score:scoreForMkt(jogo,mkt), grade:gradeForMkt(jogo,mkt)}};
+  if(pick.kind==='rf')return pick;
+  return {{mkt, score:scoreForMkt(jogo,mkt), grade:gradeForMkt(jogo,mkt), key:MKT_RESULT[mkt]||'over15_ok', kind:'main'}};
 }}
 function getPalpiteMkt(jogo){{return normalizedPalpite(jogo).mkt;}}
 function getPalpiteGrade(jogo){{return normalizedPalpite(jogo).grade||'D';}}
 function getPalpiteScore(jogo){{return normalizedPalpite(jogo).score||0;}}
+function getPalpiteKey(jogo){{return normalizedPalpite(jogo).key||MKT_RESULT[getPalpiteMkt(jogo)]||'over15_ok';}}
+function primaryResultBadge(jogo){{
+  const pick=normalizedPalpite(jogo);
+  if(pick.kind==='rf')return rfBadge(rfResult(jogo,pick.rf));
+  return resBadge(jogo,pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}}
+function primaryResultOk(jogo){{
+  const pick=normalizedPalpite(jogo);
+  if(pick.kind==='rf'){{
+    const r=rfResult(jogo,pick.rf);
+    if(r==='GREEN')return true;
+    if(r==='RED')return false;
+    return null;
+  }}
+  return resultOk(getResultado(jogo),pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}}
+function primaryRowClass(jogo){{
+  const pick=normalizedPalpite(jogo);
+  if(pick.kind==='rf'){{
+    const r=rfResult(jogo,pick.rf);
+    if(r==='GREEN')return'row-hit';
+    if(r==='RED')return'row-miss';
+    return'row-pending';
+  }}
+  return rowClass(jogo,pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}}
+function primaryPlacarCard(jogo){{
+  const pick=normalizedPalpite(jogo);
+  if(pick.kind==='rf'){{
+    const res=getResultado(jogo);
+    if(!res)return`<div class="top-placar pending"><i data-lucide="clock"></i><span class="ft">Aguardando</span></div>`;
+    const r=rfResult(jogo,pick.rf);
+    const cls=r==='GREEN'?'hit':r==='RED'?'miss':'pending';
+    const icon=r==='GREEN'?'circle-check':r==='RED'?'circle-x':'circle-help';
+    return`<div class="top-placar ${{cls}}"><i data-lucide="${{icon}}"></i><div><span class="ft">${{res.placar}}</span> <span class="ht">HT ${{res.placar_ht}}</span></div></div>`;
+  }}
+  return placarCard(jogo,pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}}
 const GRADE_ORDER={{'A+':0,'A':1,'B':2,'C':3,'D':4}};
 function gradeRank(g){{return GRADE_ORDER[g]??99;}}
 function sortByGrade(a,b,gradeFn,scoreFn){{
@@ -2330,9 +2401,10 @@ function historicoAllRows(){{
       const mkt = getPalpiteMkt(j);
       const grade = getPalpiteGrade(j);
       const score = getPalpiteScore(j);
-      const key = MKT_RESULT[mkt] || 'over15_ok';
+      const key = getPalpiteKey(j);
       const res = getResultado(j);
-      const ok = res ? resultOk(res,key) : null;
+      const pick = normalizedPalpite(j);
+      const ok = res ? primaryResultOk(j) : null;
       const status = ok===true ? 'green' : ok===false ? 'red' : 'pendente';
       const alternatives = approvedMarkets(j).map(x=>x.mkt).join(' ');
       rows.push({{date,j,mkt,grade,score,status,alternatives}});
@@ -2435,7 +2507,6 @@ function renderVisao(date,jogos){{
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{{
     const c=col(getPalpiteScore(d));
-    const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
     const overlay=cardOverlayClass(d);
     return`<div class="top-card ${{cls[i]}}${{overlay}}">
       <div class="top-rank">#${{i+1}}</div>
@@ -2451,13 +2522,12 @@ function renderVisao(date,jogos){{
           ${{oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-weight:800;margin-top:2px">Odd: ${{oddMkt(d)}}</span>`:''}}
         </div>
       </div>
-      ${{placarCard(d, mktKey)}}
+      ${{primaryPlacarCard(d)}}
     </div>`;
   }}).join('');
 
   const rows=[...jogos].sort(sortByGrade).map((d,i)=>{{
-    const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
-    const rc=rowClass(d,mktKey);
+    const rc=primaryRowClass(d);
     return`<tr class="${{rc}}">
       <td class="row-num">${{i+1}}</td>
       ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
@@ -2469,7 +2539,7 @@ function renderVisao(date,jogos){{
       <td class="mono" style="color:${{col(d.score_esc75)}};font-weight:700">${{pctText(d.score_esc75)}}</td>
       <td class="mono" style="color:${{col(d.score_cards25)}};font-weight:700">${{pctText(d.score_cards25)}}</td>
       ${{placarCell(d)}}
-      <td>${{resBadge(d,mktKey)}}</td>
+      <td>${{primaryResultBadge(d)}}</td>
     </tr>`;
   }}).join('');
 
@@ -2505,8 +2575,7 @@ function renderRanking(date,jogos){{
     const title = `<div class="sec-title"><i data-lucide="${{group.icon}}"></i> ${{group.title}}</div>`;
     if(!group.items.length)return`<div class="ranking-col">${{title}}<div class="empty">Nenhum jogo nesta categoria.</div></div>`;
     const rows=group.items.map((d,i)=>{{
-      const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
-      const rc=rowClass(d,mktKey);
+      const rc=primaryRowClass(d);
       return`<tr class="${{rc}}">
         <td class="row-num">${{i+1}}</td>
         ${{jogoCell(d)}}
@@ -2516,7 +2585,7 @@ function renderRanking(date,jogos){{
         <td class="mono" style="color:${{col(getPalpiteScore(d))}};font-weight:700">${{pctText(getPalpiteScore(d))}}</td>
         <td class="alt-cell">${{approvedMarketsHtml(d, {{label:false, max:3, empty:true}})}}</td>
         ${{placarCell(d)}}
-        <td>${{resBadge(d,mktKey)}}</td>
+        <td>${{primaryResultBadge(d)}}</td>
       </tr>`;
     }}).join('');
     return`<div class="ranking-col">
@@ -3410,7 +3479,6 @@ function renderHistoricoDia(date,jogos){{
 
   if(!conf){{
     const rows=[...jogos].sort(sortByGrade).map((d,i)=>{{
-      const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
       return`<tr class="row-pending">
         <td class="row-num">${{i+1}}</td>
         ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
@@ -3453,8 +3521,7 @@ function renderHistoricoDia(date,jogos){{
       const icon=info.acertou===true?'circle-check':info.acertou===false?'circle-x':'circle-help';
       return`<span class="res-badge ${{cls}}" style="margin:1px;font-size:9px"><i data-lucide="${{icon}}"></i> ${{mkt}}</span>`;
     }}).join('');
-    const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
-    const rc=rowClass(d,mktKey);
+    const rc=primaryRowClass(d);
     const cantRow=res&&res.corners_total!=null?`<span class="mini-stat neutral"><i data-lucide="flag"></i>${{res.corners_total}}</span>`:'—';
     const cartRow=res&&res.cards_total!=null?`<span class="mini-stat neutral"><i data-lucide="square"></i>${{res.cards_total}}</span>`:'—';
     return`<tr class="${{rc}}">
@@ -3517,8 +3584,7 @@ function renderHistoricoGlobal(){{
   const taxaStat=s=>s.auditados>0?Math.round((s.acertos/s.auditados)*1000)/10:null;
   const addPick=(s,j)=>{{
     s.gerados++;
-    const key=MKT_RESULT[getPalpiteMkt(j)]||'over15_ok';
-    const ok=resultOk(getResultado(j),key);
+    const ok=primaryResultOk(j);
     if(ok===true){{s.auditados++;s.acertos++;}}
     else if(ok===false){{s.auditados++;s.erros++;}}
   }};
