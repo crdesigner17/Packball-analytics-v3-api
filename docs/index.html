@@ -2951,6 +2951,23 @@ function normalizedPalpite(jogo){
 function getPalpiteMkt(jogo){return normalizedPalpite(jogo).mkt;}
 function getPalpiteGrade(jogo){return normalizedPalpite(jogo).grade||'D';}
 function getPalpiteScore(jogo){return normalizedPalpite(jogo).score||0;}
+function getPalpiteKey(jogo){return normalizedPalpite(jogo).key||MKT_RESULT[getPalpiteMkt(jogo)]||'over15_ok';}
+function primaryResultBadge(jogo){
+  const pick=normalizedPalpite(jogo);
+  return resBadge(jogo,pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}
+function primaryResultOk(jogo){
+  const pick=normalizedPalpite(jogo);
+  return resultOk(getResultado(jogo),pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}
+function primaryRowClass(jogo){
+  const pick=normalizedPalpite(jogo);
+  return rowClass(jogo,pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}
+function primaryPlacarCard(jogo){
+  const pick=normalizedPalpite(jogo);
+  return placarCard(jogo,pick.key||MKT_RESULT[pick.mkt]||'over15_ok');
+}
 const GRADE_ORDER={'A+':0,'A':1,'B':2,'C':3,'D':4};
 function gradeRank(g){return GRADE_ORDER[g]??99;}
 function sortByGrade(a,b,gradeFn,scoreFn){
@@ -3543,7 +3560,6 @@ function renderVisao(date,jogos){
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{
     const c=col(getPalpiteScore(d));
-    const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
     const overlay=cardOverlayClass(d);
     return`<div class="top-card ${cls[i]}${overlay}">
       <div class="top-rank">#${i+1}</div>
@@ -3559,7 +3575,7 @@ function renderVisao(date,jogos){
           ${oddMkt(d)!=='—'?`<span style="font-size:11px;color:var(--yellow);font-weight:800;margin-top:2px">Odd: ${oddMkt(d)}</span>`:''}
         </div>
       </div>
-      ${placarCard(d, mktKey)}
+      ${primaryPlacarCard(d)}
     </div>`;
   }).join('');
 
