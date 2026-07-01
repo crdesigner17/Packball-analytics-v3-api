@@ -3821,10 +3821,11 @@ function renderOver25(date,jogos){
 // €€ Escanteios €€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€€
 function renderEsc(date,jogos){
   const el=document.getElementById('mkt-'+date+'-escanteios');
+  if(!el)return;
   const r75=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
   const r85=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc85||getPalpiteGrade(d),d=>d.score_esc85));
   function escRows(rows,mktKey){
-    return rows.slice(0,15).map((d,i)=>{
+    const html = rows.slice(0,15).map((d,i)=>{
       const rc=rowClass(d,mktKey);
       const res=getResultado(d);
       const cantReal=res&&res.corners_total!=null?`<td><span class="corner-real">${res.corners_total}</span></td>`:'<td class="mono muted">--</td>';
@@ -3840,6 +3841,7 @@ function renderEsc(date,jogos){
         ${cantReal}<td>${resBadge(d,mktKey)}</td>
       </tr>`;
     }).join('');
+    return html || '<tr><td colspan="11" class="empty">Nenhum jogo encontrado para escanteios nesta data.</td></tr>';
   }
   el.innerHTML=`
     <div class="tbl-wrap corner-table-wrap"><table>
@@ -5376,6 +5378,16 @@ function sidebarNav(mkt){
     const d = dates[dates.length-1];
     if(d) switchDate(d);
     else return;
+  }
+  if(mkt==='visao'){
+    historicoVisible=false;
+    const histPanel=document.getElementById('panel-historico');
+    if(histPanel)histPanel.style.display='none';
+    clearMarketCategoryState();
+    activeMkt[activeDate]='visao';
+    switchMkt(activeDate,'visao');
+    updateSidebarActive('visao');
+    return;
   }
   if(historicoVisible || document.getElementById('panel-historico')?.style.display==='block'){
     activeMkt[activeDate]=mkt;
