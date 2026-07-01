@@ -2342,9 +2342,13 @@ function cardOverlayClass(jogo){{
   if(!res)return'';
   const ac=jogo.acertos||{{}};
   const bestMktAcerto=ac[getPalpiteMkt(jogo)];
-  if(!bestMktAcerto)return'';
-  if(bestMktAcerto.acertou===true)return' tc-hit';
-  if(bestMktAcerto.acertou===false)return' tc-miss';
+  if(bestMktAcerto){{
+    if(bestMktAcerto.acertou===true)return' tc-hit';
+    if(bestMktAcerto.acertou===false)return' tc-miss';
+  }}
+  const ok=primaryResultOk(jogo);
+  if(ok===true)return' tc-hit';
+  if(ok===false)return' tc-miss';
   return'';
 }}
 
