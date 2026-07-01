@@ -838,18 +838,23 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .sec-title::after{{content:'';flex:1;height:1px;background:var(--border)}}
 
 /* TOP CARDS */
-.top-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:20px;align-items:stretch;max-width:100%;min-width:0}}
+.top-grid{{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:10px;margin-bottom:20px;align-items:start;max-width:100%;min-width:0}}
 .top-grid::-webkit-scrollbar{{height:3px}}
 .top-grid::-webkit-scrollbar-thumb{{background:var(--accent);border-radius:2px}}
-.top-card{{width:100%;min-width:0;background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}}
+.top-card{{width:100%;min-width:0;height:auto;align-self:start;background:var(--s1);border:1px solid var(--border);border-radius:11px;padding:14px;position:relative;overflow:hidden;transition:border-color .2s,transform .15s}}
 .top-card:hover{{border-color:var(--accent);transform:translateY(-2px);box-shadow:0 8px 24px rgba(0,0,0,.3)}}
 .top-card:active{{transform:translateY(0);box-shadow:none}}
 /* resultado overlay no card */
 .tc-hit::after{{content:'';position:absolute;inset:0;background:rgba(0,200,150,.06);border:1px solid rgba(0,200,150,.25);border-radius:11px;pointer-events:none}}
 .tc-miss::after{{content:'';position:absolute;inset:0;background:rgba(239,68,68,.06);border:1px solid rgba(239,68,68,.25);border-radius:11px;pointer-events:none}}
-.top-rank{{position:absolute;top:10px;right:12px;font-size:13px;font-weight:800;color:rgba(255,255,255,.14)}}
-.top-liga{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:24px}}
-.top-jogo{{font-size:13px;font-weight:700;margin-bottom:2px;padding-right:22px;line-height:1.3;overflow-wrap:anywhere}}
+.top-rank-block{{position:absolute;top:10px;right:12px;text-align:right;display:flex;flex-direction:column;align-items:flex-end;gap:3px;z-index:1}}
+.top-rank{{position:static;font-size:13px;font-weight:800;color:rgba(255,255,255,.18);line-height:1}}
+.top-status{{font-family:'JetBrains Mono',monospace;font-size:9px;font-weight:800;letter-spacing:.4px;text-transform:uppercase;padding:2px 5px;border-radius:4px;line-height:1}}
+.top-status.hit{{color:var(--green);background:rgba(0,200,150,.10);border:1px solid rgba(0,200,150,.25)}}
+.top-status.miss{{color:var(--red);background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.25)}}
+.top-status.pending{{color:var(--yellow);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.20)}}
+.top-liga{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:86px}}
+.top-jogo{{font-size:13px;font-weight:700;margin-bottom:2px;padding-right:86px;line-height:1.3;overflow-wrap:anywhere}}
 .top-hora{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:8px}}
 .top-mkt{{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}}
 .top-bottom{{display:flex;align-items:center;justify-content:space-between;margin-top:6px}}
@@ -2111,7 +2116,10 @@ function approvedMarketsHtml(d, opts){{
   opts = opts || {{}};
   const primary = opts.primary || getPalpiteMkt(d);
   const max = opts.max || 4;
-  const mkts = approvedMarkets(d).filter(x=>x.mkt!==primary).slice(0,max);
+  const isCardAltMarket = x => x && (x.cardPick || x.key==='cards_v1' || /Cart/i.test(String(x.mkt||'')));
+  let mkts = approvedMarkets(d).filter(x=>x.mkt!==primary);
+  if(opts.excludeCards) mkts = mkts.filter(x=>!isCardAltMarket(x));
+  mkts = mkts.slice(0,max);
   if(!mkts.length) return opts.empty ? '<span class="muted" style="font-size:11px">Sem alternativas</span>' : '';
   const label = opts.label === false ? '' : '<span class="alt-label">Também aprovado</span>';
   const res = getResultado(d);
@@ -2356,6 +2364,13 @@ function cardOverlayClass(jogo){{
   return'';
 }}
 
+function topCardStatus(jogo){{
+  const ok=primaryResultOk(jogo);
+  if(ok===true)return{{text:'GREEN',cls:'hit'}};
+  if(ok===false)return{{text:'RED',cls:'miss'}};
+  return getResultado(jogo)?{{text:'Não confirmado',cls:'pending'}}:{{text:'Aguardando',cls:'pending'}};
+}}
+
 // ── Render Global KPIs (header) ────────────────────────────────────
 
 // ── Visão Geral ────────────────────────────────────────────────────
@@ -2514,13 +2529,13 @@ function renderVisao(date,jogos){{
   const t5=top.map((d,i)=>{{
     const c=col(getPalpiteScore(d));
     const overlay=cardOverlayClass(d);
+    const status=topCardStatus(d);
     return`<div class="top-card ${{cls[i]}}${{overlay}}">
-      <div class="top-rank">#${{i+1}}</div>
+      <div class="top-rank-block"><div class="top-rank">#${{i+1}}</div><div class="top-status ${{status.cls}}">${{status.text}}</div></div>
       <div class="top-liga">${{d.liga}}</div>
       <div class="top-jogo">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div>
       <div class="top-hora"><i data-lucide="clock"></i> ${{d.hora}}</div>
       <div class="top-mkt">${{getPalpiteMkt(d)}}</div>
-      ${{approvedMarketsHtml(d, {{max:3}})}}
       <div class="top-bottom">
         <div class="top-score" style="color:${{c}}">${{getPalpiteScore(d)}}%</div>
         <div class="top-grade-block">
