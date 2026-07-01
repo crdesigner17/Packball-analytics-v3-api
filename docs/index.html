@@ -2787,7 +2787,7 @@ function oddMkt(d){
   if(d.oddVal) return parseFloat(d.oddVal).toFixed(2);
   const mkt=getPalpiteMkt(d);
   let val=null;
-  if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15;
+  if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15||d.odd_justa_15||oddEstimate(d,mkt);
   else if(mkt==='Over 2.5') val=d.odds_o25;
   else if(mkt==='Cart 2.5') val=d.odds_cards_25;
   else if(mkt==='Cart 3.5') val=d.odds_cards_35;
@@ -2799,7 +2799,7 @@ function oddMkt(d){
   return parseFloat(val).toFixed(2);
 }
 function oddMktLabel(mkt){
-  if(mkt==='Over 1.5')      return'Odd O1.5';
+  if(mkt==='Over 1.5')      return'ODD';
   if(mkt==='Over 2.5')      return'Odd O2.5';
   if(mkt==='Cart 2.5')      return'Odd C2.5';
   if(mkt==='Cart 3.5')      return'Odd C3.5';
@@ -2824,7 +2824,7 @@ function oddEstimate(d,mkt){
 }
 function oddForMarketDetail(d,mkt){
   let val=null;
-  if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15;
+  if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15||d.odd_justa_15;
   else if(mkt==='Over 2.5') val=d.odds_o25;
   else if(mkt==='Cart 2.5') val=d.odds_cards_25;
   else if(mkt==='Cart 3.5') val=d.odds_cards_35;
@@ -3759,28 +3759,29 @@ function renderResultadoFinal(date,jogos){
 function renderOver15(date,jogos){
   const el=document.getElementById('mkt-'+date+'-over15');
   let rows=[...jogos].filter(d=>d.passou_filtro).sort((a,b)=>sortByGrade(a,b,d=>d.grade_15||getPalpiteGrade(d),d=>d.score_15));
-  const total=rows.length;
   const html=rows.map((d,i)=>{
     const rc=rowClass(d,'over15_ok');
-    const probColor=d.over15_g>=85?'var(--green)':d.over15_g>=75?'var(--blue)':'var(--orange)';
+    const prob = d.over15_g ?? d.score_15;
+    const oddOver15 = d.odds_o15 || d.odd_over15 || d.odd_justa_15 || (prob ? 100 / prob : null);
+    const probColor=prob>=85?'var(--green)':prob>=75?'var(--blue)':'var(--orange)';
+    const scoreColor=col(d.score_15||0);
     return`<tr class="${rc}">
       <td class="mono muted">${i+1}</td>${jogoCell(d)}
       <td class="mono muted">${d.hora}</td>
-      <td><span class="metric-value em" style="color:${probColor}">${d.over15_g||'—'}%</span></td>
-      <td class="mono" style="color:var(--yellow);font-weight:800;font-size:13px">${odd(d.odd_over15)}</td>
+      <td class="mono" style="color:var(--blue)">${d.exg_tot||'—'}</td>
+      <td><span class="metric-value em" style="color:${probColor}">${prob!=null?Number(prob).toFixed(1):'—'}%</span></td>
+      <td class="mono" style="color:var(--yellow);font-weight:800;font-size:13px">${odd(oddOver15)}</td>
+      <td>${gradeHtml(d.grade_15)}</td>
+      <td class="mono" style="color:${scoreColor};font-weight:800">${d.score_15!=null?Number(d.score_15).toFixed(1)+'%':'—'}</td>
       ${placarCell(d)}
       <td>${resBadge(d,'over15_ok')}</td>
-      <td>${bar(d.score_15)}</td>
-      <td>${gradeHtml(d.grade_15)}</td>
-      <td class="mono" style="color:var(--blue)">${d.exg_tot||'—'}</td>
       <td>${via(d.via)}</td>
     </tr>`;
   }).join('');
   el.innerHTML=`
-    <div class="callout info"><strong><i data-lucide="crosshair"></i> Over 1.5 Gols — Validado 88.6%</strong> · ${total} jogos aprovados no Filtro 3 Vias.</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Probabilidade</th><th style="color:var(--yellow)">Odd O1.5</th><th>Placar</th><th>Resultado</th><th>Score</th><th>Confiança</th><th>xG</th><th>Via</th></tr></thead>
-      <tbody>${html||'<tr><td colspan="10" class="empty">Nenhum jogo passou o Filtro 3 Vias.</td></tr>'}</tbody>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>xG</th><th style="color:var(--green)">Probabilidade</th><th style="color:var(--yellow)">ODD</th><th>Confiança</th><th>Score</th><th>Placar</th><th>Resultado</th><th>Via</th></tr></thead>
+      <tbody>${html||'<tr><td colspan="11" class="empty">Nenhum jogo passou o Filtro 3 Vias.</td></tr>'}</tbody>
     </table></div>`;
 }
 
@@ -3807,7 +3808,6 @@ function renderOver25(date,jogos){
     .filter(x=>x.under)
     .sort((a,b)=>sortByGrade(a.jogo,b.jogo,d=>underMarketPick(d)?.grade||'D',d=>underMarketPick(d)?.score||0));
   el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="shield-check"></i> Mercado Under</strong> · Mostra Under 3.5 quando passa no filtro rígido; senão, Under 4.5 quando o score aprova.</div>
     <div class="tbl-wrap"><table>
       <thead><tr>
         <th>#</th><th>Jogo</th><th>Hora</th><th>Mercado</th>
@@ -3859,7 +3859,6 @@ function renderEsc(date,jogos){
     }).join('');
   }
   el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="corner-up-right"></i> Escanteios</strong> · Lista direta com volume, tendência e resultado.</div>
     <div class="tbl-wrap corner-table-wrap"><table>
       <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Over 6.5 FT</th><th>Over 7.5 FT</th><th>Over 8.5 FT</th><th>Over 9.5 FT</th><th>Over 10.5 FT</th><th>Resultado Real</th><th>Resultado</th></tr></thead>
       <tbody>${escRows(r75,'esc75_ok')}</tbody></table></div>`;
