@@ -1845,6 +1845,19 @@ function via(v){{
   if(v==='Via 3')return'<span class="via v3">VIA3</span>';
   return'<span class="via vx">—</span>';
 }}
+function cornerPctColor(v){{
+  const pct=v!=null?v:0;
+  return pct>=80?'var(--green)':pct>=60?'var(--teal)':pct>=40?'var(--yellow)':pct>=20?'var(--orange)':'var(--red)';
+}}
+function cornerOverCell(v){{
+  const pct=v!=null?Math.min(Math.max(Number(v)||0,0),100):0;
+  const c=cornerPctColor(v);
+  const fillWidth=pct>0?`calc(${{pct}}% - 6px)`:'0';
+  return`<td><div class="corner-over-cell">
+    <span class="corner-over-pct" style="color:${{c}}">${{v!=null?fmtNum(v,0)+'%':'--'}}</span>
+    <div class="corner-over-track" style="border-color:${{c}}"><div class="corner-over-fill" style="width:${{fillWidth}};background:${{c}}"></div></div>
+  </div></td>`;
+}}
 function pct(v){{return v!=null?v+'%':'—';}}
 function pctText(v){{
   if(v==null||v==='')return'—';
@@ -2774,32 +2787,32 @@ function renderOver25(date,jogos){{
 // ── Escanteios ─────────────────────────────────────────────────────
 function renderEsc(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-escanteios');
+  if(!el)return;
   const r75=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
   const r85=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc85||getPalpiteGrade(d),d=>d.score_esc85));
   function escRows(rows,mktKey){{
-    return rows.slice(0,15).map((d,i)=>{{
+    const html = rows.slice(0,15).map((d,i)=>{{
       const rc=rowClass(d,mktKey);
       const res=getResultado(d);
-      const cantReal=res&&res.corners_total!=null?`<td class="mono" style="color:var(--teal)">${{res.corners_total}}</td>`:'<td class="mono muted">—</td>';
+      const cantReal=res&&res.corners_total!=null?`<td><span class="corner-real">${{res.corners_total}}</span></td>`:'<td class="mono muted">--</td>';
       return`<tr class="${{rc}}">
         <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
         <td class="mono muted">${{d.hora}}</td>
-        <td>${{bar(mktKey==='esc75_ok'?d.score_esc75:d.score_esc85)}}</td>
-        <td class="mono" style="color:var(--teal)">${{d.avg_corners||'—'}}</td>
-        <td>${{pyramid(d)}}</td>
+        <td class="corner-confidence">${{confHtml(mktKey==='esc75_ok'?d.score_esc75:d.score_esc85)}}</td>
+        ${{cornerOverCell(d.over65_c)}}
+        ${{cornerOverCell(d.over75_c)}}
+        ${{cornerOverCell(d.over85_c)}}
+        ${{cornerOverCell(d.over95_c)}}
+        ${{cornerOverCell(d.over105_c)}}
         ${{cantReal}}<td>${{resBadge(d,mktKey)}}</td>
       </tr>`;
     }}).join('');
+    return html || '<tr><td colspan="11" class="empty">Nenhum jogo encontrado para escanteios nesta data.</td></tr>';
   }}
   el.innerHTML=`
-    <div class="sec-title"><i data-lucide="corner-up-right"></i> Over 7.5</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Média</th><th>Pirâmide</th><th>Real</th><th>Resultado</th></tr></thead>
-      <tbody>${{escRows(r75,'esc75_ok')}}</tbody></table></div>
-    <div class="sec-title"><i data-lucide="corner-up-right"></i> Over 8.5</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Score</th><th>Média</th><th>Pirâmide</th><th>Real</th><th>Resultado</th></tr></thead>
-      <tbody>${{escRows(r85,'esc85_ok')}}</tbody></table></div>`;
+    <div class="tbl-wrap corner-table-wrap"><table>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Over 6.5 FT</th><th>Over 7.5 FT</th><th>Over 8.5 FT</th><th>Over 9.5 FT</th><th>Over 10.5 FT</th><th>Resultado Real</th><th>Resultado</th></tr></thead>
+      <tbody>${{escRows(r75,'esc75_ok')}}</tbody></table></div>`;
 }}
 
 // ── Cartões ────────────────────────────────────────────────────────
@@ -4108,6 +4121,16 @@ function sidebarNav(mkt){{
     const d = dates[dates.length-1];
     if(d) switchDate(d);
     else return;
+  }}
+  if(mkt==='visao'){{
+    historicoVisible=false;
+    const histPanel=document.getElementById('panel-historico');
+    if(histPanel)histPanel.style.display='none';
+    clearMarketCategoryState();
+    activeMkt[activeDate]='visao';
+    switchMkt(activeDate,'visao');
+    updateSidebarActive('visao');
+    return;
   }}
   if(historicoVisible || document.getElementById('panel-historico')?.style.display==='block'){{
     activeMkt[activeDate]=mkt;
