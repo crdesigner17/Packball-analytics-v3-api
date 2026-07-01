@@ -3071,15 +3071,6 @@ function approvedMarkets(d){
   if(under) push(under.mkt,under.key,under.score,under.grade,'protect');
   if((d.score_esc75||0) >= MKT_MIN['Esc 7.5']) push('Esc 7.5','esc75_ok',d.score_esc75,d.grade_esc75);
   if((d.score_esc85||0) >= MKT_MIN['Esc 8.5']) push('Esc 8.5','esc85_ok',d.score_esc85,d.grade_esc85);
-  const cardPick = normalizeCardPick(d);
-  if(cardPick) mkts.push({
-    mkt:cardMarketLabel(cardPick.market_key, cardPick.market),
-    key:'cards_v1',
-    score:cardPick.score_final,
-    grade:cardPick.grade,
-    cls:'cards',
-    cardPick
-  });
   return mkts.sort((a,b)=>(b.score||0)-(a.score||0));
 }
 
@@ -3548,14 +3539,7 @@ function renderGlobalHistoricoSearch(){
 
 function renderVisao(date,jogos){
   const el=document.getElementById('mkt-'+date+'-visao');
-  const snap=(ALL_DATA[date]||{}).palpites_snapshot||[];
-  const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
-  const fullByName=new Map(jogos.map(j=>[`${j.home} x ${j.away}`,j]));
-  const enrichSnap = item => {
-    const full = (item.fixture_id && fullById.get(String(item.fixture_id))) || fullByName.get(`${item.home} x ${item.away}`) || {};
-    return {...item, ...full};
-  };
-  const top=[...(snap.length?snap.map(enrichSnap):jogos)].sort(sortByGrade).slice(0,5);
+  const top=[...jogos].sort(sortByGrade).slice(0,5);
   const cls=['tc-aplus','tc-a','tc-b','tc-c','tc-d'];
   const t5=top.map((d,i)=>{
     const c=col(getPalpiteScore(d));
@@ -3580,20 +3564,15 @@ function renderVisao(date,jogos){
   }).join('');
 
   const rows=[...jogos].sort(sortByGrade).map((d,i)=>{
-    const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';
-    const rc=rowClass(d,mktKey);
+    const rc=primaryRowClass(d);
     return`<tr class="${rc}">
       <td class="row-num">${i+1}</td>
       ${jogoCell(d)}<td class="mono muted">${d.hora}</td>
       <td class="td-conf">${gradeHtml(getPalpiteGrade(d))}</td>
       <td class="td-palpite">${getPalpiteMkt(d)}</td>
       <td class="mono" style="color:${col(getPalpiteScore(d))};font-weight:700">${pctText(getPalpiteScore(d))}</td>
-      <td class="alt-cell">${approvedMarketsHtml(d, {label:false, max:3, empty:true})}</td>
-      <td class="mono" style="color:${col(d.score_15)};font-weight:700">${pctText(d.score_15)}</td>
-      <td class="mono" style="color:${col(d.score_esc75)};font-weight:700">${pctText(d.score_esc75)}</td>
-      <td class="mono" style="color:${col(d.score_cards25)};font-weight:700">${pctText(d.score_cards25)}</td>
       ${placarCell(d)}
-      <td>${resBadge(d,mktKey)}</td>
+      <td>${primaryResultBadge(d)}</td>
     </tr>`;
   }).join('');
 
@@ -3602,7 +3581,7 @@ function renderVisao(date,jogos){
     <div class="top-grid">${t5}</div>
     <div class="sec-title"><i data-lucide="list"></i> Resumo Geral</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Melhor</th><th>Score</th><th>Alternativas</th><th>Over 1.5</th><th>Esc 7.5</th><th>Cart 2.5</th><th>Placar</th><th>Resultado</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th style="color:var(--green)">Confiança</th><th style="color:var(--accent)">Melhor Palpite</th><th>Score</th><th>Placar</th><th>Resultado</th></tr></thead>
       <tbody>${rows}</tbody>
     </table></div>`;
 }
