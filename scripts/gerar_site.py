@@ -225,11 +225,7 @@ def card_pick_approved(jogo):
     if not isinstance(jogo, dict):
         return False
     analysis = jogo.get('cards_analysis')
-    if isinstance(analysis, dict) and analysis.get('approved') is True:
-        return True
-    if any(k in jogo for k in ('cards_analysis', 'card_markets', 'cards_market_key', 'cards_best_market')):
-        return False
-    return (jogo.get('score_cards25') or 0) >= 75 or (jogo.get('score_cards35') or 0) >= 75
+    return isinstance(analysis, dict) and analysis.get('approved') is True
 
 def apply_visual_overrides(html):
     """Aplica somente ajustes visuais ao HTML gerado, preservando dados e lógica."""
@@ -1694,7 +1690,9 @@ const MKT_MIN = {{
   'Over 1.5':85,'Over 2.5':75,'BTTS':70,'Over 0.5 HT':75,'Under 4.5':75,'Under 3.5':75,
   'Esc 7.5':75,'Esc 8.5':75,'Cart 2.5':75,'Cart 3.5':75,
 }};
-const CARD_MARKETS = new Set(['Cart 2.5','Cart 3.5']);
+function isCardMarketName(mkt){{
+  return /cart|cart[oõ]es|cart[aã]o/i.test(String(mkt||''));
+}}
 
 // ── Helpers ────────────────────────────────────────────────────────
 // ── KPI Filter ────────────────────────────────────────────────────
@@ -1917,7 +1915,7 @@ function mainBestPick(jogo){{
   const picks=mainMarketCandidates(jogo);
   if(picks.length)return picks[0];
   const legacy=jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';
-  if(legacy && !CARD_MARKETS.has(legacy)){{
+  if(legacy && !isCardMarketName(legacy)){{
     return {{mkt:legacy,key:MKT_RESULT[legacy]||'over15_ok',score:scoreForMkt(jogo,legacy),grade:gradeForMkt(jogo,legacy),kind:'main'}};
   }}
   return {{mkt:'Over 1.5',key:'over15_ok',score:jogo.score_15||0,grade:jogo.grade_15||gradeFromScore(jogo.score_15||0),kind:'main'}};
@@ -2085,8 +2083,15 @@ function approvedMarkets(d){{
   if(under) push(under.mkt,under.key,under.score,under.grade,'protect');
   if((d.score_esc75||0) >= MKT_MIN['Esc 7.5']) push('Esc 7.5','esc75_ok',d.score_esc75,d.grade_esc75);
   if((d.score_esc85||0) >= MKT_MIN['Esc 8.5']) push('Esc 8.5','esc85_ok',d.score_esc85,d.grade_esc85);
-  if((d.score_cards25||0) >= MKT_MIN['Cart 2.5']) push('Cart 2.5','cart25_ok',d.score_cards25,d.grade_cart25);
-  if((d.score_cards35||0) >= MKT_MIN['Cart 3.5']) push('Cart 3.5','cart35_ok',d.score_cards35,d.grade_cart35);
+  const cardPick = normalizeCardPick(d);
+  if(cardPick) mkts.push({{
+    mkt:cardMarketLabel(cardPick.market_key, cardPick.market),
+    key:'cards_v1',
+    score:cardPick.score_final,
+    grade:cardPick.grade,
+    cls:'cards',
+    cardPick
+  }});
   return mkts.sort((a,b)=>(b.score||0)-(a.score||0));
 }}
 
@@ -2107,7 +2112,7 @@ function approvedMarketsHtml(d, opts){{
   const label = opts.label === false ? '' : '<span class="alt-label">Também aprovado</span>';
   const res = getResultado(d);
   return `<div class="alt-mkts">${{label}}${{mkts.map(x=>{{
-    const ok = res ? resultOk(res,x.key) : null;
+    const ok = res ? (x.cardPick ? cardResultOk(x.cardPick) : resultOk(res,x.key)) : null;
     const stCls = ok===true ? 'hit' : ok===false ? 'miss' : res ? 'pending' : '';
     const stTxt = ok===true ? 'GREEN' : ok===false ? 'RED' : res ? 'S/D' : '';
     return `<span class="alt-badge ${{x.cls}} ${{stCls}}">${{x.mkt}} <strong>${{pctText(x.score)}}</strong>${{stTxt?`<span class="alt-res">${{stTxt}}</span>`:''}}</span>`;
@@ -2892,45 +2897,11 @@ function lineValueBadge(value, title){{
   return `<span class="cards-line-badge ${{lineValueClass(n)}}" title="${{escapeAttr(title || '')}}">${{text}}</span>`;
 }}
 
-function normalizeLegacyCardPick(d){{
-  const score25 = numValue(d.score_cards25);
-  const score35 = numValue(d.score_cards35);
-  const best35 = score35 != null && score35 >= 75 && score35 >= (score25 || 0);
-  const best25 = score25 != null && score25 >= 75;
-  if(!best25 && !best35) return null;
-  const key = best35 ? 'cards_over_35' : 'cards_over_25';
-  const line = best35 ? 3.5 : 2.5;
-  const score = best35 ? score35 : score25;
-  const avg = numValue(d.avg_cards);
-  const lineValue = avg == null ? null : Math.round((avg - line) * 100) / 100;
-  return {{
-    jogo:d,
-    legacy:true,
-    market_key:key,
-    market:cardMarketLabel(key),
-    line,
-    side:'over',
-    score,
-    score_before_cap:score,
-    score_cap:null,
-    score_final:score,
-    grade:best35 ? (d.grade_cart35 || gradeFromScore(score)) : (d.grade_cart25 || gradeFromScore(score)),
-    data_quality:null,
-    data_source_level:'BAIXA',
-    line_value:lineValue,
-    line_value_score:null,
-    line_risk_penalty:null,
-    avg_cards:avg,
-    breakdown:null,
-    result_key:best35 ? 'cart35_ok' : 'cart25_ok'
-  }};
-}}
-
 function normalizeCardPick(d){{
   const analysis = d.cards_analysis || null;
   const marketKey = analysis?.market_key || d.cards_market_key || null;
   const hasV1 = analysis && analysis.approved === true && marketKey;
-  if(!hasV1) return normalizeLegacyCardPick(d);
+  if(!hasV1) return null;
   const markets = Array.isArray(d.card_markets) && d.card_markets.length ? d.card_markets : (Array.isArray(analysis.submarkets) ? analysis.submarkets : []);
   const market = markets.find(item=>item.market_key===marketKey) || {{}};
   const breakdown = analysis.breakdown || market.breakdown || null;
@@ -3099,7 +3070,7 @@ function renderCart(date,jogos){{
         </tr>`;
       }}).join('') : '<tr><td colspan="13" class="empty">Nenhum palpite de cartões aprovado neste filtro.</td></tr>'}}</tbody>
     </table></div>
-    <div class="cards-muted-note">Fallback legado ativo automaticamente quando cards_analysis/card_markets não existem.</div>`;
+    <div class="cards-muted-note">Aba baseada exclusivamente no Card Engine V1; jogos sem cards_analysis aprovado não entram.</div>`;
 }}
 
 // ── Bilhetes ───────────────────────────────────────────────────────
