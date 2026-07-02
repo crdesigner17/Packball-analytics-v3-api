@@ -25,11 +25,11 @@ Uso:
   python scripts/coletar.py --date today --key SUA_CHAVE
   python scripts/coletar.py --key SUA_CHAVE          # usa data de hoje
 """
-import os, sys, json, time, argparse
+import os, sys, json, time, argparse, unicodedata
 from datetime import datetime, date
 import requests
 import numpy as np
-from ligas_config import blocked_name, favorite_league_names
+from ligas_config import blocked_name, favorite_league_names, read_favorite_rows
 from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
 from cards.pipeline_adapter import apply_cards_engine_to_matches
 
@@ -81,6 +81,7 @@ LIGAS = {
 LIGAS_ELITE_IDS = {lid for lid, (nome, tier, season) in LIGAS.items() if tier == "elite"}
 
 SEASON = 2025  # fallback — cada liga usa seu próprio season
+LEAGUE_CACHE_FILE = os.path.join(os.path.dirname(__file__), 'league_api_cache.json')
 
 # Retry / rate-limit
 MAX_RETRIES   = 3
@@ -133,6 +134,136 @@ class APIClient:
         return 0, 0
 
 # ── Helpers matemáticos ─────────────────────────────────────────────
+def norm_txt(value) -> str:
+    text = unicodedata.normalize('NFKD', str(value or ''))
+    text = ''.join(ch for ch in text if not unicodedata.combining(ch))
+    return ' '.join(text.lower().replace('-', ' ').split())
+
+
+def league_cache_key(country: str, league: str) -> str:
+    return f"{norm_txt(country)}|{norm_txt(league)}"
+
+
+def country_matches(api_country: str, wanted_country: str) -> bool:
+    aliases = {
+        'united states': {'usa', 'united states'},
+        'usa': {'usa', 'united states'},
+    }
+    api = norm_txt(api_country)
+    wanted = norm_txt(wanted_country)
+    return api == wanted or api in aliases.get(wanted, set()) or wanted in aliases.get(api, set())
+
+
+def load_league_cache() -> dict:
+    if not os.path.exists(LEAGUE_CACHE_FILE):
+        return {}
+    try:
+        with open(LEAGUE_CACHE_FILE, encoding='utf-8') as f:
+            return json.load(f)
+    except Exception:
+        return {}
+
+
+def save_league_cache(cache: dict):
+    try:
+        with open(LEAGUE_CACHE_FILE, 'w', encoding='utf-8') as f:
+            json.dump(cache, f, ensure_ascii=False, indent=2, sort_keys=True)
+    except Exception as exc:
+        print(f"  ⚠ Não foi possível salvar cache de ligas: {exc}")
+
+
+def pick_league_season(api_league: dict, fallback_year: int = 2026) -> int:
+    seasons = api_league.get('seasons') or []
+    current = [s for s in seasons if s.get('current')]
+    if current:
+        return int(current[-1].get('year') or fallback_year)
+    years = [int(s.get('year')) for s in seasons if str(s.get('year') or '').isdigit()]
+    return max(years) if years else fallback_year
+
+
+def league_match_score(api_league: dict, country: str, league: str) -> int:
+    api_name = api_league.get('league', {}).get('name', '')
+    api_country = api_league.get('country', {}).get('name', '')
+    wanted_name = norm_txt(league)
+    wanted_country = norm_txt(country)
+    score = 0
+    if country_matches(api_country, country):
+        score += 100
+    if norm_txt(api_name) == wanted_name:
+        score += 100
+    elif wanted_name in norm_txt(api_name) or norm_txt(api_name) in wanted_name:
+        score += 50
+    return score
+
+
+def resolve_api_league(client: APIClient, country: str, league: str, cache: dict) -> dict | None:
+    key = league_cache_key(country, league)
+    if key in cache:
+        return cache[key]
+
+    best = None
+    best_score = 0
+    for params in ({"search": league, "country": country}, {"search": league}):
+        data = client.get("/leagues", params)
+        for item in (data or {}).get("response", []):
+            score = league_match_score(item, country, league)
+            if score > best_score:
+                best = item
+                best_score = score
+
+    if not best or best_score < 150:
+        return None
+
+    resolved = {
+        "id": best.get("league", {}).get("id"),
+        "name": best.get("league", {}).get("name") or league,
+        "country": best.get("country", {}).get("name") or country,
+        "season": pick_league_season(best),
+    }
+    if not resolved["id"]:
+        return None
+    cache[key] = resolved
+    return resolved
+
+
+def expand_ligas_from_api(client: APIClient):
+    """Inclui na coleta as ligas liberadas nos CSVs, descobrindo IDs pela API-Football."""
+    global LIGAS, LIGAS_ELITE_IDS
+
+    cache = load_league_cache()
+    added = 0
+    skipped = 0
+    existing_ids = set(LIGAS)
+
+    for row in read_favorite_rows():
+        country = row.get('country', '')
+        league = row.get('league', '')
+        if not country or not league or blocked_name(country) or blocked_name(league):
+            continue
+
+        resolved = resolve_api_league(client, country, league, cache)
+        if not resolved:
+            skipped += 1
+            continue
+
+        league_id = int(resolved["id"])
+        if league_id in existing_ids:
+            continue
+
+        LIGAS[league_id] = (resolved["name"], "normal", int(resolved["season"]))
+        existing_ids.add(league_id)
+        added += 1
+
+    LIGAS = {
+        league_id: info
+        for league_id, info in LIGAS.items()
+        if info[0] in LIGAS_PERMITIDAS
+    }
+    LIGAS_ELITE_IDS = {lid for lid, (nome, tier, season) in LIGAS.items() if tier == "elite"}
+    save_league_cache(cache)
+    print(f"   Ligas na coleta: {len(LIGAS)} | novas via API: {added} | sem ID: {skipped}")
+
+
 def s(v):
     try:
         f = float(v)
@@ -1052,6 +1183,8 @@ def main():
         print(f"   Quota API: {used}/{limit} chamadas hoje")
         if limit - used < 50:
             print(f"   ⚠ ATENÇÃO: menos de 50 chamadas restantes!")
+
+    expand_ligas_from_api(client)
 
     jogos = processar_data(client, date_str)
 
