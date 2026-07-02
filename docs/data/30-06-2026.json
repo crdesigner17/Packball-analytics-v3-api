@@ -3386,12 +3386,12 @@
         "under45_ok": true,
         "placar": "0-1",
         "placar_ht": "0-1",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 17,
+        "cards_total": 4,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     },
@@ -4305,12 +4305,12 @@
         "under45_ok": true,
         "placar": "0-1",
         "placar_ht": "0-1",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 17,
+        "cards_total": 4,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     }
@@ -4707,17 +4707,17 @@
     },
     "Cart 2.5": {
       "palpites": 4,
-      "acertos": 1,
+      "acertos": 2,
       "erros": 1,
-      "sem_dados": 2,
-      "taxa": 50.0
+      "sem_dados": 1,
+      "taxa": 66.7
     },
     "Cart 3.5": {
       "palpites": 3,
-      "acertos": 1,
+      "acertos": 2,
       "erros": 1,
-      "sem_dados": 1,
-      "taxa": 50.0
+      "sem_dados": 0,
+      "taxa": 66.7
     }
   },
   "stats": {
