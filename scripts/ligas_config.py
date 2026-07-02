@@ -13,7 +13,7 @@ FAVORITE_LEAGUE_FILES = [
 
 EXCLUDED_KEYWORDS = [
     'women', 'womens', 'feminino', 'feminina', 'femenino', 'femenina',
-    'ladies', 'frauenliga', 'wpsl', 'nwsl',
+    'ladies', 'frauenliga', 'wpsl', 'nwsl', 'uws',
     'u17', 'u18', 'u19', 'u20', 'u21', 'u23',
     'u-17', 'u-18', 'u-19', 'u-20', 'u-21', 'u-23',
     'under 17', 'under 18', 'under 19', 'under 20', 'under 21', 'under 23',
@@ -93,4 +93,3 @@ def favorite_countries(extra_countries=None):
     if extra_countries:
         countries.update(extra_countries)
     return countries
-
