@@ -4138,12 +4138,8 @@ function sidebarNav(mkt){{
     else return;
   }}
   if(mkt==='visao'){{
-    historicoVisible=false;
-    const histPanel=document.getElementById('panel-historico');
-    if(histPanel)histPanel.style.display='none';
-    clearMarketCategoryState();
     activeMkt[activeDate]='visao';
-    switchMkt(activeDate,'visao');
+    switchDate(activeDate);
     updateSidebarActive('visao');
     return;
   }}
