@@ -928,6 +928,29 @@ button,input,select{{font-family:'Inter',sans-serif}}
 
 /* TABLE */
 .tbl-wrap{{width:100%;max-width:100%;min-width:0;overflow-x:auto;overscroll-behavior-x:contain;border-radius:9px;border:1px solid var(--border);margin-bottom:18px}}
+.corner-summary-grid{{display:grid;grid-template-columns:repeat(6,minmax(0,1fr));gap:10px;margin:0 0 16px}}
+.corner-summary-card{{background:var(--s1);border:1px solid var(--border);border-radius:8px;padding:12px 14px;min-width:0}}
+.corner-summary-label{{font-size:10px;line-height:1.2;color:#8FB4E8;font-weight:800;text-transform:uppercase;letter-spacing:.9px;margin-bottom:8px}}
+.corner-summary-value{{font-size:20px;line-height:1.05;color:var(--text);font-weight:900;font-family:'JetBrains Mono',monospace;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.corner-summary-sub{{font-size:10px;color:var(--muted);font-weight:700;margin-top:4px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
+.corner-table-wrap table{{min-width:1360px}}
+.corner-table-wrap th,.corner-table-wrap td{{text-align:center}}
+.corner-table-wrap th:nth-child(2),.corner-table-wrap td:nth-child(2){{text-align:left}}
+.corner-table-wrap tbody tr.row-hit{{background:linear-gradient(90deg,rgba(0,200,150,.30),rgba(0,200,150,.16),rgba(8,18,26,.92))!important;box-shadow:inset 0 0 0 1px rgba(0,200,150,.34)}}
+.corner-table-wrap tbody tr.row-miss{{background:linear-gradient(90deg,rgba(239,68,68,.28),rgba(239,68,68,.14),rgba(8,18,26,.92))!important;box-shadow:inset 0 0 0 1px rgba(239,68,68,.34)}}
+.corner-table-wrap th:nth-child(n+5),.corner-table-wrap td:nth-child(n+5){{border-left:1px solid rgba(148,163,184,.16)}}
+.corner-table-wrap th:nth-child(10),.corner-table-wrap td:nth-child(10){{border-left-color:rgba(59,130,246,.24)}}
+.corner-table-wrap .corner-confidence{{min-width:116px;text-align:center}}
+.corner-table-wrap .corner-over-cell{{display:flex;align-items:center;justify-content:center;gap:6px;min-width:146px;padding:0 4px;background:transparent;border:0;box-shadow:none;flex-wrap:nowrap;align-content:center}}
+.corner-table-wrap .corner-over-track{{position:relative;width:58px;height:12px;background:rgba(2,18,27,.48);border:1px solid var(--green);border-radius:999px;overflow:hidden;box-shadow:none}}
+.corner-table-wrap .corner-over-fill{{position:absolute;left:3px;top:50%;transform:translateY(-50%);height:6px;max-width:calc(100% - 6px);border-radius:999px;opacity:.86}}
+.corner-table-wrap .corner-over-pct{{min-width:32px;font-size:11px;font-weight:800;text-align:right}}
+.corner-table-wrap .corner-no-data{{display:inline-flex;align-items:center;justify-content:center;min-width:72px;color:#6F829E;font-size:10px;font-weight:800}}
+.corner-table-wrap .corner-best-pick{{display:inline-flex;align-items:center;justify-content:center;min-width:104px;border-radius:999px;padding:5px 9px;background:rgba(0,200,150,.08);border:1px solid rgba(0,200,150,.18);color:var(--teal);font-size:10px;font-weight:900;white-space:nowrap}}
+.corner-table-wrap .corner-best-pick.empty{{background:transparent;border-color:rgba(148,163,184,.12);color:#6F829E}}
+.corner-table-wrap .corner-real{{display:inline-flex;align-items:center;justify-content:center;width:34px;height:28px;border-radius:8px;background:rgba(0,200,150,.18);border:1px solid rgba(0,200,150,.18);color:var(--teal);font-weight:900;font-size:15px}}
+.corner-line-result{{display:flex;justify-content:center;margin-top:0}}
+.corner-table-wrap .corner-line-result .res-badge{{height:18px;min-width:44px;padding:1px 5px;font-size:8px;border-radius:999px;justify-content:center}}
 table{{width:100%;min-width:760px;border-collapse:collapse;font-size:13px}}
 thead th{{background:var(--s2);padding:9px 12px;text-align:left;font-size:10px;font-weight:600;letter-spacing:.7px;text-transform:uppercase;color:var(--muted);border-bottom:1px solid var(--border);white-space:nowrap;font-family:'Inter',sans-serif}}
 tbody tr{{border-bottom:1px solid rgba(148,163,184,.12);transition:background .1s}}
@@ -1875,13 +1898,46 @@ function cornerPctColor(v){{
   const pct=v!=null?v:0;
   return pct>=80?'var(--green)':pct>=60?'var(--teal)':pct>=40?'var(--yellow)':pct>=20?'var(--orange)':'var(--red)';
 }}
-function cornerOverCell(v){{
+function cornerLineBadge(ok){{
+  if(ok===true)return'<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
+  if(ok===false)return'<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
+  return'<span class="res-badge pending"><i data-lucide="clock"></i> S/D</span>';
+}}
+function cornerLineStatus(d,line){{
+  const res=getResultado(d);
+  if(!res||res.corners_total==null)return null;
+  const total=Number(res.corners_total);
+  if(!Number.isFinite(total))return null;
+  return total>line;
+}}
+function cornerBestPick(d){{
+  const opts=CORNER_LINES.map(l=>({{label:l.label,line:l.line,value:Number(d[l.field])}})).filter(x=>Number.isFinite(x.value));
+  if(!opts.length)return null;
+  return opts.sort((a,b)=>b.value-a.value)[0];
+}}
+function cornerBestCell(d){{
+  const pick=cornerBestPick(d);
+  if(!pick)return'<td><span class="corner-best-pick empty">Sem dados</span></td>';
+  return`<td><span class="corner-best-pick">${{pick.label}} · ${{fmtNum(pick.value,0)}}%</span></td>`;
+}}
+function cornerBestRowClass(d){{
+  const pick=cornerBestPick(d);
+  if(!pick)return'row-pending';
+  const ok=cornerLineStatus(d,pick.line);
+  if(ok===true)return'row-hit';
+  if(ok===false)return'row-miss';
+  return'row-pending';
+}}
+function cornerOverCell(v,d,line){{
+  if(v==null||!Number.isFinite(Number(v)))return'<td><span class="corner-no-data">Sem dados</span></td>';
   const pct=v!=null?Math.min(Math.max(Number(v)||0,0),100):0;
   const c=cornerPctColor(v);
   const fillWidth=pct>0?`calc(${{pct}}% - 6px)`:'0';
+  const status=d&&line!=null&&v!=null?cornerLineStatus(d,line):null;
   return`<td><div class="corner-over-cell">
     <span class="corner-over-pct" style="color:${{c}}">${{v!=null?fmtNum(v,0)+'%':'--'}}</span>
     <div class="corner-over-track" style="border-color:${{c}}"><div class="corner-over-fill" style="width:${{fillWidth}};background:${{c}}"></div></div>
+    <div class="corner-line-result">${{cornerLineBadge(status)}}</div>
   </div></td>`;
 }}
 function pct(v){{return v!=null?v+'%':'—';}}
@@ -2847,34 +2903,87 @@ function renderOver25(date,jogos){{
 }}
 
 // ── Escanteios ─────────────────────────────────────────────────────
+const CORNER_LINES=[
+  {{label:'Over 6.5',field:'over65_c',line:6.5}},
+  {{label:'Over 7.5',field:'over75_c',line:7.5}},
+  {{label:'Over 8.5',field:'over85_c',line:8.5}},
+  {{label:'Over 9.5',field:'over95_c',line:9.5}},
+  {{label:'Over 10.5',field:'over105_c',line:10.5}}
+];
+function cornerStatsForGames(games){{
+  const byLine=CORNER_LINES.map(l=>({{...l,total:0,green:0,red:0,rate:null}}));
+  const gameIds=new Set();
+  (games||[]).forEach((d,idx)=>{{
+    const res=getResultado(d);
+    const totalCorners=res&&Number(res.corners_total);
+    if(!Number.isFinite(totalCorners))return;
+    let used=false;
+    byLine.forEach(s=>{{
+      if(d[s.field]==null||!Number.isFinite(Number(d[s.field])))return;
+      s.total++;
+      if(totalCorners>s.line)s.green++;else s.red++;
+      used=true;
+    }});
+    if(used)gameIds.add(d.fixture_id||d.jogo||idx);
+  }});
+  byLine.forEach(s=>{{s.rate=s.total?Math.round((s.green/s.total)*1000)/10:null;}});
+  const best=byLine.filter(s=>s.total>0).sort((a,b)=>(b.rate??-1)-(a.rate??-1)||b.total-a.total||a.line-b.line)[0]||null;
+  return{{games:gameIds.size,lines:byLine,best}};
+}}
+function isUsableCornerValue(v){{
+  if(v==null||v==='')return false;
+  const n=Number(v);
+  return Number.isFinite(n);
+}}
+function hasCompleteCornerData(d){{
+  const vals=CORNER_LINES.map(l=>Number(d[l.field]));
+  return CORNER_LINES.every(l=>isUsableCornerValue(d[l.field]))&&vals.some(v=>v>0);
+}}
+function allCornerGames(){{
+  return Object.values(ALL_DATA).flatMap(day=>(day&&day.resultado_confirmado&&Array.isArray(day.jogos))?day.jogos.filter(hasCompleteCornerData):[]);
+}}
+function cornerSummaryCards(dayStats,globalStats){{
+  const val=s=>s?`${{s.rate}}%`:'—';
+  const sub=s=>s?`${{s.green}}/${{s.total}} greens`:'Sem resultados';
+  return`<div class="corner-summary-grid">
+    <div class="corner-summary-card"><div class="corner-summary-label">Jogos analisados dia</div><div class="corner-summary-value">${{dayStats.games}}</div><div class="corner-summary-sub">Com resultado de escanteios</div></div>
+    <div class="corner-summary-card"><div class="corner-summary-label">Melhor linha dia</div><div class="corner-summary-value">${{dayStats.best?dayStats.best.label:'—'}}</div><div class="corner-summary-sub">${{sub(dayStats.best)}}</div></div>
+    <div class="corner-summary-card"><div class="corner-summary-label">Melhor % dia</div><div class="corner-summary-value">${{val(dayStats.best)}}</div><div class="corner-summary-sub">Linha mais assertiva</div></div>
+    <div class="corner-summary-card"><div class="corner-summary-label">Jogos analisados geral</div><div class="corner-summary-value">${{globalStats.games}}</div><div class="corner-summary-sub">Período finalizado</div></div>
+    <div class="corner-summary-card"><div class="corner-summary-label">Melhor linha geral</div><div class="corner-summary-value">${{globalStats.best?globalStats.best.label:'—'}}</div><div class="corner-summary-sub">${{sub(globalStats.best)}}</div></div>
+    <div class="corner-summary-card"><div class="corner-summary-label">Melhor % geral</div><div class="corner-summary-value">${{val(globalStats.best)}}</div><div class="corner-summary-sub">Todo o histórico</div></div>
+  </div>`;
+}}
 function renderEsc(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-escanteios');
   if(!el)return;
-  const r75=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
-  const r85=[...jogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc85||getPalpiteGrade(d),d=>d.score_esc85));
-  function escRows(rows,mktKey){{
+  const cornerJogos=[...jogos].filter(hasCompleteCornerData);
+  const r75=[...cornerJogos].sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
+  const dayStats=cornerStatsForGames(cornerJogos);
+  const globalStats=cornerStatsForGames(allCornerGames());
+  function escRows(rows){{
     const html = rows.slice(0,15).map((d,i)=>{{
-      const rc=rowClass(d,mktKey);
       const res=getResultado(d);
       const cantReal=res&&res.corners_total!=null?`<td><span class="corner-real">${{res.corners_total}}</span></td>`:'<td class="mono muted">--</td>';
-      return`<tr class="${{rc}}">
+      return`<tr class="${{cornerBestRowClass(d)}}">
         <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
         <td class="mono muted">${{d.hora}}</td>
-        <td class="corner-confidence">${{confHtml(mktKey==='esc75_ok'?d.score_esc75:d.score_esc85)}}</td>
-        ${{cornerOverCell(d.over65_c)}}
-        ${{cornerOverCell(d.over75_c)}}
-        ${{cornerOverCell(d.over85_c)}}
-        ${{cornerOverCell(d.over95_c)}}
-        ${{cornerOverCell(d.over105_c)}}
-        ${{cantReal}}<td>${{resBadge(d,mktKey)}}</td>
+        <td class="corner-confidence">${{confHtml(d.score_esc75)}}</td>
+        ${{cornerOverCell(d.over65_c,d,6.5)}}
+        ${{cornerOverCell(d.over75_c,d,7.5)}}
+        ${{cornerOverCell(d.over85_c,d,8.5)}}
+        ${{cornerOverCell(d.over95_c,d,9.5)}}
+        ${{cornerOverCell(d.over105_c,d,10.5)}}
+        ${{cantReal}}
       </tr>`;
     }}).join('');
-    return html || '<tr><td colspan="11" class="empty">Nenhum jogo encontrado para escanteios nesta data.</td></tr>';
+    return html || '<tr><td colspan="10" class="empty">Nenhum jogo com dados úteis de escanteios nesta data.</td></tr>';
   }}
   el.innerHTML=`
+    ${{cornerSummaryCards(dayStats,globalStats)}}
     <div class="tbl-wrap corner-table-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Over 6.5 FT</th><th>Over 7.5 FT</th><th>Over 8.5 FT</th><th>Over 9.5 FT</th><th>Over 10.5 FT</th><th>Resultado Real</th><th>Resultado</th></tr></thead>
-      <tbody>${{escRows(r75,'esc75_ok')}}</tbody></table></div>`;
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Confiança</th><th>Over 6.5 FT</th><th>Over 7.5 FT</th><th>Over 8.5 FT</th><th>Over 9.5 FT</th><th>Over 10.5 FT</th><th>Resultado Real</th></tr></thead>
+      <tbody>${{escRows(r75)}}</tbody></table></div>`;
 }}
 
 // ── Cartões ────────────────────────────────────────────────────────
