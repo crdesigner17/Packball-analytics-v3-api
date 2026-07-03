@@ -292,11 +292,6 @@ def expand_ligas_from_api(client: APIClient):
         existing_ids.add(league_id)
         added += 1
 
-    LIGAS = {
-        league_id: info
-        for league_id, info in LIGAS.items()
-        if info[0] in LIGAS_PERMITIDAS
-    }
     LIGAS_ELITE_IDS = {lid for lid, (nome, tier, season) in LIGAS.items() if tier == "elite"}
     save_league_cache(cache)
     print(f"   Ligas na coleta: {len(LIGAS)} | novas via API: {added} | sem ID: {skipped}")
