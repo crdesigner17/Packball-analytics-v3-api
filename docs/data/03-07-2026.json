@@ -673,7 +673,36 @@
       "grade_cart65": "D",
       "palpite_mkt": "Cart 3.5",
       "palpite_grade": "A",
-      "palpite_score": 86.1
+      "palpite_score": 86.1,
+      "resultado": {
+        "fixture_id": 1567312,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 0,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "2-0",
+        "placar_ht": "1-0",
+        "corners_total": 6,
+        "cards_total": 2,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Cart 3.5": {
+          "score": 86.1,
+          "palpite": true,
+          "acertou": false
+        }
+      }
     },
     {
       "date": "03-07-2026",
@@ -1619,7 +1648,9 @@
       "grade_cart65": "A+",
       "palpite_mkt": "Cart 4.5",
       "palpite_grade": "A+",
-      "palpite_score": 88.2
+      "palpite_score": 88.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -2565,7 +2596,9 @@
       "grade_cart65": "C",
       "palpite_mkt": "Cart 4.5",
       "palpite_grade": "A+",
-      "palpite_score": 89
+      "palpite_score": 89,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -3239,7 +3272,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Cart 3.5",
       "palpite_grade": "A",
-      "palpite_score": 80.8
+      "palpite_score": 80.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -3637,7 +3672,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -4035,7 +4072,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -4433,7 +4472,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -5241,7 +5282,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 3.5",
       "palpite_grade": "A+",
-      "palpite_score": 89
+      "palpite_score": 89,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -5639,7 +5682,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -6037,7 +6082,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -6435,7 +6482,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "A",
-      "palpite_score": 77.5
+      "palpite_score": 77.5,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -6833,7 +6882,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "A",
-      "palpite_score": 76.6
+      "palpite_score": 76.6,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -7231,7 +7282,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -7629,7 +7682,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -8027,7 +8082,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "A",
-      "palpite_score": 79.1
+      "palpite_score": 79.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -8425,7 +8482,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under 3.5",
       "palpite_grade": "A",
-      "palpite_score": 75.6
+      "palpite_score": 75.6,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -8823,7 +8882,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -9221,7 +9282,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 85.7
+      "palpite_score": 85.7,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -9619,7 +9682,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -10017,7 +10082,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -10415,7 +10482,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -10813,7 +10882,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "BTTS",
       "palpite_grade": "B",
-      "palpite_score": 73.3
+      "palpite_score": 73.3,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -11211,7 +11282,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -11609,7 +11682,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -12007,7 +12082,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -12405,7 +12482,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -12803,7 +12882,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -13201,7 +13282,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -13599,7 +13682,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -13997,7 +14082,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 2.5",
       "palpite_grade": "A+",
-      "palpite_score": 85.2
+      "palpite_score": 85.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -14395,7 +14482,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -14793,7 +14882,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "BTTS",
       "palpite_grade": "A",
-      "palpite_score": 76.4
+      "palpite_score": 76.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -15191,7 +15282,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -15589,7 +15682,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -16397,7 +16492,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 3.5",
       "palpite_grade": "A+",
-      "palpite_score": 89
+      "palpite_score": 89,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -17205,7 +17302,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 3.5",
       "palpite_grade": "A+",
-      "palpite_score": 89
+      "palpite_score": 89,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -17603,7 +17702,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -18003,7 +18104,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -18401,7 +18504,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -18799,7 +18904,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "B",
-      "palpite_score": 73
+      "palpite_score": 73,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -19471,7 +19578,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -19869,7 +19978,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -20405,7 +20516,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under Cart 5.5",
       "palpite_grade": "A+",
-      "palpite_score": 89
+      "palpite_score": 89,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "03-07-2026",
@@ -20619,7 +20732,9 @@
       "grade_cart65": "C",
       "palpite_mkt": "Over 2.5",
       "palpite_grade": "B",
-      "palpite_score": 72.8
+      "palpite_score": 72.8,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -20823,8 +20938,35 @@
       "score": 86.1,
       "grade": "A",
       "oddVal": null,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1567312,
+        "status": "FT",
+        "gols_home": 2,
+        "gols_away": 0,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "2-0",
+        "placar_ht": "1-0",
+        "corners_total": 6,
+        "cards_total": 2,
+        "esc75_ok": false,
+        "esc85_ok": false,
+        "cart25_ok": false,
+        "cart35_ok": false
+      },
+      "acertos": {
+        "Cart 3.5": {
+          "score": 86.1,
+          "palpite": true,
+          "acertou": false
+        }
+      }
     },
     {
       "fixture_id": 1528015,
@@ -21389,9 +21531,151 @@
       "oddTotal": 1
     }
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 1,
+      "acertos": 0,
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 1,
+      "acertos": 0,
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 1,
+      "acertos": 0,
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
+    },
+    "Cart 3.5": {
+      "palpites": 1,
+      "acertos": 0,
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
+    }
+  },
   "stats": {
     "total": 44,
     "over15_aprovados": 8,
