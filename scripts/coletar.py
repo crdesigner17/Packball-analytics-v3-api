@@ -175,6 +175,13 @@ def league_search_terms(league: str) -> list[str]:
     return clean_terms
 
 
+def api_country_param(country: str) -> str | None:
+    clean = str(country or '').strip()
+    if re.fullmatch(r'[A-Za-z0-9_-]+', clean):
+        return clean
+    return None
+
+
 def load_league_cache() -> dict:
     if not os.path.exists(LEAGUE_CACHE_FILE):
         return {}
@@ -233,8 +240,9 @@ def resolve_api_league(client: APIClient, country: str, league: str, cache: dict
     query_plan = []
     for term in league_search_terms(league):
         query_plan.append({"search": term})
-    if country:
-        query_plan.append({"country": country})
+    safe_country = api_country_param(country)
+    if safe_country:
+        query_plan.append({"country": safe_country})
 
     seen_params = set()
     for params in query_plan:

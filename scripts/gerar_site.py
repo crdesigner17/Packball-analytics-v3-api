@@ -7,7 +7,7 @@ WinMetrics — Gerador de Site v3.1
 """
 import csv, json, os, re, unicodedata
 from datetime import datetime, timezone
-from ligas_config import LEAGUE_ALIASES, blocked_name, favorite_league_names, read_favorite_rows
+from ligas_config import LEAGUE_ALIASES, blocked_name, favorite_league_names, is_allowed_game, read_favorite_rows
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 OUT_FILE = os.path.join(os.path.dirname(__file__), '..', 'docs', 'index.html')
@@ -31,17 +31,47 @@ LEAGUE_COUNTRY_MAP = build_league_country_map()
 def filter_favorite_leagues(day_data):
     if not FAVORITE_LEAGUES or not isinstance(day_data, dict):
         return day_data
+    def allowed_item(item):
+        return is_allowed_game(item.get('country') or item.get('pais') or '', item.get('liga'))
     filtered = dict(day_data)
     filtered['jogos'] = [
         j for j in day_data.get('jogos', [])
         if (
             not isinstance(j, dict) or
             (
-                j.get('liga') in FAVORITE_LEAGUES and
+                allowed_item(j) and
                 not blocked_name(' '.join(str(j.get(k, '')) for k in ('liga', 'jogo', 'home', 'away')))
             )
         )
     ]
+    filtered['top5'] = [
+        name for name in day_data.get('top5', [])
+        if any(j.get('jogo') == name for j in filtered['jogos'])
+    ]
+    for key in ('palpites_snapshot',):
+        if isinstance(day_data.get(key), list):
+            filtered[key] = [
+                j for j in day_data.get(key, [])
+                if allowed_item(j)
+            ]
+    bilhetes_snapshot = day_data.get('bilhetes_snapshot')
+    if isinstance(bilhetes_snapshot, dict):
+        bilhetes_filtered = dict(bilhetes_snapshot)
+        if isinstance(bilhetes_filtered.get('bilheteDia'), dict):
+            sels = [s for s in bilhetes_filtered['bilheteDia'].get('sels', []) if allowed_item(s)]
+            bilhetes_filtered['bilheteDia'] = dict(bilhetes_filtered['bilheteDia'], sels=sels)
+        bilhetes = []
+        for bilhete in bilhetes_snapshot.get('bilhetes', []):
+            b = dict(bilhete.get('b') or {})
+            sels = [s for s in b.get('sels', []) if allowed_item(s)]
+            if not sels:
+                continue
+            b['sels'] = sels
+            bilhete_copy = dict(bilhete)
+            bilhete_copy['b'] = b
+            bilhetes.append(bilhete_copy)
+        bilhetes_filtered['bilhetes'] = bilhetes
+        filtered['bilhetes_snapshot'] = bilhetes_filtered
     return filtered
 
 def load_index():

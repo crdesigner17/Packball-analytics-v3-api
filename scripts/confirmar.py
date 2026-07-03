@@ -10,6 +10,7 @@ Uso:
 import os, sys, json, argparse, time
 from datetime import datetime, date, timedelta
 import requests
+from ligas_config import is_allowed_game
 from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
 
 BASE_URL = "https://v3.football.api-sports.io"
@@ -215,7 +216,11 @@ def match_jogo(home_palpite, away_palpite, resultados):
     return None
 
 def processar_confirmacao(date_str_api, resultados_api, data_json):
-    jogos = data_json.get("jogos", [])
+    jogos = [
+        jogo for jogo in data_json.get("jogos", [])
+        if is_allowed_game(jogo.get("country") or jogo.get("pais") or "", jogo.get("liga"))
+    ]
+    data_json["jogos"] = jogos
     nao_encontrados = []
     if not data_json.get("palpites_snapshot"):
         data_json["palpites_snapshot"] = build_palpites_snapshot(jogos)

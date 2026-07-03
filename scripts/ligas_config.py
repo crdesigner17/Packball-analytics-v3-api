@@ -48,6 +48,12 @@ DENIED_ROWS = {
     ('United States', 'USL League Two'),
 }
 
+DENIED_LEAGUES = {
+    'Club Friendlies 3',
+    'Club Friendlies 4',
+    'USL League Two',
+}
+
 LEAGUE_ALIASES = {
     'World Cup': ['World Cup', 'FIFA World Cup'],
     'Friendly International': ['Friendly International', 'Friendlies', 'International Friendlies'],
@@ -99,12 +105,20 @@ def blocked_name(value):
     return any(keyword in value for keyword in EXCLUDED_KEYWORDS)
 
 
+def is_denied_league(country, league):
+    country_key = norm_key(country)
+    league_key = norm_key(league)
+    denied_rows = {(norm_key(c), norm_key(l)) for c, l in DENIED_ROWS}
+    denied_leagues = {norm_key(l) for l in DENIED_LEAGUES}
+    return league_key in denied_leagues or (country_key, league_key) in denied_rows
+
+
 def append_row(rows, seen, country, league):
     if not country or not league:
         return
     if blocked_name(country) or blocked_name(league):
         return
-    if (country, league) in DENIED_ROWS:
+    if is_denied_league(country, league):
         return
     key = (country, league)
     if key in seen:
@@ -150,6 +164,10 @@ def league_allowed(league):
     allowed = {norm_key(row['league']) for row in read_favorite_rows()}
     allowed.update(norm_key(alias) for alias in expand_league_names({row['league'] for row in read_favorite_rows()}))
     return norm_key(league) in allowed
+
+
+def is_allowed_game(country, league):
+    return bool(league) and not is_denied_league(country, league) and league_allowed(league)
 
 
 def favorite_league_names(extra_leagues=None):
