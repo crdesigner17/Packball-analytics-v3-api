@@ -27,9 +27,10 @@ Uso:
 """
 import os, sys, json, time, argparse, unicodedata
 from datetime import datetime, date
+from difflib import SequenceMatcher
 import requests
 import numpy as np
-from ligas_config import blocked_name, favorite_league_names, read_favorite_rows
+from ligas_config import LEAGUE_ALIASES, blocked_name, favorite_league_names, read_favorite_rows
 from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
 from cards.pipeline_adapter import apply_cards_engine_to_matches
 
@@ -148,10 +149,30 @@ def country_matches(api_country: str, wanted_country: str) -> bool:
     aliases = {
         'united states': {'usa', 'united states'},
         'usa': {'usa', 'united states'},
+        'world': {'world', 'international'},
+        'international': {'world', 'international'},
+        'south america': {'south america', 'conmebol'},
+        'conmebol': {'south america', 'conmebol'},
+        'europe': {'europe', 'uefa'},
+        'uefa': {'europe', 'uefa'},
     }
     api = norm_txt(api_country)
     wanted = norm_txt(wanted_country)
     return api == wanted or api in aliases.get(wanted, set()) or wanted in aliases.get(api, set())
+
+
+def league_search_terms(league: str) -> list[str]:
+    terms = [league]
+    terms.extend(LEAGUE_ALIASES.get(league, []))
+    seen = set()
+    clean_terms = []
+    for term in terms:
+        clean = str(term or '').strip()
+        key = norm_txt(clean)
+        if clean and key not in seen:
+            seen.add(key)
+            clean_terms.append(clean)
+    return clean_terms
 
 
 def load_league_cache() -> dict:
@@ -185,14 +206,20 @@ def league_match_score(api_league: dict, country: str, league: str) -> int:
     api_name = api_league.get('league', {}).get('name', '')
     api_country = api_league.get('country', {}).get('name', '')
     wanted_name = norm_txt(league)
-    wanted_country = norm_txt(country)
+    api_name_norm = norm_txt(api_name)
     score = 0
     if country_matches(api_country, country):
         score += 100
-    if norm_txt(api_name) == wanted_name:
+    if api_name_norm == wanted_name:
         score += 100
-    elif wanted_name in norm_txt(api_name) or norm_txt(api_name) in wanted_name:
+    elif wanted_name in api_name_norm or api_name_norm in wanted_name:
         score += 50
+    else:
+        ratio = SequenceMatcher(None, api_name_norm, wanted_name).ratio()
+        if ratio >= 0.82:
+            score += 75
+        elif ratio >= 0.68:
+            score += 45
     return score
 
 
@@ -203,7 +230,18 @@ def resolve_api_league(client: APIClient, country: str, league: str, cache: dict
 
     best = None
     best_score = 0
-    for params in ({"search": league, "country": country}, {"search": league}):
+    query_plan = []
+    for term in league_search_terms(league):
+        query_plan.append({"search": term})
+    if country:
+        query_plan.append({"country": country})
+
+    seen_params = set()
+    for params in query_plan:
+        params_key = tuple(sorted(params.items()))
+        if params_key in seen_params:
+            continue
+        seen_params.add(params_key)
         data = client.get("/leagues", params)
         for item in (data or {}).get("response", []):
             score = league_match_score(item, country, league)
