@@ -7,11 +7,26 @@ WinMetrics — Gerador de Site v3.1
 """
 import csv, json, os, re, unicodedata
 from datetime import datetime, timezone
-from ligas_config import blocked_name, favorite_league_names
+from ligas_config import LEAGUE_ALIASES, blocked_name, favorite_league_names, read_favorite_rows
 
 DATA_DIR = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
 OUT_FILE = os.path.join(os.path.dirname(__file__), '..', 'docs', 'index.html')
 FAVORITE_LEAGUES = favorite_league_names()
+
+def build_league_country_map():
+    items = {}
+    for row in read_favorite_rows():
+        country = row.get('country') or ''
+        league = row.get('league') or ''
+        if not country or not league:
+            continue
+        meta = {'country': country}
+        items.setdefault(league.lower(), meta)
+        for alias in LEAGUE_ALIASES.get(league, []):
+            items.setdefault(alias.lower(), meta)
+    return items
+
+LEAGUE_COUNTRY_MAP = build_league_country_map()
 
 def filter_favorite_leagues(day_data):
     if not FAVORITE_LEAGUES or not isinstance(day_data, dict):
@@ -854,6 +869,12 @@ button,input,select{{font-family:'Inter',sans-serif}}
 .top-status.miss{{color:var(--red);background:rgba(239,68,68,.10);border:1px solid rgba(239,68,68,.25)}}
 .top-status.pending{{color:var(--yellow);background:rgba(245,158,11,.08);border:1px solid rgba(245,158,11,.20)}}
 .top-liga{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;text-transform:uppercase;letter-spacing:.7px;margin-bottom:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;padding-right:86px}}
+.league-meta{{display:flex;align-items:center;gap:7px;min-width:0;color:var(--muted);font-family:'JetBrains Mono',monospace;font-size:10px;line-height:1.3}}
+.league-flag{{width:18px;height:18px;border-radius:50%;display:inline-flex;align-items:center;justify-content:center;flex-shrink:0;font-size:14px;background:rgba(255,255,255,.06);object-fit:cover}}
+.league-code{{font-weight:800;color:var(--text2);letter-spacing:.35px;text-transform:uppercase}}
+.league-name{{overflow:hidden;text-overflow:ellipsis;white-space:nowrap}}
+.top-liga .league-meta{{font-size:10px;color:inherit}}
+.top-liga .league-flag{{width:16px;height:16px;font-size:12px}}
 .top-jogo{{font-size:13px;font-weight:700;margin-bottom:2px;padding-right:86px;line-height:1.3;overflow-wrap:anywhere}}
 .top-hora{{font-size:10px;color:var(--muted);font-family:'JetBrains Mono',monospace;margin-bottom:8px}}
 .top-mkt{{font-size:10px;font-weight:700;color:var(--accent);margin-bottom:6px;text-transform:uppercase;letter-spacing:.4px}}
@@ -1870,6 +1891,32 @@ function pctText(v){{
   if(!Number.isFinite(n))return'—';
   return (Math.round(n*10)/10).toString().replace('.0','')+'%';
 }}
+const LEAGUE_COUNTRY_MAP = {json.dumps(LEAGUE_COUNTRY_MAP, ensure_ascii=False)};
+const COUNTRY_META = {{
+  'Argentina':['ARG','ar'],'Australia':['AUS','au'],'Belarus':['BLR','by'],'Belgium':['BEL','be'],
+  'Bhutan':['BHU','bt'],'Brazil':['BRA','br'],'Chile':['CHI','cl'],'Croatia':['CRO','hr'],
+  'Denmark':['DEN','dk'],'Ecuador':['ECU','ec'],'England':['ENG','gb-eng'],'Estonia':['EST','ee'],
+  'Ethiopia':['ETH','et'],'Europe':['EUR','eu'],'Finland':['FIN','fi'],'France':['FRA','fr'],
+  'Germany':['GER','de'],'Greece':['GRE','gr'],'Iceland':['ISL','is'],'Iran':['IRN','ir'],
+  'Italy':['ITA','it'],'Kazakhstan':['KAZ','kz'],'Kyrgyzstan':['KGZ','kg'],'Lebanon':['LIB','lb'],
+  'Lithuania':['LTU','lt'],'Morocco':['MAR','ma'],'Netherlands':['NED','nl'],'Norway':['NOR','no'],
+  'Papua New Guinea':['PNG','pg'],'Paraguay':['PAR','py'],'Portugal':['POR','pt'],'Romania':['ROU','ro'],
+  'Saudi Arabia':['KSA','sa'],'South America':['SOU','un'],'Spain':['ESP','es'],'Turkey':['TUR','tr'],
+  'United States':['USA','us'],'World':['WOR','un'],'Yemen':['YEM','ye']
+}};
+Object.values(COUNTRY_META).forEach(meta=>{{ COUNTRY_META[meta[0]]=meta; }});
+function leagueMeta(d){{
+  const fallback=LEAGUE_COUNTRY_MAP[String(d.liga||'').toLowerCase()]||{{}};
+  const country=d.country||fallback.country||'';
+  const meta=COUNTRY_META[country]||[country.slice(0,3).toUpperCase(),''];
+  return {{country, code:meta[0]||'', iso:meta[1]||'', league:d.liga||''}};
+}}
+function leagueMetaHtml(d){{
+  const m=leagueMeta(d);
+  const code=m.code?`<span class="league-code">${{m.code}}</span>`:'';
+  const flag=m.iso?`<img class="league-flag" src="https://flagcdn.com/w40/${{m.iso}}.png" alt="${{m.code}}" loading="lazy" onerror="this.replaceWith(Object.assign(document.createElement('span'),{{className:'league-flag',textContent:'📍'}}))">`:`<span class="league-flag">📍</span>`;
+  return `<span class="league-meta" title="${{m.country?m.country+' · ':''}}${{m.league}}">${{flag}}${{code}}<span class="league-name">${{m.league}}</span></span>`;
+}}
 function pyramid(d){{
   const rows=[['6.5',d.over65_c],['7.5',d.over75_c],['8.5',d.over85_c],['9.5',d.over95_c],['10.5',d.over105_c]];
   return'<div style="display:flex;flex-direction:column;gap:3px;min-width:120px">'+rows.map(([l,v])=>{{
@@ -1886,7 +1933,7 @@ function pyramid(d){{
   }}).join('')+'</div>';
 }}
 function jogoCell(d){{
-  return`<td><div class="jogo-main">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div><div class="jogo-sub">${{d.liga}}</div></td>`;
+  return`<td><div class="jogo-main">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div><div class="jogo-sub">${{leagueMetaHtml(d)}}</div></td>`;
 }}
 function getJogos(date){{return(ALL_DATA[date]||{{}}).jogos||[];}}
 
@@ -2476,7 +2523,7 @@ function runHistoricoSearch(date){{
     const badge = r.status==='green' ? '<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>' : r.status==='red' ? '<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>' : '<span class="res-badge pending"><i data-lucide="clock"></i> S/D</span>';
     return `<tr class="${{r.status==='green'?'row-hit':r.status==='red'?'row-miss':''}}">
       <td class="row-num">${{i+1}}</td>
-      <td><div class="jogo-main">${{r.j.jogo}}</div><div class="jogo-sub">${{r.j.liga}} · ${{r.j.hora}}</div></td>
+      <td><div class="jogo-main">${{r.j.jogo}}</div><div class="jogo-sub">${{leagueMetaHtml(r.j)}} · ${{r.j.hora}}</div></td>
       <td class="mono muted">${{r.date}}</td>
       <td>${{gradeHtml(r.grade)}}</td>
       <td class="td-palpite">${{r.mkt}}</td>
@@ -2532,7 +2579,7 @@ function renderVisao(date,jogos){{
     const status=topCardStatus(d);
     return`<div class="top-card ${{cls[i]}}${{overlay}}">
       <div class="top-rank-block"><div class="top-rank">#${{i+1}}</div><div class="top-status ${{status.cls}}">${{status.text}}</div></div>
-      <div class="top-liga">${{d.liga}}</div>
+      <div class="top-liga">${{leagueMetaHtml(d)}}</div>
       <div class="top-jogo">${{d.jogo}}${{d.is_elite?'<span class="elite">ELITE</span>':''}}</div>
       <div class="top-hora"><i data-lucide="clock"></i> ${{d.hora}}</div>
       <div class="top-mkt">${{getPalpiteMkt(d)}}</div>
@@ -3302,7 +3349,7 @@ function renderBilhetes(date, jogos){{
       }}
       return`<div class="bilhete-row">
         <span class="bilhete-num">${{i+1}}</span>
-        <div style="flex:1;min-width:0"><div class="bilhete-jogo">${{s.jogo}}</div><div class="bilhete-liga">${{s.liga}} · ${{s.hora}}</div></div>
+        <div style="flex:1;min-width:0"><div class="bilhete-jogo">${{s.jogo}}</div><div class="bilhete-liga">${{leagueMetaHtml(s)}} · ${{s.hora}}</div></div>
         <span class="bilhete-mkt">${{s.mkt}}</span>
         <div class="bilhete-score-bar">${{bar(s.score,60)}}</div>
         <span class="bilhete-odd-val">${{s.oddVal?s.oddVal.toFixed(2):'—'}}</span>
@@ -3371,7 +3418,7 @@ function renderBilhetes(date, jogos){{
       for(const s of b.sels){{
         const key = `${{s.jogo}}|${{s.hora}}`;
         if(!byJogo.has(key)){{
-          byJogo.set(key, {{jogo:s.jogo, liga:s.liga, hora:s.hora, sels:[]}});
+          byJogo.set(key, {{jogo:s.jogo, liga:s.liga, country:s.country, hora:s.hora, sels:[]}});
           groups.push(byJogo.get(key));
         }}
         byJogo.get(key).sels.push(s);
@@ -3387,7 +3434,7 @@ function renderBilhetes(date, jogos){{
           <span class="bilhete-num">${{i+1}}</span>
           <div style="flex:1;min-width:0">
             <div class="bilhete-jogo">${{g.jogo}}</div>
-            <div class="bilhete-liga">${{g.liga}} · ${{g.hora}}</div>
+            <div class="bilhete-liga">${{leagueMetaHtml(g)}} · ${{g.hora}}</div>
           </div>
           <div class="bilhete-market-stack">${{marketLines}}</div>
           <div class="bilhete-res">${{statuses}}</div>
@@ -3400,7 +3447,7 @@ function renderBilhetes(date, jogos){{
         <span class="bilhete-num">${{i+1}}</span>
         <div style="flex:1;min-width:0">
           <div class="bilhete-jogo">${{s.jogo}}</div>
-          <div class="bilhete-liga">${{s.liga}} · ${{s.hora}}</div>
+          <div class="bilhete-liga">${{leagueMetaHtml(s)}} · ${{s.hora}}</div>
         </div>
         <span class="bilhete-mkt">${{s.mkt}}</span>
         <div class="bilhete-score-bar">${{bar(scoreVal,60)}}</div>

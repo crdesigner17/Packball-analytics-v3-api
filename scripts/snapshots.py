@@ -37,6 +37,7 @@ def snapshot_item(jogo):
         'home': jogo.get('home'),
         'away': jogo.get('away'),
         'liga': jogo.get('liga'),
+        'country': jogo.get('country'),
         'hora': jogo.get('hora'),
         'mkt': mkt,
         'score': score,
