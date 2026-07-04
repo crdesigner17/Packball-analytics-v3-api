@@ -25,7 +25,7 @@ Uso:
   python scripts/coletar.py --date today --key SUA_CHAVE
   python scripts/coletar.py --key SUA_CHAVE          # usa data de hoje
 """
-import os, sys, json, time, argparse, unicodedata
+import os, sys, json, time, argparse, unicodedata, csv, re
 from datetime import datetime, date
 from difflib import SequenceMatcher
 import requests
@@ -37,7 +37,9 @@ from cards.pipeline_adapter import apply_cards_engine_to_matches
 # ── Configuração ────────────────────────────────────────────────────
 BASE_URL  = "https://v3.football.api-sports.io"
 OUT_DIR   = os.path.join(os.path.dirname(__file__), '..', 'docs', 'data')
+CSV_DIR   = os.path.join(os.path.dirname(__file__), '..', 'data', 'csv')
 os.makedirs(OUT_DIR, exist_ok=True)
+CSV_ENRICHMENT_REPORT = {}
 
 # Ligas suportadas → (league_id, nome, tier, season)
 # Ligas europeias: season=2025 (temporada 2025/26)
@@ -672,6 +674,254 @@ def get_recent_fixture_stats(client: APIClient, team_id: int, league_id: int, se
 
     return result
 
+# ── CSV enrichment ──────────────────────────────────────────────────────────
+def csv_date_fmt(date_str: str) -> str:
+    return datetime.strptime(date_str, "%Y-%m-%d").strftime("%d-%m-%Y")
+
+
+def csv_float(value):
+    if value is None:
+        return None
+    text = str(value).strip().strip('"').replace('%', '').replace(',', '.')
+    if not text or text in {'-', '—', 'nan', 'None'} or '|' in text:
+        return None
+    try:
+        return float(text)
+    except Exception:
+        return None
+
+
+def csv_pct(value):
+    num = csv_float(value)
+    if num is not None and 0 < num <= 1:
+        return num * 100
+    return num
+
+
+def csv_pair(value):
+    if value is None:
+        return (None, None)
+    parts = [part.strip() for part in str(value).strip().strip('"').split('|')]
+    if len(parts) < 2:
+        return (None, None)
+    return (csv_float(parts[0]), csv_float(parts[1]))
+
+
+def find_packball_csv(folder: str, required_terms: list[str], blocked_terms: list[str] = None):
+    if not os.path.isdir(folder):
+        return None
+    blocked_terms = blocked_terms or []
+    for fname in os.listdir(folder):
+        lower = norm_txt(fname)
+        if not fname.lower().endswith('.csv'):
+            continue
+        if all(term in lower for term in required_terms) and not any(term in lower for term in blocked_terms):
+            return os.path.join(folder, fname)
+    return None
+
+
+def base_csv_row(raw, source):
+    return {
+        'source': os.path.basename(source),
+        'raw': raw,
+        'country': raw[0].strip() if len(raw) > 0 else '',
+        'league': raw[2].strip() if len(raw) > 2 else '',
+        'hour': raw[3].strip() if len(raw) > 3 else '',
+        'status': raw[4].strip() if len(raw) > 4 else '',
+        'home': raw[5].strip() if len(raw) > 5 else '',
+        'away': raw[8].strip() if len(raw) > 8 else '',
+    }
+
+
+def read_packball_rows(path: str, date_fmt: str, mapper):
+    rows = []
+    if not path or not os.path.exists(path):
+        return rows
+    with open(path, encoding='utf-8-sig', newline='') as f:
+        reader = csv.reader(f, delimiter=';')
+        next(reader, None)
+        for line_no, raw in enumerate(reader, start=2):
+            if len(raw) < 9:
+                continue
+            if date_fmt and not str(raw[3] if len(raw) > 3 else '').startswith(date_fmt):
+                continue
+            item = base_csv_row(raw, path)
+            item['line'] = line_no
+            item.update(mapper(raw))
+            rows.append(item)
+    return rows
+
+
+def map_goals_csv(raw):
+    return {
+        'over15_g': csv_pct(raw[12] if len(raw) > 12 else None),
+        'over25_g': csv_pct(raw[13] if len(raw) > 13 else None),
+        'btts_pct': csv_pct(raw[14] if len(raw) > 14 else None),
+        'under25_pct': csv_pct(raw[15] if len(raw) > 15 else None),
+        'over05_ht': csv_pct(raw[16] if len(raw) > 16 else None),
+        'avg_goals_csv': csv_float(raw[17] if len(raw) > 17 else None),
+        'h2h_goals': csv_float(raw[18] if len(raw) > 18 else None),
+        'avg_shots': csv_float(raw[26] if len(raw) > 26 else None),
+    }
+
+
+def map_corners_csv(raw):
+    home_corners, away_corners = csv_pair(raw[9] if len(raw) > 9 else None)
+    return {
+        'avg_corners_h': home_corners,
+        'avg_corners_a': away_corners,
+        'avg_corners': csv_float(raw[11] if len(raw) > 11 else None),
+        'over65_c': csv_pct(raw[12] if len(raw) > 12 else None),
+        'over75_c': csv_pct(raw[13] if len(raw) > 13 else None),
+        'over85_c': csv_pct(raw[14] if len(raw) > 14 else None),
+        'over95_c': csv_pct(raw[15] if len(raw) > 15 else None),
+        'over105_c': csv_pct(raw[16] if len(raw) > 16 else None),
+    }
+
+
+def map_resultado_csv(raw):
+    return {
+        'rf_odds_h': csv_float(raw[9] if len(raw) > 9 else None),
+        'rf_odds_a': csv_float(raw[10] if len(raw) > 10 else None),
+    }
+
+
+def load_csv_enrichment(date_str: str):
+    date_fmt = csv_date_fmt(date_str)
+    date_short = '-'.join(date_fmt.split('-')[:2])
+    folders = [
+        os.path.join(CSV_DIR, date_fmt),
+        os.path.join(CSV_DIR, date_short),
+        CSV_DIR,
+    ]
+    folder = next((path for path in folders if os.path.isdir(path)), None)
+    report = {
+        'date': date_fmt,
+        'folder': folder,
+        'files': {},
+        'rows': {},
+        'matches': {'goals': 0, 'corners': 0, 'resultado': 0},
+        'fields_applied': {},
+    }
+    if not folder:
+        report['status'] = 'csv_folder_missing'
+        CSV_ENRICHMENT_REPORT[date_str] = report
+        return {'date': date_fmt, 'rows': {}, 'report': report}
+
+    files = {
+        'goals': find_packball_csv(folder, ['over', 'gols']),
+        'corners': find_packball_csv(folder, ['escanteio']),
+        'resultado': find_packball_csv(folder, ['resultado', 'final']),
+    }
+    rows = {
+        'goals': read_packball_rows(files['goals'], date_fmt, map_goals_csv),
+        'corners': read_packball_rows(files['corners'], date_fmt, map_corners_csv),
+        'resultado': read_packball_rows(files['resultado'], date_fmt, map_resultado_csv),
+    }
+    report['files'] = {key: os.path.basename(path) if path else None for key, path in files.items()}
+    report['rows'] = {key: len(value) for key, value in rows.items()}
+    report['status'] = 'loaded'
+    CSV_ENRICHMENT_REPORT[date_str] = report
+    return {'date': date_fmt, 'rows': rows, 'report': report}
+
+
+def team_match_score(a, b):
+    na, nb = norm_txt(a), norm_txt(b)
+    if not na or not nb:
+        return 0
+    if na == nb:
+        return 100
+    if na in nb or nb in na:
+        return 92
+    ta, tb = set(na.split()), set(nb.split())
+    overlap = len(ta & tb)
+    token_score = (overlap / max(len(ta), len(tb))) * 85 if overlap else 0
+    seq_score = SequenceMatcher(None, na, nb).ratio() * 100
+    return max(token_score, seq_score)
+
+
+def pick_csv_match(rows, jogo):
+    best = None
+    best_score = 0
+    for row in rows:
+        home_score = team_match_score(jogo.get('home'), row.get('home'))
+        away_score = team_match_score(jogo.get('away'), row.get('away'))
+        league_score = team_match_score(jogo.get('liga'), row.get('league'))
+        score = (home_score * 0.45) + (away_score * 0.45) + (league_score * 0.10)
+        if score > best_score:
+            best_score = score
+            best = row
+    return (best, round(best_score, 1)) if best_score >= 78 else (None, round(best_score, 1))
+
+
+def merge_csv_value(jogo, field, value, applied, source, blend=True):
+    if value is None:
+        return
+    old = jogo.get(field)
+    if old is None:
+        new_value = value
+        method = 'fill'
+    elif blend:
+        try:
+            new_value = round((float(old) * 0.45) + (float(value) * 0.55), 2)
+            method = 'blend'
+        except Exception:
+            return
+    else:
+        return
+    if old != new_value:
+        jogo[field] = new_value
+        applied.append({'field': field, 'old': old, 'csv': value, 'new': new_value, 'method': method, 'source': source})
+
+
+def apply_csv_enrichment(jogo: dict, csv_data: dict, date_str: str):
+    rows_by_kind = (csv_data or {}).get('rows') or {}
+    applied = []
+    matches = {}
+
+    goals, score = pick_csv_match(rows_by_kind.get('goals', []), jogo)
+    if goals:
+        matches['goals'] = {'source': goals.get('source'), 'line': goals.get('line'), 'score': score}
+        merge_csv_value(jogo, 'over15_g', goals.get('over15_g'), applied, 'goals')
+        merge_csv_value(jogo, 'over25_g', goals.get('over25_g'), applied, 'goals')
+        merge_csv_value(jogo, 'over05_ht', goals.get('over05_ht'), applied, 'goals')
+        merge_csv_value(jogo, 'h2h_goals', goals.get('h2h_goals'), applied, 'goals')
+        merge_csv_value(jogo, 'avg_shots', goals.get('avg_shots'), applied, 'goals')
+        btts = goals.get('btts_pct')
+        if btts is not None:
+            merge_csv_value(jogo, 'btts_h', btts, applied, 'goals', blend=False)
+            merge_csv_value(jogo, 'btts_a', btts, applied, 'goals', blend=False)
+        under25 = goals.get('under25_pct')
+        if under25 is not None:
+            merge_csv_value(jogo, 'under25_h', under25, applied, 'goals')
+            merge_csv_value(jogo, 'under25_a', under25, applied, 'goals')
+
+    corners, score = pick_csv_match(rows_by_kind.get('corners', []), jogo)
+    if corners:
+        matches['corners'] = {'source': corners.get('source'), 'line': corners.get('line'), 'score': score}
+        for field in ['avg_corners', 'avg_corners_h', 'avg_corners_a',
+                      'over65_c', 'over75_c', 'over85_c', 'over95_c', 'over105_c']:
+            merge_csv_value(jogo, field, corners.get(field), applied, 'corners')
+
+    resultado, score = pick_csv_match(rows_by_kind.get('resultado', []), jogo)
+    if resultado:
+        matches['resultado'] = {'source': resultado.get('source'), 'line': resultado.get('line'), 'score': score}
+        merge_csv_value(jogo, 'odds_h', resultado.get('rf_odds_h'), applied, 'resultado', blend=False)
+        merge_csv_value(jogo, 'odds_a', resultado.get('rf_odds_a'), applied, 'resultado', blend=False)
+
+    report = CSV_ENRICHMENT_REPORT.get(date_str)
+    if report:
+        for kind in matches:
+            report['matches'][kind] = report['matches'].get(kind, 0) + 1
+        for item in applied:
+            report['fields_applied'][item['field']] = report['fields_applied'].get(item['field'], 0) + 1
+
+    if matches or applied:
+        jogo['csv_enrichment'] = {
+            'matches': matches,
+            'applied_fields': applied,
+        }
+
 # ── Score engine (idêntico ao processar.py v3.0) ────────────────────
 def calcular_scores(jogo: dict) -> dict:
     o15g    = jogo.get('over15_g')
@@ -843,6 +1093,17 @@ def processar_data(client: APIClient, date_str: str) -> list:
     results = []
     team_cache    = {}  # (team_id, league_id) → stats
     fixture_cache = {}  # fixture_id → recent stats
+    csv_data = load_csv_enrichment(date_str)
+    csv_report = csv_data.get('report', {})
+    if csv_report.get('status') == 'loaded':
+        print(
+            "  CSVs PackBall carregados: "
+            f"gols={csv_report.get('rows', {}).get('goals', 0)} | "
+            f"escanteios={csv_report.get('rows', {}).get('corners', 0)} | "
+            f"resultado={csv_report.get('rows', {}).get('resultado', 0)}"
+        )
+    else:
+        print("  CSVs PackBall nao encontrados para enriquecimento desta data")
 
     for league_id, liga_info in LIGAS.items():
         liga_nome = liga_info[0]; tier = liga_info[1]
@@ -1050,6 +1311,8 @@ def processar_data(client: APIClient, date_str: str) -> list:
                 "under25_h": None, "under25_a": None,
             }
 
+            apply_csv_enrichment(jogo, csv_data, date_str)
+
             # Calcular todos os scores
             scores = calcular_scores(jogo)
             jogo.update(scores)
@@ -1161,6 +1424,7 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
         "resultado_confirmado": resultado_confirmado,
         "resultado_stats":      resultado_stats,
         "resultado_stats_full": resultado_stats_full,
+        "csv_enrichment_report": CSV_ENRICHMENT_REPORT.get(date_str_api, {}),
         "stats": {
             "total":            len(jogos),
             "over15_aprovados": len(aprovados15),
