@@ -2501,12 +2501,12 @@
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "0-0",
-        "corners_total": 5,
-        "cards_total": null,
-        "esc75_ok": false,
-        "esc85_ok": false,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {}
     },
@@ -3694,12 +3694,12 @@
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "0-0",
-        "corners_total": 5,
-        "cards_total": null,
-        "esc75_ok": false,
-        "esc85_ok": false,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {}
     },
@@ -3860,12 +3860,12 @@
                 "under45_ok": true,
                 "placar": "1-0",
                 "placar_ht": "0-0",
-                "corners_total": 5,
-                "cards_total": null,
-                "esc75_ok": false,
-                "esc85_ok": false,
-                "cart25_ok": null,
-                "cart35_ok": null
+                "corners_total": 9,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
               },
               "acertos": {}
             },
@@ -4028,12 +4028,12 @@
                 "under45_ok": true,
                 "placar": "1-0",
                 "placar_ht": "0-0",
-                "corners_total": 5,
-                "cards_total": null,
-                "esc75_ok": false,
-                "esc85_ok": false,
-                "cart25_ok": null,
-                "cart35_ok": null
+                "corners_total": 9,
+                "cards_total": 2,
+                "esc75_ok": true,
+                "esc85_ok": true,
+                "cart25_ok": false,
+                "cart35_ok": false
               },
               "acertos": {}
             }
@@ -4179,15 +4179,15 @@
     "Cart 2.5": {
       "palpites": 4,
       "acertos": 1,
-      "erros": 1,
-      "sem_dados": 2,
-      "taxa": 50.0
+      "erros": 2,
+      "sem_dados": 1,
+      "taxa": 33.3
     },
     "Cart 3.5": {
       "palpites": 4,
       "acertos": 0,
-      "erros": 2,
-      "sem_dados": 2,
+      "erros": 3,
+      "sem_dados": 1,
       "taxa": 0.0
     }
   },
