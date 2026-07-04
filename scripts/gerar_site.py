@@ -272,6 +272,162 @@ def card_pick_approved(jogo):
     analysis = jogo.get('cards_analysis')
     return isinstance(analysis, dict) and analysis.get('approved') is True
 
+
+RESPONSIVE_CSS = r'''
+/* WM RESPONSIVE MOBILE */
+html,body{max-width:100%;overflow-x:hidden}
+img,svg,canvas,video{max-width:100%}
+.tbl-wrap,.corner-table-wrap,.table-wrap,.live-table-wrap,.prev-tbl-wrap,.compare-table-wrap,.stats-table-card,.mini-table-card{
+  -webkit-overflow-scrolling:touch;scrollbar-width:thin;scrollbar-color:var(--border) transparent;
+}
+.tbl-wrap table,.corner-table-wrap table{table-layout:auto}
+@media(max-width:1180px){
+  .ranking-cols{grid-template-columns:1fr}
+  .hist-visual{grid-template-columns:1fr}
+  .hist-hero{grid-template-columns:1fr 1fr}
+  .hist-hero>div:first-child{grid-column:1/-1}
+  .hist-layout{grid-template-columns:1fr}
+  .hg-kpi-row{grid-template-columns:repeat(3,minmax(0,1fr))}
+  .hg-panels{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:900px){
+  :root{--mobile-topbar-h:52px}
+  .app-layout{display:flex;flex-direction:column;gap:0;min-height:100vh;padding:0;background:var(--bg)}
+  .sidebar{
+    position:sticky;top:0;z-index:180;width:100%;height:auto;min-height:var(--mobile-topbar-h);
+    max-height:none;border-right:0;border-bottom:1px solid var(--border);border-radius:0;
+    padding:7px 8px;background:var(--s1);overflow-x:auto;overflow-y:hidden;
+    display:flex;flex-direction:row;align-items:center;gap:8px;
+  }
+  .sidebar::-webkit-scrollbar{display:none}
+  .sidebar-logo{
+    min-height:0;padding:0 8px 0 0;border-bottom:0;flex:0 0 auto;
+    display:flex;align-items:center;gap:8px;
+  }
+  .sidebar-logo-icon{width:30px;height:30px}
+  .sidebar-logo-name{font-size:14px}
+  .sidebar-logo-sub{font-size:8px;letter-spacing:1.4px}
+  .sidebar-section{padding:0;margin:0;display:flex;align-items:center;gap:6px;min-width:0;overflow-x:auto;scrollbar-width:none}
+  .sidebar-section::-webkit-scrollbar{display:none}
+  .sidebar-divider,.sidebar-group-label,.sidebar-upgrade{display:none!important}
+  .sidebar-item{
+    height:36px;margin:0;flex:0 0 auto;padding:0 10px;border-radius:8px;
+    white-space:nowrap;font-size:12px;border-left:0;display:inline-flex;align-items:center;
+  }
+  .sidebar-item.active{border-left:0;border-bottom:2px solid var(--green);padding-left:10px;background:rgba(0,200,150,.10)}
+  .sidebar-pro,.sidebar-cnt{display:none}
+  .content-area{width:100%;flex:1 1 auto}
+  .page-hero-search,.page-hero-title,.main,.date-strip-shell,.mkt-cat-bar,.sub-filter-bar{
+    width:calc(100% - 20px);max-width:none;
+  }
+  .page-hero-search{min-height:auto;padding:9px 0;align-items:stretch;gap:8px}
+  .page-hero-title{min-height:auto;padding:18px 0 14px}
+  .page-hero-heading h1{font-size:20px}
+  .page-hero-subtitle{font-size:12px;max-width:100%}
+  .page-hero-actions{min-width:0}
+  .date-strip-shell{top:var(--mobile-topbar-h);grid-template-columns:38px minmax(0,1fr) 38px}
+  .date-strip-arrow{height:48px}
+  .date-strip-item{height:48px;min-width:62px;padding:0 10px}
+  .date-strip-dow{font-size:10px}
+  .date-strip-day{font-size:12px}
+  .mkt-cat-bar{
+    top:calc(var(--mobile-topbar-h) + 48px);overflow-x:auto;justify-content:flex-start;
+    scrollbar-width:none;
+  }
+  .mkt-cat-bar::-webkit-scrollbar{display:none}
+  .mkt-cat-tab{flex:0 0 auto;min-width:max-content;height:40px;padding:0 12px;font-size:12px}
+  .sub-filter-bar{
+    top:calc(var(--mobile-topbar-h) + 88px);overflow-x:auto;flex-wrap:nowrap;
+    justify-content:flex-start;padding:6px 8px;scrollbar-width:none;
+  }
+  .sub-filter-bar::-webkit-scrollbar{display:none}
+  .sub-filter-btn{flex:0 0 auto}
+  .main{padding:14px 0 22px}
+  .kpi-row{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:8px}
+  .kpi{min-width:0;padding:11px 10px}
+  .top-grid{grid-template-columns:1fr}
+  .top-card{padding:13px}
+  .top-liga,.top-jogo{padding-right:72px}
+  .rf-grid,.corner-summary-grid,.cards-summary-grid,.bilhete-grid,.bilhete-destaques,.hist-summary-grid,.hist-audit-grid,.hg-panels,.hg-bottom{
+    grid-template-columns:1fr;
+  }
+  .hg-hero,.hist-hero{grid-template-columns:1fr;padding:14px;gap:10px}
+  .hg-kpi-row{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .hg-kpi{padding:12px;gap:10px}
+  .hg-kpi-icon{width:34px;height:34px;border-radius:9px}
+  .hg-kpi-val{font-size:22px}
+  .hist-hero>div:first-child{grid-column:auto}
+  .hist-hero-insights{grid-template-columns:1fr}
+  .hist-visual{grid-template-columns:1fr;padding:12px;border-radius:12px}
+  .hist-radial-wrap{grid-template-columns:112px minmax(0,1fr);gap:10px}
+  .hist-radial{width:112px;height:112px}
+  .hist-break-row{grid-template-columns:minmax(0,1fr) 50px}
+  .hist-break-row em{display:none}
+  .hist-panel-head{align-items:flex-start;flex-direction:column;gap:4px}
+  .hist-panel-note{white-space:normal}
+  .day-hist-row{grid-template-columns:52px minmax(0,1fr) 78px;gap:8px}
+  .hist-market-row{grid-template-columns:26px minmax(0,1fr) 72px;padding:9px}
+  .hg-rank-row{grid-template-columns:28px 6px minmax(0,1fr) 58px;gap:8px;padding:9px}
+  .hg-day-row{grid-template-columns:42px minmax(0,1fr) 82px;gap:8px}
+  .bilhete-dia,.bilhete-card{padding:14px}
+  .bilhete-header{align-items:flex-start}
+  .bilhete-row{
+    display:grid;grid-template-columns:22px minmax(0,1fr);gap:6px 8px;align-items:start;
+    padding:9px 0;
+  }
+  .bilhete-num{grid-row:1/4;width:auto}
+  .bilhete-jogo{padding-right:0}
+  .bilhete-mkt,.bilhete-odd-val,.bilhete-score-bar,.bilhete-res,.bilhete-market-stack{
+    width:auto;min-width:0;max-width:none;padding-right:0;text-align:left;grid-column:2;
+  }
+  .bilhete-score-bar{width:100%;max-width:160px}
+  .bilhete-market-line{grid-template-columns:minmax(0,1fr) 74px 42px;gap:6px}
+  .bilhete-res{text-align:left}
+  .bilhete-footer{align-items:flex-start;flex-direction:column}
+  .ranking-col table,table{min-width:680px}
+  .corner-table-wrap table{min-width:1080px}
+  .cal-modal{align-items:flex-start;overflow-y:auto;padding:14px}
+  .cal-box{width:min(100%,360px);min-width:0;padding:16px;margin:0 auto}
+}
+@media(max-width:560px){
+  .sidebar-logo-text{display:none}
+  .sidebar{padding:7px 6px}
+  .sidebar-item{height:34px;padding:0 9px;font-size:11px;gap:7px}
+  .sidebar-item i{width:14px!important;height:14px!important}
+  .page-hero-search{flex-direction:column}
+  .page-hero-searchbox{width:100%}
+  .page-hero-actions{width:100%;margin-left:0;display:grid;grid-template-columns:1fr;gap:8px}
+  .wm-update-pill,.wm-date-filter,.wm-date-filter-trigger{width:100%}
+  .wm-date-filter-menu{left:0;right:auto;width:min(318px,calc(100vw - 32px))}
+  .wm-filter-tabs{grid-template-columns:repeat(2,minmax(0,1fr))}
+  .wm-filter-fields{grid-template-columns:1fr}
+  .kpi-row,.hg-kpi-row{grid-template-columns:1fr}
+  .top-bottom{align-items:flex-start;flex-direction:column;gap:8px}
+  .top-grade-block{align-items:flex-start}
+  .hist-radial-wrap{grid-template-columns:1fr;justify-items:center}
+  .hist-vlegend{width:100%}
+  .hist-summary-grid{grid-template-columns:1fr}
+  .hg-hero{padding:14px}
+  .hg-taxa-val{font-size:32px}
+  .hg-panel,.hg-card,.hist-panel{padding:13px}
+  .hg-rank-detail,.hg-day-info{white-space:normal}
+  .cards-summary-grid{grid-template-columns:1fr}
+  .corner-summary-grid{grid-template-columns:1fr}
+  .ranking-col table,table{min-width:620px}
+  .corner-table-wrap table{min-width:980px}
+  .empty{padding:24px 12px}
+}
+/* WM RESPONSIVE MOBILE END */
+'''
+
+
+def ensure_responsive_css(html):
+    pattern = r'/\* WM RESPONSIVE MOBILE \*/.*?/\* WM RESPONSIVE MOBILE END \*/\n?'
+    if '/* WM RESPONSIVE MOBILE */' in html:
+        return re.sub(pattern, RESPONSIVE_CSS + '\n', html, flags=re.DOTALL)
+    return html.replace('</style>', RESPONSIVE_CSS + '\n</style>', 1)
+
+
 def apply_visual_overrides(html):
     """Aplica somente ajustes visuais ao HTML gerado, preservando dados e lógica."""
     html = html.replace(
@@ -607,6 +763,7 @@ def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, car
             "Constante WM_DATA_UPDATED_AT ausente ou duplicada em docs/index.html."
         )
 
+    html = ensure_responsive_css(html)
     return html
 
 
@@ -1619,6 +1776,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   .day-hist-row{{grid-template-columns:52px minmax(0,1fr) 76px}}
   table{{min-width:640px}}
 }}
+{RESPONSIVE_CSS}
 </style>
 </head>
 <body>
