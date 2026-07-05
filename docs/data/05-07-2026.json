@@ -673,7 +673,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Cart 3.5",
       "palpite_grade": "A",
-      "palpite_score": 86.1
+      "palpite_score": 86.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -1619,7 +1621,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Cart 4.5",
       "palpite_grade": "A",
-      "palpite_score": 83.3
+      "palpite_score": 83.3,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -2832,7 +2836,9 @@
       "grade_cart65": "B",
       "palpite_mkt": "Cart 5.5",
       "palpite_grade": "A+",
-      "palpite_score": 88
+      "palpite_score": 88,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -3179,7 +3185,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 80.2
+      "palpite_score": 80.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -3526,1419 +3534,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 90.1
-    },
-    {
-      "date": "05-07-2026",
-      "jogo": "Argentino Quilmes x Talleres Remedios",
-      "liga": "Copa Uruguay",
-      "country": "Argentina",
-      "hora": "13:00",
-      "home": "Argentino Quilmes",
-      "away": "Talleres Remedios",
-      "fixture_id": 1499496,
-      "referee": null,
-      "home_id": 8376,
-      "away_id": 1927,
-      "is_elite": false,
-      "odds_h": 2.8,
-      "odds_d": 2.88,
-      "odds_a": 2.55,
-      "odds_cards_25": null,
-      "odds_cards_35": null,
-      "odds_cards_45": null,
-      "odds_cards_55": null,
-      "odds_cards_65": null,
-      "odds_cards_under_25": null,
-      "odds_cards_under_35": null,
-      "odds_cards_under_45": null,
-      "odds_cards_under_55": null,
-      "odds_cards_under_65": null,
-      "over15_g": 53.75,
-      "over25_g": 22.75,
-      "over15_h": null,
-      "over15_a": null,
-      "over25_h": null,
-      "over25_a": null,
-      "exg_h": 1.1,
-      "exg_a": 1.0,
-      "ppg_h": 1.23,
-      "ppg_a": 1.91,
-      "h2h_goals": 1.73,
-      "h2h_n": 10,
-      "avg_sc_h": 1.1,
-      "avg_sc_a": 1.0,
-      "avg_co_h": 1.0,
-      "avg_co_a": 0.5,
-      "btts_h": 68.2,
-      "btts_a": 40.9,
-      "over05_ht": 60.0,
-      "over15_ht": null,
-      "avg_shots_h": null,
-      "avg_shots_a": null,
-      "avg_sot_h": null,
-      "avg_sot_a": null,
-      "avg_sot": null,
-      "avg_shots": 15.6,
-      "avg_corners": 9.0,
-      "avg_corners_h": 3.6,
-      "avg_corners_a": 4.8,
-      "over65_c": 60.0,
-      "over75_c": 55.0,
-      "over85_c": 35.0,
-      "over95_c": 20.0,
-      "over105_c": 16.8,
-      "avg_cards": null,
-      "avg_cards_h": null,
-      "avg_cards_a": null,
-      "over25_cards": null,
-      "over35_cards": null,
-      "over45_cards": null,
-      "pred_winner": "Talleres Remedios",
-      "pred_advice": "Double chance : draw or Talleres Remedios",
-      "win_home": 10.0,
-      "win_away": 45.0,
-      "form_h": "WWDWD",
-      "form_a": "WWDDW",
-      "under25_h": 75.0,
-      "under25_a": 75.0,
-      "csv_enrichment": {
-        "matches": {
-          "goals": {
-            "source": "PackBall Custom OVER GOLS 01 05-07-2026.csv",
-            "line": 55,
-            "score": 88.7
-          },
-          "corners": {
-            "source": "PackBall Custom ESCANTEIOS  05-07-2026.csv",
-            "line": 55,
-            "score": 88.7
-          },
-          "resultado": {
-            "source": "PackBall Custom RESULTADO FINAL  05-07-2026.csv",
-            "line": 55,
-            "score": 88.7
-          }
-        },
-        "applied_fields": [
-          {
-            "field": "over15_g",
-            "old": 40.0,
-            "csv": 65.0,
-            "new": 53.75,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "over25_g",
-            "old": 20.0,
-            "csv": 25.0,
-            "new": 22.75,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "over05_ht",
-            "old": null,
-            "csv": 60.0,
-            "new": 60.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "h2h_goals",
-            "old": 1.4,
-            "csv": 2.0,
-            "new": 1.73,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "avg_shots",
-            "old": null,
-            "csv": 15.6,
-            "new": 15.6,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_h",
-            "old": null,
-            "csv": 75.0,
-            "new": 75.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_a",
-            "old": null,
-            "csv": 75.0,
-            "new": 75.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "avg_corners",
-            "old": null,
-            "csv": 9.0,
-            "new": 9.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_h",
-            "old": null,
-            "csv": 3.6,
-            "new": 3.6,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_a",
-            "old": null,
-            "csv": 4.8,
-            "new": 4.8,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over65_c",
-            "old": null,
-            "csv": 60.0,
-            "new": 60.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over75_c",
-            "old": null,
-            "csv": 55.0,
-            "new": 55.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over85_c",
-            "old": null,
-            "csv": 35.0,
-            "new": 35.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over95_c",
-            "old": null,
-            "csv": 20.0,
-            "new": 20.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over105_c",
-            "old": null,
-            "csv": 16.8,
-            "new": 16.8,
-            "method": "fill",
-            "source": "corners"
-          }
-        ]
-      },
-      "exg_tot": 2.1,
-      "ppg_avg": 1.57,
-      "ppg_min": 1.23,
-      "btts_cf": 54.5,
-      "poisson_o15": 62.0,
-      "poisson_o25": 35.0,
-      "poisson_u45": 93.8,
-      "poisson_u35": 83.9,
-      "score_15": 53.8,
-      "score_25": 33.9,
-      "score_btts": 46.3,
-      "score_05ht": 51.3,
-      "score_u45": 73.2,
-      "score_u35": 72.2,
-      "score_esc75": 55.0,
-      "score_esc85": 48.0,
-      "score_cards25": 0,
-      "score_cards35": 0,
-      "passou_filtro": true,
-      "via": "Via 2",
-      "under35_filter": false,
-      "grade_15": "C",
-      "grade_25": "D",
-      "grade_btts": "D",
-      "grade_05ht": "C",
-      "grade_u45": "B",
-      "grade_u35": "D",
-      "grade_esc85": "D",
-      "grade_esc75": "C",
-      "grade_cart25": "D",
-      "odd_justa_15": 1.86,
-      "odd_justa_25": 4.4,
-      "odd_justa_btts": 1.83,
-      "odd_justa_05ht": 1.67,
-      "odd_justa_esc85": 2.86,
-      "odd_justa_cart25": null,
-      "best_mkt": "Under 4.5",
-      "best_score": 73.2,
-      "best_grade": "B",
-      "best_risk": "Moderado",
-      "justif_15": "O1.5 54% · xG 2.1 · PPG 1.6 · H2H 1.7 gols · Via 2 ✓",
-      "justif_esc": "Média 9.0 cant · O8.5: 35.0% · O7.5: 55.0%",
-      "justif_cards": "Nenhum mercado de cartoes aprovado com sustentacao suficiente",
-      "cards_analysis": {
-        "market_group": "Cartoes",
-        "approved": false,
-        "best_market": null,
-        "market_key": null,
-        "line": null,
-        "side": null,
-        "score": 0,
-        "score_before_cap": 0,
-        "score_bruto": 0,
-        "score_cap": 80,
-        "score_final": 0,
-        "final_score": 0,
-        "confidence": "D",
-        "data_quality": 20,
-        "data_quality_tier": "insufficient",
-        "data_source_level": "BAIXA",
-        "line_value": null,
-        "line_value_score": null,
-        "line_risk_penalty": null,
-        "breakdown": null,
-        "odds_available": false,
-        "odds": null,
-        "reasons": [
-          "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-        ],
-        "submarkets": [],
-        "referee": {
-          "found": false,
-          "referee": "",
-          "score": 0,
-          "confidence": 0,
-          "tier": "UNKNOWN"
-        },
-        "referee_under": {
-          "found": false,
-          "score": 0,
-          "tier": "UNKNOWN",
-          "confidence": 0
-        },
-        "team_stats": {
-          "available": false,
-          "home_avg": null,
-          "away_avg": null,
-          "combined_avg": null,
-          "source": "missing"
-        },
-        "odds_data": {
-          "available": false,
-          "total_cards": [],
-          "both_teams_card": {
-            "yes_odds": null,
-            "no_odds": null
-          },
-          "both_teams_2plus_cards": {
-            "yes_odds": null,
-            "no_odds": null
-          }
-        },
-        "context": {
-          "available": true,
-          "importance": "high",
-          "over_score": 15,
-          "under_score": 0,
-          "reasons": [
-            "Jogo eliminatorio ou fase final"
-          ],
-          "score": 15
-        },
-        "league_data": false
-      },
-      "card_markets": [],
-      "cards_best_mkt": null,
-      "cards_best_market": null,
-      "cards_market_key": null,
-      "cards_best_score": 0,
-      "cards_score_before_cap": 0,
-      "cards_score_cap": 80,
-      "cards_score_final": 0,
-      "cards_best_grade": "D",
-      "cards_data_quality": 20,
-      "cards_data_source_level": "BAIXA",
-      "cards_odds_available": false,
-      "cards_reasons": [
-        "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-      ],
-      "score_cards45": 0,
-      "score_cards55": 0,
-      "score_cards65": 0,
-      "grade_cart35": "D",
-      "grade_cart45": "D",
-      "grade_cart55": "D",
-      "grade_cart65": "D",
-      "palpite_mkt": "Under 4.5",
-      "palpite_grade": "B",
-      "palpite_score": 73.2
-    },
-    {
-      "date": "05-07-2026",
-      "jogo": "Sportivo Italiano x Real Pilar",
-      "liga": "Copa Uruguay",
-      "country": "Argentina",
-      "hora": "13:00",
-      "home": "Sportivo Italiano",
-      "away": "Real Pilar",
-      "fixture_id": 1499506,
-      "referee": null,
-      "home_id": 8388,
-      "away_id": 2422,
-      "is_elite": false,
-      "odds_h": 2.2,
-      "odds_d": 2.8,
-      "odds_a": 3.45,
-      "odds_cards_25": null,
-      "odds_cards_35": null,
-      "odds_cards_45": null,
-      "odds_cards_55": null,
-      "odds_cards_65": null,
-      "odds_cards_under_25": null,
-      "odds_cards_under_35": null,
-      "odds_cards_under_45": null,
-      "odds_cards_under_55": null,
-      "odds_cards_under_65": null,
-      "over15_g": 70.0,
-      "over25_g": 37.25,
-      "over15_h": null,
-      "over15_a": null,
-      "over25_h": null,
-      "over25_a": null,
-      "exg_h": 1.0,
-      "exg_a": 1.1,
-      "ppg_h": 1.55,
-      "ppg_a": 1.5,
-      "h2h_goals": 2.27,
-      "h2h_n": 10,
-      "avg_sc_h": 1.0,
-      "avg_sc_a": 1.1,
-      "avg_co_h": 0.9,
-      "avg_co_a": 1.0,
-      "btts_h": 63.6,
-      "btts_a": 72.7,
-      "over05_ht": 70.0,
-      "over15_ht": null,
-      "avg_shots_h": null,
-      "avg_shots_a": null,
-      "avg_sot_h": null,
-      "avg_sot_a": null,
-      "avg_sot": null,
-      "avg_shots": 16.0,
-      "avg_corners": 8.3,
-      "avg_corners_h": 4.0,
-      "avg_corners_a": 3.9,
-      "over65_c": 60.0,
-      "over75_c": 40.0,
-      "over85_c": 40.0,
-      "over95_c": 25.0,
-      "over105_c": 16.1,
-      "avg_cards": null,
-      "avg_cards_h": null,
-      "avg_cards_a": null,
-      "over25_cards": null,
-      "over35_cards": null,
-      "over45_cards": null,
-      "pred_winner": "Real Pilar",
-      "pred_advice": "Combo Double chance : draw or Real Pilar and -3.5 goals",
-      "win_home": 10.0,
-      "win_away": 45.0,
-      "form_h": "LWLLD",
-      "form_a": "WLWDD",
-      "under25_h": 65.0,
-      "under25_a": 65.0,
-      "csv_enrichment": {
-        "matches": {
-          "goals": {
-            "source": "PackBall Custom OVER GOLS 01 05-07-2026.csv",
-            "line": 56,
-            "score": 92.3
-          },
-          "corners": {
-            "source": "PackBall Custom ESCANTEIOS  05-07-2026.csv",
-            "line": 56,
-            "score": 92.3
-          },
-          "resultado": {
-            "source": "PackBall Custom RESULTADO FINAL  05-07-2026.csv",
-            "line": 56,
-            "score": 92.3
-          }
-        },
-        "applied_fields": [
-          {
-            "field": "over25_g",
-            "old": 40.0,
-            "csv": 35.0,
-            "new": 37.25,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "over05_ht",
-            "old": null,
-            "csv": 70.0,
-            "new": 70.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "h2h_goals",
-            "old": 2.6,
-            "csv": 2.0,
-            "new": 2.27,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "avg_shots",
-            "old": null,
-            "csv": 16.0,
-            "new": 16.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_h",
-            "old": null,
-            "csv": 65.0,
-            "new": 65.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_a",
-            "old": null,
-            "csv": 65.0,
-            "new": 65.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "avg_corners",
-            "old": null,
-            "csv": 8.3,
-            "new": 8.3,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_h",
-            "old": null,
-            "csv": 4.0,
-            "new": 4.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_a",
-            "old": null,
-            "csv": 3.9,
-            "new": 3.9,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over65_c",
-            "old": null,
-            "csv": 60.0,
-            "new": 60.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over75_c",
-            "old": null,
-            "csv": 40.0,
-            "new": 40.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over85_c",
-            "old": null,
-            "csv": 40.0,
-            "new": 40.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over95_c",
-            "old": null,
-            "csv": 25.0,
-            "new": 25.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over105_c",
-            "old": null,
-            "csv": 16.1,
-            "new": 16.1,
-            "method": "fill",
-            "source": "corners"
-          }
-        ]
-      },
-      "exg_tot": 2.1,
-      "ppg_avg": 1.52,
-      "ppg_min": 1.5,
-      "btts_cf": 68.2,
-      "poisson_o15": 62.0,
-      "poisson_o25": 35.0,
-      "poisson_u45": 93.8,
-      "poisson_u35": 83.9,
-      "score_15": 70.0,
-      "score_25": 40.2,
-      "score_btts": 54.7,
-      "score_05ht": 55.6,
-      "score_u45": 70.7,
-      "score_u35": 70.2,
-      "score_esc75": 48.7,
-      "score_esc85": 46.4,
-      "score_cards25": 0,
-      "score_cards35": 0,
-      "passou_filtro": true,
-      "via": "Via 2",
-      "under35_filter": false,
-      "grade_15": "B",
-      "grade_25": "D",
-      "grade_btts": "C",
-      "grade_05ht": "C",
-      "grade_u45": "B",
-      "grade_u35": "D",
-      "grade_esc85": "D",
-      "grade_esc75": "D",
-      "grade_cart25": "D",
-      "odd_justa_15": 1.43,
-      "odd_justa_25": 2.68,
-      "odd_justa_btts": 1.47,
-      "odd_justa_05ht": 1.43,
-      "odd_justa_esc85": 2.5,
-      "odd_justa_cart25": null,
-      "best_mkt": "Under 4.5",
-      "best_score": 70.7,
-      "best_grade": "B",
-      "best_risk": "Moderado",
-      "justif_15": "O1.5 70% · xG 2.1 · PPG 1.5 · H2H 2.3 gols · Via 2 ✓",
-      "justif_esc": "Média 8.3 cant · O8.5: 40.0% · O7.5: 40.0%",
-      "justif_cards": "Nenhum mercado de cartoes aprovado com sustentacao suficiente",
-      "cards_analysis": {
-        "market_group": "Cartoes",
-        "approved": false,
-        "best_market": null,
-        "market_key": null,
-        "line": null,
-        "side": null,
-        "score": 0,
-        "score_before_cap": 0,
-        "score_bruto": 0,
-        "score_cap": 80,
-        "score_final": 0,
-        "final_score": 0,
-        "confidence": "D",
-        "data_quality": 20,
-        "data_quality_tier": "insufficient",
-        "data_source_level": "BAIXA",
-        "line_value": null,
-        "line_value_score": null,
-        "line_risk_penalty": null,
-        "breakdown": null,
-        "odds_available": false,
-        "odds": null,
-        "reasons": [
-          "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-        ],
-        "submarkets": [],
-        "referee": {
-          "found": false,
-          "referee": "",
-          "score": 0,
-          "confidence": 0,
-          "tier": "UNKNOWN"
-        },
-        "referee_under": {
-          "found": false,
-          "score": 0,
-          "tier": "UNKNOWN",
-          "confidence": 0
-        },
-        "team_stats": {
-          "available": false,
-          "home_avg": null,
-          "away_avg": null,
-          "combined_avg": null,
-          "source": "missing"
-        },
-        "odds_data": {
-          "available": false,
-          "total_cards": [],
-          "both_teams_card": {
-            "yes_odds": null,
-            "no_odds": null
-          },
-          "both_teams_2plus_cards": {
-            "yes_odds": null,
-            "no_odds": null
-          }
-        },
-        "context": {
-          "available": true,
-          "importance": "high",
-          "over_score": 15,
-          "under_score": 0,
-          "reasons": [
-            "Jogo eliminatorio ou fase final"
-          ],
-          "score": 15
-        },
-        "league_data": false
-      },
-      "card_markets": [],
-      "cards_best_mkt": null,
-      "cards_best_market": null,
-      "cards_market_key": null,
-      "cards_best_score": 0,
-      "cards_score_before_cap": 0,
-      "cards_score_cap": 80,
-      "cards_score_final": 0,
-      "cards_best_grade": "D",
-      "cards_data_quality": 20,
-      "cards_data_source_level": "BAIXA",
-      "cards_odds_available": false,
-      "cards_reasons": [
-        "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-      ],
-      "score_cards45": 0,
-      "score_cards55": 0,
-      "score_cards65": 0,
-      "grade_cart35": "D",
-      "grade_cart45": "D",
-      "grade_cart55": "D",
-      "grade_cart65": "D",
-      "palpite_mkt": "Under 4.5",
-      "palpite_grade": "B",
-      "palpite_score": 70.7
-    },
-    {
-      "date": "05-07-2026",
-      "jogo": "Defensores Unidos x Argentino de Merlo",
-      "liga": "Copa Uruguay",
-      "country": "Argentina",
-      "hora": "15:00",
-      "home": "Defensores Unidos",
-      "away": "Argentino de Merlo",
-      "fixture_id": 1499498,
-      "referee": null,
-      "home_id": 1945,
-      "away_id": 2430,
-      "is_elite": false,
-      "odds_h": 2.9,
-      "odds_d": 3.0,
-      "odds_a": 2.38,
-      "odds_cards_25": null,
-      "odds_cards_35": null,
-      "odds_cards_45": null,
-      "odds_cards_55": null,
-      "odds_cards_65": null,
-      "odds_cards_under_25": null,
-      "odds_cards_under_35": null,
-      "odds_cards_under_45": null,
-      "odds_cards_under_55": null,
-      "odds_cards_under_65": null,
-      "over15_g": 63.75,
-      "over25_g": 34.5,
-      "over15_h": null,
-      "over15_a": null,
-      "over25_h": null,
-      "over25_a": null,
-      "exg_h": 0.8,
-      "exg_a": 0.9,
-      "ppg_h": 1.05,
-      "ppg_a": 1.36,
-      "h2h_goals": 1.96,
-      "h2h_n": 10,
-      "avg_sc_h": 0.8,
-      "avg_sc_a": 0.9,
-      "avg_co_h": 1.0,
-      "avg_co_a": 0.9,
-      "btts_h": 81.8,
-      "btts_a": 63.6,
-      "over05_ht": 70.0,
-      "over15_ht": null,
-      "avg_shots_h": null,
-      "avg_shots_a": null,
-      "avg_sot_h": null,
-      "avg_sot_a": null,
-      "avg_sot": null,
-      "avg_shots": 17.6,
-      "avg_corners": 8.8,
-      "avg_corners_h": 4.1,
-      "avg_corners_a": 2.9,
-      "over65_c": 60.0,
-      "over75_c": 50.0,
-      "over85_c": 45.0,
-      "over95_c": 30.0,
-      "over105_c": 17.8,
-      "avg_cards": null,
-      "avg_cards_h": null,
-      "avg_cards_a": null,
-      "over25_cards": null,
-      "over35_cards": null,
-      "over45_cards": null,
-      "pred_winner": "Argentino de Merlo",
-      "pred_advice": "Double chance : draw or Argentino de Merlo",
-      "win_home": 10.0,
-      "win_away": 45.0,
-      "form_h": "WLDLL",
-      "form_a": "WDDWW",
-      "under25_h": 70.0,
-      "under25_a": 70.0,
-      "csv_enrichment": {
-        "matches": {
-          "goals": {
-            "source": "PackBall Custom OVER GOLS 01 05-07-2026.csv",
-            "line": 57,
-            "score": 88.2
-          },
-          "corners": {
-            "source": "PackBall Custom ESCANTEIOS  05-07-2026.csv",
-            "line": 57,
-            "score": 88.2
-          },
-          "resultado": {
-            "source": "PackBall Custom RESULTADO FINAL  05-07-2026.csv",
-            "line": 57,
-            "score": 88.2
-          }
-        },
-        "applied_fields": [
-          {
-            "field": "over15_g",
-            "old": 50.0,
-            "csv": 75.0,
-            "new": 63.75,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "over25_g",
-            "old": 40.0,
-            "csv": 30.0,
-            "new": 34.5,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "over05_ht",
-            "old": null,
-            "csv": 70.0,
-            "new": 70.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "h2h_goals",
-            "old": 1.9,
-            "csv": 2.0,
-            "new": 1.96,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "avg_shots",
-            "old": null,
-            "csv": 17.6,
-            "new": 17.6,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_h",
-            "old": null,
-            "csv": 70.0,
-            "new": 70.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_a",
-            "old": null,
-            "csv": 70.0,
-            "new": 70.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "avg_corners",
-            "old": null,
-            "csv": 8.8,
-            "new": 8.8,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_h",
-            "old": null,
-            "csv": 4.1,
-            "new": 4.1,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_a",
-            "old": null,
-            "csv": 2.9,
-            "new": 2.9,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over65_c",
-            "old": null,
-            "csv": 60.0,
-            "new": 60.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over75_c",
-            "old": null,
-            "csv": 50.0,
-            "new": 50.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over85_c",
-            "old": null,
-            "csv": 45.0,
-            "new": 45.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over95_c",
-            "old": null,
-            "csv": 30.0,
-            "new": 30.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over105_c",
-            "old": null,
-            "csv": 17.8,
-            "new": 17.8,
-            "method": "fill",
-            "source": "corners"
-          }
-        ]
-      },
-      "exg_tot": 1.7,
-      "ppg_avg": 1.21,
-      "ppg_min": 1.05,
-      "btts_cf": 72.7,
-      "poisson_o15": 50.7,
-      "poisson_o25": 24.3,
-      "poisson_u45": 97.0,
-      "poisson_u35": 90.7,
-      "score_15": 63.8,
-      "score_25": 34.0,
-      "score_btts": 52.2,
-      "score_05ht": 53.2,
-      "score_u45": 74.7,
-      "score_u35": 76.3,
-      "score_esc75": 53.1,
-      "score_esc85": 50.3,
-      "score_cards25": 0,
-      "score_cards35": 0,
-      "passou_filtro": false,
-      "via": "Reprovado",
-      "under35_filter": true,
-      "grade_15": "D",
-      "grade_25": "D",
-      "grade_btts": "C",
-      "grade_05ht": "C",
-      "grade_u45": "B",
-      "grade_u35": "A",
-      "grade_esc85": "C",
-      "grade_esc75": "C",
-      "grade_cart25": "D",
-      "odd_justa_15": 1.57,
-      "odd_justa_25": 2.9,
-      "odd_justa_btts": 1.38,
-      "odd_justa_05ht": 1.43,
-      "odd_justa_esc85": 2.22,
-      "odd_justa_cart25": null,
-      "best_mkt": "Under 3.5",
-      "best_score": 76.3,
-      "best_grade": "A",
-      "best_risk": "Confiança Média",
-      "justif_15": "O1.5 64% · xG 1.7 · PPG 1.2 · H2H 2.0 gols",
-      "justif_esc": "Média 8.8 cant · O8.5: 45.0% · O7.5: 50.0%",
-      "justif_cards": "Nenhum mercado de cartoes aprovado com sustentacao suficiente",
-      "cards_analysis": {
-        "market_group": "Cartoes",
-        "approved": false,
-        "best_market": null,
-        "market_key": null,
-        "line": null,
-        "side": null,
-        "score": 0,
-        "score_before_cap": 0,
-        "score_bruto": 0,
-        "score_cap": 80,
-        "score_final": 0,
-        "final_score": 0,
-        "confidence": "D",
-        "data_quality": 20,
-        "data_quality_tier": "insufficient",
-        "data_source_level": "BAIXA",
-        "line_value": null,
-        "line_value_score": null,
-        "line_risk_penalty": null,
-        "breakdown": null,
-        "odds_available": false,
-        "odds": null,
-        "reasons": [
-          "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-        ],
-        "submarkets": [],
-        "referee": {
-          "found": false,
-          "referee": "",
-          "score": 0,
-          "confidence": 0,
-          "tier": "UNKNOWN"
-        },
-        "referee_under": {
-          "found": false,
-          "score": 0,
-          "tier": "UNKNOWN",
-          "confidence": 0
-        },
-        "team_stats": {
-          "available": false,
-          "home_avg": null,
-          "away_avg": null,
-          "combined_avg": null,
-          "source": "missing"
-        },
-        "odds_data": {
-          "available": false,
-          "total_cards": [],
-          "both_teams_card": {
-            "yes_odds": null,
-            "no_odds": null
-          },
-          "both_teams_2plus_cards": {
-            "yes_odds": null,
-            "no_odds": null
-          }
-        },
-        "context": {
-          "available": true,
-          "importance": "high",
-          "over_score": 15,
-          "under_score": 0,
-          "reasons": [
-            "Jogo eliminatorio ou fase final"
-          ],
-          "score": 15
-        },
-        "league_data": false
-      },
-      "card_markets": [],
-      "cards_best_mkt": null,
-      "cards_best_market": null,
-      "cards_market_key": null,
-      "cards_best_score": 0,
-      "cards_score_before_cap": 0,
-      "cards_score_cap": 80,
-      "cards_score_final": 0,
-      "cards_best_grade": "D",
-      "cards_data_quality": 20,
-      "cards_data_source_level": "BAIXA",
-      "cards_odds_available": false,
-      "cards_reasons": [
-        "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-      ],
-      "score_cards45": 0,
-      "score_cards55": 0,
-      "score_cards65": 0,
-      "grade_cart35": "D",
-      "grade_cart45": "D",
-      "grade_cart55": "D",
-      "grade_cart65": "D",
-      "palpite_mkt": "Under 3.5",
-      "palpite_grade": "A",
-      "palpite_score": 76.3
-    },
-    {
-      "date": "05-07-2026",
-      "jogo": "San Martín Burzaco x Liniers",
-      "liga": "Copa Uruguay",
-      "country": "Argentina",
-      "hora": "15:00",
-      "home": "San Martín Burzaco",
-      "away": "Liniers",
-      "fixture_id": 1499505,
-      "referee": null,
-      "home_id": 8387,
-      "away_id": 8395,
-      "is_elite": false,
-      "odds_h": 2.2,
-      "odds_d": 2.9,
-      "odds_a": 3.35,
-      "odds_cards_25": null,
-      "odds_cards_35": null,
-      "odds_cards_45": null,
-      "odds_cards_55": null,
-      "odds_cards_65": null,
-      "odds_cards_under_25": null,
-      "odds_cards_under_35": null,
-      "odds_cards_under_45": null,
-      "odds_cards_under_55": null,
-      "odds_cards_under_65": null,
-      "over15_g": 49.25,
-      "over25_g": 25.5,
-      "over15_h": null,
-      "over15_a": null,
-      "over25_h": null,
-      "over25_a": null,
-      "exg_h": 1.0,
-      "exg_a": 0.7,
-      "ppg_h": 1.36,
-      "ppg_a": 1.14,
-      "h2h_goals": 1.73,
-      "h2h_n": 10,
-      "avg_sc_h": 1.0,
-      "avg_sc_a": 0.7,
-      "avg_co_h": 0.9,
-      "avg_co_a": 1.0,
-      "btts_h": 50.0,
-      "btts_a": 63.6,
-      "over05_ht": 60.0,
-      "over15_ht": null,
-      "avg_shots_h": null,
-      "avg_shots_a": null,
-      "avg_sot_h": null,
-      "avg_sot_a": null,
-      "avg_sot": null,
-      "avg_shots": 17.2,
-      "avg_corners": 10.0,
-      "avg_corners_h": 5.1,
-      "avg_corners_a": 6.1,
-      "over65_c": 85.0,
-      "over75_c": 80.0,
-      "over85_c": 65.0,
-      "over95_c": 35.0,
-      "over105_c": 18.0,
-      "avg_cards": null,
-      "avg_cards_h": null,
-      "avg_cards_a": null,
-      "over25_cards": null,
-      "over35_cards": null,
-      "over45_cards": null,
-      "pred_winner": "Liniers",
-      "pred_advice": "Combo Double chance : draw or Liniers and -3.5 goals",
-      "win_home": 10.0,
-      "win_away": 45.0,
-      "form_h": "WLLDD",
-      "form_a": "WLLDD",
-      "under25_h": 70.0,
-      "under25_a": 70.0,
-      "csv_enrichment": {
-        "matches": {
-          "goals": {
-            "source": "PackBall Custom OVER GOLS 01 05-07-2026.csv",
-            "line": 58,
-            "score": 92.3
-          },
-          "corners": {
-            "source": "PackBall Custom ESCANTEIOS  05-07-2026.csv",
-            "line": 58,
-            "score": 92.3
-          },
-          "resultado": {
-            "source": "PackBall Custom RESULTADO FINAL  05-07-2026.csv",
-            "line": 58,
-            "score": 92.3
-          }
-        },
-        "applied_fields": [
-          {
-            "field": "over15_g",
-            "old": 30.0,
-            "csv": 65.0,
-            "new": 49.25,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "over25_g",
-            "old": 20.0,
-            "csv": 30.0,
-            "new": 25.5,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "over05_ht",
-            "old": null,
-            "csv": 60.0,
-            "new": 60.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "h2h_goals",
-            "old": 1.4,
-            "csv": 2.0,
-            "new": 1.73,
-            "method": "blend",
-            "source": "goals"
-          },
-          {
-            "field": "avg_shots",
-            "old": null,
-            "csv": 17.2,
-            "new": 17.2,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_h",
-            "old": null,
-            "csv": 70.0,
-            "new": 70.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "under25_a",
-            "old": null,
-            "csv": 70.0,
-            "new": 70.0,
-            "method": "fill",
-            "source": "goals"
-          },
-          {
-            "field": "avg_corners",
-            "old": null,
-            "csv": 10.0,
-            "new": 10.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_h",
-            "old": null,
-            "csv": 5.1,
-            "new": 5.1,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "avg_corners_a",
-            "old": null,
-            "csv": 6.1,
-            "new": 6.1,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over65_c",
-            "old": null,
-            "csv": 85.0,
-            "new": 85.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over75_c",
-            "old": null,
-            "csv": 80.0,
-            "new": 80.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over85_c",
-            "old": null,
-            "csv": 65.0,
-            "new": 65.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over95_c",
-            "old": null,
-            "csv": 35.0,
-            "new": 35.0,
-            "method": "fill",
-            "source": "corners"
-          },
-          {
-            "field": "over105_c",
-            "old": null,
-            "csv": 18.0,
-            "new": 18.0,
-            "method": "fill",
-            "source": "corners"
-          }
-        ]
-      },
-      "exg_tot": 1.7,
-      "ppg_avg": 1.25,
-      "ppg_min": 1.14,
-      "btts_cf": 56.8,
-      "poisson_o15": 50.7,
-      "poisson_o25": 24.3,
-      "poisson_u45": 97.0,
-      "poisson_u35": 90.7,
-      "score_15": 49.2,
-      "score_25": 30.5,
-      "score_btts": 44.0,
-      "score_05ht": 48.9,
-      "score_u45": 74.7,
-      "score_u35": 76.3,
-      "score_esc75": 67.7,
-      "score_esc85": 62.7,
-      "score_cards25": 0,
-      "score_cards35": 0,
-      "passou_filtro": false,
-      "via": "Reprovado",
-      "under35_filter": true,
-      "grade_15": "D",
-      "grade_25": "D",
-      "grade_btts": "D",
-      "grade_05ht": "D",
-      "grade_u45": "B",
-      "grade_u35": "A",
-      "grade_esc85": "C",
-      "grade_esc75": "B",
-      "grade_cart25": "D",
-      "odd_justa_15": 2.03,
-      "odd_justa_25": 3.92,
-      "odd_justa_btts": 1.76,
-      "odd_justa_05ht": 1.67,
-      "odd_justa_esc85": 1.54,
-      "odd_justa_cart25": null,
-      "best_mkt": "Under 3.5",
-      "best_score": 76.3,
-      "best_grade": "A",
-      "best_risk": "Confiança Média",
-      "justif_15": "O1.5 49% · xG 1.7 · PPG 1.2 · H2H 1.7 gols",
-      "justif_esc": "Média 10.0 cant · O8.5: 65.0% · O7.5: 80.0%",
-      "justif_cards": "Nenhum mercado de cartoes aprovado com sustentacao suficiente",
-      "cards_analysis": {
-        "market_group": "Cartoes",
-        "approved": false,
-        "best_market": null,
-        "market_key": null,
-        "line": null,
-        "side": null,
-        "score": 0,
-        "score_before_cap": 0,
-        "score_bruto": 0,
-        "score_cap": 80,
-        "score_final": 0,
-        "final_score": 0,
-        "confidence": "D",
-        "data_quality": 20,
-        "data_quality_tier": "insufficient",
-        "data_source_level": "BAIXA",
-        "line_value": null,
-        "line_value_score": null,
-        "line_risk_penalty": null,
-        "breakdown": null,
-        "odds_available": false,
-        "odds": null,
-        "reasons": [
-          "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-        ],
-        "submarkets": [],
-        "referee": {
-          "found": false,
-          "referee": "",
-          "score": 0,
-          "confidence": 0,
-          "tier": "UNKNOWN"
-        },
-        "referee_under": {
-          "found": false,
-          "score": 0,
-          "tier": "UNKNOWN",
-          "confidence": 0
-        },
-        "team_stats": {
-          "available": false,
-          "home_avg": null,
-          "away_avg": null,
-          "combined_avg": null,
-          "source": "missing"
-        },
-        "odds_data": {
-          "available": false,
-          "total_cards": [],
-          "both_teams_card": {
-            "yes_odds": null,
-            "no_odds": null
-          },
-          "both_teams_2plus_cards": {
-            "yes_odds": null,
-            "no_odds": null
-          }
-        },
-        "context": {
-          "available": true,
-          "importance": "high",
-          "over_score": 15,
-          "under_score": 0,
-          "reasons": [
-            "Jogo eliminatorio ou fase final"
-          ],
-          "score": 15
-        },
-        "league_data": false
-      },
-      "card_markets": [],
-      "cards_best_mkt": null,
-      "cards_best_market": null,
-      "cards_market_key": null,
-      "cards_best_score": 0,
-      "cards_score_before_cap": 0,
-      "cards_score_cap": 80,
-      "cards_score_final": 0,
-      "cards_best_grade": "D",
-      "cards_data_quality": 20,
-      "cards_data_source_level": "BAIXA",
-      "cards_odds_available": false,
-      "cards_reasons": [
-        "Nenhum mercado de cartoes aprovado com sustentacao suficiente"
-      ],
-      "score_cards45": 0,
-      "score_cards55": 0,
-      "score_cards65": 0,
-      "grade_cart35": "D",
-      "grade_cart45": "D",
-      "grade_cart55": "D",
-      "grade_cart65": "D",
-      "palpite_mkt": "Under 3.5",
-      "palpite_grade": "A",
-      "palpite_score": 76.3
+      "palpite_score": 90.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -5338,7 +3936,9 @@
       "grade_cart65": "B",
       "palpite_mkt": "Cart 2.5",
       "palpite_grade": "A",
-      "palpite_score": 78.9
+      "palpite_score": 78.9,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -5552,7 +4152,9 @@
       "grade_cart65": "B",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -5851,7 +4453,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -6198,7 +4802,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 73.8
+      "palpite_score": 73.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -6497,7 +5103,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "B",
-      "palpite_score": 65.4
+      "palpite_score": 65.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -6796,7 +5404,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 66.8
+      "palpite_score": 66.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -7095,7 +5705,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -7394,7 +6006,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -7693,7 +6307,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 82.1
+      "palpite_score": 82.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -7992,7 +6608,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "BTTS",
       "palpite_grade": "C",
-      "palpite_score": 62.8
+      "palpite_score": 62.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "05-07-2026",
@@ -8291,7 +6909,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 74.1
+      "palpite_score": 74.1,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -8614,9 +7234,151 @@
     ],
     "bilheteDia": null
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "csv_enrichment_report": {
     "date": "05-07-2026",
     "folder": "/home/runner/work/winmetrics-analytics/winmetrics-analytics/scripts/../data/csv/05-07-2026",
