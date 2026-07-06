@@ -2825,12 +2825,12 @@
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "1-0",
-        "corners_total": 1,
-        "cards_total": 1,
+        "corners_total": 6,
+        "cards_total": 7,
         "esc75_ok": false,
         "esc85_ok": false,
-        "cart25_ok": false,
-        "cart35_ok": false
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     },
@@ -3572,12 +3572,12 @@
         "under45_ok": false,
         "placar": "5-0",
         "placar_ht": "2-0",
-        "corners_total": 4,
-        "cards_total": 2,
-        "esc75_ok": false,
-        "esc85_ok": false,
-        "cart25_ok": false,
-        "cart35_ok": false
+        "corners_total": 13,
+        "cards_total": 6,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     },
@@ -4727,11 +4727,11 @@
         "under45_ok": true,
         "placar": "3-0",
         "placar_ht": "1-0",
-        "corners_total": 1,
-        "cards_total": 1,
-        "esc75_ok": false,
-        "esc85_ok": false,
-        "cart25_ok": false,
+        "corners_total": 11,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
         "cart35_ok": false
       },
       "acertos": {}
@@ -7834,11 +7834,11 @@
         "under45_ok": true,
         "placar": "3-0",
         "placar_ht": "1-0",
-        "corners_total": 1,
-        "cards_total": 1,
-        "esc75_ok": false,
-        "esc85_ok": false,
-        "cart25_ok": false,
+        "corners_total": 11,
+        "cards_total": 3,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": true,
         "cart35_ok": false
       },
       "acertos": {}
@@ -7869,12 +7869,12 @@
         "under45_ok": true,
         "placar": "1-0",
         "placar_ht": "1-0",
-        "corners_total": 1,
-        "cards_total": 1,
+        "corners_total": 6,
+        "cards_total": 7,
         "esc75_ok": false,
         "esc85_ok": false,
-        "cart25_ok": false,
-        "cart35_ok": false
+        "cart25_ok": true,
+        "cart35_ok": true
       },
       "acertos": {}
     }
@@ -8760,10 +8760,10 @@
     },
     "Esc 7.5": {
       "palpites": 2,
-      "acertos": 0,
-      "erros": 2,
+      "acertos": 1,
+      "erros": 1,
       "sem_dados": 0,
-      "taxa": 0.0
+      "taxa": 50.0
     },
     "Esc 8.5": {
       "palpites": 0,
@@ -8774,17 +8774,17 @@
     },
     "Cart 2.5": {
       "palpites": 6,
+      "acertos": 6,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": 100.0
+    },
+    "Cart 3.5": {
+      "palpites": 6,
       "acertos": 3,
       "erros": 3,
       "sem_dados": 0,
       "taxa": 50.0
-    },
-    "Cart 3.5": {
-      "palpites": 6,
-      "acertos": 1,
-      "erros": 5,
-      "sem_dados": 0,
-      "taxa": 16.7
     }
   },
   "stats": {

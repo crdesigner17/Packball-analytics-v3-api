@@ -673,7 +673,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Cart 3.5",
       "palpite_grade": "A",
-      "palpite_score": 86.2
+      "palpite_score": 86.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "06-07-2026",
@@ -1619,7 +1621,9 @@
       "grade_cart65": "B",
       "palpite_mkt": "Cart 4.5",
       "palpite_grade": "A",
-      "palpite_score": 87.4
+      "palpite_score": 87.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "06-07-2026",
@@ -2832,7 +2836,9 @@
       "grade_cart65": "B",
       "palpite_mkt": "Cart 5.5",
       "palpite_grade": "A",
-      "palpite_score": 87.2
+      "palpite_score": 87.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "06-07-2026",
@@ -4053,7 +4059,9 @@
       "grade_cart65": "B",
       "palpite_mkt": "Cart 5.5",
       "palpite_grade": "A",
-      "palpite_score": 85.2
+      "palpite_score": 85.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "06-07-2026",
@@ -4408,7 +4416,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 71.7
+      "palpite_score": 71.7,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "06-07-2026",
@@ -4622,7 +4632,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "B",
-      "palpite_score": 68.4
+      "palpite_score": 68.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "06-07-2026",
@@ -4921,7 +4933,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "06-07-2026",
@@ -5220,7 +5234,9 @@
       "grade_cart65": "D",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -5472,9 +5488,151 @@
       "oddTotal": 1
     }
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Cart 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "csv_enrichment_report": {
     "date": "06-07-2026",
     "folder": "/home/runner/work/winmetrics-analytics/winmetrics-analytics/scripts/../data/csv/06-07-2026",
