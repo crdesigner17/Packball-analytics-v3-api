@@ -32,7 +32,6 @@ import requests
 import numpy as np
 from ligas_config import LEAGUE_ALIASES, blocked_name, favorite_league_names, read_favorite_rows
 from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
-from cards.pipeline_adapter import apply_cards_engine_to_matches
 
 # ── Configuração ────────────────────────────────────────────────────
 BASE_URL  = "https://v3.football.api-sports.io"
@@ -485,19 +484,6 @@ def get_odds(client: APIClient, fixture_id: int) -> dict:
                     if "over 7.5" in k:  result["odds_corners_75"] = v
                     if "over 8.5" in k:  result["odds_corners_85"] = v
 
-            elif "card" in name and "over/under" in name:
-                for k, v in vals.items():
-                    if "over 2.5" in k:  result["odds_cards_25"] = v
-                    if "over 3.5" in k:  result["odds_cards_35"] = v
-                    if "over 4.5" in k:  result["odds_cards_45"] = v
-                    if "over 5.5" in k:  result["odds_cards_55"] = v
-                    if "over 6.5" in k:  result["odds_cards_65"] = v
-                    if "under 2.5" in k: result["odds_cards_under_25"] = v
-                    if "under 3.5" in k: result["odds_cards_under_35"] = v
-                    if "under 4.5" in k: result["odds_cards_under_45"] = v
-                    if "under 5.5" in k: result["odds_cards_under_55"] = v
-                    if "under 6.5" in k: result["odds_cards_under_65"] = v
-
     # Converter odds para probabilidades implícitas (sem margem)
     def to_prob(odd): return round(100 / odd, 1) if odd and odd > 1 else None
 
@@ -648,7 +634,6 @@ def get_recent_fixture_stats(client: APIClient, team_id: int, league_id: int, se
     n_done = len(corners_list)
     result = {
         "avg_corners":  safe_mean(corners_list),
-        "avg_cards":    safe_mean(cards_list),
         "avg_shots":    safe_mean(shots_list),
         "avg_sot":      safe_mean(sot_list),
         "over05_ht":    safe_pct(over05ht_list),
@@ -665,13 +650,6 @@ def get_recent_fixture_stats(client: APIClient, team_id: int, league_id: int, se
             result[k] = None
 
     # Over 2.5 / 3.5 / 4.5 cartões
-    if cards_list:
-        for thr, key in [(2.5,"over25_cards"),(3.5,"over35_cards"),(4.5,"over45_cards")]:
-            result[key] = round(sum(1 for x in cards_list if x > thr) / len(cards_list) * 100, 1)
-    else:
-        for k in ["over25_cards","over35_cards","over45_cards"]:
-            result[k] = None
-
     return result
 
 # ── CSV enrichment ──────────────────────────────────────────────────────────
@@ -937,8 +915,6 @@ def calcular_scores(jogo: dict) -> dict:
     o65c    = jogo.get('over65_c'); o75c = jogo.get('over75_c'); o85c = jogo.get('over85_c')
     o95c    = jogo.get('over95_c'); o105c = jogo.get('over105_c')
     avg_shots = jogo.get('avg_shots')
-    avg_cards = jogo.get('avg_cards')
-    o25cards  = jogo.get('over25_cards'); o35cards = jogo.get('over35_cards')
     o05ht     = jogo.get('over05_ht');    o15ht = jogo.get('over15_ht')
     u25h      = jogo.get('under25_h');    u25a  = jogo.get('under25_a')
     avg_sot   = jogo.get('avg_sot')
@@ -967,7 +943,6 @@ def calcular_scores(jogo: dict) -> dict:
     exg_n  = n(exg_tot, 0, 5)
     cant_n = n(avg_c, 0, 15)
     shots_n= n(avg_shots, 0, 40)
-    cards_n= n(avg_cards, 0, 8)
 
     # Over 1.5 — Modo API
     # score_15 = over15_g (probabilidade do endpoint predictions)
@@ -1013,8 +988,6 @@ def calcular_scores(jogo: dict) -> dict:
     under35_passou = s_u35 >= 75 and under35_blockers_ok and (under35_model_ok or under35_no_xg_ok)
     s_esc75   = ws([(cant_n,40),(o75c,30),(shots_n,15),(o65c or 50,10),(ppg_n,5)])
     s_esc85   = ws([(cant_n,38),(o85c,32),(shots_n,15),(o75c,10),(ppg_n,5)])
-    s_cards25 = ws([(o25cards,45),(cards_n,35),(ppg_n,10),(50,10)])
-    s_cards35 = ws([(o35cards,50),(cards_n,30),(ppg_n,10),(50,10)])
 
     candidatos = [
         ('Over 1.5', s15, passou),
@@ -1024,7 +997,6 @@ def calcular_scores(jogo: dict) -> dict:
         ('Under 4.5', s_u45, True),
         ('Under 3.5', s_u35, under35_passou),
         ('Esc 7.5', s_esc75, True),
-        ('Cart 2.5', s_cards25, True),
     ]
     best = max(candidatos, key=lambda x: x[1] if x[2] else 0)
 
@@ -1054,8 +1026,6 @@ def calcular_scores(jogo: dict) -> dict:
         "score_u35":   round(s_u35,1),
         "score_esc75": round(s_esc75,1),
         "score_esc85": round(s_esc85,1),
-        "score_cards25":round(s_cards25,1),
-        "score_cards35":round(s_cards35,1),
         "passou_filtro": bool(passou),
         "via":           via_str,
         "under35_filter": bool(under35_passou),
@@ -1067,20 +1037,17 @@ def calcular_scores(jogo: dict) -> dict:
         "grade_u35":   grade(s_u35) if under35_passou else 'D',
         "grade_esc85": grade(s_esc85),
         "grade_esc75": grade(s_esc75),
-        "grade_cart25":grade(s_cards25),
         "odd_justa_15":    odd_justa(o15g),
         "odd_justa_25":    odd_justa(o25g),
         "odd_justa_btts":  odd_justa(btts_cf),
         "odd_justa_05ht":  odd_justa(o05ht),
         "odd_justa_esc85": odd_justa(o85c),
-        "odd_justa_cart25":odd_justa(o25cards),
         "best_mkt":    best[0],
         "best_score":  round(best[1],1),
         "best_grade":  grade(best[1]),
         "best_risk":   risk(best[1]),
         "justif_15":   justif_15(),
         "justif_esc":  f"Média {avg_c or '—'} cant · O8.5: {o85c or '—'}% · O7.5: {o75c or '—'}%",
-        "justif_cards":f"Média {avg_cards or '—'} cart · O2.5: {o25cards or '—'}% · O3.5: {o35cards or '—'}%",
     }
 
 # ── Processamento de uma data completa ──────────────────────────────
@@ -1177,8 +1144,6 @@ def processar_data(client: APIClient, date_str: str) -> list:
             # ── Médias mescladas (casa + fora) ──
             avg_corners_h = rs_h.get("avg_corners"); avg_corners_a = rs_a.get("avg_corners")
             avg_corners   = avg_nn(avg_corners_h, avg_corners_a)
-            avg_cards_h   = rs_h.get("avg_cards");   avg_cards_a   = rs_a.get("avg_cards")
-            avg_cards     = avg_nn(avg_cards_h, avg_cards_a)
             avg_shots     = avg_nn(rs_h.get("avg_shots"),  rs_a.get("avg_shots"))
             avg_sot       = avg_nn(rs_h.get("avg_sot"),    rs_a.get("avg_sot"))
 
@@ -1233,17 +1198,6 @@ def processar_data(client: APIClient, date_str: str) -> list:
                 "odds_h":  odds.get("odds_h"),
                 "odds_d":  odds.get("odds_d"),
                 "odds_a":  odds.get("odds_a"),
-                "odds_cards_25": odds.get("odds_cards_25"),
-                "odds_cards_35": odds.get("odds_cards_35"),
-                "odds_cards_45": odds.get("odds_cards_45"),
-                "odds_cards_55": odds.get("odds_cards_55"),
-                "odds_cards_65": odds.get("odds_cards_65"),
-                "odds_cards_under_25": odds.get("odds_cards_under_25"),
-                "odds_cards_under_35": odds.get("odds_cards_under_35"),
-                "odds_cards_under_45": odds.get("odds_cards_under_45"),
-                "odds_cards_under_55": odds.get("odds_cards_under_55"),
-                "odds_cards_under_65": odds.get("odds_cards_under_65"),
-
                 # Over gols
                 "over15_g": o15g,
                 "over25_g": o25g,
@@ -1290,13 +1244,6 @@ def processar_data(client: APIClient, date_str: str) -> list:
                 "over105_c": avg_over("over105_c"),
 
                 # Cards
-                "avg_cards":    avg_cards,
-                "avg_cards_h":  avg_cards_h,
-                "avg_cards_a":  avg_cards_a,
-                "over25_cards": avg_over("over25_cards"),
-                "over35_cards": avg_over("over35_cards"),
-                "over45_cards": avg_over("over45_cards"),
-
                 # Predictions
                 "pred_winner": preds.get("pred_winner"),
                 "pred_advice": preds.get("pred_advice"),
@@ -1324,7 +1271,7 @@ def processar_data(client: APIClient, date_str: str) -> list:
             results.append(jogo)
             print(f"       ✓ score_best={jogo['best_score']} ({jogo['best_grade']}) → {jogo['best_mkt']}")
 
-    return apply_cards_engine_to_matches(results)
+    return results
 
 # ── Gravar JSON ─────────────────────────────────────────────────────
 def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
@@ -1334,7 +1281,6 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
 
     aprovados15   = [j for j in jogos if j['score_15'] >= 85 and j['passou_filtro']]
     aprovados_esc = [j for j in jogos if j['score_esc75'] >= 75]
-    aprovados_cart= [j for j in jogos if j['score_cards25'] >= 75]
     premium       = [j for j in jogos if j.get('best_grade') in ('A+','A')]
 
     # Preservar resultados já confirmados do JSON anterior
@@ -1429,7 +1375,6 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
             "total":            len(jogos),
             "over15_aprovados": len(aprovados15),
             "esc85_aprovados":  len(aprovados_esc),
-            "cart25_aprovados": len(aprovados_cart),
             "premium":          len(premium),
         }
     }
@@ -1454,7 +1399,6 @@ def gravar_dia(date_str_api: str, jogos: list, force: bool = False):
         "total":   len(jogos),
         "over15":  len(aprovados15),
         "esc85":   len(aprovados_esc),
-        "cart25":  len(aprovados_cart),
         "premium": len(premium),
     })
     index = sorted(index, key=lambda x: datetime.strptime(x["date"], "%d-%m-%Y"), reverse=True)

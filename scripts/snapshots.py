@@ -9,8 +9,6 @@ def odd_mkt(jogo, mkt=None):
     field = {
         'Over 1.5': 'odds_o15',
         'Over 2.5': 'odds_o25',
-        'Cart 2.5': 'odds_cards_25',
-        'Cart 3.5': 'odds_cards_35',
         'Esc 7.5': 'odds_corners_75',
         'Esc 8.5': 'odds_corners_85',
         'Under 3.5': 'odds_u45',

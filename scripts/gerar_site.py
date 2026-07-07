@@ -79,12 +79,100 @@ def load_index():
     if not os.path.exists(path): return []
     with open(path, encoding='utf-8') as f: return json.load(f)
 
+NON_CARD_MARKET_SCORES = [
+    ('Over 1.5', 'score_15', 'grade_15', lambda j: j.get('passou_filtro')),
+    ('Over 2.5', 'score_25', 'grade_25', lambda j: True),
+    ('BTTS', 'score_btts', 'grade_btts', lambda j: True),
+    ('Over 0.5 HT', 'score_05ht', 'grade_05ht', lambda j: True),
+    ('Under 4.5', 'score_u45', 'grade_u45', lambda j: True),
+    ('Under 3.5', 'score_u35', 'grade_u35', lambda j: j.get('under35_filter')),
+    ('Esc 7.5', 'score_esc75', 'grade_esc75', lambda j: True),
+    ('Esc 8.5', 'score_esc85', 'grade_esc85', lambda j: True),
+]
+
+def is_card_market(mkt):
+    return 'cart' in str(mkt or '').lower()
+
+def sanitize_card_markets(day_data):
+    if not isinstance(day_data, dict):
+        return day_data
+    stats_summary = day_data.get('stats')
+    if isinstance(stats_summary, dict):
+        stats_summary.pop('cart25_aprovados', None)
+    for stats_key in ('resultado_stats', 'resultado_stats_full'):
+        stats = day_data.get(stats_key)
+        if isinstance(stats, dict):
+            for market in list(stats):
+                if is_card_market(market):
+                    stats.pop(market, None)
+
+    for jogo in day_data.get('jogos', []) or []:
+        if not isinstance(jogo, dict):
+            continue
+        for key in list(jogo):
+            key_norm = str(key).lower()
+            if 'card' in key_norm or 'cart' in key_norm:
+                jogo.pop(key, None)
+        resultado = jogo.get('resultado')
+        if isinstance(resultado, dict):
+            for key in ('cards_total', 'cart25_ok', 'cart35_ok'):
+                resultado.pop(key, None)
+        acertos = jogo.get('acertos')
+        if isinstance(acertos, dict):
+            for market in list(acertos):
+                if is_card_market(market):
+                    acertos.pop(market, None)
+        if is_card_market(jogo.get('best_mkt')) or is_card_market(jogo.get('palpite_mkt')):
+            candidates = []
+            for market, score_key, grade_key, allowed in NON_CARD_MARKET_SCORES:
+                try:
+                    score = float(jogo.get(score_key) or 0)
+                except Exception:
+                    score = 0
+                if score > 0 and allowed(jogo):
+                    candidates.append((score, market, grade_key))
+            if candidates:
+                score, market, grade_key = max(candidates)
+                jogo['best_mkt'] = market
+                jogo['best_score'] = round(score, 1)
+                jogo['best_grade'] = jogo.get(grade_key) or jogo.get('best_grade') or 'D'
+                jogo['palpite_mkt'] = market
+                jogo['palpite_score'] = round(score, 1)
+                jogo['palpite_grade'] = jogo.get(grade_key) or jogo.get('palpite_grade') or 'D'
+
+    def keep_non_card(item):
+        if is_card_market((item or {}).get('mkt')):
+            return False
+        if isinstance(item, dict):
+            for key in list(item):
+                key_norm = str(key).lower()
+                if 'card' in key_norm or 'cart' in key_norm:
+                    item.pop(key, None)
+        resultado = (item or {}).get('resultado')
+        if isinstance(resultado, dict):
+            for key in ('cards_total', 'cart25_ok', 'cart35_ok'):
+                resultado.pop(key, None)
+        return True
+
+    if isinstance(day_data.get('palpites_snapshot'), list):
+        day_data['palpites_snapshot'] = [item for item in day_data['palpites_snapshot'] if keep_non_card(item)]
+    bilhetes_snapshot = day_data.get('bilhetes_snapshot')
+    if isinstance(bilhetes_snapshot, dict):
+        if isinstance(bilhetes_snapshot.get('bilheteDia'), dict):
+            sels = [s for s in bilhetes_snapshot['bilheteDia'].get('sels', []) if keep_non_card(s)]
+            bilhetes_snapshot['bilheteDia']['sels'] = sels
+        for bilhete in bilhetes_snapshot.get('bilhetes', []):
+            b = bilhete.get('b') or {}
+            if isinstance(b, dict):
+                b['sels'] = [s for s in b.get('sels', []) if keep_non_card(s)]
+    return day_data
+
 def load_day(date_str):
     path = os.path.join(DATA_DIR, f'{date_str}.json')
     if not os.path.exists(path): return None
     with open(path, encoding='utf-8') as f:
         day_data = filter_favorite_leagues(json.load(f))
-    return enrich_resultado_final_csv(date_str, day_data)
+    return sanitize_card_markets(enrich_resultado_final_csv(date_str, day_data))
 
 def norm_team_name(value):
     text = unicodedata.normalize('NFKD', str(value or '')).encode('ascii', 'ignore').decode('ascii')
@@ -211,17 +299,6 @@ def enrich_resultado_final_csv(date_str, day_data):
             jogo['rf_csv'] = best
     return day_data
 
-def load_cards_audit():
-    path = os.path.join(DATA_DIR, 'cards_audit_report.json')
-    if not os.path.exists(path):
-        return {}
-    try:
-        with open(path, encoding='utf-8') as f:
-            return json.load(f)
-    except Exception as exc:
-        print(f"Aviso: nao foi possivel carregar cards_audit_report.json: {exc}")
-        return {}
-
 def fmt_date(date_str):
     try:
         d = datetime.strptime(date_str, '%d-%m-%Y')
@@ -233,7 +310,7 @@ def fmt_date(date_str):
 def calcular_acertos_globais(all_data):
     """Calcula taxa de acerto acumulada para todos os dias confirmados."""
     mercados = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Under 3.5',
-                'Esc 7.5','Esc 8.5','Cart 2.5','Cart 3.5']
+                'Esc 7.5','Esc 8.5']
     totais = {m: {'palpites':0,'acertos':0,'erros':0} for m in mercados}
     dias_confirmados = 0
 
@@ -265,13 +342,6 @@ def calcular_acertos_globais(all_data):
         'taxa_geral': taxa_geral,
         'dias_confirmados': dias_confirmados,
     }
-
-def card_pick_approved(jogo):
-    if not isinstance(jogo, dict):
-        return False
-    analysis = jogo.get('cards_analysis')
-    return isinstance(analysis, dict) and analysis.get('approved') is True
-
 
 RESPONSIVE_CSS = r'''
 /* WM RESPONSIVE MOBILE */
@@ -348,7 +418,7 @@ img,svg,canvas,video{max-width:100%}
   .top-grid{grid-template-columns:1fr}
   .top-card{padding:13px}
   .top-liga,.top-jogo{padding-right:72px}
-  .rf-grid,.corner-summary-grid,.cards-summary-grid,.bilhete-grid,.bilhete-destaques,.hist-summary-grid,.hist-audit-grid,.hg-panels,.hg-bottom{
+  .rf-grid,.corner-summary-grid,.bilhete-grid,.bilhete-destaques,.hist-summary-grid,.hist-audit-grid,.hg-panels,.hg-bottom{
     grid-template-columns:1fr;
   }
   .hg-hero,.hist-hero{grid-template-columns:1fr;padding:14px;gap:10px}
@@ -411,7 +481,6 @@ img,svg,canvas,video{max-width:100%}
   .hg-taxa-val{font-size:32px}
   .hg-panel,.hg-card,.hist-panel{padding:13px}
   .hg-rank-detail,.hg-day-info{white-space:normal}
-  .cards-summary-grid{grid-template-columns:1fr}
   .corner-summary-grid{grid-template-columns:1fr}
   .ranking-col table,table{min-width:620px}
   .corner-table-wrap table{min-width:980px}
@@ -607,8 +676,7 @@ const PAGE_HERO_COPY = {
   historico: {title: 'Hist\u00f3rico Global', subtitle: 'Acompanhe a performance consolidada das previs\u00f5es.'},
   resultado: {title: 'Resultado Final', subtitle: 'Mercados de vencedor, dupla chance e prote\u00e7\u00f5es por jogo.'},
   gols: {title: 'Gols', subtitle: 'Leituras para linhas de gols com base nas estat\u00edsticas do confronto.'},
-  escanteios: {title: 'Escanteios', subtitle: 'Oportunidades em cantos com volume e tend\u00eancia por partida.'},
-  cartoes: {title: 'Cart\u00f5es', subtitle: 'An\u00e1lise disciplinar para linhas de cart\u00f5es.'}
+  escanteios: {title: 'Escanteios', subtitle: 'Oportunidades em cantos com volume e tend\u00eancia por partida.'}
 };
 function updatePageHero(key){
   const copy = PAGE_HERO_COPY[key] || PAGE_HERO_COPY.visao;
@@ -663,11 +731,139 @@ function shiftDateStrip(dir){
     html = html.replace("</script>\n\n<!-- Bot", "window.addEventListener('load',()=>centerCurrentDate('auto'));\nwindow.addEventListener('resize',()=>centerCurrentDate('auto'));\n</script>\n\n<!-- Bot", 1)
     return html
 
+
+def remove_card_market_ui(html):
+    html = re.sub(
+        r'\n// ── Cartões.*?\n// ── Bilhetes',
+        '\n// ── Bilhetes',
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(r"\n\.cards-summary-grid\{.*?\.cards-muted-note\{.*?\}", '', html, flags=re.DOTALL)
+    html = html.replace('.rf-grid,.corner-summary-grid,.cards-summary-grid,.bilhete-grid,.bilhete-destaques,.hist-summary-grid,.hist-audit-grid,.hg-panels,.hg-bottom', '.rf-grid,.corner-summary-grid,.bilhete-grid,.bilhete-destaques,.hist-summary-grid,.hist-audit-grid,.hg-panels,.hg-bottom')
+    html = re.sub(r"\n\s*\.cards-summary-grid\{[^}]*\}", '', html)
+    html = re.sub(r"\n\s*\.cards-toolbar\{[^}]*\}", '', html)
+    html = re.sub(r"\n\s*\.cards-filter-btn\{[^}]*\}", '', html)
+    html = re.sub(
+        r'\n// [^\n]*Cart[^\n]*\nlet activeCardQuickFilter.*?\n// [^\n]*Bilhetes',
+        '\n// Bilhetes',
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(
+        r'\nlet activeCardQuickFilter.*?\n// [^\n]*Bilhetes',
+        '\n// Bilhetes',
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(
+        r"\n\s*else if\(mkt==='cartoes'\)\s*renderCart\(date,jogos\);",
+        '',
+        html,
+    )
+    html = re.sub(r"\nfunction isCardMarketName\(mkt\)\{.*?\n\}", '', html, flags=re.DOTALL)
+    html = re.sub(
+        r"\n\s*\} else if\(tipo==='cart'\)\{\s*filtrados=.*?cor='var\(--orange\)';\s*",
+        "\n  ",
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(
+        r"\n\s*const cardPick=d\.__cardPick\|\|null;\s*const mktKey=cardPick\?null:\(MKT_RESULT\[getPalpiteMkt\(d\)\]\|\|'over15_ok'\);\s*const rc=cardPick\?cardRowClass\(cardPick\):rowClass\(d,mktKey\);\s*const scoreField=cardPick\?cardPick\.score_final:\(tipo==='prem'\?getPalpiteScore\(d\):tipo==='15'\?d\.score_15:d\.score_esc75\);\s*const mktShow=cardPick\?cardMarketLabel\(cardPick\.market_key,cardPick\.market\):\(tipo==='prem'\?getPalpiteMkt\(d\):tipo==='15'\?'Over 1\.5':'Esc 7\.5'\);",
+        "\n    const mktKey=MKT_RESULT[getPalpiteMkt(d)]||'over15_ok';\n    const rc=rowClass(d,mktKey);\n    const scoreField=tipo==='prem'?getPalpiteScore(d):tipo==='15'?d.score_15:d.score_esc75;\n    const mktShow=tipo==='prem'?getPalpiteMkt(d):tipo==='15'?'Over 1.5':'Esc 7.5';",
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(
+        r"\n\s*const cardPick=d\.__cardPick\|\|null;\s*const mktKey=cardPick\?null:getPalpiteKey\(d\);\s*const rc=cardPick\?cardRowClass\(cardPick\):rowClass\(d,mktKey\);\s*const scoreField=cardPick\?cardPick\.score_final:\(tipo==='prem'\?getPalpiteScore\(d\):tipo==='15'\?d\.score_15:d\.score_esc75\);\s*const mktShow=cardPick\?cardMarketLabel\(cardPick\.market_key,cardPick\.market\):\(tipo==='prem'\?getPalpiteMkt\(d\):tipo==='15'\?'Over 1\.5':'Esc 7\.5'\);",
+        "\n    const mktKey=getPalpiteKey(d);\n    const rc=rowClass(d,mktKey);\n    const scoreField=tipo==='prem'?getPalpiteScore(d):tipo==='15'?d.score_15:d.score_esc75;\n    const mktShow=tipo==='prem'?getPalpiteMkt(d):tipo==='15'?'Over 1.5':'Esc 7.5';",
+        html,
+        flags=re.DOTALL,
+    )
+    html = html.replace('${gradeHtml(cardPick?cardPick.grade:getPalpiteGrade(d))}', '${gradeHtml(getPalpiteGrade(d))}')
+    html = html.replace('${cardPick?cardResultBadge(cardPick):resBadge(d,mktKey)}', '${resBadge(d,mktKey)}')
+    html = html.replace("if(legacy && !isCardMarketName(legacy)){", "if(legacy){")
+    html = re.sub(r"\n\s*const isCardAltMarket = .*?\n\s*if\(opts\.excludeCards\) mkts = mkts\.filter\(x=>!isCardAltMarket\(x\)\);", '', html, flags=re.DOTALL)
+    html = html.replace("const ok = res ? (x.cardPick ? cardResultOk(x.cardPick) : resultOk(res,x.key)) : null;", "const ok = res ? resultOk(res,x.key) : null;")
+    html = re.sub(r'\n\s*<option value="Cart" .*?</option>', '', html)
+    html = re.sub(
+        r"\n\s*'cartoes':\s*\[[^\]]*?\],",
+        '',
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(
+        r"\n\s*\}\} else if\(cat === 'cartoes'\)\{\{.*?const p = document\.getElementById\('mkt-'\+date\+'-cartoes'\);\s*if\(p\) p\.classList\.add\('active'\);",
+        '',
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(
+        r"\n\s*\} else if\(cat === 'cartoes'\)\{.*?\n\s*\} else if\(cat === 'resultado'\)\{",
+        "\n  } else if(cat === 'resultado'){",
+        html,
+        flags=re.DOTALL,
+    )
+    html = html.replace(
+        "const MERCADOS   = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Under 3.5','Esc 7.5','Esc 8.5','Cart 2.5','Cart 3.5'];",
+        "const MERCADOS   = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Under 3.5','Esc 7.5','Esc 8.5'];",
+    )
+    html = html.replace("  'Cart 2.5':    'cart25_ok',\n  'Cart 3.5':    'cart35_ok',\n", '')
+    html = html.replace("  'Cart 2.5':'score_cards25','Cart 3.5':'score_cards35',\n", '')
+    html = html.replace("'Esc 7.5':75,'Esc 8.5':75,'Cart 2.5':75,'Cart 3.5':75,", "'Esc 7.5':75,'Esc 8.5':75,")
+    html = re.sub(r"\s*else if\(mkt==='Cart [23]\.5'\) val=d\.odds_cards_[23]5;", '', html)
+    html = re.sub(r"\s*if\(mkt==='Cart [23]\.5'\)\s*return'Odd C[23]\.5';", '', html)
+    html = html.replace("    'Cart 2.5':'grade_cart25','Cart 3.5':'grade_cart35',", '')
+    html = html.replace(
+        "const scoreField=cardPick?cardPick.score_final:(tipo==='prem'?getPalpiteScore(d):tipo==='15'?d.score_15:tipo==='esc'?d.score_esc75:d.score_cards25);",
+        "const scoreField=cardPick?cardPick.score_final:(tipo==='prem'?getPalpiteScore(d):tipo==='15'?d.score_15:d.score_esc75);",
+    )
+    html = html.replace(
+        "const mktShow=cardPick?cardMarketLabel(cardPick.market_key,cardPick.market):(tipo==='prem'?getPalpiteMkt(d):tipo==='15'?'Over 1.5':tipo==='esc'?'Esc 7.5':'Cart 2.5');",
+        "const mktShow=cardPick?cardMarketLabel(cardPick.market_key,cardPick.market):(tipo==='prem'?getPalpiteMkt(d):tipo==='15'?'Over 1.5':'Esc 7.5');",
+    )
+    html = re.sub(
+        r"const mktMiniNames=\{[^}]*Cart 2\.5[^}]*\};",
+        "const mktMiniNames={'Over 1.5':'Over 1.5','Over 2.5':'Over 2.5','Esc 7.5':'Escanteios (Over)','Esc 8.5':'Esc 8.5','BTTS':'Ambas Marcam','Under 3.5':'Under 3.5','Under 4.5':'Under 4.5','Over 0.5 HT':'Over 0.5 HT'};",
+        html,
+    )
+    html = re.sub(r"\n\s*const cart=res\.cards_total.*?\n", '\n', html)
+    html = html.replace("${cart}", '')
+    html = re.sub(
+        r"\n\s*if\(\(mktKey==='cart25_ok' \|\| mktKey==='cart35_ok'\) && !hasPositiveStat\(res\.cards_total\)\)\{\s*return null;\s*\}",
+        '',
+        html,
+        flags=re.DOTALL,
+    )
+    html = re.sub(r"\n\s*const cartRow=res&&res\.cards_total.*?\n", '\n', html)
+    html = html.replace('<th>Cart.</th>', '')
+    html = html.replace('<td class="mono">${cartRow}</td>', '')
+    card_tab = '''      <div class="mkt-cat-tab disabled" data-cat="cartoes" aria-disabled="true" title="Cartões em breve">
+        <i data-lucide="layers" style="width:14px;height:14px"></i> Cartões
+      </div>
+'''
+    html = re.sub(
+        r'\s*<div class="mkt-cat-tab[^"]*" data-cat="cartoes".*?</div>\s*',
+        '\n' + card_tab,
+        html,
+        flags=re.DOTALL,
+    )
+    if 'data-cat="cartoes"' not in html:
+        html = html.replace(
+            '      <div class="mkt-cat-tab" data-cat="escanteios" onclick="switchCat(\'escanteios\')">\n'
+            '        <i data-lucide="corner-up-right" style="width:14px;height:14px"></i> Escanteios\n'
+            '      </div>\n',
+            '      <div class="mkt-cat-tab" data-cat="escanteios" onclick="switchCat(\'escanteios\')">\n'
+            '        <i data-lucide="corner-up-right" style="width:14px;height:14px"></i> Escanteios\n'
+            '      </div>\n' + card_tab,
+            1,
+        )
+    return html
+
 def day_panel_html(d, day_data):
     jogos  = day_data.get('jogos', [])
     n15    = sum(1 for j in jogos if j['score_15'] >= 85 and j['passou_filtro'])
     nesc   = sum(1 for j in jogos if j['score_esc75'] >= 75)
-    ncart  = sum(1 for j in jogos if card_pick_approved(j))
     nprem  = sum(1 for j in jogos if (j.get('palpite_grade') or j.get('best_grade')) in ('A+', 'A'))
     fmt, wd = fmt_date(d)
     confirmado = day_data.get('resultado_confirmado', False)
@@ -682,13 +878,12 @@ def day_panel_html(d, day_data):
     <div id="mkt-{d}-over15"       class="mkt-panel"></div>
     <div id="mkt-{d}-over25"       class="mkt-panel"></div>
     <div id="mkt-{d}-escanteios"   class="mkt-panel"></div>
-    <div id="mkt-{d}-cartoes"      class="mkt-panel"></div>
     <div id="mkt-{d}-historico_dia" class="mkt-panel"></div>
   </div>
 </div>'''
 
 
-def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, cards_audit_json, updated_iso_json):
+def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, updated_iso_json):
     """
     Injeta apenas os dados dinâmicos no index.html existente, preservando
     todo o layout, CSS e JS do template.  Usa marcadores HTML como âncoras.
@@ -742,17 +937,12 @@ def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, car
         f'const GLOBAIS    = {globais_json};',
         html, flags=re.DOTALL
     )
-    html, audit_count = re.subn(
+    html = re.sub(
         r'const CARD_AUDIT\s*=\s*\{.*?;\n?',
-        lambda _: f'const CARD_AUDIT = {cards_audit_json};\n',
-        html, flags=re.DOTALL
+        '',
+        html,
+        flags=re.DOTALL,
     )
-    if audit_count == 0:
-        html = re.sub(
-            r'(const GLOBAIS\s*=\s*\{.*?;\n)',
-            lambda match: match.group(1) + f'const CARD_AUDIT = {cards_audit_json};\n',
-            html, flags=re.DOTALL
-        )
     html, updated_count = re.subn(
         r'const WM_DATA_UPDATED_AT\s*=\s*.*?;',
         f'const WM_DATA_UPDATED_AT = {updated_iso_json};',
@@ -763,6 +953,7 @@ def patch_html(date_tabs_html, day_panels_html, all_data_json, globais_json, car
             "Constante WM_DATA_UPDATED_AT ausente ou duplicada em docs/index.html."
         )
 
+    html = remove_card_market_ui(html)
     html = ensure_responsive_css(html)
     return html
 
@@ -789,7 +980,6 @@ def gerar_site():
         fmt, wd  = fmt_date(d)
         n15      = entry.get('over15', 0)
         nesc     = entry.get('esc85', 0)
-        ncart    = entry.get('cart25', 0)
         nprem    = entry.get('premium', 0)
         conf     = day_data.get('resultado_confirmado', False)
 
@@ -804,7 +994,6 @@ def gerar_site():
 
     # Calcular acertos globais para o header
     globais = calcular_acertos_globais(all_data)
-    cards_audit = load_cards_audit()
     updated_dt = datetime.now(timezone.utc)
     updated = updated_dt.strftime('%d/%m/%Y %H:%M UTC')
     updated_iso = updated_dt.isoformat().replace('+00:00', 'Z')
@@ -815,7 +1004,6 @@ def gerar_site():
         day_panels_html='\n'.join(day_panels_html),
         all_data_json=json.dumps(all_data, ensure_ascii=False),
         globais_json=json.dumps(globais, ensure_ascii=False),
-        cards_audit_json=json.dumps(cards_audit, ensure_ascii=False),
         updated_iso_json=json.dumps(updated_iso),
     )
 
@@ -1661,6 +1849,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 }}
 .mkt-cat-tab:hover{{color:var(--text)}}
 .mkt-cat-tab.active{{color:var(--accent);border-bottom-color:var(--accent);font-weight:600}}
+.mkt-cat-tab.disabled{{cursor:default;opacity:.55;pointer-events:none}}
 /* SUB FILTER BAR */
 .sub-filter-bar{{
   background:var(--s1);border-bottom:1px solid var(--border);
@@ -1682,44 +1871,6 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   color:var(--bg);background:var(--green);
   border-color:var(--green);
 }}
-.cards-summary-grid{{
-  display:grid;grid-template-columns:repeat(5,minmax(120px,1fr));gap:10px;margin-bottom:12px;
-}}
-.cards-summary-item{{
-  background:rgba(255,255,255,.035);border:1px solid var(--border);border-radius:8px;padding:10px 12px;min-width:0;
-}}
-.cards-summary-item span{{display:block;font-size:10px;color:var(--muted);text-transform:uppercase;font-weight:800;letter-spacing:.7px;margin-bottom:4px}}
-.cards-summary-item strong{{display:block;font-family:'JetBrains Mono',monospace;font-size:18px;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}}
-.cards-toolbar{{
-  display:flex;flex-wrap:wrap;gap:8px;margin:10px 0 12px;align-items:center;
-}}
-.cards-toolbar-label{{font-size:11px;text-transform:uppercase;letter-spacing:.8px;color:var(--muted);font-weight:800;margin-right:2px}}
-.cards-filter-btn{{
-  height:28px;border:1px solid var(--border);background:var(--s2);color:var(--muted);border-radius:18px;
-  padding:0 12px;font-size:11px;font-weight:700;cursor:pointer;transition:all .15s;white-space:nowrap;
-}}
-.cards-filter-btn:hover{{color:var(--text);border-color:var(--accent)}}
-.cards-filter-btn.active{{color:var(--bg);background:var(--orange);border-color:var(--orange)}}
-.cards-market-pill{{
-  display:inline-flex;align-items:center;gap:6px;border-radius:18px;padding:6px 10px;
-  border:1px solid rgba(245,158,11,.35);background:rgba(245,158,11,.10);color:var(--yellow);
-  font-size:12px;font-weight:800;white-space:nowrap;
-}}
-.cards-source-badge,.cards-line-badge{{
-  display:inline-flex;align-items:center;justify-content:center;border-radius:999px;padding:5px 8px;
-  font-size:11px;font-weight:900;font-family:'JetBrains Mono',monospace;border:1px solid transparent;white-space:nowrap;
-}}
-.cards-source-ELITE{{background:rgba(6,95,70,.22);border-color:rgba(6,95,70,.55);color:#34D399}}
-.cards-source-ALTA{{background:rgba(0,200,150,.16);border-color:rgba(0,200,150,.45);color:var(--green)}}
-.cards-source-MEDIA{{background:rgba(245,158,11,.16);border-color:rgba(245,158,11,.45);color:var(--orange)}}
-.cards-source-BAIXA{{background:rgba(239,68,68,.16);border-color:rgba(239,68,68,.45);color:var(--red)}}
-.cards-line-deep{{background:rgba(6,95,70,.22);border-color:rgba(6,95,70,.55);color:#34D399}}
-.cards-line-green{{background:rgba(0,200,150,.16);border-color:rgba(0,200,150,.45);color:var(--green)}}
-.cards-line-blue{{background:rgba(59,130,246,.16);border-color:rgba(59,130,246,.45);color:var(--blue)}}
-.cards-line-orange{{background:rgba(245,158,11,.16);border-color:rgba(245,158,11,.45);color:var(--orange)}}
-.cards-line-red{{background:rgba(239,68,68,.16);border-color:rgba(239,68,68,.45);color:var(--red)}}
-.cards-score-tip{{cursor:help}}
-.cards-muted-note{{font-size:11px;color:var(--muted);margin-top:8px}}
 .ranking-cols{{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:12px;align-items:start}}
 .ranking-col{{min-width:0}}
 .ranking-col .tbl-wrap{{margin-bottom:0}}
@@ -1755,9 +1906,6 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
   .mkt-cat-tab{{padding:0 8px;font-size:12px}}
   .sub-filter-bar{{padding:6px 8px}}
   .sub-filter-btn{{height:30px;padding:0 12px;font-size:12px}}
-  .cards-summary-grid{{grid-template-columns:repeat(2,minmax(0,1fr))}}
-  .cards-toolbar{{gap:6px}}
-  .cards-filter-btn{{padding:0 10px}}
   .top-grid{{grid-template-columns:1fr}}
   .hist-hero{{grid-template-columns:1fr;padding:13px;gap:10px}}
   .hist-hero-insights{{grid-template-columns:1fr}}
@@ -1862,7 +2010,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
       <div class="mkt-cat-tab" data-cat="escanteios" onclick="switchCat('escanteios')">
         <i data-lucide="corner-up-right" style="width:14px;height:14px"></i> Escanteios
       </div>
-      <div class="mkt-cat-tab" data-cat="cartoes" onclick="switchCat('cartoes')">
+      <div class="mkt-cat-tab disabled" data-cat="cartoes" aria-disabled="true" title="Cartões em breve">
         <i data-lucide="layers" style="width:14px;height:14px"></i> Cartões
       </div>
     </div>
@@ -1903,8 +2051,7 @@ select{{background:var(--s2);border:1px solid var(--border);color:var(--text);pa
 <script>
 const ALL_DATA   = {all_data_json};
 const GLOBAIS    = {globais_json};
-const CARD_AUDIT = {{}};
-const MERCADOS   = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Under 3.5','Esc 7.5','Esc 8.5','Cart 2.5','Cart 3.5'];
+const MERCADOS   = ['Over 1.5','Over 2.5','BTTS','Over 0.5 HT','Under 4.5','Under 3.5','Esc 7.5','Esc 8.5'];
 const MKT_RESULT = {{
   'Over 1.5':    'over15_ok',
   'Over 2.5':    'over25_ok',
@@ -1914,23 +2061,16 @@ const MKT_RESULT = {{
   'Under 3.5':   'under35_ok',
   'Esc 7.5':     'esc75_ok',
   'Esc 8.5':     'esc85_ok',
-  'Cart 2.5':    'cart25_ok',
-  'Cart 3.5':    'cart35_ok',
 }};
 const MKT_SCORE = {{
   'Over 1.5':'score_15','Over 2.5':'score_25','BTTS':'score_btts',
   'Over 0.5 HT':'score_05ht','Under 4.5':'score_u45','Under 3.5':'score_u35',
   'Esc 7.5':'score_esc75','Esc 8.5':'score_esc85',
-  'Cart 2.5':'score_cards25','Cart 3.5':'score_cards35',
 }};
 const MKT_MIN = {{
   'Over 1.5':85,'Over 2.5':75,'BTTS':70,'Over 0.5 HT':75,'Under 4.5':75,'Under 3.5':75,
-  'Esc 7.5':75,'Esc 8.5':75,'Cart 2.5':75,'Cart 3.5':75,
+  'Esc 7.5':75,'Esc 8.5':75,
 }};
-function isCardMarketName(mkt){{
-  return /cart|cart[oõ]es|cart[aã]o/i.test(String(mkt||''));
-}}
-
 // ── Helpers ────────────────────────────────────────────────────────
 // ── KPI Filter ────────────────────────────────────────────────────
 let activeKpi = {{}};
@@ -1959,30 +2099,26 @@ function kpiFilter(date, tipo, count){{
   }} else if(tipo==='esc'){{
     filtrados=jogos.filter(d=>d.score_esc75>=75).sort((a,b)=>sortByGrade(a,b,d=>d.grade_esc75||getPalpiteGrade(d),d=>d.score_esc75));
     titulo='Over 7.5 Escanteios ≥75%'; cor='var(--teal)';
-  }} else if(tipo==='cart'){{
-    filtrados=jogos.map(normalizeCardPick).filter(Boolean).sort(cardSort).map(p=>({{...p.jogo,__cardPick:p}}));
-    titulo='Cartões Card Engine V1'; cor='var(--orange)';
   }}
   if(!filtrados.length){{
     panel.innerHTML=`<div class="kpi-filter-panel"><div class="kpi-filter-title" style="color:${{cor}}">${{titulo}}</div><div class="empty">Nenhum jogo neste filtro.</div></div>`;
     panel.style.display='block'; return;
   }}
   const rows=filtrados.map((d,i)=>{{
-    const cardPick=d.__cardPick||null;
-    const mktKey=cardPick?null:getPalpiteKey(d);
-    const rc=cardPick?cardRowClass(cardPick):rowClass(d,mktKey);
-    const scoreField=cardPick?cardPick.score_final:(tipo==='prem'?getPalpiteScore(d):tipo==='15'?d.score_15:tipo==='esc'?d.score_esc75:d.score_cards25);
-    const mktShow=cardPick?cardMarketLabel(cardPick.market_key,cardPick.market):(tipo==='prem'?getPalpiteMkt(d):tipo==='15'?'Over 1.5':tipo==='esc'?'Esc 7.5':'Cart 2.5');
+    const mktKey=getPalpiteKey(d);
+    const rc=rowClass(d,mktKey);
+    const scoreField=tipo==='prem'?getPalpiteScore(d):tipo==='15'?d.score_15:d.score_esc75;
+    const mktShow=tipo==='prem'?getPalpiteMkt(d):tipo==='15'?'Over 1.5':'Esc 7.5';
     return`<tr class="${{rc}}">
       <td class="mono muted">${{i+1}}</td>
       ${{jogoCell(d)}}
       <td class="mono muted">${{d.hora}}</td>
-      <td>${{gradeHtml(cardPick?cardPick.grade:getPalpiteGrade(d))}}</td>
+      <td>${{gradeHtml(getPalpiteGrade(d))}}</td>
       <td class="mono" style="font-size:11px;color:var(--muted)">${{mktShow}}</td>
       <td>${{bar(scoreField)}}</td>
       <td class="mono" style="color:var(--yellow);font-weight:700">${{oddMkt(d)}}</td>
       ${{placarCell(d)}}
-      <td>${{cardPick?cardResultBadge(cardPick):resBadge(d,mktKey)}}</td>
+      <td>${{resBadge(d,mktKey)}}</td>
     </tr>`;
   }}).join('');
   panel.innerHTML=`<div class="kpi-filter-panel">
@@ -2029,8 +2165,6 @@ function oddMkt(d){{
   let val=null;
   if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15||d.odd_justa_15||oddEstimate(d,mkt);
   else if(mkt==='Over 2.5') val=d.odds_o25;
-  else if(mkt==='Cart 2.5') val=d.odds_cards_25;
-  else if(mkt==='Cart 3.5') val=d.odds_cards_35;
   else if(mkt==='Esc 7.5')  val=d.odds_corners_75;
   else if(mkt==='Esc 8.5')  val=d.odds_corners_85;
   else if(mkt==='Under 3.5'||mkt==='Under 4.5') val=d.odds_u45;
@@ -2041,8 +2175,6 @@ function oddMkt(d){{
 function oddMktLabel(mkt){{
   if(mkt==='Over 1.5')      return'ODD';
   if(mkt==='Over 2.5')      return'Odd O2.5';
-  if(mkt==='Cart 2.5')      return'Odd C2.5';
-  if(mkt==='Cart 3.5')      return'Odd C3.5';
   if(mkt==='Esc 7.5')       return'Odd E7.5';
   if(mkt==='Esc 8.5')       return'Odd E8.5';
   if(mkt==='Under 3.5')     return'Odd U3.5';
@@ -2066,8 +2198,6 @@ function oddForMarketDetail(d,mkt){{
   let val=null;
   if(mkt==='Over 1.5')      val=d.odds_o15||d.odd_over15||d.odd_justa_15;
   else if(mkt==='Over 2.5') val=d.odds_o25;
-  else if(mkt==='Cart 2.5') val=d.odds_cards_25;
-  else if(mkt==='Cart 3.5') val=d.odds_cards_35;
   else if(mkt==='Esc 7.5')  val=d.odds_corners_75;
   else if(mkt==='Esc 8.5')  val=d.odds_corners_85;
   else if(mkt==='Under 3.5'||mkt==='Under 4.5') val=d.odds_u45;
@@ -2188,7 +2318,7 @@ const LINHA_SEGURA_DIFF = 8;
 function gradeForMkt(jogo,mkt){{
   const map = {{
     'Over 1.5':'grade_15','Over 2.5':'grade_25','Esc 7.5':'grade_esc75','Esc 8.5':'grade_esc85',
-    'Cart 2.5':'grade_cart25','Cart 3.5':'grade_cart35','BTTS':'grade_btts','Over 0.5 HT':'grade_05ht',
+    'BTTS':'grade_btts','Over 0.5 HT':'grade_05ht',
     'Under 3.5':'grade_u35','Under 4.5':'grade_u45'
   }};
   const field = map[mkt];
@@ -2224,7 +2354,7 @@ function mainBestPick(jogo){{
   const picks=mainMarketCandidates(jogo);
   if(picks.length)return picks[0];
   const legacy=jogo.palpite_mkt||jogo.best_mkt||jogo.mkt||'';
-  if(legacy && !isCardMarketName(legacy)){{
+  if(legacy){{
     return {{mkt:legacy,key:MKT_RESULT[legacy]||'over15_ok',score:scoreForMkt(jogo,legacy),grade:gradeForMkt(jogo,legacy),kind:'main'}};
   }}
   return {{mkt:'Over 1.5',key:'over15_ok',score:jogo.score_15||0,grade:jogo.grade_15||gradeFromScore(jogo.score_15||0),kind:'main'}};
@@ -2331,10 +2461,9 @@ function placarCard(jogo, mktKey){{
   const cls=ok===true?'hit':ok===false?'miss':'pending';
   const icon=ok===true?'circle-check':ok===false?'circle-x':'circle-help';
   const cant=res.corners_total!=null?`<i data-lucide="flag"></i>${{res.corners_total}}`:'';
-  const cart=res.cards_total!=null?`<i data-lucide="square"></i>${{res.cards_total}}`:'';
   return`<div class="top-placar ${{cls}}">
     <i data-lucide="${{icon}}"></i>
-    <div><span class="ft">${{res.placar}}</span> <span class="ht">HT ${{res.placar_ht}}${{cant}}${{cart}}</span></div>
+    <div><span class="ft">${{res.placar}}</span> <span class="ht">HT ${{res.placar_ht}}${{cant}}</span></div>
   </div>`;
 }}
 
@@ -2407,15 +2536,13 @@ function approvedMarketsHtml(d, opts){{
   opts = opts || {{}};
   const primary = opts.primary || getPalpiteMkt(d);
   const max = opts.max || 4;
-  const isCardAltMarket = x => x && (x.cardPick || x.key==='cards_v1' || /Cart/i.test(String(x.mkt||'')));
   let mkts = approvedMarkets(d).filter(x=>x.mkt!==primary);
-  if(opts.excludeCards) mkts = mkts.filter(x=>!isCardAltMarket(x));
   mkts = mkts.slice(0,max);
   if(!mkts.length) return opts.empty ? '<span class="muted" style="font-size:11px">Sem alternativas</span>' : '';
   const label = opts.label === false ? '' : '<span class="alt-label">Também aprovado</span>';
   const res = getResultado(d);
   return `<div class="alt-mkts">${{label}}${{mkts.map(x=>{{
-    const ok = res ? (x.cardPick ? cardResultOk(x.cardPick) : resultOk(res,x.key)) : null;
+    const ok = res ? resultOk(res,x.key) : null;
     const stCls = ok===true ? 'hit' : ok===false ? 'miss' : res ? 'pending' : '';
     const stTxt = ok===true ? 'GREEN' : ok===false ? 'RED' : res ? 'S/D' : '';
     return `<span class="alt-badge ${{x.cls}} ${{stCls}}">${{x.mkt}} <strong>${{pctText(x.score)}}</strong>${{stTxt?`<span class="alt-res">${{stTxt}}</span>`:''}}</span>`;
@@ -2693,7 +2820,6 @@ function historicoSearchHtml(date){{
         <option value="todos" ${{st.mercado==='todos'?'selected':''}}>Todos mercados</option>
         <option value="Over" ${{st.mercado==='Over'?'selected':''}}>Gols</option>
         <option value="Esc" ${{st.mercado==='Esc'?'selected':''}}>Escanteios</option>
-        <option value="Cart" ${{st.mercado==='Cart'?'selected':''}}>Cartões</option>
         <option value="BTTS" ${{st.mercado==='BTTS'?'selected':''}}>BTTS</option>
         <option value="Under" ${{st.mercado==='Under'?'selected':''}}>Under</option>
       </select>
@@ -3174,260 +3300,6 @@ function renderEsc(date,jogos){{
       <tbody>${{escRows(r75)}}</tbody></table></div>`;
 }}
 
-// ── Cartões ────────────────────────────────────────────────────────
-let activeCardQuickFilter = 'todos';
-const CARD_MARKET_LABELS = {{
-  cards_over_25:'Over 2.5 Cartões',
-  cards_over_35:'Over 3.5 Cartões',
-  cards_over_45:'Over 4.5 Cartões',
-  cards_over_55:'Over 5.5 Cartões',
-  cards_over_65:'Over 6.5 Cartões',
-  cards_under_25:'Under 2.5 Cartões',
-  cards_under_35:'Under 3.5 Cartões',
-  cards_under_45:'Under 4.5 Cartões',
-  cards_under_55:'Under 5.5 Cartões',
-  cards_under_65:'Under 6.5 Cartões',
-  cards_both_card:'Ambas recebem cartão',
-  cards_both_2plus:'Ambas 2+ cartões'
-}};
-const CARD_QUICK_FILTERS = [
-  {{key:'todos', label:'Todos'}},
-  {{key:'aplus', label:'Somente A+'}},
-  {{key:'a', label:'Somente A'}},
-  {{key:'over', label:'Somente Over'}},
-  {{key:'under', label:'Somente Under'}},
-  {{key:'both', label:'Somente Ambas Cartão'}},
-  {{key:'line15', label:'Line Value ≥1.5'}},
-  {{key:'elite', label:'Data Source ELITE'}},
-  {{key:'alta', label:'Data Source ALTA'}}
-];
-
-function numValue(value){{
-  const n = Number(value);
-  return Number.isFinite(n) ? n : null;
-}}
-
-function fmtCardNumber(value, decimals=1){{
-  const n = numValue(value);
-  if(n == null) return '—';
-  return n.toFixed(decimals).replace(/\\.0$/,'');
-}}
-
-function escapeHtml(value){{
-  return String(value ?? '').replace(/[&<>"']/g, ch=>({{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}}[ch]));
-}}
-
-function escapeAttr(value){{return escapeHtml(value).replace(/\n/g,'&#10;');}}
-
-function cardMarketLabel(key, fallback){{
-  return CARD_MARKET_LABELS[key] || fallback || 'Cartões';
-}}
-
-function cardLineFromKey(key){{
-  const map = {{
-    cards_over_25:2.5,cards_over_35:3.5,cards_over_45:4.5,cards_over_55:5.5,cards_over_65:6.5,
-    cards_under_25:2.5,cards_under_35:3.5,cards_under_45:4.5,cards_under_55:5.5,cards_under_65:6.5
-  }};
-  return map[key] ?? null;
-}}
-
-function sourceBadge(level){{
-  const value = ['ELITE','ALTA','MEDIA','BAIXA'].includes(level) ? level : 'BAIXA';
-  return `<span class="cards-source-badge cards-source-${{value}}">${{value}}</span>`;
-}}
-
-function lineValueClass(value){{
-  const n = numValue(value);
-  if(n == null) return 'cards-line-red';
-  if(n >= 2) return 'cards-line-deep';
-  if(n >= 1.5) return 'cards-line-green';
-  if(n >= 1) return 'cards-line-blue';
-  if(n >= .7) return 'cards-line-orange';
-  return 'cards-line-red';
-}}
-
-function lineValueBadge(value, title){{
-  const n = numValue(value);
-  const text = n == null ? '—' : `${{n >= 0 ? '+' : ''}}${{n.toFixed(2)}}`;
-  return `<span class="cards-line-badge ${{lineValueClass(n)}}" title="${{escapeAttr(title || '')}}">${{text}}</span>`;
-}}
-
-function normalizeCardPick(d){{
-  const analysis = d.cards_analysis || null;
-  const marketKey = analysis?.market_key || d.cards_market_key || null;
-  const hasV1 = analysis && analysis.approved === true && marketKey;
-  if(!hasV1) return null;
-  const markets = Array.isArray(d.card_markets) && d.card_markets.length ? d.card_markets : (Array.isArray(analysis.submarkets) ? analysis.submarkets : []);
-  const market = markets.find(item=>item.market_key===marketKey) || {{}};
-  const breakdown = analysis.breakdown || market.breakdown || null;
-  const teamStats = analysis.team_stats || analysis.diagnostics?.team_stats || {{}};
-  const scoreFinal = numValue(analysis.score_final ?? analysis.final_score ?? analysis.score ?? d.cards_best_score ?? market.score) ?? 0;
-  const scoreBeforeCap = numValue(analysis.score_before_cap ?? analysis.score_bruto ?? market.score_before_cap ?? market.score_bruto ?? scoreFinal) ?? scoreFinal;
-  const scoreCap = numValue(analysis.score_cap ?? market.score_cap ?? breakdown?.score_cap);
-  const line = numValue(analysis.line ?? market.line ?? cardLineFromKey(marketKey));
-  const side = analysis.side || market.side || (marketKey.includes('_under_') ? 'under' : marketKey.includes('_over_') ? 'over' : 'yes');
-  const avgCards = numValue(teamStats.combined_avg ?? d.avg_cards);
-  const lineValue = numValue(analysis.line_value ?? market.line_value);
-  return {{
-    jogo:d,
-    legacy:false,
-    market_key:marketKey,
-    market:analysis.best_market || d.cards_best_market || market.market || cardMarketLabel(marketKey),
-    line,
-    side,
-    score:scoreFinal,
-    score_before_cap:scoreBeforeCap,
-    score_cap:scoreCap,
-    score_final:scoreFinal,
-    grade:analysis.confidence || d.cards_best_grade || market.confidence || gradeFromScore(scoreFinal),
-    data_quality:numValue(analysis.data_quality ?? d.cards_data_quality),
-    data_source_level:analysis.data_source_level || d.cards_data_source_level || market.data_source_level || breakdown?.data_source_level || 'BAIXA',
-    line_value:lineValue,
-    line_value_score:numValue(analysis.line_value_score ?? market.line_value_score),
-    line_risk_penalty:numValue(analysis.line_risk_penalty ?? market.line_risk_penalty),
-    avg_cards:avgCards,
-    breakdown,
-    result_key:null
-  }};
-}}
-
-function cardResultOk(pick){{
-  const res = getResultado(pick.jogo);
-  if(!res) return null;
-  if(pick.result_key && res[pick.result_key] != null) return res[pick.result_key];
-  const total = numValue(res.cards_total);
-  if(total == null || pick.line == null) return null;
-  if(pick.side === 'over') return total > pick.line;
-  if(pick.side === 'under') return total < pick.line;
-  return null;
-}}
-
-function cardResultBadge(pick){{
-  const ok = cardResultOk(pick);
-  if(ok===true) return '<span class="res-badge hit"><i data-lucide="circle-check"></i> GREEN</span>';
-  if(ok===false) return '<span class="res-badge miss"><i data-lucide="circle-x"></i> RED</span>';
-  return '<span class="res-badge pending"><i data-lucide="clock"></i> Aguardando</span>';
-}}
-
-function cardRowClass(pick){{
-  const ok = cardResultOk(pick);
-  if(ok===true) return 'row-hit';
-  if(ok===false) return 'row-miss';
-  return 'row-pending';
-}}
-
-function cardQuickFilterMatch(pick){{
-  if(activeCardQuickFilter === 'aplus') return pick.grade === 'A+';
-  if(activeCardQuickFilter === 'a') return pick.grade === 'A';
-  if(activeCardQuickFilter === 'over') return pick.side === 'over';
-  if(activeCardQuickFilter === 'under') return pick.side === 'under';
-  if(activeCardQuickFilter === 'both') return pick.market_key === 'cards_both_card';
-  if(activeCardQuickFilter === 'line15') return (pick.line_value ?? -99) >= 1.5;
-  if(activeCardQuickFilter === 'elite') return pick.data_source_level === 'ELITE';
-  if(activeCardQuickFilter === 'alta') return pick.data_source_level === 'ALTA';
-  return true;
-}}
-
-function timeSortValue(hora){{
-  const m = String(hora || '').match(/(\\d{{1,2}}):(\\d{{2}})/);
-  return m ? Number(m[1]) * 60 + Number(m[2]) : 9999;
-}}
-
-function cardSort(a,b){{
-  return (b.score_final||0)-(a.score_final||0)
-    || (b.line_value ?? -99)-(a.line_value ?? -99)
-    || (b.data_quality ?? -1)-(a.data_quality ?? -1)
-    || timeSortValue(a.jogo.hora)-timeSortValue(b.jogo.hora);
-}}
-
-function setCardQuickFilter(key){{
-  activeCardQuickFilter = key;
-  if(activeDate) renderCart(activeDate, getJogos(activeDate));
-}}
-
-function cardScoreTooltip(pick){{
-  const b = pick.breakdown || {{}};
-  const qualityPenalty = b.quality_penalty ?? (b.data_quality_penalty != null ? -Math.abs(Number(b.data_quality_penalty)) : '—');
-  return [
-    `Score Bruto: ${{fmtCardNumber(pick.score_before_cap,1)}}`,
-    `Penalidade Qualidade: ${{qualityPenalty}}`,
-    `Score Cap: ${{fmtCardNumber(pick.score_cap,1)}}`,
-    `Score Final: ${{fmtCardNumber(pick.score_final,1)}}`
-  ].join('\\n');
-}}
-
-function cardLineTooltip(pick){{
-  return [
-    `Média esperada: ${{fmtCardNumber(pick.avg_cards,1)}}`,
-    `Linha: ${{fmtCardNumber(pick.line,1)}}`,
-    `Line Value: ${{fmtCardNumber(pick.line_value,2)}}`
-  ].join('\\n');
-}}
-
-function cardAuditSummaryHtml(rows, jogos){{
-  const summary = CARD_AUDIT?.summary || {{}};
-  const byMarket = summary.by_market_key || {{}};
-  const topMarket = Object.entries(byMarket).sort((a,b)=>b[1]-a[1])[0]?.[0] || rows[0]?.market_key || null;
-  const totalGames = summary.total_games ?? jogos.length;
-  const approved = summary.approved_cards ?? rows.length;
-  const avgScore = summary.avg_score ?? (rows.length ? rows.reduce((s,x)=>s+(x.score_final||0),0)/rows.length : null);
-  const avgQuality = summary.avg_data_quality ?? (rows.length ? rows.reduce((s,x)=>s+(x.data_quality||0),0)/rows.length : null);
-  return `<div class="cards-summary-grid">
-    <div class="cards-summary-item"><span>Jogos analisados</span><strong>${{fmtCardNumber(totalGames,0)}}</strong></div>
-    <div class="cards-summary-item"><span>Jogos aprovados</span><strong>${{fmtCardNumber(approved,0)}}</strong></div>
-    <div class="cards-summary-item"><span>Mercado frequente</span><strong>${{cardMarketLabel(topMarket,'—').replace(' Cartões','')}}</strong></div>
-    <div class="cards-summary-item"><span>Média Score</span><strong>${{fmtCardNumber(avgScore,1)}}</strong></div>
-    <div class="cards-summary-item"><span>Qualidade média</span><strong>${{fmtCardNumber(avgQuality,1)}}%</strong></div>
-  </div>`;
-}}
-
-function renderCart(date,jogos){{
-  const el=document.getElementById('mkt-'+date+'-cartoes');
-  const marketFilter = activeSubFilter || 'all';
-  const allRows = jogos.map(normalizeCardPick).filter(Boolean);
-  const rows = allRows
-    .filter(p=>marketFilter==='all' || p.market_key===marketFilter)
-    .filter(cardQuickFilterMatch)
-    .sort(cardSort);
-  const quickButtons = CARD_QUICK_FILTERS.map(f=>
-    `<button type="button" class="cards-filter-btn${{activeCardQuickFilter===f.key?' active':''}}" onclick="setCardQuickFilter('${{f.key}}')">${{f.label}}</button>`
-  ).join('');
-  el.innerHTML=`
-    <div class="callout ok"><strong><i data-lucide="layers"></i> Card Engine V1</strong> · Linhas aprovadas pelo motor de cartões, com score final calibrado.</div>
-    ${{cardAuditSummaryHtml(allRows, jogos)}}
-    <div class="cards-toolbar"><span class="cards-toolbar-label">Filtros</span>${{quickButtons}}</div>
-    <div class="tbl-wrap"><table>
-      <thead><tr>
-        <th>#</th><th>Jogo</th><th>Hora</th>
-        <th>Mercado</th>
-        <th>Score</th><th>Grade</th>
-        <th>Qualidade</th><th>Line Value</th><th>Score Cap</th><th>Fonte</th>
-        <th>Média cartões</th>
-        <th>Real</th><th>Resultado</th>
-      </tr></thead>
-      <tbody>${{rows.length ? rows.map((pick,i)=>{{
-        const d = pick.jogo;
-        const rc=cardRowClass(pick);
-        const res=getResultado(d);
-        const cartReal=res&&res.cards_total!=null?`<td class="mono" style="color:var(--yellow);font-weight:700;font-size:15px">${{res.cards_total}}</td>`:'<td class="mono muted">—</td>';
-        return`<tr class="${{rc}}">
-          <td class="mono muted">${{i+1}}</td>${{jogoCell(d)}}
-          <td class="mono muted">${{d.hora}}</td>
-          <td><span class="cards-market-pill">${{escapeHtml(cardMarketLabel(pick.market_key,pick.market))}}</span></td>
-          <td><span class="metric-value em cards-score-tip" title="${{escapeAttr(cardScoreTooltip(pick))}}">${{fmtCardNumber(pick.score_final,1)}}</span></td>
-          <td>${{gradeHtml(pick.grade)}}</td>
-          <td class="mono" style="color:var(--text2);font-weight:800">${{pick.data_quality==null?'—':fmtCardNumber(pick.data_quality,0)+'%'}}</td>
-          <td>${{lineValueBadge(pick.line_value, cardLineTooltip(pick))}}</td>
-          <td class="mono" style="color:var(--blue);font-weight:800">${{fmtCardNumber(pick.score_cap,0)}}</td>
-          <td>${{sourceBadge(pick.data_source_level)}}</td>
-          <td class="mono" style="color:var(--yellow);font-weight:800">${{fmtCardNumber(pick.avg_cards,1)}}</td>
-          ${{cartReal}}<td>${{cardResultBadge(pick)}}</td>
-        </tr>`;
-      }}).join('') : '<tr><td colspan="13" class="empty">Nenhum palpite de cartões aprovado neste filtro.</td></tr>'}}</tbody>
-    </table></div>
-    <div class="cards-muted-note">Aba baseada exclusivamente no Card Engine V1; jogos sem cards_analysis aprovado não entram.</div>`;
-}}
-
 // ── Bilhetes ───────────────────────────────────────────────────────
 function gerarBilhetes(jogos){{
   // Candidatos: apenas A+/A — qualidade como único critério
@@ -3849,12 +3721,11 @@ function renderHistoricoDia(date,jogos){{
     }}).join('');
     const rc=primaryRowClass(d);
     const cantRow=res&&res.corners_total!=null?`<span class="mini-stat neutral"><i data-lucide="flag"></i>${{res.corners_total}}</span>`:'—';
-    const cartRow=res&&res.cards_total!=null?`<span class="mini-stat neutral"><i data-lucide="square"></i>${{res.cards_total}}</span>`:'—';
     return`<tr class="${{rc}}">
       <td class="row-num">${{i+1}}</td>
       ${{jogoCell(d)}}<td class="mono muted">${{d.hora}}</td>
       ${{res?`<td><div class="placar-cell">${{res.placar}}</div><div class="placar-ht">HT ${{res.placar_ht}}</div></td>`:'<td class="mono muted">—</td>'}}
-      <td class="mono">${{cantRow}}</td><td class="mono">${{cartRow}}</td>
+      <td class="mono">${{cantRow}}</td>
       <td style="max-width:230px">${{badges||'<span class="muted" style="font-size:11px">Sem palpites</span>'}}</td>
     </tr>`;
   }}).join('');
@@ -3877,7 +3748,7 @@ function renderHistoricoDia(date,jogos){{
     <div style="max-width:580px;margin-bottom:20px">${{taxaBars||'<div class="empty">Sem dados.</div>'}}</div>
     <div class="sec-title"><i data-lucide="list"></i> Todos os Jogos</div>
     <div class="tbl-wrap"><table>
-      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Placar</th><th>Cant.</th><th>Cart.</th><th>Palpites e Acertos</th></tr></thead>
+      <thead><tr><th>#</th><th>Jogo</th><th>Hora</th><th>Placar</th><th>Cant.</th><th>Palpites e Acertos</th></tr></thead>
       <tbody>${{rows}}</tbody>
     </table></div>`;
 }}
@@ -3905,7 +3776,7 @@ function renderHistoricoGlobal(){{
   const taxaColor=t=>t==null?'var(--muted)':t>=70?'var(--green)':t>=50?'var(--orange)':'var(--red)';
   const fmtTaxa=t=>t!=null?`${{t}}%`:'—';
   const categoryColor=grade=>grade==='A+'?'var(--green)':grade==='A'?'var(--yellow)':grade==='B'?'var(--blue)':'var(--text)';
-  const marketColor=m=>m&&m.startsWith('Esc')?'var(--teal)':m&&m.startsWith('Cart')?'var(--orange)':m==='BTTS'?'var(--yellow)':m&&m.startsWith('Under')?'var(--purple2)':'var(--blue)';
+  const marketColor=m=>m&&m.startsWith('Esc')?'var(--teal)':m==='BTTS'?'var(--yellow)':m&&m.startsWith('Under')?'var(--purple2)':'var(--blue)';
   const stat=()=>({{gerados:0,auditados:0,acertos:0,erros:0}});
   const taxaStat=s=>s.auditados>0?Math.round((s.acertos/s.auditados)*1000)/10:null;
   const addPick=(s,j)=>{{
@@ -4120,7 +3991,7 @@ function renderHistoricoGlobal(){{
   }}).join('');
 
   // ── Mercado mini ───────────────────────────────────────────────
-  const mktMiniNames={{'Over 1.5':'Over 1.5','Over 2.5':'Over 2.5','Esc 7.5':'Escanteios (Over)','Esc 8.5':'Esc 8.5','Cart 2.5':'Cartões (Over)','Cart 3.5':'Cart 3.5','BTTS':'Ambas Marcam','Under 3.5':'Under 3.5','Under 4.5':'Under 4.5','Over 0.5 HT':'Over 0.5 HT'}};
+  const mktMiniNames={{'Over 1.5':'Over 1.5','Over 2.5':'Over 2.5','Esc 7.5':'Escanteios (Over)','Esc 8.5':'Esc 8.5','BTTS':'Ambas Marcam','Under 3.5':'Under 3.5','Under 4.5':'Under 4.5','Over 0.5 HT':'Over 0.5 HT'}};
   const mktMiniHtml=[...marketStats].filter(x=>x.auditados>0)
     .sort((a,b)=>(b.taxa-a.taxa)||(b.auditados-a.auditados)).slice(0,5)
     .map(s=>`<div class="hg-mkt-mini-row">
@@ -4467,7 +4338,6 @@ function renderMkt(date,mkt){{
   else if(mkt==='over15')    renderOver15(date,jogos);
   else if(mkt==='over25')    renderOver25(date,jogos);
   else if(mkt==='escanteios')renderEsc(date,jogos);
-  else if(mkt==='cartoes')   renderCart(date,jogos);
   else if(mkt==='bilhetes')     renderBilhetes(date,jogos);
   else if(mkt==='historico_dia') renderHistoricoDia(date,jogos);
   if(typeof ensureLucideIcons === 'function') ensureLucideIcons();
@@ -4519,18 +4389,6 @@ let activeSubFilter = null;
 const CAT_SUBFILTERS = {{
   'gols':       [{{key:'over15',  label:'Over 1.5'}}, {{key:'over25', label:'Under'}}],
   'escanteios': [{{key:'esc75',   label:'Over 7.5'}}, {{key:'esc85',  label:'Over 8.5'}}],
-  'cartoes':    [
-    {{key:'all', label:'Todos'}},
-    {{key:'cards_over_25', label:'Over 2.5'}},
-    {{key:'cards_over_35', label:'Over 3.5'}},
-    {{key:'cards_over_45', label:'Over 4.5'}},
-    {{key:'cards_over_55', label:'Over 5.5'}},
-    {{key:'cards_over_65', label:'Over 6.5'}},
-    {{key:'cards_under_45', label:'Under 4.5'}},
-    {{key:'cards_under_55', label:'Under 5.5'}},
-    {{key:'cards_under_65', label:'Under 6.5'}},
-    {{key:'cards_both_card', label:'Ambas recebem cartão'}}
-  ],
   'resultado':  [],
 }};
 
@@ -4602,11 +4460,6 @@ function renderCatContent(date, cat, subKey){{
     renderEsc(date, jogos);
     document.querySelectorAll(`#day-${{date}} .mkt-panel`).forEach(p=>p.classList.remove('active'));
     const p = document.getElementById('mkt-'+date+'-escanteios');
-    if(p) p.classList.add('active');
-  }} else if(cat === 'cartoes'){{
-    renderCart(date, jogos);
-    document.querySelectorAll(`#day-${{date}} .mkt-panel`).forEach(p=>p.classList.remove('active'));
-    const p = document.getElementById('mkt-'+date+'-cartoes');
     if(p) p.classList.add('active');
   }} else if(cat === 'resultado'){{
     renderResultadoFinal(date, jogos);
@@ -4775,4 +4628,5 @@ switchDate(targetDate);
 
 if __name__ == '__main__':
     gerar_site()
+
 

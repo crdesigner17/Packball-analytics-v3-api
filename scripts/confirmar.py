@@ -31,8 +31,6 @@ MKT_RESULTADO = {
     'Under 3.5':   'under35_ok',
     'Esc 7.5':     'esc75_ok',
     'Esc 8.5':     'esc85_ok',
-    'Cart 2.5':    'cart25_ok',
-    'Cart 3.5':    'cart35_ok',
 }
 
 MKT_SCORE = {
@@ -44,8 +42,6 @@ MKT_SCORE = {
     'Under 3.5':   'score_u35',
     'Esc 7.5':     'score_esc75',
     'Esc 8.5':     'score_esc85',
-    'Cart 2.5':    'score_cards25',
-    'Cart 3.5':    'score_cards35',
 }
 
 # Todos os mercados para stats secundárias
@@ -58,8 +54,6 @@ MERCADOS_TODOS = {
     'Under 3.5':   {'score': 'score_u35',     'min': 75, 'filtro': False},
     'Esc 7.5':     {'score': 'score_esc75',   'min': 75, 'filtro': False},
     'Esc 8.5':     {'score': 'score_esc85',   'min': 75, 'filtro': False},
-    'Cart 2.5':    {'score': 'score_cards25', 'min': 75, 'filtro': False},
-    'Cart 3.5':    {'score': 'score_cards35', 'min': 75, 'filtro': False},
 }
 
 class APIClient:
@@ -150,9 +144,7 @@ def buscar_resultados_api(client, date_str_api):
         stat_data = client.get("/fixtures/statistics", {"fixture": fix["fixture"]["id"]})
         if stat_data and stat_data.get("response"):
             corners_total = 0
-            cards_total   = 0
             has_corners   = False
-            has_cards     = False
             for team_stat in stat_data["response"]:
                 for item in team_stat.get("statistics", []):
                     t = item.get("type", "")
@@ -165,30 +157,19 @@ def buscar_resultados_api(client, date_str_api):
                         if v > 0:
                             has_corners = True
                         corners_total += v
-                    if t in ("Yellow Cards", "Red Cards"):
-                        if v > 0:
-                            has_cards = True
-                        cards_total += v
 
             resultado["corners_total"]  = corners_total if has_corners else None
-            resultado["cards_total"]    = cards_total if has_cards else None
             resultado["esc75_ok"]       = corners_total > 7.5 if has_corners else None
             resultado["esc85_ok"]       = corners_total > 8.5 if has_corners else None
-            resultado["cart25_ok"]      = cards_total > 2.5 if has_cards else None
-            resultado["cart35_ok"]      = cards_total > 3.5 if has_cards else None
         else:
             resultado["corners_total"]  = None
-            resultado["cards_total"]    = None
             resultado["esc75_ok"]       = None
             resultado["esc85_ok"]       = None
-            resultado["cart25_ok"]      = None
-            resultado["cart35_ok"]      = None
 
         key = (normalizar(home), normalizar(away))
         resultados[key] = resultado
         print(f"  ✓ {home} {resultado['placar']} {away} | "
-              f"Cant:{resultado.get('corners_total','?')} "
-              f"Cart:{resultado.get('cards_total','?')}")
+              f"Cant:{resultado.get('corners_total','?')}")
 
     print(f"\n  → {len(resultados)} jogos finalizados encontrados")
     return resultados

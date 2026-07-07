@@ -15,7 +15,6 @@ from datetime import datetime
 import warnings
 from ligas_config import blocked_name, favorite_countries, favorite_league_names
 from snapshots import build_bilhetes_snapshot, build_palpites_snapshot, attach_results_to_snapshots
-from cards.pipeline_adapter import apply_cards_engine_to_matches
 warnings.filterwarnings('ignore')
 
 # ── Configuração ───────────────────────────────────────────────────
@@ -326,7 +325,6 @@ def load_csvs(date_str):
     paths = {
         'geral': find(['geral']) or find(['general']),
         'esc':   find(['escanteio']) or find(['escanteios']),
-        'cart':  find(['cart']),
     }
     missing = [k for k, v in paths.items() if v is None]
     if missing:
@@ -345,7 +343,6 @@ def load_csvs(date_str):
 def processar_dia(date_str, dfs):
     geral_raw = dfs['geral']
     esc_raw   = dfs['esc']
-    cart_raw  = dfs['cart']
 
     # ── Mapeamento colunas GERAL ──
     g = fex(geral_raw, {
@@ -392,106 +389,16 @@ def processar_dia(date_str, dfs):
         'avg_shots': 67,
     })
 
-    # ── Mapeamento colunas CARTÕES ──
-    c = fex(cart_raw, {
-        'avg_cards_h': colspec(11, [
-            'avg_cards_h', 'home_cards_avg', 'home avg cards', 'home cards avg',
-            'cards avg home', 'cards home avg', 'home cards', 'team a cards',
-            'team_a_cards', 'cards_home', 'avg cards home', 'yellow cards home',
-            'home yellow cards', 'home team cards', 'casa cartoes', 'mandante cartoes',
-            'casa'
-        ]),
-        'avg_cards_a': colspec(12, [
-            'avg_cards_a', 'away_cards_avg', 'away avg cards', 'away cards avg',
-            'cards avg away', 'cards away avg', 'away cards', 'team b cards',
-            'team_b_cards', 'cards_away', 'avg cards away', 'yellow cards away',
-            'away yellow cards', 'away team cards', 'fora cartoes', 'visitante cartoes',
-            'fora'
-        ]),
-        'avg_cards_total': colspec(15, [
-            'avg_cards_total', 'avg_cards', 'average cards total', 'cards average total',
-            'avg total cards', 'total cards avg', 'match cards avg',
-            'cards per match', 'cards per game', 'cartoes media', 'media cartoes',
-            'total cards average', 'card average total', 'global'
-        ]),
-        'over25_cards': colspec(17, [
-            'over25_cards', 'over_25_cards', 'over 2.5 cards', 'over 2,5 cards',
-            'cards over 2.5', 'cards over 2,5', 'o25 cards', '+2.5 cards',
-            '+2,5 cards', '2.5+ cards', '2,5+ cards', '+2.5', 'over 25 cards',
-            'cartoes over 2.5', 'mais de 2.5 cartoes', 'global 2'
-        ]),
-        'over35_cards': colspec(18, [
-            'over35_cards', 'over_35_cards', 'over 3.5 cards', 'over 3,5 cards',
-            'cards over 3.5', 'cards over 3,5', 'o35 cards', '+3.5 cards',
-            '+3,5 cards', '3.5+ cards', '3,5+ cards', '+3.5', 'over 35 cards',
-            'cartoes over 3.5', 'mais de 3.5 cartoes', 'global 3'
-        ]),
-        'over45_cards': colspec(19, [
-            'over45_cards', 'over_45_cards', 'over 4.5 cards', 'over 4,5 cards',
-            'cards over 4.5', 'cards over 4,5', 'o45 cards', '+4.5 cards',
-            '+4,5 cards', '4.5+ cards', '4,5+ cards', '+4.5', 'over 45 cards',
-            'cartoes over 4.5', 'mais de 4.5 cartoes', 'global 4'
-        ]),
-        'over55_cards': colspec(20, [
-            'over55_cards', 'over_55_cards', 'over 5.5 cards', 'over 5,5 cards',
-            'cards over 5.5', 'cards over 5,5', 'o55 cards', '+5.5 cards',
-            '+5,5 cards', '5.5+ cards', '5,5+ cards', '+5.5', 'over 55 cards',
-            'cartoes over 5.5', 'mais de 5.5 cartoes', 'global 5'
-        ]),
-    }, report_key=f'{date_str}:cartoes')
-    if f'{date_str}:cartoes' in COLUMN_REPORT:
-        COLUMN_REPORT[f'{date_str}:cartoes']['csv_path'] = dfs.get('_paths', {}).get('cart')
-    for over_col, under_col in [
-        ('over25_cards', 'under25_cards'),
-        ('over35_cards', 'under35_cards'),
-        ('over45_cards', 'under45_cards'),
-        ('over55_cards', 'under55_cards'),
-    ]:
-        if over_col in c.columns:
-            c[under_col] = c[over_col].apply(lambda value: 100 - value if pd.notna(value) else np.nan)
-    report_key = f'{date_str}:cartoes'
-    if report_key in COLUMN_REPORT:
-        fields = COLUMN_REPORT[report_key]['fields']
-        if 'avg_cards_total' in fields:
-            fields['avg_cards'] = {**fields['avg_cards_total'], 'internal_alias_of': 'avg_cards_total'}
-        if 'avg_cards_h' in fields:
-            fields['home_cards_avg'] = {**fields['avg_cards_h'], 'internal_alias_of': 'avg_cards_h'}
-        if 'avg_cards_a' in fields:
-            fields['away_cards_avg'] = {**fields['avg_cards_a'], 'internal_alias_of': 'avg_cards_a'}
-        for over_col, under_col in [
-            ('over25_cards', 'under25_cards'),
-            ('over35_cards', 'under35_cards'),
-            ('over45_cards', 'under45_cards'),
-            ('over55_cards', 'under55_cards'),
-        ]:
-            if over_col in fields:
-                fields[under_col] = {
-                    'source_column': fields[over_col].get('source_column'),
-                    'source_index': fields[over_col].get('source_index'),
-                    'method': f'derived_from_{over_col}',
-                    'formula': f'100 - {over_col}',
-                    'non_null_after_filter': fields[over_col].get('non_null_after_filter', 0)
-                }
-
     # Garantir colunas mesmo se vazio
     for col in ['avg_corners_h','avg_corners_a','avg_corners_total',
                 'over65_c','over75_c','over85_c','over95_c','over105_c','avg_shots']:
         if col not in e.columns: e[col] = np.nan
-    for col in ['avg_cards_h','avg_cards_a','avg_cards_total',
-                'over25_cards','over35_cards','over45_cards','over55_cards',
-                'under25_cards','under35_cards','under45_cards','under55_cards']:
-        if col not in c.columns: c[col] = np.nan
 
     # ── Merge ──
     m = (g
          .merge(e[['home','away','league',
                    'avg_corners_h','avg_corners_a','avg_corners_total',
                    'over65_c','over75_c','over85_c','over95_c','over105_c','avg_shots']],
-                on=['home','away','league'], how='left')
-         .merge(c[['home','away','league',
-                   'avg_cards_h','avg_cards_a','avg_cards_total',
-                   'over25_cards','over35_cards','over45_cards','over55_cards',
-                   'under25_cards','under35_cards','under45_cards','under55_cards']],
                 on=['home','away','league'], how='left'))
 
     results = []
@@ -518,26 +425,6 @@ def processar_dia(date_str, dfs):
         o65c   = s(r.get('over65_c')); o75c = s(r.get('over75_c'))
         o85c   = s(r.get('over85_c')); o95c = s(r.get('over95_c')); o105c = s(r.get('over105_c'))
         avg_shots = s(r.get('avg_shots'))
-        avg_cards = s(r.get('avg_cards_total'))
-        ch_cards  = s(r.get('avg_cards_h')); ca_cards = s(r.get('avg_cards_a'))
-        if avg_cards is None:
-            avg_cards = avg_nn(ch_cards, ca_cards)
-        o25cards  = s(r.get('over25_cards'))
-        o35cards  = s(r.get('over35_cards'))
-        o45cards  = s(r.get('over45_cards'))
-        o55cards  = s(r.get('over55_cards'))
-        u25cards  = s(r.get('under25_cards'))
-        u35cards  = s(r.get('under35_cards'))
-        u45cards  = s(r.get('under45_cards'))
-        u55cards  = s(r.get('under55_cards'))
-        if o25cards is not None and 0 < o25cards <= 1: o25cards *= 100
-        if o35cards is not None and 0 < o35cards <= 1: o35cards *= 100
-        if o45cards is not None and 0 < o45cards <= 1: o45cards *= 100
-        if o55cards is not None and 0 < o55cards <= 1: o55cards *= 100
-        if u25cards is not None and 0 < u25cards <= 1: u25cards *= 100
-        if u35cards is not None and 0 < u35cards <= 1: u35cards *= 100
-        if u45cards is not None and 0 < u45cards <= 1: u45cards *= 100
-        if u55cards is not None and 0 < u55cards <= 1: u55cards *= 100
 
         # ── Derivados ──
         exg_tot   = avg_nn(exg_h, exg_a) and (exg_h + exg_a) if (exg_h is not None and exg_a is not None) else None
@@ -566,7 +453,6 @@ def processar_dia(date_str, dfs):
         exg_n     = n(exg_tot, 0, 5)
         cant_n    = n(avg_c, 0, 15)
         shots_n   = n(avg_shots, 0, 40)      # escanteios CSV shots
-        cards_n   = n(avg_cards, 0, 8)
         sot_n     = n(sot_tot, 0, 10)        # finalizações no alvo
         da_n      = n(avg_da, 0, 25)         # ataques perigosos
         ts_n      = n(shots_tot, 0, 20)      # total finalizações
@@ -711,22 +597,6 @@ def processar_dia(date_str, dfs):
             (ppg_n,               5),
         ])
 
-        # ── Cartões Over 2.5 ──
-        s_cards25 = ws([
-            (o25cards,   45),
-            (cards_n,    35),
-            (ppg_n,      10),
-            (50,         10),
-        ])
-
-        # ── Cartões Over 3.5 ──
-        s_cards35 = ws([
-            (o35cards,   50),
-            (cards_n,    30),
-            (ppg_n,      10),
-            (50,         10),
-        ])
-
         # ── Score de Consistência Geral (multi-mercado) ──
         # Quanto mais mercados alinhados, maior a confiança global
         mercados_scores = [s for s in [s15, s25, s_btts, s_05ht] if s > 0]
@@ -750,13 +620,6 @@ def processar_dia(date_str, dfs):
             if o75c: parts.append(f"O7.5: {o75c:.0f}%")
             return " · ".join(parts) if parts else "Dados insuficientes"
 
-        def justif_cards():
-            parts = []
-            if avg_cards: parts.append(f"Média {avg_cards:.1f} cart")
-            if o25cards: parts.append(f"O2.5: {o25cards:.0f}%")
-            if o35cards: parts.append(f"O3.5: {o35cards:.0f}%")
-            return " · ".join(parts) if parts else "Dados insuficientes"
-
         hora = str(r['hour'])[-5:] if str(r['hour']) != 'nan' else ''
         liga = str(r['league'])
 
@@ -769,7 +632,6 @@ def processar_dia(date_str, dfs):
             ('Under 4.5', s_u45, True),
             ('Under 3.5', s_u35, under35_passou),
             ('Esc 7.5', s_esc75, True),
-            ('Cart 2.5', s_cards25, True),
         ]
         best = max(candidatos, key=lambda x: x[1] if x[2] else 0)
         best_mkt, best_score = best[0], best[1]
@@ -807,17 +669,6 @@ def processar_dia(date_str, dfs):
             'over65_c': o65c, 'over75_c': o75c, 'over85_c': o85c,
             'over95_c': o95c, 'over105_c': o105c,
 
-            # Cartões
-            'avg_cards': avg_cards,
-            'avg_cards_h': ch_cards,
-            'avg_cards_a': ca_cards,
-            'home_cards_avg': ch_cards,
-            'away_cards_avg': ca_cards,
-            'over25_cards': o25cards, 'over35_cards': o35cards,
-            'over45_cards': o45cards, 'over55_cards': o55cards,
-            'under25_cards': u25cards, 'under35_cards': u35cards,
-            'under45_cards': u45cards, 'under55_cards': u55cards,
-
             # Probabilidades Poisson
             'poisson_o15': round(prob_o15_poisson, 1) if prob_o15_poisson else None,
             'poisson_o25': round(prob_o25_poisson, 1) if prob_o25_poisson else None,
@@ -833,8 +684,6 @@ def processar_dia(date_str, dfs):
             'score_u35':      round(s_u35, 1),
             'score_esc75':    round(s_esc75, 1),
             'score_esc85':    round(s_esc85, 1),
-            'score_cards25':  round(s_cards25, 1),
-            'score_cards35':  round(s_cards35, 1),
 
             # Filtro e via
             'passou_filtro': bool(passou),
@@ -850,7 +699,6 @@ def processar_dia(date_str, dfs):
             'grade_u35':   grade(s_u35) if under35_passou else 'D',
             'grade_esc85': grade(s_esc85),
             'grade_esc75': grade(s_esc75),
-            'grade_cart25':grade(s_cards25),
 
             # Odd justa por mercado
             'odd_justa_15':    odd_justa(o15g),
@@ -858,7 +706,6 @@ def processar_dia(date_str, dfs):
             'odd_justa_btts':  odd_justa(btts_cf),
             'odd_justa_05ht':  odd_justa(o05ht),
             'odd_justa_esc85': odd_justa(o85c),
-            'odd_justa_cart25':odd_justa(o25cards),
 
             # Melhor mercado do jogo
             'best_mkt':    best_mkt,
@@ -869,11 +716,10 @@ def processar_dia(date_str, dfs):
             # Justificativas
             'justif_15':   justif_15(),
             'justif_esc':  justif_esc(),
-            'justif_cards': justif_cards(),
         }
         results.append(jogo_out)
 
-    return apply_cards_engine_to_matches(results)
+    return results
 
 
 # ── Consolidar histórico ───────────────────────────────────────────
@@ -886,7 +732,6 @@ def consolidar_historico(all_results):
     for date_str, jogos in sorted(por_data.items()):
         aprovados15  = [j for j in jogos if j['score_15'] >= 85 and j['passou_filtro']]
         aprovados_esc = [j for j in jogos if j['score_esc75'] >= 75]
-        aprovados_cart = [j for j in jogos if j['score_cards25'] >= 75]
         premium = [j for j in jogos if j['best_grade'] in ('A+', 'A')]
         # Top 5 do dia por best_score
         top5 = sorted(jogos, key=lambda x: x['best_score'], reverse=True)[:5]
@@ -901,7 +746,6 @@ def consolidar_historico(all_results):
                 'total':           len(jogos),
                 'over15_aprovados': len(aprovados15),
                 'esc85_aprovados':  len(aprovados_esc),
-                'cart25_aprovados': len(aprovados_cart),
                 'premium':          len(premium),
             }
         }
@@ -928,12 +772,11 @@ def consolidar_historico(all_results):
             'total':   len(jogos),
             'over15':  len(aprovados15),
             'esc85':   len(aprovados_esc),
-            'cart25':  len(aprovados_cart),
             'premium': len(premium),
         })
         print(f"  ✓ {date_str} → {len(jogos)} jogos | "
               f"O1.5: {len(aprovados15)} | Esc: {len(aprovados_esc)} | "
-              f"Cart: {len(aprovados_cart)} | Premium: {len(premium)}")
+              f"Premium: {len(premium)}")
 
     with open(os.path.join(OUT_DIR, 'index.json'), 'w', encoding='utf-8') as f:
         json.dump(sorted(index, key=lambda x: x['date'], reverse=True), f, ensure_ascii=False)
@@ -941,19 +784,6 @@ def consolidar_historico(all_results):
 
 
 # ── Entry point ────────────────────────────────────────────────────
-def salvar_relatorio_colunas_cartoes():
-    if not COLUMN_REPORT:
-        return
-    report = {
-        'generated_at': datetime.now().isoformat(timespec='seconds'),
-        'description': 'Mapeamento real das colunas usadas pelo pipeline de cartoes.',
-        'dates': COLUMN_REPORT
-    }
-    out_path = os.path.join(OUT_DIR, 'card_pipeline_column_report.json')
-    with open(out_path, 'w', encoding='utf-8') as f:
-        json.dump(report, f, ensure_ascii=False, indent=2)
-    print(f"Relatorio de colunas de cartoes gravado em {out_path}")
-
 if __name__ == '__main__':
     date_dirs = sorted([
         d for d in os.listdir(DATA_DIR)
@@ -981,7 +811,5 @@ if __name__ == '__main__':
     if all_results:
         print(f"\nConsolidando {len(all_results)} jogos...")
         consolidar_historico(all_results)
-        salvar_relatorio_colunas_cartoes()
     else:
-        salvar_relatorio_colunas_cartoes()
         print("Nenhum resultado gerado.")
