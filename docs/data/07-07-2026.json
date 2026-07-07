@@ -94,8 +94,29 @@
       "best_risk": "Muito Baixo",
       "justif_15": "xG 4.3 · PPG 2.2 · Via 2 ✓",
       "justif_esc": "Média 7.0 cant · O8.5: 33.35% · O7.5: 50.0%",
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1576804,
+        "status": "FT",
+        "gols_home": 3,
+        "gols_away": 2,
+        "gols_total": 5,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": false,
+        "under45_ok": false,
+        "placar": "3-2",
+        "placar_ht": "0-1",
+        "corners_total": 7,
+        "esc75_ok": false,
+        "esc85_ok": false
+      },
+      "acertos": {},
+      "palpite_mkt": "",
+      "palpite_grade": "D",
+      "palpite_score": 0
     },
     {
       "date": "07-07-2026",
@@ -550,18 +571,18 @@
       "taxa": null
     },
     "Over 2.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "BTTS": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Over 0.5 HT": {
       "palpites": 0,
