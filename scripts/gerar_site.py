@@ -783,7 +783,12 @@ def remove_card_market_ui(html):
     html = html.replace('${gradeHtml(cardPick?cardPick.grade:getPalpiteGrade(d))}', '${gradeHtml(getPalpiteGrade(d))}')
     html = html.replace('${cardPick?cardResultBadge(cardPick):resBadge(d,mktKey)}', '${resBadge(d,mktKey)}')
     html = html.replace("if(legacy && !isCardMarketName(legacy)){", "if(legacy){")
-    html = re.sub(r"\n\s*const isCardAltMarket = .*?\n\s*if\(opts\.excludeCards\) mkts = mkts\.filter\(x=>!isCardAltMarket\(x\)\);", '', html, flags=re.DOTALL)
+    html = re.sub(
+        r"\n\s*const isCardAltMarket = .*?\n\s*let mkts = approvedMarkets\(d\)\.filter\(x=>x\.mkt!==primary\);\s*if\(opts\.excludeCards\) mkts = mkts\.filter\(x=>!isCardAltMarket\(x\)\);",
+        "\n  let mkts = approvedMarkets(d).filter(x=>x.mkt!==primary);",
+        html,
+        flags=re.DOTALL,
+    )
     html = html.replace("const ok = res ? (x.cardPick ? cardResultOk(x.cardPick) : resultOk(res,x.key)) : null;", "const ok = res ? resultOk(res,x.key) : null;")
     html = re.sub(r'\n\s*<option value="Cart" .*?</option>', '', html)
     html = re.sub(
@@ -2533,20 +2538,25 @@ function gradeFromScore(score){{
 }}
 
 function approvedMarketsHtml(d, opts){{
-  opts = opts || {{}};
-  const primary = opts.primary || getPalpiteMkt(d);
-  const max = opts.max || 4;
-  let mkts = approvedMarkets(d).filter(x=>x.mkt!==primary);
-  mkts = mkts.slice(0,max);
-  if(!mkts.length) return opts.empty ? '<span class="muted" style="font-size:11px">Sem alternativas</span>' : '';
-  const label = opts.label === false ? '' : '<span class="alt-label">Também aprovado</span>';
-  const res = getResultado(d);
-  return `<div class="alt-mkts">${{label}}${{mkts.map(x=>{{
-    const ok = res ? resultOk(res,x.key) : null;
-    const stCls = ok===true ? 'hit' : ok===false ? 'miss' : res ? 'pending' : '';
-    const stTxt = ok===true ? 'GREEN' : ok===false ? 'RED' : res ? 'S/D' : '';
-    return `<span class="alt-badge ${{x.cls}} ${{stCls}}">${{x.mkt}} <strong>${{pctText(x.score)}}</strong>${{stTxt?`<span class="alt-res">${{stTxt}}</span>`:''}}</span>`;
-  }}).join('')}}</div>`;
+  try{{
+    opts = opts || {{}};
+    const primary = opts.primary || getPalpiteMkt(d);
+    const max = opts.max || 4;
+    let mkts = approvedMarkets(d).filter(x=>x.mkt!==primary);
+    mkts = mkts.slice(0,max);
+    if(!mkts.length) return opts.empty ? '<span class="muted" style="font-size:11px">Sem alternativas</span>' : '';
+    const label = opts.label === false ? '' : '<span class="alt-label">Também aprovado</span>';
+    const res = getResultado(d);
+    return `<div class="alt-mkts">${{label}}${{mkts.map(x=>{{
+      const ok = res ? resultOk(res,x.key) : null;
+      const stCls = ok===true ? 'hit' : ok===false ? 'miss' : res ? 'pending' : '';
+      const stTxt = ok===true ? 'GREEN' : ok===false ? 'RED' : res ? 'S/D' : '';
+      return `<span class="alt-badge ${{x.cls}} ${{stCls}}">${{x.mkt}} <strong>${{pctText(x.score)}}</strong>${{stTxt?`<span class="alt-res">${{stTxt}}</span>`:''}}</span>`;
+    }}).join('')}}</div>`;
+  }}catch(e){{
+    console.warn('Alternativas indisponíveis para o jogo:', d&&d.jogo, e);
+    return opts && opts.empty ? '<span class="muted" style="font-size:11px">Sem alternativas</span>' : '';
+  }}
 }}
 
 // ── Resultado Final helpers ───────────────────────────────────────
@@ -2990,6 +3000,7 @@ function renderVisao(date,jogos){{
 // ── Ranking ────────────────────────────────────────────────────────
 function renderRanking(date,jogos){{
   const el=document.getElementById('mkt-'+date+'-ranking');
+  if(!el) return;
   const snap=(ALL_DATA[date]||{{}}).palpites_snapshot||[];
   const fullById=new Map(jogos.filter(j=>j.fixture_id).map(j=>[String(j.fixture_id),j]));
   const fullByName=new Map(jogos.map(j=>[`${{j.home}} x ${{j.away}}`,j]));
@@ -3009,6 +3020,7 @@ function renderRanking(date,jogos){{
     const title = `<div class="sec-title"><i data-lucide="${{group.icon}}"></i> ${{group.title}}</div>`;
     if(!group.items.length)return`<div class="ranking-col">${{title}}<div class="empty">Nenhum jogo nesta categoria.</div></div>`;
     const rows=group.items.map((d,i)=>{{
+      try{{
       const rc=primaryRowClass(d);
       return`<tr class="${{rc}}">
         <td class="row-num">${{i+1}}</td>
@@ -3021,6 +3033,10 @@ function renderRanking(date,jogos){{
         ${{placarCell(d)}}
         <td>${{primaryResultBadge(d)}}</td>
       </tr>`;
+      }}catch(e){{
+        console.warn('Ranking indisponível para o jogo:', d&&d.jogo, e);
+        return '';
+      }}
     }}).join('');
     return`<div class="ranking-col">
       ${{title}}
