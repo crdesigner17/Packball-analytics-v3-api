@@ -3,12 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "type": "commonjs",
-  "scripts": {
-    "scrape:betano:cards": "node scripts/scraping/betano_cards_scraper.js",
-    "scrape:referees": "node scripts/cards/referee_profile_scraper.js",
-    "test:cards": "node scripts/cards/test_card_engine.js",
-    "audit:cards": "node scripts/cards/card_audit.js"
-  },
   "dependencies": {
     "playwright": "^1.61.1"
   }

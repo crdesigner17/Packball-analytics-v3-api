@@ -15,7 +15,6 @@ Dashboard de análise estatística profissional para apostas esportivas.
 | Over 1.5 Gols | ✅ Validado 88.6% | ≥80% + Filtro Vias |
 | Escanteios Over 7.5 | ⚠️ Em validação | ≥75% |
 | Escanteios Over 8.5 | ⚠️ Em validação | ≥75% |
-| Cartões Over 2.5 | ⚠️ Em observação | ≥75% |
 | Under 4.5 Gols | 🆕 Novo | ≥75% |
 
 ## 📈 Grade Profissional
