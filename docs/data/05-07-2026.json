@@ -4075,18 +4075,18 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Cart 2.5": {
           "score": 78.9,
           "palpite": true,
-          "acertou": null
+          "acertou": false
         }
       }
     },
@@ -4318,12 +4318,12 @@
         "under45_ok": false,
         "placar": "3-2",
         "placar_ht": "1-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 12,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -7579,12 +7579,12 @@
         "under45_ok": false,
         "placar": "3-2",
         "placar_ht": "1-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 12,
+        "cards_total": 2,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Over 1.5": {
@@ -7747,18 +7747,18 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-0",
-        "corners_total": null,
-        "cards_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null,
-        "cart25_ok": null,
-        "cart35_ok": null
+        "corners_total": 9,
+        "cards_total": 1,
+        "esc75_ok": true,
+        "esc85_ok": true,
+        "cart25_ok": false,
+        "cart35_ok": false
       },
       "acertos": {
         "Cart 2.5": {
           "score": 78.9,
           "palpite": true,
-          "acertou": null
+          "acertou": false
         }
       }
     },
@@ -8114,9 +8114,9 @@
     "Cart 2.5": {
       "palpites": 1,
       "acertos": 0,
-      "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
     },
     "Cart 3.5": {
       "palpites": 1,
