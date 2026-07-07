@@ -211,8 +211,29 @@
       "best_risk": "Baixo",
       "justif_15": "xG 3.6 · PPG 2.5 · Via 2 ✓",
       "justif_esc": "Média 8.25 cant · O8.5: 50.0% · O7.5: 50.0%",
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1576805,
+        "status": "PEN",
+        "gols_home": 0,
+        "gols_away": 0,
+        "gols_total": 0,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "0-0",
+        "placar_ht": "0-0",
+        "corners_total": 5,
+        "esc75_ok": false,
+        "esc85_ok": false
+      },
+      "acertos": {},
+      "palpite_mkt": "",
+      "palpite_grade": "D",
+      "palpite_score": 0
     },
     {
       "date": "07-07-2026",
