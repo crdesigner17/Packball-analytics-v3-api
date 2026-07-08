@@ -226,9 +226,9 @@
         "under45_ok": true,
         "placar": "0-0",
         "placar_ht": "0-0",
-        "corners_total": 5,
-        "esc75_ok": false,
-        "esc85_ok": false
+        "corners_total": 10,
+        "esc75_ok": true,
+        "esc85_ok": true
       },
       "acertos": {},
       "palpite_mkt": "",
