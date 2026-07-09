@@ -94,10 +94,28 @@
       "best_risk": "Baixo",
       "justif_15": "O1.5 80% · xG 1.7 · PPG 1.2 · H2H 2.1 gols",
       "justif_esc": "Média 11.100000000000001 cant · O8.5: 70.0% · O7.5: 85.0%",
-      "palpite_mkt": null,
-      "palpite_grade": null,
-      "palpite_score": null,
-      "resultado": null,
+      "palpite_mkt": "",
+      "palpite_grade": "D",
+      "palpite_score": 0,
+      "resultado": {
+        "fixture_id": 1520767,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "0-1",
+        "corners_total": null,
+        "esc75_ok": null,
+        "esc85_ok": null
+      },
       "acertos": {}
     }
   ],
@@ -214,10 +232,10 @@
       "taxa": null
     },
     "Esc 7.5": {
-      "palpites": 0,
+      "palpites": 1,
       "acertos": 0,
       "erros": 0,
-      "sem_dados": 0,
+      "sem_dados": 1,
       "taxa": null
     },
     "Esc 8.5": {
