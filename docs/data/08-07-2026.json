@@ -112,9 +112,9 @@
         "under45_ok": true,
         "placar": "1-2",
         "placar_ht": "0-1",
-        "corners_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null
+        "corners_total": 7,
+        "esc75_ok": false,
+        "esc85_ok": false
       },
       "acertos": {}
     }
@@ -234,9 +234,9 @@
     "Esc 7.5": {
       "palpites": 1,
       "acertos": 0,
-      "erros": 0,
-      "sem_dados": 1,
-      "taxa": null
+      "erros": 1,
+      "sem_dados": 0,
+      "taxa": 0.0
     },
     "Esc 8.5": {
       "palpites": 0,
