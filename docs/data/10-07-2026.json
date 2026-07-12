@@ -361,9 +361,9 @@
         "under45_ok": false,
         "placar": "3-3",
         "placar_ht": "0-2",
-        "corners_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null
+        "corners_total": 9,
+        "esc75_ok": true,
+        "esc85_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -661,9 +661,9 @@
         "under45_ok": false,
         "placar": "3-3",
         "placar_ht": "0-2",
-        "corners_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null
+        "corners_total": 9,
+        "esc75_ok": true,
+        "esc85_ok": true
       },
       "acertos": {
         "Over 1.5": {
@@ -870,9 +870,9 @@
                 "under45_ok": false,
                 "placar": "3-3",
                 "placar_ht": "0-2",
-                "corners_total": null,
-                "esc75_ok": null,
-                "esc85_ok": null
+                "corners_total": 9,
+                "esc75_ok": true,
+                "esc85_ok": true
               },
               "acertos": {
                 "Over 1.5": {
@@ -988,9 +988,9 @@
                 "under45_ok": false,
                 "placar": "3-3",
                 "placar_ht": "0-2",
-                "corners_total": null,
-                "esc75_ok": null,
-                "esc85_ok": null
+                "corners_total": 9,
+                "esc75_ok": true,
+                "esc85_ok": true
               },
               "acertos": {
                 "Over 1.5": {
@@ -1144,9 +1144,9 @@
             "under45_ok": false,
             "placar": "3-3",
             "placar_ht": "0-2",
-            "corners_total": null,
-            "esc75_ok": null,
-            "esc85_ok": null
+            "corners_total": 9,
+            "esc75_ok": true,
+            "esc85_ok": true
           },
           "acertos": {
             "Over 1.5": {
