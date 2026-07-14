@@ -100,8 +100,32 @@
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
       "palpite_score": 100.0,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1585131,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 2,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "0-2",
+        "placar_ht": "0-1",
+        "corners_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "14-07-2026",
@@ -250,8 +274,32 @@
       "score": 100.0,
       "grade": "A+",
       "oddVal": null,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1585131,
+        "status": "FT",
+        "gols_home": 0,
+        "gols_away": 2,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": false,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "0-2",
+        "placar_ht": "0-1",
+        "corners_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": false
+      },
+      "acertos": {
+        "Over 1.5": {
+          "score": 100.0,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "fixture_id": 1499524,
@@ -327,8 +375,32 @@
               "score": 100.0,
               "grade": "A+",
               "oddVal": null,
-              "resultado": null,
-              "acertos": {}
+              "resultado": {
+                "fixture_id": 1585131,
+                "status": "FT",
+                "gols_home": 0,
+                "gols_away": 2,
+                "gols_total": 2,
+                "gols_ht": 1,
+                "btts": false,
+                "over05_ht_ok": true,
+                "over15_ok": true,
+                "over25_ok": false,
+                "under35_ok": true,
+                "under45_ok": true,
+                "placar": "0-2",
+                "placar_ht": "0-1",
+                "corners_total": 8,
+                "esc75_ok": true,
+                "esc85_ok": false
+              },
+              "acertos": {
+                "Over 1.5": {
+                  "score": 100.0,
+                  "palpite": true,
+                  "acertou": true
+                }
+              }
             },
             {
               "fixture_id": 1499524,
@@ -405,8 +477,32 @@
           "score": 100.0,
           "grade": "A+",
           "oddVal": null,
-          "resultado": null,
-          "acertos": {}
+          "resultado": {
+            "fixture_id": 1585131,
+            "status": "FT",
+            "gols_home": 0,
+            "gols_away": 2,
+            "gols_total": 2,
+            "gols_ht": 1,
+            "btts": false,
+            "over05_ht_ok": true,
+            "over15_ok": true,
+            "over25_ok": false,
+            "under35_ok": true,
+            "under45_ok": true,
+            "placar": "0-2",
+            "placar_ht": "0-1",
+            "corners_total": 8,
+            "esc75_ok": true,
+            "esc85_ok": false
+          },
+          "acertos": {
+            "Over 1.5": {
+              "score": 100.0,
+              "palpite": true,
+              "acertou": true
+            }
+          }
         },
         {
           "fixture_id": 1499524,
@@ -430,8 +526,8 @@
   "resultado_confirmado": true,
   "resultado_stats": {
     "Over 1.5": {
-      "palpites": 1,
-      "acertos": 1,
+      "palpites": 2,
+      "acertos": 2,
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
@@ -488,8 +584,8 @@
   },
   "resultado_stats_full": {
     "Over 1.5": {
-      "palpites": 1,
-      "acertos": 1,
+      "palpites": 2,
+      "acertos": 2,
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
