@@ -1222,7 +1222,25 @@
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
       "palpite_score": 72.1,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1494704,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 2,
+        "gols_total": 3,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-2",
+        "placar_ht": "0-2",
+        "corners_total": 10,
+        "esc75_ok": true,
+        "esc85_ok": true
+      },
       "acertos": {}
     },
     {
