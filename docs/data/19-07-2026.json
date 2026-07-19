@@ -100,7 +100,25 @@
       "palpite_mkt": "Over 2.5",
       "palpite_grade": "B",
       "palpite_score": 71.0,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1591866,
+        "status": "AET",
+        "gols_home": 0,
+        "gols_away": 0,
+        "gols_total": 0,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "0-0",
+        "placar_ht": "0-0",
+        "corners_total": 13,
+        "esc75_ok": true,
+        "esc85_ok": true
+      },
       "acertos": {}
     },
     {
