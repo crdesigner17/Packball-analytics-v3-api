@@ -1597,9 +1597,9 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-1",
-        "corners_total": null,
-        "esc75_ok": null,
-        "esc85_ok": null
+        "corners_total": 5,
+        "esc75_ok": false,
+        "esc85_ok": false
       },
       "acertos": {}
     },
