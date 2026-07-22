@@ -99,7 +99,9 @@
       "justif_esc": "Média 10.45 cant · O8.5: 75.0% · O7.5: 75.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 72.3
+      "palpite_score": 72.3,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -199,7 +201,9 @@
       "justif_esc": "Média 9.35 cant · O8.5: 65.0% · O7.5: 70.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 65.4
+      "palpite_score": 65.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -299,7 +303,9 @@
       "justif_esc": "Média 10.85 cant · O8.5: 65.0% · O7.5: 75.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 72.3
+      "palpite_score": 72.3,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -399,7 +405,9 @@
       "justif_esc": "Média 9.7 cant · O8.5: 65.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 71.7
+      "palpite_score": 71.7,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -499,7 +507,9 @@
       "justif_esc": "Média 10.4 cant · O8.5: 60.0% · O7.5: 70.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 69.6
+      "palpite_score": 69.6,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -599,7 +609,9 @@
       "justif_esc": "Média 10.75 cant · O8.5: 70.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 75.1
+      "palpite_score": 75.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -699,7 +711,9 @@
       "justif_esc": "Média 9.4 cant · O8.5: 65.0% · O7.5: 75.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 69.4
+      "palpite_score": 69.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -799,7 +813,9 @@
       "justif_esc": "Média 10.65 cant · O8.5: 80.0% · O7.5: 85.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 76.2
+      "palpite_score": 76.2,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -899,7 +915,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -999,7 +1017,9 @@
       "justif_esc": "Média 10.5 cant · O8.5: 80.0% · O7.5: 85.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "22-07-2026",
@@ -1099,107 +1119,9 @@
       "justif_esc": "Média 9.15 cant · O8.5: 55.0% · O7.5: 60.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 88.9
-    },
-    {
-      "date": "22-07-2026",
-      "jogo": "San Antonio x Cumbayá",
-      "liga": "Liga Pro Serie B",
-      "country": "Ecuador",
-      "hora": "17:30",
-      "home": "San Antonio",
-      "away": "Cumbayá",
-      "fixture_id": 1526582,
-      "referee": null,
-      "home_id": 23310,
-      "away_id": 16476,
-      "is_elite": false,
-      "odds_h": null,
-      "odds_d": null,
-      "odds_a": null,
-      "over15_g": 33.3,
-      "over25_g": 33.3,
-      "over15_h": null,
-      "over15_a": null,
-      "over25_h": null,
-      "over25_a": null,
-      "exg_h": 1.2,
-      "exg_a": 1.1,
-      "ppg_h": 1.18,
-      "ppg_a": 1.29,
-      "h2h_goals": 1.67,
-      "h2h_n": 3,
-      "avg_sc_h": 1.2,
-      "avg_sc_a": 1.1,
-      "avg_co_h": 1.2,
-      "avg_co_a": 0.9,
-      "btts_h": 70.6,
-      "btts_a": 64.7,
-      "over05_ht": null,
-      "over15_ht": null,
-      "avg_shots_h": null,
-      "avg_shots_a": null,
-      "avg_sot_h": null,
-      "avg_sot_a": null,
-      "avg_sot": null,
-      "avg_shots": null,
-      "avg_corners": null,
-      "avg_corners_h": null,
-      "avg_corners_a": null,
-      "over65_c": null,
-      "over75_c": null,
-      "over85_c": null,
-      "over95_c": null,
-      "over105_c": null,
-      "pred_winner": "San Antonio",
-      "pred_advice": "Double chance : San Antonio or draw",
-      "win_home": 35.0,
-      "win_away": 30.0,
-      "form_h": "DWLDL",
-      "form_a": "DLWWD",
-      "under25_h": null,
-      "under25_a": null,
-      "exg_tot": 2.3,
-      "ppg_avg": 1.23,
-      "ppg_min": 1.18,
-      "btts_cf": 67.7,
-      "poisson_o15": 66.9,
-      "poisson_o25": 40.4,
-      "poisson_u45": 91.6,
-      "poisson_u35": 79.9,
-      "score_15": 33.3,
-      "score_25": 37.1,
-      "score_btts": 48.2,
-      "score_05ht": 36.8,
-      "score_u45": 65.4,
-      "score_u35": 64.5,
-      "score_esc75": 47.1,
-      "score_esc85": 41.2,
-      "passou_filtro": true,
-      "via": "Via 2",
-      "under35_filter": false,
-      "grade_15": "D",
-      "grade_25": "D",
-      "grade_btts": "D",
-      "grade_05ht": "D",
-      "grade_u45": "B",
-      "grade_u35": "D",
-      "grade_esc85": "D",
-      "grade_esc75": "D",
-      "odd_justa_15": 3.0,
-      "odd_justa_25": 3.0,
-      "odd_justa_btts": 1.48,
-      "odd_justa_05ht": null,
-      "odd_justa_esc85": null,
-      "best_mkt": "Under 4.5",
-      "best_score": 65.4,
-      "best_grade": "B",
-      "best_risk": "Moderado",
-      "justif_15": "O1.5 33% · xG 2.3 · PPG 1.2 · H2H 1.7 gols · Via 2 ✓",
-      "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "palpite_mkt": "Under 4.5",
-      "palpite_grade": "B",
-      "palpite_score": 65.4
+      "palpite_score": 88.9,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -1347,9 +1269,123 @@
     ],
     "bilheteDia": null
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "csv_enrichment_report": {
     "date": "22-07-2026",
     "folder": "/home/runner/work/winmetrics-analytics/winmetrics-analytics/scripts/../data/csv",
