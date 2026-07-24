@@ -598,7 +598,25 @@
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
       "palpite_score": 71.5,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1520782,
+        "status": "FT",
+        "gols_home": 4,
+        "gols_away": 2,
+        "gols_total": 6,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": true,
+        "under35_ok": false,
+        "under45_ok": false,
+        "placar": "4-2",
+        "placar_ht": "2-0",
+        "corners_total": 13,
+        "esc75_ok": true,
+        "esc85_ok": true
+      },
       "acertos": {}
     },
     {
@@ -946,7 +964,25 @@
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "B",
       "palpite_score": 70.8,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1493004,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "1-1",
+        "corners_total": 8,
+        "esc75_ok": true,
+        "esc85_ok": false
+      },
       "acertos": {}
     }
   ],
