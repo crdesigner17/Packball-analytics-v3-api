@@ -814,7 +814,25 @@
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "B",
       "palpite_score": 71.4,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1493007,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 0,
+        "gols_total": 1,
+        "gols_ht": 0,
+        "btts": false,
+        "over05_ht_ok": false,
+        "over15_ok": false,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-0",
+        "placar_ht": "0-0",
+        "corners_total": 9,
+        "esc75_ok": true,
+        "esc85_ok": true
+      },
       "acertos": {}
     },
     {
