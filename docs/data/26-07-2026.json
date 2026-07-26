@@ -99,7 +99,9 @@
       "justif_esc": "Média 10.530000000000001 cant · O8.5: 63.9% · O7.5: 69.45%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 70.0
+      "palpite_score": 70.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -199,7 +201,9 @@
       "justif_esc": "Média 9.6 cant · O8.5: 65.0% · O7.5: 75.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 70.0
+      "palpite_score": 70.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -299,7 +303,9 @@
       "justif_esc": "Média 10.850000000000001 cant · O8.5: 70.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 76.1
+      "palpite_score": 76.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -399,7 +405,9 @@
       "justif_esc": "Média 9.5 cant · O8.5: 70.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 70.1
+      "palpite_score": 70.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -499,7 +507,9 @@
       "justif_esc": "Média 10.1 cant · O8.5: 70.0% · O7.5: 75.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 70.8
+      "palpite_score": 70.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -599,7 +609,9 @@
       "justif_esc": "Média 10.385 cant · O8.5: 78.35% · O7.5: 78.35%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 72.9
+      "palpite_score": 72.9,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -699,7 +711,9 @@
       "justif_esc": "Média 9.55 cant · O8.5: 55.0% · O7.5: 60.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 75.0
+      "palpite_score": 75.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -799,7 +813,9 @@
       "justif_esc": "Média 9.75 cant · O8.5: 60.0% · O7.5: 70.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 68.9
+      "palpite_score": 68.9,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -899,7 +915,9 @@
       "justif_esc": "Média 9.75 cant · O8.5: 60.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 70.5
+      "palpite_score": 70.5,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -999,7 +1017,9 @@
       "justif_esc": "Média 9.85 cant · O8.5: 70.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 71.5
+      "palpite_score": 71.5,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1099,7 +1119,9 @@
       "justif_esc": "Média 11.2 cant · O8.5: 85.0% · O7.5: 85.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 77.1
+      "palpite_score": 77.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1199,7 +1221,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 70.0
+      "palpite_score": 70.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1299,7 +1323,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 64.5
+      "palpite_score": 64.5,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1399,7 +1425,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1499,7 +1527,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 71.4
+      "palpite_score": 71.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1599,7 +1629,9 @@
       "justif_esc": "Média 8.600000000000001 cant · O8.5: 50.0% · O7.5: 55.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 70.0
+      "palpite_score": 70.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1699,7 +1731,9 @@
       "justif_esc": "Média 9.350000000000001 cant · O8.5: 65.0% · O7.5: 65.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1799,107 +1833,9 @@
       "justif_esc": "Média 8.25 cant · O8.5: 55.0% · O7.5: 55.0%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "B",
-      "palpite_score": 69.7
-    },
-    {
-      "date": "26-07-2026",
-      "jogo": "Deportivo Laferrere x Talleres Remedios",
-      "liga": "Copa Uruguay",
-      "country": "Argentina",
-      "hora": "15:00",
-      "home": "Deportivo Laferrere",
-      "away": "Talleres Remedios",
-      "fixture_id": 1499550,
-      "referee": null,
-      "home_id": 1924,
-      "away_id": 1927,
-      "is_elite": false,
-      "odds_h": 2.8,
-      "odds_d": 2.88,
-      "odds_a": 2.55,
-      "over15_g": 66.7,
-      "over25_g": 33.3,
-      "over15_h": null,
-      "over15_a": null,
-      "over25_h": null,
-      "over25_a": null,
-      "exg_h": 1.1,
-      "exg_a": 1.1,
-      "ppg_h": 1.46,
-      "ppg_a": 1.88,
-      "h2h_goals": 2.0,
-      "h2h_n": 9,
-      "avg_sc_h": 1.1,
-      "avg_sc_a": 1.1,
-      "avg_co_h": 1.2,
-      "avg_co_a": 0.5,
-      "btts_h": 69.2,
-      "btts_a": 42.3,
-      "over05_ht": null,
-      "over15_ht": null,
-      "avg_shots_h": null,
-      "avg_shots_a": null,
-      "avg_sot_h": null,
-      "avg_sot_a": null,
-      "avg_sot": null,
-      "avg_shots": null,
-      "avg_corners": null,
-      "avg_corners_h": null,
-      "avg_corners_a": null,
-      "over65_c": null,
-      "over75_c": null,
-      "over85_c": null,
-      "over95_c": null,
-      "over105_c": null,
-      "pred_winner": "Talleres Remedios",
-      "pred_advice": "Combo Double chance : draw or Talleres Remedios and -3.5 goals",
-      "win_home": 10.0,
-      "win_away": 45.0,
-      "form_h": "DWDWW",
-      "form_a": "WWDLW",
-      "under25_h": null,
-      "under25_a": null,
-      "exg_tot": 2.2,
-      "ppg_avg": 1.67,
-      "ppg_min": 1.46,
-      "btts_cf": 55.8,
-      "poisson_o15": 64.5,
-      "poisson_o25": 37.7,
-      "poisson_u45": 92.8,
-      "poisson_u35": 81.9,
-      "score_15": 66.7,
-      "score_25": 39.5,
-      "score_btts": 49.6,
-      "score_05ht": 48.9,
-      "score_u45": 66.2,
-      "score_u35": 65.9,
-      "score_esc75": 51.9,
-      "score_esc85": 55.7,
-      "passou_filtro": true,
-      "via": "Via 2",
-      "under35_filter": false,
-      "grade_15": "B",
-      "grade_25": "D",
-      "grade_btts": "D",
-      "grade_05ht": "D",
-      "grade_u45": "B",
-      "grade_u35": "D",
-      "grade_esc85": "C",
-      "grade_esc75": "C",
-      "odd_justa_15": 1.5,
-      "odd_justa_25": 3.0,
-      "odd_justa_btts": 1.79,
-      "odd_justa_05ht": null,
-      "odd_justa_esc85": null,
-      "best_mkt": "Over 1.5",
-      "best_score": 66.7,
-      "best_grade": "B",
-      "best_risk": "Moderado",
-      "justif_15": "O1.5 67% · xG 2.2 · PPG 1.7 · H2H 2.0 gols · Via 2 ✓",
-      "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
-      "palpite_mkt": "Over 1.5",
-      "palpite_grade": "B",
-      "palpite_score": 66.7
+      "palpite_score": 69.7,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -1999,7 +1935,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2099,7 +2037,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2199,7 +2139,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2299,7 +2241,9 @@
       "justif_esc": "Média 10.6 cant · O8.5: 65.0% · O7.5: 70.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2399,7 +2343,9 @@
       "justif_esc": "Média 11.1 cant · O8.5: 85.0% · O7.5: 85.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2499,7 +2445,9 @@
       "justif_esc": "Média 9.15 cant · O8.5: 55.0% · O7.5: 55.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 90.0
+      "palpite_score": 90.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2599,7 +2547,9 @@
       "justif_esc": "Média 9.15 cant · O8.5: 65.0% · O7.5: 80.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A",
-      "palpite_score": 80.0
+      "palpite_score": 80.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2699,7 +2649,9 @@
       "justif_esc": "Média 11.4 cant · O8.5: 90.0% · O7.5: 95.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 82.4
+      "palpite_score": 82.4,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2799,7 +2751,9 @@
       "justif_esc": "Média 10.649999999999999 cant · O8.5: 70.0% · O7.5: 85.0%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2899,7 +2853,9 @@
       "justif_esc": "Média 9.100000000000001 cant · O8.5: 50.0% · O7.5: 75.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 68.1
+      "palpite_score": 68.1,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -2999,7 +2955,9 @@
       "justif_esc": "Média 9.75 cant · O8.5: 60.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 71.5
+      "palpite_score": 71.5,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -3099,7 +3057,9 @@
       "justif_esc": "Média 9.95 cant · O8.5: 70.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 71.7
+      "palpite_score": 71.7,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -3199,7 +3159,9 @@
       "justif_esc": "Média 7.58 cant · O8.5: 41.65% · O7.5: 58.35%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 70.0
+      "palpite_score": 70.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -3299,7 +3261,9 @@
       "justif_esc": "Média 10.125 cant · O8.5: 81.25% · O7.5: 87.5%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "26-07-2026",
@@ -3399,7 +3363,9 @@
       "justif_esc": "Média 6.125 cant · O8.5: 29.15% · O7.5: 29.15%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "B",
-      "palpite_score": 70.0
+      "palpite_score": 70.0,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -3891,9 +3857,123 @@
       "oddTotal": 1
     }
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "csv_enrichment_report": {
     "date": "26-07-2026",
     "folder": "/home/runner/work/winmetrics-analytics/winmetrics-analytics/scripts/../data/csv",
