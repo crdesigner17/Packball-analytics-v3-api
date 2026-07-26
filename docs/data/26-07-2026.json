@@ -2188,7 +2188,25 @@
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
       "palpite_score": 50.0,
-      "resultado": null,
+      "resultado": {
+        "fixture_id": 1548978,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 2,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "1-1",
+        "corners_total": 17,
+        "esc75_ok": true,
+        "esc85_ok": true
+      },
       "acertos": {}
     },
     {
@@ -2794,8 +2812,32 @@
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
       "palpite_score": 82.4,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1494709,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-1",
+        "corners_total": 14,
+        "esc75_ok": true,
+        "esc85_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 82.4,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "date": "26-07-2026",
@@ -3880,8 +3922,32 @@
       "score": 82.4,
       "grade": "A",
       "oddVal": null,
-      "resultado": null,
-      "acertos": {}
+      "resultado": {
+        "fixture_id": 1494709,
+        "status": "FT",
+        "gols_home": 1,
+        "gols_away": 1,
+        "gols_total": 2,
+        "gols_ht": 1,
+        "btts": true,
+        "over05_ht_ok": true,
+        "over15_ok": true,
+        "over25_ok": false,
+        "under35_ok": true,
+        "under45_ok": true,
+        "placar": "1-1",
+        "placar_ht": "0-1",
+        "corners_total": 14,
+        "esc75_ok": true,
+        "esc85_ok": true
+      },
+      "acertos": {
+        "Esc 7.5": {
+          "score": 82.4,
+          "palpite": true,
+          "acertou": true
+        }
+      }
     },
     {
       "fixture_id": 1493006,
@@ -4688,11 +4754,11 @@
       "taxa": null
     },
     "Esc 7.5": {
-      "palpites": 0,
-      "acertos": 0,
+      "palpites": 1,
+      "acertos": 1,
       "erros": 0,
       "sem_dados": 0,
-      "taxa": null
+      "taxa": 100.0
     },
     "Esc 8.5": {
       "palpites": 0,
@@ -4718,8 +4784,8 @@
       "taxa": 100.0
     },
     "BTTS": {
-      "palpites": 2,
-      "acertos": 2,
+      "palpites": 3,
+      "acertos": 3,
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
@@ -4746,18 +4812,18 @@
       "taxa": null
     },
     "Esc 7.5": {
-      "palpites": 1,
-      "acertos": 1,
+      "palpites": 2,
+      "acertos": 2,
       "erros": 0,
       "sem_dados": 0,
       "taxa": 100.0
     },
     "Esc 8.5": {
-      "palpites": 1,
-      "acertos": 0,
+      "palpites": 2,
+      "acertos": 1,
       "erros": 1,
       "sem_dados": 0,
-      "taxa": 0.0
+      "taxa": 50.0
     }
   },
   "csv_enrichment_report": {
