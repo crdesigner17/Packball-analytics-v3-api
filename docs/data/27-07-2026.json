@@ -99,7 +99,9 @@
       "justif_esc": "Média 9.7 cant · O8.5: 70.0% · O7.5: 85.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 72.8
+      "palpite_score": 72.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "27-07-2026",
@@ -199,7 +201,9 @@
       "justif_esc": "Média 10.65 cant · O8.5: 80.0% · O7.5: 90.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "A",
-      "palpite_score": 77.8
+      "palpite_score": 77.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "27-07-2026",
@@ -299,7 +303,9 @@
       "justif_esc": "Média 10.9 cant · O8.5: 55.0% · O7.5: 75.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 74.8
+      "palpite_score": 74.8,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "27-07-2026",
@@ -399,7 +405,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 59.0
+      "palpite_score": 59.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "27-07-2026",
@@ -499,7 +507,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Over 1.5",
       "palpite_grade": "A+",
-      "palpite_score": 100.0
+      "palpite_score": 100.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "27-07-2026",
@@ -599,7 +609,9 @@
       "justif_esc": "Média — cant · O8.5: —% · O7.5: —%",
       "palpite_mkt": "Under 4.5",
       "palpite_grade": "C",
-      "palpite_score": 50.0
+      "palpite_score": 50.0,
+      "resultado": null,
+      "acertos": {}
     },
     {
       "date": "27-07-2026",
@@ -699,7 +711,9 @@
       "justif_esc": "Média 10.55 cant · O8.5: 75.0% · O7.5: 80.0%",
       "palpite_mkt": "Esc 7.5",
       "palpite_grade": "B",
-      "palpite_score": 71.9
+      "palpite_score": 71.9,
+      "resultado": null,
+      "acertos": {}
     }
   ],
   "top5": [
@@ -787,9 +801,123 @@
     ],
     "bilheteDia": null
   },
-  "resultado_confirmado": false,
-  "resultado_stats": {},
-  "resultado_stats_full": {},
+  "resultado_confirmado": true,
+  "resultado_stats": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
+  "resultado_stats_full": {
+    "Over 1.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 2.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "BTTS": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Over 0.5 HT": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 4.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Under 3.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 7.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    },
+    "Esc 8.5": {
+      "palpites": 0,
+      "acertos": 0,
+      "erros": 0,
+      "sem_dados": 0,
+      "taxa": null
+    }
+  },
   "csv_enrichment_report": {
     "date": "27-07-2026",
     "folder": "/home/runner/work/winmetrics-analytics/winmetrics-analytics/scripts/../data/csv",
