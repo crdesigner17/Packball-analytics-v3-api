@@ -625,7 +625,7 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "1-1",
-        "corners_total": 9,
+        "corners_total": 12,
         "esc75_ok": true,
         "esc85_ok": true
       },
@@ -745,7 +745,7 @@
         "under45_ok": true,
         "placar": "4-0",
         "placar_ht": "2-0",
-        "corners_total": 12,
+        "corners_total": 13,
         "esc75_ok": true,
         "esc85_ok": true
       },
