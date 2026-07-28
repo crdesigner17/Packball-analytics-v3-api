@@ -355,7 +355,7 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-0",
-        "corners_total": 1,
+        "corners_total": 7,
         "esc75_ok": false,
         "esc85_ok": false
       },
@@ -601,9 +601,9 @@
         "under45_ok": true,
         "placar": "0-0",
         "placar_ht": "0-0",
-        "corners_total": 4,
-        "esc75_ok": false,
-        "esc85_ok": false
+        "corners_total": 9,
+        "esc75_ok": true,
+        "esc85_ok": true
       },
       "acertos": {}
     },
@@ -4549,7 +4549,7 @@
         "under45_ok": true,
         "placar": "1-1",
         "placar_ht": "0-0",
-        "corners_total": 1,
+        "corners_total": 7,
         "esc75_ok": false,
         "esc85_ok": false
       },
