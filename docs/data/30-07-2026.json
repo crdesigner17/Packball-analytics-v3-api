@@ -114,9 +114,9 @@
       "home_id": 147,
       "away_id": 135,
       "is_elite": false,
-      "odds_h": 3.15,
-      "odds_d": 3.25,
-      "odds_a": 2.26,
+      "odds_h": 3.1,
+      "odds_d": 3.35,
+      "odds_a": 2.22,
       "over15_g": 50.0,
       "over25_g": 30.0,
       "over15_h": null,
@@ -214,9 +214,9 @@
       "home_id": 456,
       "away_id": 438,
       "is_elite": false,
-      "odds_h": 2.32,
-      "odds_d": 2.96,
-      "odds_a": 3.35,
+      "odds_h": 2.34,
+      "odds_d": 2.8,
+      "odds_a": 3.5,
       "over15_g": 60.0,
       "over25_g": 50.0,
       "over15_h": null,
@@ -842,7 +842,7 @@
     }
   ],
   "bilhetes_snapshot": {
-    "created_at": "2026-07-28T09:40:57Z",
+    "created_at": "2026-07-29T09:41:34Z",
     "bilhetes": [
       {
         "tipo": "b1",
